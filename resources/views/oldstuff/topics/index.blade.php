@@ -1,0 +1,1 @@
+@extends ('layout')@section ('content')	Das ist content@endsection
