@@ -153,7 +153,7 @@ class VischoolController extends BaseController
 	
 	public function unit_show($id) {
 	$unit = Unit::find($id);
-	$blocks = $unit->blocks->all();
+	$blocks = Block::where('unit_id',$unit->id)->orderBy('order')->get();
 	$differentiationExists = 0;
 	$differentiations = null;
 	$differentiationCheck = $unit->blocks->where('differentiation_id','!=',13)->isNotEmpty();
