@@ -103,7 +103,7 @@ class UnitBackendController extends Controller
 			$filename_thumb = 'thumb'. $filename;
 			//save big image
 			$location = public_path('images/units/'.$filename);
-			Image::make($image)->resize(null, 300, function ($constraint) {
+			Image::make($image)->resize(355, 200, function ($constraint) {
 				$constraint->aspectRatio();})->save($location);
 			$unit->unit_img = $filename;
 			//save thumb image
@@ -173,7 +173,7 @@ class UnitBackendController extends Controller
 			$filename_thumb = 'thumb'. $filename;
 			//save big image
 			$location = public_path('images/units/'.$filename);
-			Image::make($image)->resize(null, 200, function ($constraint) {
+			Image::make($image)->resize(355, 200, function ($constraint) {
 				$constraint->aspectRatio();})->save($location);
 			$unit->unit_img = $filename;
 			//save thumb image

@@ -1,5 +1,8 @@
 @extends('layout_teacher')
-		
+
+@section('stylesheets')
+@endsection
+
 @section ('page-header')
 
 <div class="m-0 d-none d-sm-block">
@@ -65,42 +68,84 @@
 <div class="container my-5">
 	<h2 class="text-brand-blue">Nutze fertige Unterrichtseinheiten zu vielen Themen</h2>
 	<p>Nutze die Unterrichtseinheiten, die von Lehrern bereits im Unterricht eingesetzt und erprobt wurden. Sie sind kostenlos und können sofort auch ohne Anmeldung eingesetzt werden. Willst Du die Einheiten nach Deinen Vorstellungen anpassen, musst Du Dir <a href="#">hier</a> einen ViSchool-Lehrerzugang erstellen. </p>
-	<div id="carouselUnits" class="carousel slide" data-ride="carousel" style="width: 80%; max-width:600px; margin: 0 auto">
-		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<img class="img-fluid img-thumbnail" src="/images/banner_small.jpeg" style="z-index:0;" alt="Unit" >
-				<img class="p-5" src="/images/units/{{$unit01->unit_img}}" style="max-width:100%; height:auto; max-height:300px; z-index:1;" alt="First slide">
-				<div class="carousel-caption">
-					<div class="d-none d-sm-block">
-						<p><a class="btn btn-primary" href="/lerneinheit/{{$unit01->id}}" role="button">{{$unit01->unit_title}}</a></p>
-					</div>
-					<div class="d-block d-sm-none">
-						<p><a class="btn-sm btn-primary" href="/lerneinheit/{{$unit01->id}}" role="button">{{$unit01->unit_title}}</a></p>
-					</div>
-				</div>
-			</div>
-			@foreach ($units as $unit)
-			<div class="carousel-item bg-white">
-				@isset($unit->unit_img)
-					<img class="d-block img-fluid img-thumbnail" src="/images/banner_small.jpeg" style="z-index:0;" alt="Unit" >
-					<img class="p-5 img-fluid d-block" src="/images/units/{{$unit->unit_img}}" style="max-width:100%; height:auto; max-height:300px; z-index:1;" alt="First slide">
-				@endisset
-				@empty($unit->unit_img)
-					<img class="d-block img-fluid img-thumbnail" src="/images/banner_small.jpeg" alt="Unit" >
-				@endempty
-				<div class="carousel-caption">
-					<div class="d-none d-sm-block">
-						<p><a class="btn btn-primary" href="/lerneinheit/{{$unit->id}}" role="button">{{$unit->unit_title}}</a></p>
-					</div>
-					<div class="d-block d-sm-none">
-						<p><a class="btn-sm btn-primary" href="/lerneinheit/{{$unit01->id}} role="button">{{$unit->unit_title}}</a></p>
-					</div>
-				</div>
-			</div>
-			@endforeach
-		</div>	
-	</div>
 	
+<div class="carousel slide mt-5" data-ride="carousel">
+   <div class="carousel-inner">
+       <div class="carousel-item active bg-white">
+           <div class="row">
+							@foreach ($unitsSet01 as $unit)
+								<div class="col">
+									<div class="card text-center">
+										@isset($unit->unit_img)
+											<img class="card-img-top" src="/images/units/{{$unit->unit_img}}" alt="Lerneinheiten01">	
+										@endisset 
+										@empty($unit->unit_img)
+											<img class="card-img-top" src="/images/banner_small.jpeg" alt="Unit" >
+										@endempty
+											<div class="card-body m-0">
+												<a href="/lerneinheit/{{$unit->id}}">{{$unit->unit_title}}</a>
+											</div>
+									</div>
+								</div>
+							@endforeach
+           </div>
+			 </div>
+			 <div class="carousel-item bg-white">	 
+					 <div class="row">
+               @foreach ($unitsSet02 as $unit)
+								<div class="col-3">
+									<div class="card text-center m-0 p-0">
+										@isset($unit->unit_img)
+											<img class="card-img-top" src="/images/units/{{$unit->unit_img}}" alt="Lerneinheiten01">	
+										@endisset 
+										@empty($unit->unit_img)
+											<img class="card-img-top" src="/images/topic_back.jpeg" alt="Unit" >
+										@endempty
+										<div class="d-none d-sm-block">
+											<div class="card-body">
+												<a href="/lerneinheit/{{$unit->id}}">{{$unit->unit_title}}</a>
+											</div>
+										</div>
+										<div class="d-block d-sm-none">
+											<div class="card-body text-muted">
+   											<a href="/lerneinheit/{{$unit->id}}">{{$unit->unit_title}}</a>
+  										</div>
+										</div>
+									</div>
+								</div>
+							@endforeach
+           </div>
+			 </div>
+			 <div class="carousel-item bg-white">	 
+					 <div class="row">
+						@foreach ($unitsSet03 as $unit)
+								<div class="col">
+									<div class="card p-2 text-center">
+										@isset($unit->unit_img)
+											<img class="card-img-top" src="/images/units/{{$unit->unit_img}}" alt="Lerneinheiten01">	
+										@endisset 
+										@empty($unit->unit_img)
+											<img class="card-img-top" src="/images/banner_small.jpeg" alt="Unit" >
+										@endempty
+										<div class="d-none d-sm-block">
+											<div class="card-body">
+												<a href="/lerneinheit/{{$unit->id}}">{{$unit->unit_title}}</a>
+											</div>
+										</div>
+										<div class="d-block d-sm-none">
+											<div class="card-body text-muted">
+   											<a href="/lerneinheit/{{$unit->id}}">{{$unit->unit_title}}</a>
+  										</div>
+										</div>
+									</div>
+								</div>
+							@endforeach 
+           </div>
+       </div>
+   </div>
+</div>
+
+
 	<div class="d-flex justify-content-center my-3">
 	<a href="/lehrer/units">Zu den fertigen Unterrichtseinheiten für alle Fächern</a>
 	</div>
@@ -147,4 +192,7 @@
 	</div>
 </div>
 
+@endsection
+
+@section('scripts')
 @endsection

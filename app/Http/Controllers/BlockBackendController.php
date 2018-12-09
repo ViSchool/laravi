@@ -362,6 +362,11 @@ public function update_orderdown($id)
     {
         $block = Block::findOrFail($id);
         $unit_id =$block->unit_id;
+        $relatedBlocks = Block::where('alternative',$block->id)->get();
+        foreach ($relatedBlocks as $relatedBlock) {
+            $relatedBlock->alternative = NULL;
+            $relatedBlock->save();
+        }
         $block->delete();
         return redirect()->route('backend.units.show',[$unit_id]);
     }
