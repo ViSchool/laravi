@@ -26,7 +26,7 @@
 				@endforeach
 			</tbody>
 		</table>
-		<ul class="pagination">{{$portals->links('vendor.pagination.bootstrap-4')}}</ul>
+		<ul class="pagination">{{$portals->links()}}</ul>
 		<hr></hr>
 	<a class="btn btn-primary" href="/backend/portals/create">Neues Portal eintragen</a>
 </div>

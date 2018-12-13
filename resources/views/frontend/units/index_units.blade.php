@@ -60,7 +60,7 @@
   					</div>
   					@endforeach	
   			<div class="container row">	
-			<ul class="pagination">{{$contents->links('vendor.pagination.bootstrap-4')}}</ul>
+			<ul class="pagination">{{$contents->links()}}</ul>
 			</div>
 			</div>
 	</div>

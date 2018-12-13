@@ -39,7 +39,7 @@
 				@endforeach
 			</tbody>
 		</table>
-		<ul class="pagination">{{$units->links('vendor.pagination.bootstrap-4')}}</ul>
+		<ul class="pagination">{{$units->links()}}</ul>
 		<hr></hr>
 	<a class="btn btn-primary" href="/backend/units/create">Neue Unterrichtseinheit erstellen</a>
 	

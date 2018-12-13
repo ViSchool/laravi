@@ -41,7 +41,7 @@
 				@endforeach
 			</tbody>
 		</table>
-		<ul class="pagination">{{$contents->links('vendor.pagination.bootstrap-4')}}</ul>
+		<ul class="pagination">{{$contents->links()}}</ul>
 		<hr></hr>
 	<a class="btn btn-primary" href="/backend/contents/create">Neuen Lerninhalt eintragen</a>
 	

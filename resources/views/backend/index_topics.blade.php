@@ -29,6 +29,6 @@
 				@endforeach
 			</tbody>
 		</table>. 
-		<ul class="pagination">{{$topics->links('vendor.pagination.bootstrap-4')}}</ul>
+		<ul class="pagination">{{$topics->links()}}</ul>
 	</div>
 @endsection

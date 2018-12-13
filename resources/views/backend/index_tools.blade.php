@@ -26,7 +26,7 @@
 				@endforeach
 			</tbody>
 		</table>
-		<ul class="pagination">{{$tools->links('vendor.pagination.bootstrap-4')}}</ul>
+		<ul class="pagination">{{$tools->links()}}</ul>
 		<hr></hr>
 	<a class="btn btn-primary" href="/backend/tools/create">Neues Tool eintragen</a>
 </div>

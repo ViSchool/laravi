@@ -24,7 +24,7 @@
 				@endforeach
 			</tbody>
 		</table>
-		{{$subjects->links('vendor.pagination.bootstrap-4')}}
+		{{$subjects->links()}}
 		<hr></hr>
 	<a class="btn btn-primary"href="/backend/subjects/create">Neues Fach eintragen</a>
 </div>

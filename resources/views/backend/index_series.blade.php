@@ -29,7 +29,7 @@
 				@endforeach
 			</tbody>
 		</table>
-		{{$series->links('vendor.pagination.bootstrap-4')}}
+		{{$series->links()}}
 		<hr></hr>
 	<a class="btn btn-primary"href="/backend/series/create">Neue Serie erstellen</a>
 </div>

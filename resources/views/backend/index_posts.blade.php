@@ -23,7 +23,7 @@
 				@endforeach
 			</tbody>
 		</table>
-		{{$posts->links('vendor.pagination.bootstrap-4')}}
+		{{$posts->links()}}
 		
 		<hr></hr>
 	<a class="btn btn-primary my-3"href="/backend/blog/create">Neuen Beitrag schreiben</a>
