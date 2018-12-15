@@ -1,16 +1,38 @@
 <?php return array (
+  'alaouy/youtube' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Alaouy\\Youtube\\YoutubeServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Youtube' => 'Alaouy\\Youtube\\Facades\\Youtube',
+    ),
+  ),
+  'beyondcode/laravel-dump-server' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'BeyondCode\\DumpServer\\DumpServerServiceProvider',
+    ),
+  ),
+  'creitive/laravel5-breadcrumbs' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Creitive\\Breadcrumbs\\BreadcrumbsServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Breadcrumbs' => 'Creitive\\Breadcrumbs\\Facades\\Breadcrumbs',
+    ),
+  ),
   'fideloper/proxy' => 
   array (
     'providers' => 
     array (
       0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
-    ),
-  ),
-  'laravel/tinker' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Tinker\\TinkerServiceProvider',
     ),
   ),
   'intervention/image' => 
@@ -24,6 +46,27 @@
       'Image' => 'Intervention\\Image\\Facades\\Image',
     ),
   ),
+  'laravel/nexmo-notification-channel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Illuminate\\Notifications\\NexmoChannelServiceProvider',
+    ),
+  ),
+  'laravel/slack-notification-channel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Illuminate\\Notifications\\SlackChannelServiceProvider',
+    ),
+  ),
+  'laravel/tinker' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    ),
+  ),
   'mews/purifier' => 
   array (
     'providers' => 
@@ -35,15 +78,11 @@
       'Purifier' => 'Mews\\Purifier\\Facades\\Purifier',
     ),
   ),
-  'creitive/laravel5-breadcrumbs' => 
+  'nunomaduro/collision' => 
   array (
     'providers' => 
     array (
-      0 => 'Creitive\\Breadcrumbs\\BreadcrumbsServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Breadcrumbs' => 'Creitive\\Breadcrumbs\\Facades\\Breadcrumbs',
+      0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
   'spatie/laravel-link-checker' => 
@@ -62,13 +101,6 @@
     'aliases' => 
     array (
       'Vimeo' => 'Vimeo\\Laravel\\Facades\\Vimeo',
-    ),
-  ),
-  'willvincent/laravel-rateable' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'willvincent\\Rateable\\RateableServiceProvider',
     ),
   ),
 );
