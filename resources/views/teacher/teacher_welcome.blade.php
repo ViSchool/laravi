@@ -90,6 +90,7 @@
 							@endforeach
            </div>
 			 </div>
+			 @if (count($unitsSet02)!= 0)
 			 <div class="carousel-item bg-white">	 
 					 <div class="row">
                @foreach ($unitsSet02 as $unit)
@@ -116,6 +117,8 @@
 							@endforeach
            </div>
 			 </div>
+			 @endif
+			 @if (count($unitsSet03)!= 0)
 			 <div class="carousel-item bg-white">	 
 					 <div class="row">
 						@foreach ($unitsSet03 as $unit)
@@ -141,7 +144,8 @@
 								</div>
 							@endforeach 
            </div>
-       </div>
+			 </div>
+			 @endif
    </div>
 </div>
 

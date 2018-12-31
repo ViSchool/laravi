@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Unit extends Model
 {
+	use Searchable;
     public function series()
 	{
 		return $this->belongsToMany('App\Serie');

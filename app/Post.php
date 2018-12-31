@@ -4,9 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon;
+use Laravel\Scout\Searchable;
 
 class Post extends Model
 {
+	use Searchable;
 	protected $fillable = ['post_title','post_body'];
 	
 	public function tags()

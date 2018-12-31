@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\Subject;
 use App\Topic;
 use App\Portal;
-use willvincent\Rateable\Rateable;
+use Laravel\Scout\Searchable;
 use App\question;
 
 class Content extends Model
 {
-	use Rateable;
+	use Searchable;
 	
 	protected $guarded = [];
 	

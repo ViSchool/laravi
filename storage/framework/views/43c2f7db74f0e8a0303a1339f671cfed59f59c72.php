@@ -83,7 +83,7 @@
   					</div>
   					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>	
   			<div class="container row">	
-			<ul class="pagination"><?php echo e($contents->links('vendor.pagination.bootstrap-4')); ?></ul>
+			<ul class="pagination"><?php echo e($contents->links()); ?></ul>
 			</div>
 			</div>
 	</div>
@@ -100,4 +100,4 @@
 <?php $__env->stopSection(); ?>		
 
 	
-<?php echo $__env->make('/layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('/layout', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

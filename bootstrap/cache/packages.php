@@ -10,6 +10,13 @@
       'Youtube' => 'Alaouy\\Youtube\\Facades\\Youtube',
     ),
   ),
+  'algolia/laravel-scout-settings' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Algolia\\Settings\\ServiceProvider',
+    ),
+  ),
   'beyondcode/laravel-dump-server' => 
   array (
     'providers' => 
@@ -51,6 +58,13 @@
     'providers' => 
     array (
       0 => 'Illuminate\\Notifications\\NexmoChannelServiceProvider',
+    ),
+  ),
+  'laravel/scout' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Laravel\\Scout\\ScoutServiceProvider',
     ),
   ),
   'laravel/slack-notification-channel' => 

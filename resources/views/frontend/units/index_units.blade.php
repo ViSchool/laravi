@@ -9,7 +9,7 @@
 @endsection
 		
 @section ('content')
-<section id="topic_contents">
+<section id="topic_units">
 	<div class="container my-4">
 				<div class="row justify-content-start">
 					@foreach ($units as $unit)

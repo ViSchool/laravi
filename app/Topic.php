@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\Content;
 use App\Subject;
 use App\Unit;
+use Laravel\Scout\Searchable;
 
 
 class Topic extends Model
 {
+	use Searchable;
     protected $fillable = ['topic_title','topic_img','subject_id'];
 
 	public function subjects()

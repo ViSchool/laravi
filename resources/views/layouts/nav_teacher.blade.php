@@ -1,7 +1,7 @@
 <!-- Navigation -->
  <div id="vischool_nav">
 	<nav class="navbar fixed-top navbar-light d-flex mb-0">
-		<a class="navbar-brand  mr-auto" href="http://vischool.net">ViSchool</a>
+		<a class="navbar-brand  mr-auto" href="/">ViSchool</a>
 		
 		<button type="button" class="btn btn-link"  data-toggle="collapse" data-target="#searchbox" aria-expanded="false" aria-controls="searchbox">
 				<i class="fas fa-search"></i>

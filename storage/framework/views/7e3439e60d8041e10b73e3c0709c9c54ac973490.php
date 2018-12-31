@@ -53,7 +53,7 @@
   </div>
 </div>
 
-<?php echo $__env->make('teacher.teacher_components.loggedInTeacher', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('teacher.teacher_components.loggedInTeacher', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
 <?php $__env->stopSection(); ?>
 		
@@ -116,11 +116,9 @@
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
            </div>
 			 </div>
+			 <?php if(count($unitsSet03)!= 0): ?>
 			 <div class="carousel-item bg-white">	 
 					 <div class="row">
-						<?php if($unitsSet03 == null): ?>
-								ist  leer
-						<?php endif; ?>
 						<?php $__currentLoopData = $unitsSet03; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 								<div class="col">
 									<div class="card p-2 text-center">
@@ -144,7 +142,8 @@
 								</div>
 							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
            </div>
-       </div>
+			 </div>
+			 <?php endif; ?>
    </div>
 </div>
 
@@ -199,4 +198,4 @@
 
 <?php $__env->startSection('scripts'); ?>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layout_teacher', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layout_teacher', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

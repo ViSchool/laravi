@@ -26,6 +26,14 @@ Route::get('/lehrer', 'TeacherController@index');
 Route::get ('/lehrer/coaching', 'TeacherController@coaching');
 Route::get ('/lehrer/schulcoaching', 'TeacherController@schulcoaching');
 
+/*Routes for Search*/
+Route::get('/suche', 'SearchController@index');
+Route::get('/suche/contents/{query}', 'SearchController@searchContents');
+Route::get('/suche/units/{query}', 'SearchController@searchUnits');
+Route::get('/suche/topics/{query}', 'SearchController@searchTopics');
+Route::get('/suche/series/{query}', 'SearchController@searchSeries');
+
+
 
 /*Routes for Units*/
 Route::get('lehrer/unterrichtseinheiten' , 'Unitcontroller@index')->name('teacher.units');
