@@ -130,8 +130,9 @@ class UnitBackendController extends Controller
         $unit = Unit::find($id);
         $subjects = Subject::where('id','!=',$unit->subject_id)->orderBy('subject_title','asc')->get();
         $currentSubject = $unit->subject;
-        	$currentSerie = $unit->series()->orderBy('serie_title')->first();
-        return view ('backend.show_units', compact('unit','subjects','currentSubject','currentSerie'));
+        $currentSerie = $unit->series()->orderBy('serie_title')->first();
+        $series = Serie::all();
+        return view ('backend.show_units', compact('series','unit','subjects','currentSubject','currentSerie'));
     }
 
     /**

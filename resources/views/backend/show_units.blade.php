@@ -66,7 +66,7 @@
 				<option value={{$currentSerie->id}}>{{$currentSerie->serie_title}}</option>
 				@endisset
 				<option value="">Gehört zu keiner Serie</option>
-				@foreach ($unit->series as $serie)
+				@foreach ($series as $serie)
 					<option value="{{$serie->id}}">{{$serie->serie_title}}</option>
 				@endforeach
 			</select>
