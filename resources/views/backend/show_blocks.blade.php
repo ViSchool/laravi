@@ -63,8 +63,8 @@
 			<option value="keine">Bitte auswählen</option>
 			@endif
 			<option value="keine">(noch) keine</option>
-			@foreach($unit->blocks as $block)
-				<option value="{{$block->id}}">{{$block->title}} ({{$block->differentiation->differentiation_title}})</option>
+			@foreach($unit->blocks as $option_block)
+				<option value="{{$option_block->id}}">{{$option_block->title}} ({{$option_block->differentiation->differentiation_title}})</option>
 			@endforeach
 		</select>
 	</div>
@@ -91,7 +91,7 @@
 					</div>
 					<div class="row mb-2">
 						<div class="col-9">	
-							<h5 id="title_{{$block->id}}" style="font-family: Cabin Sketch" class="pt-4 pb-1 m-0">{{$block->title}}:</h5>
+							<p id="title_{{$block->id}}" class="pt-4 pb-1 m-0">{{$block->title}}:</p>
 						</div>
 						<div class="col-3">
 							<i class="pt-4 far fa-clock"></i>
