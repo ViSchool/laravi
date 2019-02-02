@@ -121,28 +121,35 @@
 
 									@isset ($block->content_id)
 										@php $content = App\Content::findOrFail($block->content_id);@endphp
-										@isset ($content->content_img_thumb)
-											<a href="/content/{{$content->id}}" target="_blank"><img src="/images/contents/{{$content->content_img}}" alt="Bild:{{$content->content_title}}"></img></a>
-										@endisset 
-										@empty ($content->content_img_thumb) 
-											@switch($content->tool_id)
-												@case(1)
-													<a href="/content/{{$content->id}}" target="_blank"><img class="img-fluid p-4" src="https://img.youtube.com/vi/{{$content->toolspecific_id}}/mqdefault.jpg"></img></a>
-												@break
-												@case(7)
-													<a href="/content/{{$content->id}}" target="_blank"><img class="img-fluid p-2" src="{{$content->img_thumb_url}}"></img></a>
-												@break
-												@default
-													@isset ($content->portal->portal_img)
-														<a href="/content/{{$content->id}}" target="_blank"><img src="/images/portals/{{$content->portal->portal_img}}"></img></a>
-													@endisset
-													@empty ($content->portal->portal_img)
-														<a href="/content/{{$content->id}}"><i class="{{$content->type->type_icon}} fa-3x"> </i> {{$content->type->content_type}} öffnen</a>
-													@endempty
-												@break
-											@endswitch
-										@endempty		
-									@endisset
+										<a href="/content/{{$content->id}}" target="_blank">
+										<div class="card border border-primary w-75">
+											@isset ($content->content_img_thumb)
+													<img class="card-img" src="/images/contents/{{$content->content_img}}" alt="Bild:{{$content->content_title}}">
+											@endisset 
+											@empty ($content->content_img_thumb) 
+												@switch($content->tool_id)
+													@case(1)
+														<img class="p-4 card-img" src="https://img.youtube.com/vi/{{$content->toolspecific_id}}/mqdefault.jpg">
+													@break
+													@case(7)
+														<img class="p-2 card-img" src="{{$content->img_thumb_url}}">
+													@break
+													@default
+														@isset ($content->portal->portal_img)
+															<img src="/images/portals/{{$content->portal->portal_img}}" class="card-img">
+														@endisset
+													@break
+												@endswitch
+											@endempty
+											<div class="card-img-overlay d-flex justify-content-center align-items-center">
+												<span class="fa-stack fa-2x card-text">
+													<i class="fas fa-square fa-stack-2x"></i>
+													<i class="far fa-play-circle fa-inverse fa-stack-1x"></i>
+												</span>
+											</div>
+										</div>
+										</a>		
+									@endisset										
 									@empty($block->content_id)
 										@empty($block->task)
 											<div class="container">
