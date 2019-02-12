@@ -120,7 +120,7 @@ public function store_contents(Request $request, $id)
         	}
         $unit = Unit::find($block->unit_id);
         $content = Content::find($block->content_id);
-		$differentiations = Differentiation::where('user_id',null)->get();
+        $differentiations = Differentiation::where('user_id',null)->get();
 		
         return view ('backend.show_blocks', compact('block','unit','content', 'ordernumber','differentiations','blockAlternative'));
     }
@@ -154,7 +154,10 @@ public function store_contents(Request $request, $id)
         		$blockAlternative = Block::findOrFail($request->alternative);
         		$block->order = $blockAlternative->order;
         		$block->alternative = $blockAlternative->id;
-        	}
+            }
+            else {
+                $block->alternative = NULL;
+            }
         $block->title = $request->title;
         $block->time = $request->time;
         $block->unit_id = $request->unit_id;
