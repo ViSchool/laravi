@@ -81,7 +81,7 @@ public function store(Request $request)
         	}
         	else {
         	$unit = Unit::find($request->unit_id);
-        $block->order = $unit->blocks->max('order') + 1;
+            $block->order = $unit->blocks->max('order') + 1;
         	}
         $block->title = $request->title;
         $block->time = $request->time;
@@ -157,6 +157,8 @@ public function store_contents(Request $request, $id)
             }
             else {
                 $block->alternative = NULL;
+                $unit = Unit::find($block->unit_id);
+                $block->order = $unit->blocks->max('order') + 1;
             }
         $block->title = $request->title;
         $block->time = $request->time;
