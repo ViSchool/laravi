@@ -39,6 +39,12 @@
             <li class="nav-item">
               <a class="nav-link" href="/backend/tools">Tools</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/backend/schools">Schulen</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/backend/teacher">Lehrer</a>
+            </li>
           </ul>
           
         </div>

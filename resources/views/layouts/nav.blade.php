@@ -19,21 +19,55 @@
 				<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
 			</li>
 			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fächer</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFaecher" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fächer</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdownSubjects">
 					@foreach($subjects as $subject)
 						<a class="dropdown-item" href="/subjects/{{$subject->id}}">{{$subject->subject_title}}</a>
 					@endforeach
 				</div>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="/lehrer">Lehrer</a>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLehrer" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Lehrer</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdownLehrer">
+					@guest
+					<a class="btn-sm btn-primary dropdown-item" href="/login">Anmelden</a>
+					<a class="dropdown-item" href="/register">Als Lehrer registrieren</a>
+					<a class="dropdown-item" href="/lehrer">Angebote für Lehrer</a>
+					@endguest
+					@auth
+					<a class="btn-sm btn-primary dropdown-item" href="/lehrer/logout">Logout</a>	
+					@endauth
+					<div class="dropdown-divider"></div>
+					@hasanyrole('Lehrer (free)|Lehrer (premium)')
+					<a class="dropdown-item" href="/lehrer/lehrerkonto">Mein Lehrerkonto</a>
+					@else
+					<a class="dropdown-item disabled" href="#" tabindex="-1" aria-disabled="true">Mein Lehrerkonto</a>
+					@endhasanyrole
+					@hasanyrole('Lehrer (free)|Lehrer (premium)|Schüler')
+					<a class="dropdown-item" href="/lehrer/themen">Meine Themen</a>
+					<a class="dropdown-item" href="/lehrer/inhalte">Meine Inhalte</a>
+					<a class="dropdown-item" href="/lehrer/unterrichtseinheiten">Meine Unterrichtseinheiten</a>
+					@else
+					<a class="dropdown-item disabled" href="http://">Meine Themen</a>
+					<a class="dropdown-item disabled" href="http://">Meine Inhalte</a>
+					<a class="dropdown-item disabled" href="http://">Meine Unterrichtseinheiten</a>
+					@endhasanyrole
+					@hasanyrole('Lehrer (free)|Lehrer (premium)')
+					<a class="dropdown-item" href="http://">Schüler und Klassen einrichten</a>
+					@else
+					<a class="dropdown-item disabled" href="http://">Schüler und Klassen einrichten</a>
+					@endhasanyrole
+				</div>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">Blog</a>					
+				<a class="nav-link" href="/blog">Blog</a>					
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#">Impressum</a>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRechtliches" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rechtliches</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownRechtliches">
+						<a class="dropdown-item" href="/impressum">Impressum</a>
+						<a class="dropdown-item" href="/datenschutz">Datenschutz</a>
+					</div>	
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="/backend/">Admin</a>				
@@ -41,5 +75,6 @@
      	</ul>
 	</nav>
 </div>
+
 
 

@@ -12,7 +12,7 @@
           <hr></hr>
 
 <div class="container">
-<?php echo $__env->make('layouts.errors', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.errors', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
 	<form method="POST" action="<?php echo e(route('backend.blocks.update',[$block->id])); ?>" enctype="multipart/form-data">
 		<?php echo e(csrf_field()); ?> <?php echo e(method_field('PATCH')); ?>
@@ -62,8 +62,8 @@
 			<option value="keine">Bitte auswählen</option>
 			<?php endif; ?>
 			<option value="keine">(noch) keine</option>
-			<?php $__currentLoopData = $unit->blocks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $block): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-				<option value="<?php echo e($block->id); ?>"><?php echo e($block->title); ?> (<?php echo e($block->differentiation->differentiation_title); ?>)</option>
+			<?php $__currentLoopData = $unit->blocks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $option_block): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+				<option value="<?php echo e($option_block->id); ?>"><?php echo e($option_block->title); ?> (<?php echo e($option_block->differentiation->differentiation_title); ?>)</option>
 			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 		</select>
 	</div>
@@ -91,7 +91,7 @@
 					</div>
 					<div class="row mb-2">
 						<div class="col-9">	
-							<h5 id="title_<?php echo e($block->id); ?>" style="font-family: Cabin Sketch" class="pt-4 pb-1 m-0"><?php echo e($block->title); ?>:</h5>
+							<p id="title_<?php echo e($block->id); ?>" class="pt-4 pb-1 m-0"><?php echo e($block->title); ?>:</p>
 						</div>
 						<div class="col-3">
 							<i class="pt-4 far fa-clock"></i>
@@ -172,7 +172,7 @@
 	</div>
 </div>
 
-<?php echo $__env->make('layouts.errors', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.errors', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
@@ -200,4 +200,4 @@
 
 <script src="<?php echo e(asset('js/ddd_subject_topic.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('backend.layout_backend', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('backend.layout_backend', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

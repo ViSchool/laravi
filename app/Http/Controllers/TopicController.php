@@ -53,7 +53,54 @@ class TopicController extends Controller
        	//return to overview of topics
         return redirect('backend/topics');
     }
+
+     public function teacher_store(Request $request)
+    {
+		$this->validate(request(), [
+        'topic_title' => 'required|max:255|unique:topics',
+        'user_id' => 'required|numeric',
+        
+        ]);
+        $topic =new Topic;
+        $topic->topic_title = $request->topic_title;
+        $topic->status_id = 5;
+        $topic->user_id = $request->user_id;
+		//Save alle data from create_topics form
+        $topic->save();	
+		$topic->subjects()->sync($request->subject_id, false);
+       	//return to overview of topics
+        return redirect('lehrer/inhalte');
+    }
     
+    //Privat veröffentlichen -  vom Lehrer erstelltes Thema 
+    public function teacherTopicPrivate($id)
+    {
+        $topic = Topic::findOrFail($id);
+        $topic->status_id = 3;
+        $topic->save();	
+       	//return to overview of topics
+        return redirect('lehrer/themen');
+    }
+
+    //An ViSChool zur Freigabe schicken - vom Lehrer erstelltes Thema
+    public function teacherTopicViSchool($id)
+    {
+        $topic = Topic::findOrFail($id);
+        $topic->status_id = 2;
+        $topic->save();	
+       	//return to overview of topics
+        return redirect('lehrer/themen');
+    }
+
+    //ViSchool Admin gibt Thema frei
+    public function teacherTopicApprove($id)
+    {
+        $topic = Topic::findOrFail($id);
+        $topic->status_id = 1;
+        $topic->save();	
+       	//return to overview of topics
+        return redirect()->back();
+    }
 
     /**Function to show single entries:
     
@@ -98,9 +145,11 @@ class TopicController extends Controller
         $topic->topic_title = $request->topic_title;
         
 		//Save alle data from create_topics form
-		$topic->save();	
-		$topic->subjects()->sync($request->subjects);
-       	//return to overview of topics
+        $topic->save();
+        $topic->subjects()->sync($request->subjects);
+        //Noch einzufügen: Nachricht an Lehrer, wenn dieses Thema einem Lehrer gehört
+		
+       //return to overview of topics
         return redirect('backend/topics');
     }
     
@@ -116,6 +165,6 @@ class TopicController extends Controller
         $topic = Topic::findOrFail($id);
         $topic->subjects()->detach();
         $topic->delete();
-        return redirect('backend/topics');
+        return redirect()->back();
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Content;
 use App\Subject;
 use App\Unit;
+use App\Status;
 use Laravel\Scout\Searchable;
 
 
@@ -27,6 +28,16 @@ class Topic extends Model
 	public function unit()
 	{
 		return $this->hasMany(Unit::class);
+	}
+
+	public function user()
+	{
+		return $this->belongsTo('App\User');
+	}
+
+	public function status()
+	{
+		return $this->belongsTo('App\Status');
 	}
 
 }

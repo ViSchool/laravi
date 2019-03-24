@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Block extends Model
 {
-    public function units()
+    public function unit()
 	{
-		return $this->belongsTo('App\Unit');
+		return $this->belongsTo('App\Unit', 'unit_id');
 	}
 	
 	public function differentiation()

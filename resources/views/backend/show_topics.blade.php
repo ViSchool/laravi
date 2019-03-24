@@ -8,7 +8,13 @@
 	<div class="container">	
  	<form method="POST" action="{{route('topics.update',[$topic->id])}}"> 	
 	 {{ csrf_field() }} {{ method_field('PATCH') }}
-		<div class="form-group">
+		
+	 	<div class="form-group">
+			<label class="text-muted" for="topic_title">Dieses Thema ist erstellt durch:</label>
+			<input type="text" class="text-muted form-control" id="topic_user" value="{{$topic->user->user_name}}" readonly>
+		</div>
+		
+	 	<div class="form-group">
 			<label for="topic_title">Name des Themas:</label>
 			<input type="text" class="form-control" id="topic_title" name="topic_title" value="{{$topic->topic_title}}">
 		</div>
@@ -26,13 +32,7 @@
 			<button type="submit" class="btn btn-secondary">Änderungen speichern</button>
 		</div>
 	</form>
-		<hr></hr>
-		<div class="form-group">
-			<form method="POST" action="{{route('topics.destroy',[$topic->id])}}">
-				{{ csrf_field() }} {{ method_field('DELETE') }}
-					<button class="btn btn-warning" type="submit"> Thema komplett löschen</button>
-			</form>
-		</div>
+		
 	
 	@include('layouts.errors')
 </div>

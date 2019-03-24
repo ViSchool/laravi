@@ -65,6 +65,15 @@ class Content extends Model
 		return $this->belongsTo('App\Type');
 	}
 
+	public function user()
+	{
+		return $this->belongsTo('App\User');
+	}
+
+	public function status()
+	{
+		return $this->belongsTo('App\Status');
+	}
 	
 	public static function parse_yturl($url) 
 	{

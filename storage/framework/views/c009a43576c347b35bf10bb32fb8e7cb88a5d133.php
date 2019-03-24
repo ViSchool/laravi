@@ -37,11 +37,11 @@
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 			</tbody>
 		</table>
-		<ul class="pagination"><?php echo e($units->links('vendor.pagination.bootstrap-4')); ?></ul>
+		<ul class="pagination"><?php echo e($units->links()); ?></ul>
 		<hr></hr>
 	<a class="btn btn-primary" href="/backend/units/create">Neue Unterrichtseinheit erstellen</a>
 	
 </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('backend.layout_backend', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('backend.layout_backend', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

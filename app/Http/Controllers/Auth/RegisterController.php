@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\School;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -27,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/lehrer/danke';
 
     /**
      * Create a new controller instance.
@@ -40,6 +41,16 @@ class RegisterController extends Controller
     }
 
     /**
+     * Overriding the RegistersUsers functionalities with my own showRegistrationForm()
+     */
+
+    public function showRegistrationForm() 
+    {
+        $schools = School::all();
+        return view ('auth.register',compact('schools'));
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -48,7 +59,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            'teacher_name' => 'required|string|max:255',
+            'teacher_surname' => 'required|string|max:255',
+            'user_name' => 'unique:users|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -60,12 +73,26 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+    protected function create($request)
+    {   
+        $user = User::create([
+            'teacher_name' => $request['teacher_name'],
+            'teacher_surname' => $request['teacher_surname'],
+            'email' => $request['email'],
+            'password' => bcrypt($request['password']),
+            'school_id' => $request['school_id'],
+            'teacher_id' => '9999999',
+            'user_name' => $request['email'],
+            
         ]);
+        $user->teacher_id = $user->id;
+        if (isset($request->newsletter)){
+            $user->newsletter = $request->newsletter;
+        }
+        $user->save();
+        $user->assignRole('Lehrer (free)');
+        return $user;
+        
+        
     }
 }

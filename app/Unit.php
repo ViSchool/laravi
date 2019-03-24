@@ -8,7 +8,7 @@ use Laravel\Scout\Searchable;
 class Unit extends Model
 {
 	use Searchable;
-    public function series()
+   public function series()
 	{
 		return $this->belongsToMany('App\Serie');
 	}
@@ -37,5 +37,14 @@ class Unit extends Model
 	{
 		return $this->belongsTo('App\Topic');
 	}
+
+	public function user()
+	{
+		return $this->belongsTo('App\User');
+	}
 	
+	public function status()
+	{
+		return $this->belongsTo('App\Status');
+	}
 }

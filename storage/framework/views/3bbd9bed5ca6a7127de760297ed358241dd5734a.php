@@ -1,46 +1,68 @@
-<footer id="vischool-footer" class="container-fluid p-5">
-	<div class="row">
-	
-	</div>
-	<div class="row">
-		<div class="col">
-			<div class="form group" id="mc_embed_signup">
-				<form action="https://vischool.us15.list-manage.com/subscribe/post?u=4061f74ace29a444ded3f0121&amp;id=f2fefffbdb" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-    				<div id="mc_embed_signup_scroll">
-						<label for="mce-EMAIL">Abboniere unseren Newsletter:
-						</label>
-						<input class="form-control" type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Emailadresse" required>
-    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-    						<div style="position: absolute; left: -5000px;" aria-hidden="true">
-    						<input type="text" name="b_4061f74ace29a444ded3f0121_f2fefffbdb" tabindex="-1" value="">
-    						</div>
-    					<div class="clear"><input class="btn btn-primary my-3"type="submit" value="Anmelden" name="subscribe" id="mc-embedded-subscribe" class="button">
-    					</div>
-    				</div>
-				</form>
+<footer id="vischool-footer" class="container-fluid py-3">
+
+<div class="row">
+  <div class="col-12 col-md">
+		<a class="text-dark text-decoration-none" href="/"><h2 class="font-weight-bold">ViSchool</h2></a>
+  </div>
+  <div class="col-6 col-md">
+    <h4 class="text-brand-blue">Lernen</h4>
+    <ul class="list-unstyled text-small">
+      <li><a class="text-muted" href="#">Fächer</a></li>
+      <li><a class="text-muted" href="#">Komplette Unterrichtseinheiten</a></li>
+      <li><a class="text-muted" href="#"></a></li>
+      <li><a class="text-muted" href="#"></a></li>
+      <li><a class="text-muted" href="#"></a></li>
+      <li><a class="text-muted" href="#"></a></li>
+    </ul>
+  </div>
+  <div class="col-6 col-md">
+    <h4 class="text-brand-blue">Lehrer</h4>
+    <ul class="list-unstyled text-small">
+      <li><a class="text-muted" href="#">Registrieren</a></li>
+      <li><a class="text-muted" href="#">Anmelden</a></li>
+      <li><a class="text-muted" href="#">Angebote für Lehrer</a></li>
+      <li><a class="text-muted" href="#">Beratungsangebot für Schulen</a></li>
+    </ul>
+  </div>
+  <div class="col-6 col-md">
+    <h4 class="text-brand-blue">Rechtliches</h4>
+    <ul class="list-unstyled text-small">
+      <li><a class="text-muted" href="/impressum">Impressum</a></li>
+      <li><a class="text-muted" href="/datenschutz">Datenschutzerklärung</a></li>
+      <li><a class="text-muted" href="#">Nutzungsbedingungen</a></li>
+      <li><a class="text-muted" href="#"></a></li>
+    </ul>
+  </div>
+  <div class="col-6 col-md">
+    <h4 class="text-brand-blue">Social Media</h4>
+    <ul class="list-unstyled text-small">
+		  <li><a class="text-muted" href="/blog">Blog</a></li>  
+      <li><a class="text-muted" href="#"><i></i></a></li>
+      <li><a class="text-muted" href="#"><i></i></a></li>
+    </ul>
+  </div>
+</div>
+
+  <div class="container-fluid">
+	<div class="card my-5">
+		<div class="card-header">
+			Newsletter
+		</div>
+		<div class="card-body">
+			<div class="d-flex justify-content-between">
+				<div id="newsletter">
+					<label>Trage Deine Emailadresse hier ein, um unseren Newsletter zu erhalten:</label> 
+				</div>
+				<div>
+					<form action="">
+						<input class="form-group" type="text">
+					</form>
+				</div>
 			</div>
 		</div>
-		<div class="col" style="text-align:center;">
-			<label class="text-center"> Bleibe auf dem Laufenden</label>
-			<div class=" text-center fa-2x">
-				<i class="fas fa-facebook p-2"></i>
-				<i class="fas fa-twitter p-2"></i>
-				<i class="fas fa-snapchat-square p-2"></i>
-			</div>
-		</div>
-		</div>
 	</div>
-	<div class="row mt-5">
+</div>
+
 	
-		<div class="col">
-			<p class="float-left"><a href="#">Impressum</a></p>
-			</p>
-		</div>
-	
-		<div class="col">
-			<p class="float-right"><a href="#">Wieder ganz nach oben</a></p>
-			</p>
-		</div>
-	</div>
 </footer>
 

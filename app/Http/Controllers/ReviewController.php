@@ -47,12 +47,13 @@ class ReviewController extends Controller
 		$review->wirkt_score = $request->wirkt_score;
 		$review->content_id = $request->review_content_id;
 		$review->review_comment = $request->review_comment;
-		$review->unit_id = 0;
-		$reviews_all = array($review->aha_score, $review->cool_score, $review->wirkt_score);
+        $review->unit_id = $request->review_unit_id;
+        $review->content_id = $request->review_content_id;
+        $reviews_all = array($review->aha_score, $review->cool_score, $review->wirkt_score);
 		$reviews_average = array_sum($reviews_all) / 3 ;
 		$review->overall_score = round($reviews_average, 1);
 		$review->save();
-		return redirect()->route('frontend.contents.show', [$review->content_id]);
+		return redirect()->back()->with('success', 'Vielen Dank für Deine Bewertung!');
     }
 
     /**

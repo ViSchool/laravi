@@ -14,6 +14,7 @@ use App\Unit;
 use App\Block;
 use App\Review;
 use App\question;
+use App\Differentiation;
 
 class VischoolController extends BaseController
 
@@ -53,6 +54,8 @@ class VischoolController extends BaseController
 	/* $contents = Content::where('topic_id',18)->with('reviews')->get()->sortBy(function($content){
 		return $content->reviews->count();
 	}); */
+	$reviews = Review::where('content_id',$id)->get();
+	$average_score = $reviews->avg('overall_score');
 	$contents = Content::where('topic_id',$id)->orderBy('updated_at','desc')->paginate(15); 
 	$units = Unit::where('topic_id',$id)->orderBy('updated_at','desc')->paginate(15);
 	    return view('frontend.topics.topic_contents', compact('contents','topic','units','average_score'));
@@ -153,16 +156,16 @@ class VischoolController extends BaseController
 	
 	public function unit_show($id) {
 	$unit = Unit::find($id);
-	$blocks = Block::where('unit_id',$unit->id)->orderBy('order')->get();
-	$differentiationExists = 0;
-	$differentiations = null;
-	$differentiationCheck = $unit->blocks->where('differentiation_id','!=',13)->isNotEmpty();
-	if ($differentiationCheck === true ){
-		$differentiationExists = 1;
-		$differentiations = $unit->blocks->where('differentiation_id','!=',13)->unique('differentiation_id')->values()->pluck('differentiation_id');
+	if ($unit->differentiation_group != NULL) {
+		$differentiations = Differentiation::where('differentiation_group',$unit->differentiation_group)->skip(1)->take(10)->get();
+		$startDifferentiation = Differentiation::where('differentiation_group',$unit->differentiation_group)->first();
+		$blocks = Block::where('unit_id',$unit->id)->whereIn('differentiation_id',[$startDifferentiation->id, 13])->orderBy('order')->get();
+		return view('frontend.units.show_units', compact('unit','blocks','differentiations','startDifferentiation'));
 	}
-	
-	return view('frontend.units.show_units', compact('unit','blocks','differentiationExists','differentiations'));
+	else {
+		$blocks = Block::where('unit_id',$unit->id)->orderBy('order')->get();
+		return view('frontend.units.show_units', compact('unit','blocks'));
+		}
 /*     return view('frontend.units.show', compact('unit')); */
 	} 
 	

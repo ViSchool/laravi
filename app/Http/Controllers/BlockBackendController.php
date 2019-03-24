@@ -310,7 +310,7 @@ public function update_contents(Request $request, $id)
         			$alternativeBlock_previous->save();
         		}
         	} 
-        return redirect()->route('backend.units.show',[$block_sorted->unit_id]);
+        return redirect()->back();
     }
 
 public function update_orderdown($id)
@@ -354,7 +354,7 @@ public function update_orderdown($id)
         			$alternativeBlock_next->save();
         		}
         	}
-        return redirect()->route('backend.units.show',[$block_sorted->unit_id]);
+        return redirect()->back();
     }
 
     /**

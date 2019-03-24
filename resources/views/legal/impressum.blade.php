@@ -9,19 +9,15 @@
 			
 			<h4>Angaben gemäß § 5 TMG:</h4>
 <p>
-Katharina Schedel
-ViSchool
-Marienforster Steinweg 39a
-53 177 Bonn
+Katharina Schedel | ViSchool | Marienforster Steinweg 39a | 53177 Bonn
 </p>
 
-<p>Kontakt:
+<p>Kontakt:</p>
+<p>Telefon:	0151-25393620 | E-Mail:	info@vischool.de</p>
 
-Telefon:	0175-2965647
-E-Mail:	info@vischool.de
-Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:
+<p>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:
+Katharina Schedel und Astrid Karabek-Broich</p>
 
-Katharina Schedel und Astrid Karabek-Broich
 </p>
 <h4>HAFTUNGSAUSSCHLUSS (DISCLAIMER)</h4>
 <h5>Haftung für Inhalte</h5>
@@ -32,7 +28,7 @@ Katharina Schedel und Astrid Karabek-Broich
 <h5>Haftung für Links</h5>
 <p>Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar.
 </p>
-<p>Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p>
+<p>Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen. Hierfür können Sie auf den einzelnen Inhaltsseiten auch gern den Fehler-Button nutzen und uns kurz beschreiben, worin die Rechtsverletzung besteht.</p>
 
 <h5>Urheberrecht</h5>
 

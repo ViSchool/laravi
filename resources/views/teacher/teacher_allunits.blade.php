@@ -1,7 +1,7 @@
-@extends('layout_teacher')
+@extends('layout')
 		
 @section ('page-header')
-	@include('teacher.teacher_components.loggedInTeacher')
+	
 @endsection
 
 @section ('content')

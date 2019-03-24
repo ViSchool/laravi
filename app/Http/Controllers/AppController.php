@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Mail;
 use App\Topic;
 use App\Subject;
 use App\Content;
+use App\Tool;
 use App\Mail\brokenLinks;
+use App\Differentiation;
 
 class AppController extends Controller
 {
@@ -32,8 +34,30 @@ class AppController extends Controller
         return json_encode($contents);
     }
 
+    public function getDynamicTools($id) 
+     {
+        $tools = Tool::where('id',$id)->pluck("embed_code");
+        return json_encode($tools);
+    }
+
 	public function sendBrokenLinks()
 	{
 		Mail::to('katharina@vischool.de')->send(new brokenLinks());
-	}
+    }
+    
+    public function getChosenContent($id) 
+     {
+        $content = Content::where('id',$id)->pluck('content_title');
+        return json_encode($content);
+    }
+
+    public function getDifferentiations($differentiation_group, $teacher_id) 
+     {
+        $differentiations = Differentiation::
+            where('differentiation_group',$differentiation_group)
+            ->whereIn('user_id', [$teacher_id, 23])
+            ->pluck('id','differentiation_title');
+        return json_encode($differentiations);
+    }
 }
+

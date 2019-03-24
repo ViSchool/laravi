@@ -11,7 +11,7 @@
           <hr></hr>
 
 <div class="container">
-<?php echo $__env->make('layouts.errors', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.errors', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
 	<form method="POST" action="<?php echo e(route('backend.units.update',[$unit->id])); ?>" enctype="multipart/form-data">
 	<?php echo e(csrf_field()); ?> <?php echo e(method_field('PATCH')); ?>
@@ -65,7 +65,7 @@
 				<option value=<?php echo e($currentSerie->id); ?>><?php echo e($currentSerie->serie_title); ?></option>
 				<?php endif; ?>
 				<option value="">Gehört zu keiner Serie</option>
-				<?php $__currentLoopData = $unit->series; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $serie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+				<?php $__currentLoopData = $series; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $serie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 					<option value="<?php echo e($serie->id); ?>"><?php echo e($serie->serie_title); ?></option>
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 			</select>
@@ -147,7 +147,7 @@
 	</div>
 </div>
 
-<?php echo $__env->make('layouts.errors', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.errors', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
@@ -158,4 +158,4 @@
 	});
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('backend.layout_backend', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('backend.layout_backend', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

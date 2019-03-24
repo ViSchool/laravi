@@ -14,20 +14,36 @@
 
 <section id="topic_contents">
 	<div class="container my-4">
+		@if (count($topic->unit) !== 0) 
+		<h4>Komplette Lerneinheiten zum Thema "{{$topic->topic_title}}"</h4>
 		<div class="row justify-content-start">
-			@if (count($topic->unit) !== 0) 
-			<div class="col">
-				<div class="card m-3 border-info" style="width:200px">
-					<div class="card-body bg-warning">
-						<a href="/lerneinheiten/{{$topic->id}}"><h4 class="card-title">Komplette Lerneinheiten zum Thema {{$topic->topic_title}}</h4></a>
-					</div>	
-					<div class="card-footer">
-      					<small class="text-muted"> <i class="fas fa-map-signs fa-2x"></i><a href="/lerneinheiten/{{$topic->id}}"> zu den Lerneinheiten</a></small>
-      					
-    				</div>
-				</div>
-			</div>
-			@endif
+			@foreach ($units as $unit)
+				<div class="col">
+					<div class="card m-3" style="width:200px">	
+						<div class="card-header bg-warning">
+							<a href="/lerneinheit/{{$unit->id}}"><h4 class="card-title">{{$unit->unit_title}}</h4></a>
+							<p class="card-text">			
+								@include('components.rating_stars',['$average_score' => $average_score])
+							</p>
+						</div>
+						<div class="card-body">
+							<p>
+								<h4>Darum geht's:</h4>
+							 	{{$unit->unit_description}}
+							</p>
+						</div>
+						<div class="card-footer">
+      					<small class="text-muted">Zuletzt aktualisiert: {{$unit->updated_at}}</small>
+    					</div>
+  					</div>
+  				</div>
+  			@endforeach		 	
+		</div>
+		@endif
+		<hr>
+
+		<h4>Einzelne Inhalte zum Thema "{{$topic->topic_title}}"</h4>
+		<div class="row justify-content-start">	
 			@foreach ($contents as $content)
 			<div class="col">
 				<div class="card m-3" style="width:200px">
@@ -51,27 +67,13 @@
 					<div class="card-body">
 						<a href="/content/{{$content->id}}"><h4 class="card-title">{{$content->content_title}}</h4></a>
 						<p class="card-text">
-					@php 
-					$reviews = App\Review::where('content_id',$content->id)->get();
-					$average_score = $reviews->avg('overall_score');
-					@endphp
+						@php 
+							$reviews = App\Review::where('content_id',$content->id)->get();
+							$average_score = $reviews->avg('overall_score');
+						@endphp
 					<!-- Sternchenbewertung auf Inhalte-Card -->
 					@if ($average_score > 0)
-						@php $rating = $average_score @endphp  
-						@foreach(range(1,5) as $i)
-                <span class="fa-stack" style="width:1em" data-toggle="tooltip" data-placement="top" title="Durchschnittliche Bewertung">
-                    <i class="far fa-star fa-stack-1x"></i>
-
-                    	@if($rating >0)
-                        	@if($rating >0.5)
-                            	<i class="fas fa-star fa-stack-1x"></i>
-                        	@else
-                            	<i class="fas fa-star-half fa-stack-1x"></i>
-                        	@endif
-                    	@endif
-                    	@php $rating--; @endphp
-                </span>
-            @endforeach
+						@include('components.rating_stars',['$average_score' => $average_score])
             	@endif
 			</p>
 	</div>

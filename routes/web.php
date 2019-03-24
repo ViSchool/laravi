@@ -13,9 +13,13 @@
 
 
 
-/*Route für AppControler*/
+/*Route für AppController*/
 Route::get('topics/get/{id}', 'AppController@getDynamicTopics'); //Route zu dynamic dropdown Subjects/Topics
 Route::get('contents/get/{id}', 'AppController@getDynamicContents'); //Route zu dynamic dropdown Topics/Contents
+Route::get('tools/get/{id}', 'AppController@getDynamicTools'); //Route zu dynamic placeholder link 
+Route::get('chosencontent/get/{id}', 'AppController@getChosenContent'); //Route zu chosen Content
+Route::get('chooseContent/{unit}/{id}', 'AppController@chooseContent'); 
+Route::get('/differentiations/getgroupdiff/{differentiation_group}/{teacherId}', 'AppController@getdifferentiations');
 
 
 /*Route für Mails*/
@@ -25,6 +29,11 @@ Route::get('/mailable', 'AppController@sendBrokenLinks');
 Route::get('/lehrer', 'TeacherController@index');
 Route::get ('/lehrer/coaching', 'TeacherController@coaching');
 Route::get ('/lehrer/schulcoaching', 'TeacherController@schulcoaching');
+Route::get ('/lehrer/danke', 'TeacherController@thanks');
+
+
+Route::get('/backend/teacher', 'TeacherController@indexBackend')->name('backend.teacher.index');
+Route::get('/backend/teacher/{teacher}', 'TeacherController@showBackend')->name('backend.teacher.show');
 
 /*Routes for Search*/
 Route::get('/suche', 'SearchController@index');
@@ -37,33 +46,62 @@ Route::get('/suche/series/{query}', 'SearchController@searchSeries');
 
 /*Routes for Units*/
 Route::get('lehrer/unterrichtseinheiten' , 'Unitcontroller@index')->name('teacher.units');
-Route::get('lehrer/toolbox/neu' , 'UnitController@create');
-Route::post('lehrer/toolbox/speichern' , 'UnitController@store')->name('unit.store');
-Route::get('lehrer/toolbox/{unit}' , 'UnitController@show');
-Route::get('lehrer/toolbox/update/{unit}' , 'UnitController@edit')->name('unit.edit');
-Route::delete('lehrer/toolbox/{unit}','UnitController@destroy')->name('units.destroy');
-Route::patch('lehrer/toolbox/update/{unit}','UnitController@update')->name('units.update');
 Route::get('lehrer/logout','Auth\LoginController@userLogout');
 Route::get('lehrer/units','TeacherController@allunits');
+Route::get('lehrer/lehrerkonto','TeacherController@lehrerkonto');
 
+//Routen, damit Lehrer selbst Themen einstellen kann und Statusänderungen dazu
+Route::get('lehrer/themen','TeacherController@topics');
+Route::post('lehrer/themen','TopicController@teacher_store');
+Route::get('lehrer/newTopicPrivate/{topic}','TopicController@teacherTopicPrivate');
+Route::get('lehrer/newTopicViSchool/{topic}','TopicController@teacherTopicViSchool');
+Route::get('lehrer/newTopicDelete/{topic}','TopicController@destroy');
 
-/*Routes for Blocks*/
-Route::post('lehrer/toolbox/aufgabe/speichern' , 'BlockController@store')->name('blocks.store');
-Route::patch('lehrer/toolbox/update/{block}' , 'BlockController@store_content')->name('blocks.store_content');
-Route::patch('lehrer/toolbox/update/{unit}' , 'BlockController@update')->name('blocks.update');
-Route::delete('lehrer/toolbox/aufgabe/löschen/{task}', 'BlockController@destroy')->name('blocks.destroy');
+//Routen, damit Lehrer selbst Inhalte einstellen kann und Statusänderungen dazu
+Route::get('/lehrer/inhalte','TeacherController@contents');
+Route::post('/lehrer/inhalte','ContentController@teacher_store');
+Route::get('/lehrer/newContentPrivate/{content}','ContentController@teacherContentPrivate');
+Route::get('/lehrer/newContentViSchool/{content}','ContentController@teacherContentViSchool');
+Route::get('/lehrer/newContentDelete/{content}','ContentController@destroy');
+
+//Routes for units and blocks, damit Lehrer selbst Unterrichtseinheiten und Aufgaben einstellen kann und Statusänderungen dazu
+Route::get('/lehrer/unterrichtseinheiten','TeacherController@units')->name('teacher.units');
+Route::get('/lehrer/unterrichtseinheiten/erstellen','TeacherController@create_unit');
+Route::post('/lehrer/unterrichtseinheiten','UnitController@teacher_store');
+Route::get('/lehrer/unterrichtseinheiten/bearbeiten/{unit}', 'UnitController@teacher_edit');
+Route::patch('/lehrer/unterrichtseinheiten/bearbeiten/{unit}','UnitController@teacher_update');
+Route::get('/lehrer/newUnitPrivate/{unit}','UnitController@teacherUnitPrivate');
+Route::get('/lehrer/newUnitViSchool/{unit}','UnitController@teacherUnitViSchool');
+Route::delete('/lehrer/newUnitDelete/{unit}','UnitController@destroy');
+Route::get('/lehrer/unterrichtseinheiten/{unit}/aufgabe','TeacherController@create_block')->name('teacher.block.create');
+Route::post('/lehrer/unterrichtseinheiten/aufgabe','BlockController@teacher_store');
+Route::get('/lehrer/unterrichtseinheiten/{unit}/aufgaben','BlockController@teacher_show');
+Route::get('/lehrer/unterrichtseinheiten/aufgabe/bearbeiten/{block}','BlockController@teacher_edit');
+Route::patch('/lehrer/unterrichtseinheiten/aufgabe/bearbeiten/{block}','BlockController@teacher_update');
+Route::delete('/lehrer/unterrichtseinheiten/aufgabe/löschen/{block}','BlockController@teacher_destroy');
+
+/*Routes for Differentiations*/
+Route::get('/lehrer/{user}/lernniveaus/übersicht','DifferentiationController@index');
+Route::post('/lehrer/{user}/lernniveaus/erstellen','DifferentiationController@store');
+Route::post('/lehrer/{user}/lernniveaus/bearbeiten','DifferentiationController@update');
+Route::delete('/lehrer/{user}/lernniveaus/löschen/{differentiation_group}','DifferentiationController@destroy');
+Route::get('/lehrer/profile/diffOn/{user}','DifferentiationController@diffSwitchOn');
+Route::get('/lehrer/profile/diffOff/{user}','DifferentiationController@diffSwitchOff');
 
 /*Routes for Inquiries*/
-Route::post('lehrer/anfrage' , 'InquiryController@store')->name('inquiries.store');
+Route::post('/lehrer/anfrage' , 'InquiryController@store')->name('inquiries.store');
 
 /* Homepage */
 Route::get('/', 'VischoolController@index')->name('vischool');
 Route::get('/test', function() {
 });
 
-/* Impressum */
+/* Legal Stuff */
 Route::get('/impressum', function () {
     return view('legal.impressum');
+});
+Route::get('/datenschutz', function () {
+    return view('legal.datenschutz');
 });
 
 /* Routes to Frontend */
@@ -107,6 +145,14 @@ Route::delete('backend/blog/{post}','PostController@destroy')->name('posts.destr
 Route::patch('backend/blog/{post}','PostController@update')->name('posts.update');
 
 
+/*Routes for Permissions */
+Route::get('/backend/permission', 'PermissionController@index')->name('backend.permission.index');
+Route::get('/backend/permission/create', 'PermissionController@create');
+Route::post('/backend/permission', 'PermissionController@store');
+Route::get('/backend/permission/{permission}', 'PermissionController@show');
+Route::delete('backend/permission/{post}','PermissionController@destroy')->name('posts.destroy');
+Route::patch('backend/permission/{post}','PermissionController@update')->name('posts.update');
+
 /*Routes for subjects database*/
 Route::get('/backend/subjects', 'SubjectsController@index');
 Route::get('/backend/subjects/create', 'SubjectsController@create');
@@ -115,6 +161,14 @@ Route::get('/backend/subjects/{subject}', 'SubjectsController@show');
 Route::delete('/backend/subjects/{subject}','SubjectsController@destroy')->name('subjects.destroy');
 Route::patch('/backend/subjects/{subject}','SubjectsController@update')->name('subjects.update');
 
+/*Routes for schools database*/
+Route::get('/backend/schools', 'SchoolController@index');
+Route::get('/backend/schools/create', 'SchoolController@create');
+Route::post('/backend/schools', 'SchoolController@store');
+Route::get('/backend/schools/{school}', 'SchoolController@show');
+Route::delete('/backend/schools/{school}','SchoolController@destroy')->name('schools.destroy');
+Route::patch('/backend/schools/{school}','SchoolController@update')->name('schools.update');
+
 /*Routes for topics database*/
 Route::get('/backend/topics', 'TopicController@index');
 Route::get('/backend/topics/create', 'TopicController@create');
@@ -122,6 +176,8 @@ Route::post('/backend/topics', 'TopicController@store');
 Route::get('/backend/topics/{topic}', 'TopicController@show');
 Route::delete('/backend/topics/{topic}','TopicController@destroy')->name('topics.destroy');
 Route::patch('/backend/topics/{topic}','TopicController@update')->name('topics.update');
+Route::get('backend/topics/approve/{topic}','TopicController@teacherTopicApprove');
+
 
 /*Routes for contents database*/
 Route::get('/backend/contents', 'ContentController@index')->name('backend.contents');
@@ -133,6 +189,7 @@ Route::post('/backend/contents', 'ContentController@store');
 Route::get('/backend/contents/{content}', 'ContentController@show')->name('backend.contents.show');
 Route::delete('/backend/contents/{content}','ContentController@destroy')->name('contents.destroy');
 Route::patch('/backend/contents/{content}','ContentController@update')->name('contents.update');
+Route::get('backend/topics/approve/{content}','TopicController@teacherContentApprove');
 
 /*Routes for tags database*/
 Route::get('/backend/tags', 'TagController@index');
@@ -140,9 +197,17 @@ Route::get('/backend/tags/{tag}', 'TagController@show');
 Route::post('/backend/tags', 'TagController@store');
 Route::delete('/backend/tags/{tag}','TagController@destroy')->name('tags.destroy');
 
+/*Routes for permissions database*/
+Route::get('/backend/permissions', 'PermissionController@index');
+Route::get('/backend/permissions/{permission}', 'PermissionController@show');
+Route::post('/backend/permissions', 'PermissionController@store')->name('permissions.store');
+Route::delete('/backend/permissions/{permission}','PermissionController@destroy')->name('permissions.destroy');
+Route::patch('/backend/permissions','PermissionController@update')->name('permissions.update');
+
 /*Routes for reviews database*/
 Route::get('/reviews/{content}', 'ReviewController@index');
 Route::post('/reviews', 'ReviewController@store')->name('review.store');
+
 
 /*Routes for mistakes database*/
 Route::get('/mistakes/{content}', 'ReviewController@index');
@@ -182,6 +247,7 @@ Route::get('/backend/units/{unit}', 'UnitBackendController@show')->name('backend
 Route::post('/backend/units', 'UnitBackendController@store')->name('backend.units.store');
 Route::delete('/backend/units/{unit}','UnitBackendController@destroy')->name('backend.units.destroy');
 Route::patch('/backend/units/{unit}','UnitBackendController@update')->name('backend.units.update');
+Route::get('backend/topics/approve/{unit}','UnitBackendController@teacherUnitApprove');
 
 /*Routes for block database backend*/
 Route::get('/backend/blocks/{unit}/create1', 'BlockBackendController@create_step1')->name('backend.blocks.create_step1');
@@ -209,14 +275,33 @@ Route::patch('/backend/questions/{question}','QuestionController@update')->name(
 
 
 
-/*Routes for User Authentication*/
+/*Routes for User Authentication
 Route::get('/register', 'RegistrationController@create');
 Route::post('/register', 'RegistrationController@store')->name('register.store');
 
 Route::get('/login', 'SessionsController@create');
 Route::get('/logout', 'SessionsController@destroy');
+*/
 
 
+// Authentication Routes...
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-Auth::routes();
+// Registration Routes...
+Route::get('/register', 'Auth\RegisterController@showRegistrationForm');
+Route::post('/register', 'Auth\RegisterController@register')->name('register');
+
+// Password Reset Routes...
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+//Email Verification Routes
+Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice'); 
+Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify'); 
+Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
+
 Route::get('/home', 'HomeController@index')->name('home');

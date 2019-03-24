@@ -109,12 +109,12 @@ class ContentController extends Controller
 			$filename_thumb = 'thumb'. $filename;
 			//save big image
 			$location = public_path('images/contents/'.$filename);
-			Image::make($image)->resize(null, 200, function ($constraint) {
+			Image::make($image)->resize(null, 400, function ($constraint) {
 				$constraint->aspectRatio();})->save($location);
 			$content->content_img = $filename;
 			//save thumb image
 			$location_big = public_path('images/contents/'.$filename_thumb);
-			Image::make($image)->resize(null, 50, function ($constraint) {
+			Image::make($image)->resize(null, 200, function ($constraint) {
 				$constraint->aspectRatio();})->save($location_big);
 			$content->content_img_thumb = $filename_thumb;
 		}
@@ -266,12 +266,12 @@ class ContentController extends Controller
 			$filename_thumb = 'thumb'. $filename;
 			//save big image
 			$location = public_path('images/contents/'.$filename);
-			Image::make($image)->resize(null, 200, function ($constraint) {
+			Image::make($image)->resize(null, 400, function ($constraint) {
 				$constraint->aspectRatio();})->save($location);
 			$content->content_img = $filename;
 			//save thumb image
 			$location_big = public_path('images/contents/'.$filename_thumb);
-			Image::make($image)->resize(null, 50, function ($constraint) {
+			Image::make($image)->resize(null, 200, function ($constraint) {
 				$constraint->aspectRatio();})->save($location_big);
 			$content->content_img_thumb = $filename_thumb;
 		}
@@ -346,7 +346,149 @@ class ContentController extends Controller
        	//return to overview of topics
         return redirect('backend/contents');
 
+	}
+	
+	public function teacher_store(Request $request) 
+	{
+		
+		$this->validate(request(), [
+			'content_title' => 'required',
+			'topic_id' => 'required', 
+			'subject_id' => 'required',
+			'content_link'=> 'required|url',
+			'tool_id'=> 'required']);
+
+        $content =new Content;
+        switch ($request->tool_id) {
+        	case 1: //youtube
+        		$content->toolspecific_id = Content::parse_yturl($request->content_link); //get Youtube ID
+				$content->type_id = 1;
+				break;
+			case 2: //kahoot
+        		$content->toolspecific_id = Content::parse_kahoot($request->content_link); //get Kahoot ID
+				$content->type_id = 2;
+				break;
+			case 3: //powtoon
+        		$content->toolspecific_id = Content::parse_powtoon($request->content_link); //get Powtoon ID
+				$content->type_id = 1;
+				break;
+			case 4: //any
+				break;
+			case 5: //PDF
+				break;
+			case 6: //h5p
+        		$content->toolspecific_id = Content::parse_h5p($request->content_link);
+        		break;
+			case 7: //vimeo
+        		$vimeodata = Content::parse_vimeo($request->content_link);
+        		$content->toolspecific_id = $vimeodata->video_id; //get Vimeo ID
+        		break;
+			case 8: //geogebra
+				break;
+        	}
+		$content->user_id = request('user_id');
+		$content->subject_id = request('subject_id');
+        $content->topic_id = request('topic_id');
+        $content->content_link = request('content_link');
+        $content->tool_id = request('tool_id');
+		$content->content_title = request('content_title');
+		$content->license = "unbekannt";
+		if($request->teacherOrStudent == "teacher") {
+			$content->status_id = 3;
+		}
+		else {
+			$content->status_id = 5;
+		}
+        
+        
+		
+		//Save all data from create_topics form
+       	$content->save(); 
+       	
+       	//get all Video-Data from youtube and save them in new Video object
+       	if(($content->tool_id == 1) And isset($content->toolspecific_id)) {
+       			$video_attributes = Youtube::getVideoInfo($content->toolspecific_id);
+       			$video = new Video;
+       			$video->content_id = $content->id;
+       			$video->video_title = $video_attributes->snippet->title;
+       			$video->video_description = $video_attributes->snippet->description;
+       			$video->video_tags = serialize($video_attributes->snippet->tags);
+       			if (isset($video_attributes->snippet->defaultAudioLanguage)) (
+       				$video->video_audio_language = $video_attributes->snippet->defaultAudioLanguage
+       			);
+       			$video->video_duration = Video::convertDuration($video_attributes->contentDetails->duration);
+       			$video->video_dimension = $video_attributes->contentDetails->dimension;
+       			$video->video_definition = $video_attributes->contentDetails->definition;
+       			$video->video_caption = $video_attributes->contentDetails->caption;
+       			$video->video_YoutubePP = $video_attributes->contentDetails->licensedContent;
+       			
+       			$video->video_youtubeLicense = $video_attributes->status->license;
+       			if(isset($video_attributes->player->embedHeight)){
+       			$video->video_maxHeight = $video_attributes->player->embedHeight;
+       			$video->video_maxWidth = $video_attributes->player->embedWidth;
+       			} else {
+       			$video->video_maxHeight = Video::getHeight($video_attributes->player->embedHtml);
+       			$video->video_maxWidth = Video::getWidth($video_attributes->player->embedHtml);
+       			};
+       			$video->save();
+       			$content->content_duration = ceil($video->video_duration/60);
+       			$content->save();
+
+       	};  
+       	//        		Vimeo Daten speichern	
+       	if ($content->tool_id == 7) {
+       			$video = new Video;
+       			$video->content_id = $content->id;
+       			
+       			$video->video_title = $vimeodata->title;
+       			$video->video_description = $vimeodata->description;
+       			$video->video_duration = $vimeodata->duration;
+       			$video->video_maxHeight = $vimeodata->height;
+       			$video->video_maxWidth = $vimeodata->width;
+       			$video->save();
+       			
+    ;
+       			if (empty($content->content_img_thumb)) {
+       				$content->img_thumb_url = $vimeodata->thumbnail_url;
+       			}
+       			$content->content_duration = ceil($video->video_duration/60);
+       			$content->save();
+       	}	
+       	
+       	//return to overview of contents
+        return redirect('lehrer/inhalte');
     }
+	
+	//als privaten Inhalt veröffentlichen
+	public function teacherContentPrivate($id)
+    {
+        $content = Content::findOrFail($id);
+        $content->status_id = 3;
+        $content->save();	
+       	//return to overview of topics
+        return redirect('lehrer/inhalte');
+    }
+
+    //An ViSChool zur Freigabe schicken - vom Lehrer erstelltes Thema
+    public function teacherContentViSchool($id)
+    {
+        $content = Content::findOrFail($id);
+        $content->status_id = 2;
+        $content->save();	
+       	//return to overview of topics
+        return redirect('lehrer/inhalte');
+    }
+
+    //ViSchool Admin gibt Thema frei
+    public function teacherContentApprove($id)
+    {
+        $content = Content::findOrFail($id);
+        $content->status_id = 1;
+        $content->save();	
+       	//return to overview of topics
+        return redirect()->back();
+    }
+
 
     /**
      * Remove the specified resource from storage.

@@ -1,19 +1,32 @@
-@extends('layout_teacher')
+@extends('layout')
 
 @section('stylesheets')
 @endsection
 
 @section ('page-header')
 
-<div class="m-0 d-none d-sm-block">
-	<div class="d-flex justify-content-between align-items-center" style="background-image:url(/images/banner_small.jpeg); height:180px;">
-		<div class="d-flex flex-column" style="max-width: 600px;">
-			<h3 class="text-brand-yellow p-5 mb-auto">Du willst digitaler unterrichten, hast aber keine Zeit oder Erfahrung?</h3>
-			<button type="button" class="mt-auto m-5 btn btn-primary text-white" data-toggle="modal" data-target="#actionModal">Jetzt Unterstützung für digitalen Unterricht nachfragen!</button>
-		</div>
-		<img class="img-fluid m-5" src="/images/vischool_ipad.png" style="height:60%; transform: rotate(15deg);";"></img>
-	</div>
-</div>
+<section class="jumbotron p-2 mb-5">	
+	<div class="container-fluid" style="background-image:url(/images/banner_small.jpeg);">
+			<div class="row">
+				<div class="col-8">
+					<h1 class="mt-3 text-capitalize text-info">ViSchool für Lehrer</h1>
+					<h3 class="lead text-white">Du willst digitaler unterrichten, hast aber keine Zeit oder Erfahrung? Starte mit fertigen Unterrichtseinheiten oder lass Dich von uns <a href="#coaching">kostenlos</a> zu Deinen eigenen Unterrichtsideen beraten.</h3>
+					<p>
+						<a href="/register" class="btn btn-primary my-2">Als Lehrer bei ViSchool anmelden</a>
+						<button type="button" class="btn btn-secondary my-2 text-white" data-toggle="modal" data-target="#actionModal">Beratung zu digitalem Unterricht anfragen</button>
+					</p>
+					</div>
+					
+					<div class="col d-flex justify-content-end">
+					<div class="d-none d-sm-block">	
+						<img class="img-fluid mt-5" src="/images/vischool_ipad.png" style="max-height:120px; transform: rotate(15deg);"></img>
+					</div>
+					</div>
+			</div>
+			
+    </div>
+  </section>
+
 
 <!-- Modal für Call to Action -->
 <div class="modal" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="actionModalLabel" aria-hidden="true">
@@ -40,10 +53,12 @@
             <label for="thema" class="col-form-label">Dein Unterrichtsthema:</label>
             <input type="text" class="form-control" id="thema" name="thema">
           </div>
-          	<div class="form-group">
+          <div class="form-group">
             <label for="email" class="col-form-label">Emailadresse unter der wir Dich erreichen:</label>
             <input type="email" class="form-control" id="email" name="email">
-          </div>
+					</div>
+					<small>Wir erheben Deine Daten aus diesem Kontaktformular lediglich, um Dich zu unserem Beratungsangebot per Email zu kontaktieren.  Näheres hierzu kannst Du unserer <a href="/datenschutz#kontakt">Datenschutzerklärung</a>  entnehmen. </small>
+					
       </div>
       <div class="modal-footer">
         <button type="button" class="btn-sm btn-secondary" data-dismiss="modal">Abbrechen</button>
@@ -54,7 +69,7 @@
   </div>
 </div>
 
-@include('teacher.teacher_components.loggedInTeacher')
+
 
 @endsection
 		
@@ -64,6 +79,7 @@
   {{ session('message') }}
 </div>
 @endif
+
 
 <div class="container my-5">
 	<h2 class="text-brand-blue">Nutze fertige Unterrichtseinheiten zu vielen Themen</h2>
@@ -150,7 +166,7 @@
 </div>
 
 
-	<div class="d-flex justify-content-center my-3">
+	<div class="d-flex justify-content-center mb-3">
 	<a href="/lehrer/units">Zu den fertigen Unterrichtseinheiten für alle Fächern</a>
 	</div>
 	<hr></hr>
@@ -178,7 +194,7 @@
 	
 	<hr></hr>
 	<h2 class="text-brand-blue">Coaching für Lehrer und Schulen</h2>
-	<div class="card-deck">
+	<div id="coaching" class="card-deck">
 		<div class="card">
 			<a href="/lehrer/coaching"><img class="card-img-top" src="/images/schueler_laptop.jpg" alt="Card image cap"></a>
 			<div class="card-body">

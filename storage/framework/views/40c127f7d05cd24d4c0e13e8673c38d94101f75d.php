@@ -7,8 +7,7 @@
 
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="<?php echo e(route('admin.login.submit')); ?>">
-                        <?php echo e(csrf_field()); ?>
-
+                        <?php echo csrf_field(); ?>
 
                         <div class="form-group<?php echo e($errors->has('email') ? ' has-error' : ''); ?>">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
@@ -67,4 +66,4 @@
 </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

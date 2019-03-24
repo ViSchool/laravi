@@ -1,8 +1,8 @@
 @extends ('layout')
 
 @section ('stylesheets')
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+<script src="/js/jsPDF/html2canvas.min.js"></script>
 
 
 @endsection
@@ -38,14 +38,18 @@
 		</div>
 	</div>
 
-	<hr></hr>
+	<hr>
+	@if (\Session::has('success'))
+    	<div class="alert alert-success">
+         <p>{!! \Session::get('success') !!}</p>
+    	</div>
+	@endif
 	<div class="row">
-		<div class="col">	
+		<div id="contentToPrint" class="col">	
 			@switch($content->tool_id) 
 				@case(1)
 					<div class="embed-responsive embed-responsive-{{$aspect_ratio}}">
-						<iframe class="embed-responsive-item"
-src="http://youtube.com/embed/{{$content->toolspecific_id}}" allowfullscreen></iframe>
+						<iframe src="https://www.youtube-nocookie.com/embed/{{$content->toolspecific_id}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 					</div>
 				@break
 				@case(4)
@@ -61,14 +65,14 @@ src="http://youtube.com/embed/{{$content->toolspecific_id}}" allowfullscreen></i
 						<a href="{{$content->content_link}}"> Als PDF öffnen <i class="far fa-file-pdf fa-2x" style="color:red"></i> </a>			
 					</div>
 
-					<object id="obj" data="{{$content->content_link}}" >object</object>	
+					<object id="obj" data="{{$content->content_link}}" ></object>	
 				@break
 				@case(6) 
 					<div style="overflow:auto;-webkit-overflow-scrolling:touch">
 						<p><iframe src="https://h5p.org/h5p/embed/{{$content->toolspecific_id}}" frameborder="0" allowfullscreen="allowfullscreen" style="width:70% "></iframe><script src="https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js" charset="UTF-8"></script></p>
 					</div>
 					
-					<object id="obj" data="://h5p.org/h5p/embed/{{$content->toolspecific_id}}" >object</object>	
+					<object id="obj" data="://h5p.org/h5p/embed/{{$content->toolspecific_id}}" ></object>	
 				@break
 				@case(7)
 					<div class="embed-responsive embed-responsive-16by9">
@@ -87,8 +91,11 @@ src="http://youtube.com/embed/{{$content->toolspecific_id}}" allowfullscreen></i
 		</div>
 	</div>
 	@endif
-	<hr></hr>
+	<hr>
 </div>
+
+
+
 
 <!-- Block Berwertung -->
 <div class="container">
@@ -165,6 +172,7 @@ src="http://youtube.com/embed/{{$content->toolspecific_id}}" allowfullscreen></i
 		<div class="row mt-3">
 			<div class="col">
 			<textarea class="form-control" name="review_comment" id="review_comment" rows="3" placeholder="Was hat Dir gefallen oder nicht? Wofür hast Du gelernt?"></textarea>	
+				<input type="hidden" name="review_unit_id" value="0"/>
 				<input type="hidden" name="review_content_id" value="{{$content->id}}"/>
 			</div>
 		</div>	
@@ -317,6 +325,8 @@ src="http://youtube.com/embed/{{$content->toolspecific_id}}" allowfullscreen></i
 @endsection
 	
 @section('scripts')
+
+
 @if(count($errors))
 <script>
 $(function() {

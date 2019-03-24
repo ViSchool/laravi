@@ -1,6 +1,6 @@
 <?php $__env->startSection('stylesheets'); ?>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+<script src="/js/jsPDF/html2canvas.min.js"></script>
 
 
 <?php $__env->stopSection(); ?>
@@ -37,14 +37,18 @@
 		</div>
 	</div>
 
-	<hr></hr>
+	<hr>
+	<?php if(\Session::has('success')): ?>
+    	<div class="alert alert-success">
+         <p><?php echo \Session::get('success'); ?></p>
+    	</div>
+	<?php endif; ?>
 	<div class="row">
-		<div class="col">	
+		<div id="contentToPrint" class="col">	
 			<?php switch($content->tool_id): 
 				case (1): ?>
 					<div class="embed-responsive embed-responsive-<?php echo e($aspect_ratio); ?>">
-						<iframe class="embed-responsive-item"
-src="http://youtube.com/embed/<?php echo e($content->toolspecific_id); ?>" allowfullscreen></iframe>
+						<iframe src="https://www.youtube-nocookie.com/embed/<?php echo e($content->toolspecific_id); ?>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 					</div>
 				<?php break; ?>
 				<?php case (4): ?>
@@ -60,14 +64,14 @@ src="http://youtube.com/embed/<?php echo e($content->toolspecific_id); ?>" allow
 						<a href="<?php echo e($content->content_link); ?>"> Als PDF öffnen <i class="far fa-file-pdf fa-2x" style="color:red"></i> </a>			
 					</div>
 
-					<object id="obj" data="<?php echo e($content->content_link); ?>" >object</object>	
+					<object id="obj" data="<?php echo e($content->content_link); ?>" ></object>	
 				<?php break; ?>
 				<?php case (6): ?> 
 					<div style="overflow:auto;-webkit-overflow-scrolling:touch">
 						<p><iframe src="https://h5p.org/h5p/embed/<?php echo e($content->toolspecific_id); ?>" frameborder="0" allowfullscreen="allowfullscreen" style="width:70% "></iframe><script src="https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js" charset="UTF-8"></script></p>
 					</div>
 					
-					<object id="obj" data="://h5p.org/h5p/embed/<?php echo e($content->toolspecific_id); ?>" >object</object>	
+					<object id="obj" data="://h5p.org/h5p/embed/<?php echo e($content->toolspecific_id); ?>" ></object>	
 				<?php break; ?>
 				<?php case (7): ?>
 					<div class="embed-responsive embed-responsive-16by9">
@@ -86,8 +90,11 @@ src="http://youtube.com/embed/<?php echo e($content->toolspecific_id); ?>" allow
 		</div>
 	</div>
 	<?php endif; ?>
-	<hr></hr>
+	<hr>
 </div>
+
+
+
 
 <!-- Block Berwertung -->
 <div class="container">
@@ -165,6 +172,7 @@ src="http://youtube.com/embed/<?php echo e($content->toolspecific_id); ?>" allow
 		<div class="row mt-3">
 			<div class="col">
 			<textarea class="form-control" name="review_comment" id="review_comment" rows="3" placeholder="Was hat Dir gefallen oder nicht? Wofür hast Du gelernt?"></textarea>	
+				<input type="hidden" name="review_unit_id" value="0"/>
 				<input type="hidden" name="review_content_id" value="<?php echo e($content->id); ?>"/>
 			</div>
 		</div>	
@@ -318,6 +326,8 @@ src="http://youtube.com/embed/<?php echo e($content->toolspecific_id); ?>" allow
 <?php $__env->stopSection(); ?>
 	
 <?php $__env->startSection('scripts'); ?>
+
+
 <?php if(count($errors)): ?>
 <script>
 $(function() {
