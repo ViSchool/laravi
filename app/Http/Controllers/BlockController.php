@@ -65,7 +65,7 @@ class BlockController extends Controller
         $this->validate(request(), [
         'block_title' => 'required', 
         'task' => 'required',
-        'differentiation_id'=> 'required',
+        'time' => 'required'
         ]);
 
         $block = new Block;
