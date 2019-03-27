@@ -180,7 +180,6 @@ class VischoolController extends BaseController
 		$differentiations = Differentiation::where('differentiation_group',$unit->differentiation_group)->skip(1)->take(10)->get();
 		$startDifferentiation = Differentiation::where('differentiation_group',$unit->differentiation_group)->first();
 		$blocks = Block::where('unit_id',$unit->id)->whereIn('differentiation_id',[$startDifferentiation->id, 13])->orderBy('order')->get();
-		dd($blocks);
 		return view('frontend.units.show_units', compact('unit','blocks','differentiations','startDifferentiation'));
 	}
 	else {
