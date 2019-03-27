@@ -324,7 +324,6 @@
   $('.tipp_popover').popover({
     container: 'body',
     html: 'true',
-    content: '{!!$block->tips!!}',
   })
 })
 </script>
