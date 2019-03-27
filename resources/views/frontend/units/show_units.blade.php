@@ -60,7 +60,7 @@
 					</div>
 					<div class="row ">
 						<div class="col-10 d-flex justify-content-around align-items-center">
-							<p class="mt-1 font-weight-bold">Ausgewähltes Lernniveau:</p>
+						<p class="mt-1 font-weight-bold">Ausgewähltes Lernniveau: </p> 
 							<div class="dropdown">
 							<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$startDifferentiation->differentiation_title}}</button>
 								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
