@@ -180,6 +180,7 @@ class VischoolController extends BaseController
 		$differentiations = Differentiation::where('differentiation_group',$unit->differentiation_group)->skip(1)->take(10)->get();
 		$startDifferentiation = Differentiation::where('differentiation_group',$unit->differentiation_group)->first();
 		$blocks = Block::where('unit_id',$unit->id)->whereIn('differentiation_id',[$startDifferentiation->id, 13])->orderBy('order')->get();
+		dd($blocks);
 		return view('frontend.units.show_units', compact('unit','blocks','differentiations','startDifferentiation'));
 	}
 	else {
@@ -192,7 +193,7 @@ class VischoolController extends BaseController
 	public function unit_diff($id,$diff) {
 	$unit = Unit::find($id);
 	if ($unit->differentiation_group != NULL) {
-		$differentiations = Differentiation::where('differentiation_group',$unit->differentiation_group)->skip(1)->take(10)->get();
+		$differentiations = Differentiation::where('differentiation_group',$unit->differentiation_group)->get();
 		$startDifferentiation = Differentiation::find($diff);
 		$blocks = Block::where('unit_id',$unit->id)->whereIn('differentiation_id',[$startDifferentiation->id, 13])->orderBy('order')->get();
 		return view('frontend.units.show_units', compact('unit','blocks','differentiations','startDifferentiation'));
