@@ -129,10 +129,10 @@
 										@php $content = App\Content::findOrFail($block->content_id);@endphp
 										<a href="/content/{{$content->id}}" target="_blank">
 										<div class="card border border-primary w-75">
-											@isset ($content->content_img_thumb)
-													<img class="card-img p-2" src="/images/contents/{{$content->content_img_thumb}}" alt="Bild:{{$content->content_title}}" style="max-height: 100%; width:auto;">
+											@isset ($content->content_img)
+													<img class="card-img p-2" src="/images/contents/{{$content->content_img}}" alt="Bild:{{$content->content_title}}" style="max-height: 100%; width:auto;">
 											@endisset 
-											@empty ($content->content_img_thumb) 
+											@empty ($content->content_img) 
 												@switch($content->tool_id)
 													@case(1)
 														<img class="p-4 card-img" src="https://img.youtube.com/vi/{{$content->toolspecific_id}}/mqdefault.jpg">
