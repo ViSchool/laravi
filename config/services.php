@@ -15,7 +15,7 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
+        'domain' => env('MAILGUN_DOMAIN', 'mg.vischool.net'),
         'secret' => env('MAILGUN_SECRET'),
     ],
 

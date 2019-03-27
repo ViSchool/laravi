@@ -15,6 +15,7 @@ use App\Block;
 use App\Review;
 use App\question;
 use App\Differentiation;
+use Auth;
 
 class VischoolController extends BaseController
 
@@ -39,10 +40,19 @@ class VischoolController extends BaseController
 	}
 	
 	public function subject_show ($id) {
-	$subject = Subject::find($id);
-    return view('frontend.subjects.subject_topics', compact('subject','today'));
+		$teacher = Auth::user();
+		$subject = Subject::find($id);
+		$publicTopics = $subject->topics->where('status_id',1);
+		if (isset ($teacher)){
+			$privateTopics = $subject->topics->whereIn('status_id',[2,3])->where('user_id',$teacher->teacher_id);	
+		}
+		else{
+			$privateTopics = [];
+		}
+		return view('frontend.subjects.subject_topics', compact('subject', 'publicTopics','privateTopics'));
 	} 
 	
+
 
 	public function topics_index() {
 	return view('frontend.topics.index', compact('topics'));
@@ -50,15 +60,19 @@ class VischoolController extends BaseController
 	
 	public function topic_show($id) {
 	
-	$topic = Topic::find($id);
-	/* $contents = Content::where('topic_id',18)->with('reviews')->get()->sortBy(function($content){
-		return $content->reviews->count();
-	}); */
-	$reviews = Review::where('content_id',$id)->get();
-	$average_score = $reviews->avg('overall_score');
-	$contents = Content::where('topic_id',$id)->orderBy('updated_at','desc')->paginate(15); 
-	$units = Unit::where('topic_id',$id)->orderBy('updated_at','desc')->paginate(15);
-	    return view('frontend.topics.topic_contents', compact('contents','topic','units','average_score'));
+		$teacher = Auth::user();
+		$topic = Topic::find($id);
+		$publicContents = $topic->content->where('status_id',1)->sortByDesc('updated_at');
+		$publicUnits = $topic->unit->where('status_id',1)->sortByDesc('updated_at');
+		if (isset ($teacher)){
+			$privateContents = $topic->content->whereIn('status_id',[2,3])->where('user_id',$teacher->teacher_id)->sortByDesc('updated_at');
+			$privateUnits = $topic->unit->whereIn('status_id',[2,3])->where('user_id',$teacher->teacher_id)->sortByDesc('updated_at');	
+		}
+		else{
+			$privateContents = [];
+			$privateUnits= [];
+		}
+		return view('frontend.topics.topic_contents', compact('publicContents','privateContents','topic','publicUnits','privateUnits'));
 	} 
 
 
@@ -132,7 +146,13 @@ class VischoolController extends BaseController
 		$question = null;
 		$finalResult = null;
 	}
-	return view('frontend.contents.show_contents', compact('breadcrumbs','content','aspect_ratio', 'reviews','average_score','question','finalResult','correctAnswers'));
+
+	$relatedContents = Content::where([
+		['topic_id',$content->topic_id],
+		['id','!=',$content->id]
+		])->inRandomOrder()->take(3)->get();
+
+	return view('frontend.contents.show_contents', compact('breadcrumbs','content','aspect_ratio', 'reviews','average_score','question','finalResult','correctAnswers','relatedContents'));
 	}
 
 

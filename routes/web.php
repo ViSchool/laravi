@@ -105,9 +105,9 @@ Route::get('/datenschutz', function () {
 });
 
 /* Routes to Frontend */
-Route::get('/subjects', 'VischoolController@subjects_index');
+/*NICHT BENUTZT: Route::get('/subjects', 'VischoolController@subjects_index');*/
 Route::get('/subjects/{id}', 'VischoolController@subject_show')->name('frontend.subject');
-Route::get('/topics', 'VischoolController@topics_index');
+/*NICHT BENUTZT: Route::get('/topics', 'VischoolController@topics_index');*/
 Route::get('/topic/{topic}', 'VischoolController@topic_show')->name('frontend.topic');
 Route::get('/contents', 'VischoolController@contents_index');
 Route::get('/content/{content}', 'VischoolController@content_show')->name('frontend.contents.show');
@@ -131,6 +131,7 @@ Route::post('/password/reset' , 'Auth\AdminResetPasswordController@reset');
 Route::get('/password/reset/{token}' , 'Auth\AdminResetPasswordController@showResetForm')->name('admin.password.reset');
 Route::get('/', 'BackendController@index')->name('admin.dashboard');
 });
+
 
 
 /*Routes for Blog */

@@ -71,8 +71,9 @@
 					<div style="overflow:auto;-webkit-overflow-scrolling:touch">
 						<p><iframe src="https://h5p.org/h5p/embed/{{$content->toolspecific_id}}" frameborder="0" allowfullscreen="allowfullscreen" style="width:70% "></iframe><script src="https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js" charset="UTF-8"></script></p>
 					</div>
-					
-					<object id="obj" data="://h5p.org/h5p/embed/{{$content->toolspecific_id}}" ></object>	
+					<div class="row">
+						<button class="btn btn-primary" onClick="window.print()">Ergebnisse drucken/speichern</button>
+					</div>
 				@break
 				@case(7)
 					<div class="embed-responsive embed-responsive-16by9">
@@ -178,7 +179,7 @@
 		</div>	
 		<div class="row">
 			<div class="col">
-				<button class="mt-3" type="submit">Bewerten</button>
+				<button class="mt-3 btn btn-info" type="submit">Bewertung abschicken</button>
 			</div>
 		</div>
 	</form>
@@ -297,30 +298,48 @@
 </div>
 @endif
 
+@if ($relatedContents->count() > 0)
 <div class="container">
 	<div class="row">
 		<div class="col-4 pt-5">
-			<p>Verwandte Artikel:</p>
+			<h4>Ähnliche Inhalte:</h4>
 		</div>
-		<div class="col">
-			<img class="img-fluid"src="https://img.youtube.com/vi/RmsDBKXDgC4/default.jpg"></img>
-		</div>
- 		<div class="col">
-			<img class="img-fluid"src="https://img.youtube.com/vi/RmsDBKXDgC4/default.jpg"></img>
+	</div>
+	<div class="row">
+		@foreach ($relatedContents as $relatedContent)
+			<div class="d-flex justify-content-around">
+				<div class="card m-3" style="width:200px">
+					@isset ($relatedContent->content_img_thumb)
+						<a href="/content/{{$relatedContent->id}}"><img class="card-img-top" src="/images/contents/{{$relatedContent->content_img}}" alt="Bild:{{$relatedContent->content_title}}"></img></a>
+					@endisset
+					@empty ($relatedContent->content_img_thumb) 
+						@switch($relatedContent->tool_id)
+							@case(1)
+								<a href="/content/{{$relatedContent->id}}"><img class="card-img-top" src="https://img.youtube.com/vi/{{$relatedContent->toolspecific_id}}/mqdefault.jpg"></img></a>
+							@break
+							@case(7)
+								<a href="/content/{{$relatedContent->id}}"><img class="card-img-top" src="{{$relatedContent->img_thumb_url}}"></img></a>
+							@break
+							@default
+								@isset ($relatedContent->portal->portal_img)
+									<a href="/content/{{$relatedContent->id}}"><img class="card-img-top" src="/images/portals/{{$relatedContent->portal->portal_img}}"></img></a>
+								@endisset
+						@endswitch
+					@endempty
+				</div>
 			</div>
-			<div class="col">
-			<img class="img-fluid"src="https://img.youtube.com/vi/RmsDBKXDgC4/default.jpg"></img>
-			</div>
-		</div>  
+		@endforeach
 	</div>
 </div>
+@endif
 
 
 <hr></hr>
+@if ($content->reviews->count() > 0)
 <div class="container">
-<h3>Vorhandene Bewertungen</h3>
+	<h3>Vorhandene Bewertungen</h3>
 </div>
-
+@endif
 
 @endsection
 	

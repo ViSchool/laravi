@@ -4,9 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
+use Laracasts\Presenter\PresentableTrait;
+use Carbon;
+
 
 class Unit extends Model
 {
+	use PresentableTrait;
+	protected $presenter = 'App\Presenters\datePresenter';
+	
 	use Searchable;
    public function series()
 	{
@@ -46,5 +52,10 @@ class Unit extends Model
 	public function status()
 	{
 		return $this->belongsTo('App\Status');
+	}
+
+	public static function prettyDate($date) 
+	{
+		return $date->diffForHumans();
 	}
 }

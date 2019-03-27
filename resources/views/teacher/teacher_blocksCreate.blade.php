@@ -210,13 +210,4 @@
     });
 </script>
 
-{{--
-Logic for Differentiation
-wenn neue Aufgabe gespeichert werden soll, die Differenzierung enthält, 
-dann lege für alle anderen Differenzierungen in der gleichen Differenzierungsgruppe 
-eine Aufgabenkopie an und zeige sie dem Lehrer in der Aufgabenübersicht eingerückt
-markiere sie rot, wenn der Lehrer sie noch nicht bearbeitet hat. 
-  
---}}
-
 @endsection

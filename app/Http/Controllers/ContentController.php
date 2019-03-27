@@ -25,8 +25,8 @@ class ContentController extends Controller
     public function index()
     {
     	$contents = Content::orderBy('created_at', 'desc')->paginate(10);
-        $subjects = Subject::orderBy('subject_title','asc)')->get();
-        return view('/backend/index_contents', compact('contents','subjects'));
+      $subjects = Subject::orderBy('subject_title','asc)')->get();
+      return view('/backend/index_contents', compact('contents','subjects'));
     }
     
     public function index_subject($id)
