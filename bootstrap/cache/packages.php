@@ -42,6 +42,13 @@
       0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
     ),
   ),
+  'hedii/artisan-log-cleaner' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Hedii\\ArtisanLogCleaner\\ArtisanLogCleanerServiceProvider',
+    ),
+  ),
   'intervention/image' => 
   array (
     'providers' => 

@@ -16,6 +16,7 @@
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.3",
+        "hedii/artisan-log-cleaner": "^1.0",
         "laracasts/presenter": "^0.2.1",
         "laravel/framework": "5.7.*",
         "laravel/scout": "^6.1",

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'ViSchool'),
 
     /*
     |--------------------------------------------------------------------------
@@ -121,7 +121,7 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    'log' => env('APP_LOG', 'daily'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
@@ -167,6 +167,7 @@ return [
         Creitive\Breadcrumbs\BreadcrumbsServiceProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
         Vimeo\Laravel\VimeoServiceProvider::class,
+        Hedii\ArtisanLogCleaner\ArtisanLogCleanerServiceProvider::class,
     
 		
         /*
