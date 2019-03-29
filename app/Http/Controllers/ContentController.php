@@ -373,17 +373,22 @@ class ContentController extends Controller
 				$content->type_id = 1;
 				break;
 			case 4: //any
+				$content->type_id = 7;
 				break;
 			case 5: //PDF
+				$content->type_id = 4;
 				break;
 			case 6: //h5p
         		$content->toolspecific_id = Content::parse_h5p($request->content_link);
-        		break;
+				$content->type_id = 7;  
+				  break;
 			case 7: //vimeo
         		$vimeodata = Content::parse_vimeo($request->content_link);
         		$content->toolspecific_id = $vimeodata->video_id; //get Vimeo ID
-        		break;
+				$content->type_id = 1;  
+				break;
 			case 8: //geogebra
+				$content->type_id = 7;
 				break;
         	}
 		$content->user_id = request('user_id');
