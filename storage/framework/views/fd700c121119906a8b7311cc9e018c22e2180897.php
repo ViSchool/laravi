@@ -31,7 +31,7 @@
 				<div class="dropdown-menu" aria-labelledby="navbarDropdownLehrer">
 					<?php if(auth()->guard()->guest()): ?>
 					<a class="btn-sm btn-primary dropdown-item" href="/login">Anmelden</a>
-					<a class="dropdown-item" href="/register">Als Lehrer registrieren</a>
+					<a class="dropdown-item" href="/lehrer/register_soon">Als Lehrer registrieren</a>
 					<a class="dropdown-item" href="/lehrer">Angebote für Lehrer</a>
 					<?php endif; ?>
 					<?php if(auth()->guard()->check()): ?>
@@ -53,12 +53,41 @@
 					<a class="dropdown-item disabled" href="http://">Meine Unterrichtseinheiten</a>
 					<?php endif; ?>
 					<?php if(auth()->check() && auth()->user()->hasAnyRole('Lehrer (free)|Lehrer (premium)')): ?>
-					<a class="dropdown-item" href="http://">Schüler und Klassen einrichten</a>
+					<a class="dropdown-item" href="/lehrer/accounts">Schüler und Klassen einrichten</a>
 					<?php else: ?>
 					<a class="dropdown-item disabled" href="http://">Schüler und Klassen einrichten</a>
 					<?php endif; ?>
 				</div>
 			</li>
+
+			<li class="nav-item dropdown">
+				<?php if(Auth::guard('student')->check()): ?>
+				Du bist eingeloggt als <?php echo e(Auth::guard('student')->student()->student_name); ?>
+
+				<?php endif; ?>
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownStudent" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Schüler</a>	
+					<form action="/schueler/login" method="post" class="dropdown-menu p-4" aria-labelledby="navbarDropdownStudent">
+						<?php echo csrf_field(); ?>	
+						<div class="form-group">
+    							<label for="student_name">Benutzername</label>
+    							<input type="text" class="form-control" id="student_name" name="studemt_name">
+  							</div>
+  							<div class="form-group">
+    							<label for="student_password">Password</label>
+    							<input type="password" class="form-control" id="student_password" placeholder="Passwort">
+  							</div>
+  							<div class="form-check">
+    							<input type="checkbox" class="form-check-input" id="remember_check" name="remember_check">
+    							<label class="form-check-label ml-5" for="remember_check">
+									Eingeloggt bleiben
+								</label>
+							</div>
+							<div class="d-flex justify-content-end">
+  								<button type="submit" class="btn btn-primary">Einloggen</button>
+							</div>
+						</form>	
+			</li>
+
 			<li class="nav-item">
 				<a class="nav-link" href="/blog">Blog</a>					
 			</li>

@@ -12,6 +12,7 @@ use App\Content;
 use App\Tool;
 use App\Differentiation;
 use App\Block;
+use App\Student;
 use Auth;
 
 class TeacherController extends Controller
@@ -94,6 +95,17 @@ class TeacherController extends Controller
         $units = Unit::where('user_id',$teacher->id)->get();
         $unitsBySubject = $units->groupBy('subject_id')->all();
         return view ('teacher.teacher_units', compact('teacher','units','unitsBySubject','subjects'));
+    }
+
+    public function students() 
+    {
+        $teacher = Auth::user();
+        $students = Student::where('teacher_id',$teacher->id)->get();
+        $classes = Student::where([
+            ['teacher_id',$teacher->id],
+            ['class_account',1]
+        ])->get();
+        return view ('teacher.teacher_students', compact('teacher','students','classes'));
     }
 
     public function create_unit() 

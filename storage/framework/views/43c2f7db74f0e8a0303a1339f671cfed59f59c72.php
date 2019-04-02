@@ -5,8 +5,17 @@
 </div>
 </section>
 <?php $__env->stopSection(); ?>
+
+
 		
 <?php $__env->startSection('content'); ?>
+	<?php if(\Session::has('success')): ?>
+    	<div class="alert alert-success">
+         <p><?php echo \Session::get('success'); ?></p>
+    	</div>
+	<?php endif; ?>
+
+
 <section id="privateUnits">
 	<div class="container m-4">
 		<?php if(count($privateUnits) !== 0): ?> 
@@ -127,10 +136,15 @@
 							</p>
 						</div>
 						<div class="card-footer">
-      					<small class="text-muted">Zuletzt aktualisiert: <?php echo e($publicUnit->updated_at); ?></small>
-    					</div>
+							<small class="text-muted">Zuletzt aktualisiert: <?php echo e($publicUnit->updated_at->diffForHumans()); ?></small>
+						</div>
+						<?php if(Auth::check()): ?>
+						<div class="card-footer">
+						<a href="/lehrer/<?php echo e(Auth::user()->id); ?>/copy/<?php echo e($publicUnit->id); ?>" title="Lerneinheit in meinen Account kopieren"><i class="far fa-copy"></i></a>
+						</div>
+						<?php endif; ?>
   					</div>
-  				</div>
+				</div>
   			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>		 	
 		</div>
 		<hr>

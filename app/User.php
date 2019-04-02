@@ -42,7 +42,13 @@ class User extends Authenticatable implements MustVerifyEmail
 	public function differentiations()
 	{
 		return $this->hasMany('App\Differentiation');
-	}
+    }
+    
+    public function students()
+	{
+		return $this->hasMany('App\Student','teacher_id');
+    }
+    
 
     public function units()
 	{

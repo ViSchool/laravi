@@ -58,7 +58,7 @@
 					</div>
 					<div class="row ">
 						<div class="col-10 d-flex justify-content-around align-items-center">
-							<p class="mt-1 font-weight-bold">Ausgewähltes Lernniveau:</p>
+						<p class="mt-1 font-weight-bold">Ausgewähltes Lernniveau: </p> 
 							<div class="dropdown">
 							<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo e($startDifferentiation->differentiation_title); ?></button>
 								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -128,10 +128,10 @@
 										<?php $content = App\Content::findOrFail($block->content_id);?>
 										<a href="/content/<?php echo e($content->id); ?>" target="_blank">
 										<div class="card border border-primary w-75">
-											<?php if(isset($content->content_img_thumb)): ?>
-													<img class="card-img p-2" src="/images/contents/<?php echo e($content->content_img_thumb); ?>" alt="Bild:<?php echo e($content->content_title); ?>" style="max-height: 100%; width:auto;">
+											<?php if(isset($content->content_img)): ?>
+													<img class="card-img p-2" src="/images/contents/<?php echo e($content->content_img); ?>" alt="Bild:<?php echo e($content->content_title); ?>" style="max-height: 100%; width:auto;">
 											<?php endif; ?> 
-											<?php if(empty($content->content_img_thumb)): ?> 
+											<?php if(empty($content->content_img)): ?> 
 												<?php switch($content->tool_id):
 													case (1): ?>
 														<img class="p-4 card-img" src="https://img.youtube.com/vi/<?php echo e($content->toolspecific_id); ?>/mqdefault.jpg">
@@ -318,15 +318,7 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
-<script>
-      $(function () {
-  $('.tipp_popover').popover({
-    container: 'body',
-    html: 'true',
-    content: '<?php echo $block->tips; ?>',
-  })
-})
-</script>
+
 
 <?php $__env->stopSection(); ?>
 
