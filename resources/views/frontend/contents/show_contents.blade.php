@@ -1,9 +1,6 @@
 @extends ('layout')
 
 @section ('stylesheets')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
-<script src="/js/jsPDF/html2canvas.min.js"></script>
-
 
 @endsection
 
@@ -64,7 +61,6 @@
 					<div class="d-flex justify-content-end">
 						<a href="{{$content->content_link}}"> Als PDF öffnen <i class="far fa-file-pdf fa-2x" style="color:red"></i> </a>			
 					</div>
-
 					<object id="obj" data="{{$content->content_link}}" ></object>	
 				@break
 				@case(6) 

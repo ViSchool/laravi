@@ -18,7 +18,7 @@
   <div class="col-6 col-md">
     <h4 class="text-brand-blue">Lehrer</h4>
     <ul class="list-unstyled text-small">
-      <li><a class="text-muted" href="#">Registrieren</a></li>
+      <li><a class="text-muted" href="/lehrer/register_soon">Registrieren</a></li>
       <li><a class="text-muted" href="#">Anmelden</a></li>
       <li><a class="text-muted" href="#">Angebote für Lehrer</a></li>
       <li><a class="text-muted" href="#">Beratungsangebot für Schulen</a></li>

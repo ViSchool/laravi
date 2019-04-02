@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Subject;
 use Auth;
 use Carbon;
+use App\User;
 
 class UnitController extends Controller
 {
@@ -183,6 +184,25 @@ class UnitController extends Controller
         $unit->save();	
        	//return to overview of topics
         return redirect()->back();
+    }
+
+    public function copy($user, $unit_id)
+    {
+        $unit = Unit::findOrFail($unit_id);
+        $teacher = User::findOrFail($user);
+        $newUnit = $unit->replicate();
+        $newUnit->unit_title = "Kopie von: " . $unit->unit_title; 
+        $newUnit->status_id = 5;
+        $newUnit->user_id = $user;
+        $newUnit->save();
+        if ($unit->blocks != Null) {
+            foreach ($unit->blocks as $block) {
+                $newBlock = $block->replicate();
+                $newBlock->unit_id = $newUnit->id;
+                $newBlock->save();
+            }
+        }
+        return redirect()->back()->with('success', 'Die Lerneinheit wurde in Deinen Account kopiert');
     }
 
 

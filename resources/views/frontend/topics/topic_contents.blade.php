@@ -7,8 +7,17 @@
 </div>
 </section>
 @endsection
+
+
 		
 @section ('content')
+	@if (\Session::has('success'))
+    	<div class="alert alert-success">
+         <p>{!! \Session::get('success') !!}</p>
+    	</div>
+	@endif
+
+
 <section id="privateUnits">
 	<div class="container m-4">
 		@if (count($privateUnits) !== 0) 
@@ -127,10 +136,15 @@
 							</p>
 						</div>
 						<div class="card-footer">
-      					<small class="text-muted">Zuletzt aktualisiert: {{$publicUnit->updated_at}}</small>
-    					</div>
+							<small class="text-muted">Zuletzt aktualisiert: {{$publicUnit->updated_at->diffForHumans()}}</small>
+						</div>
+						@if (Auth::check())
+						<div class="card-footer">
+						<a href="/lehrer/{{Auth::user()->id}}/copy/{{$publicUnit->id}}" title="Lerneinheit in meinen Account kopieren"><i class="far fa-copy"></i></a>
+						</div>
+						@endif
   					</div>
-  				</div>
+				</div>
   			@endforeach		 	
 		</div>
 		<hr>

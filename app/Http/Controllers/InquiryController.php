@@ -14,7 +14,7 @@ class InquiryController extends Controller
      */
     public function index()
     {
-        //
+        return view('teacher.landingpage');
     }
 
     /**
@@ -44,7 +44,7 @@ class InquiryController extends Controller
 		$inquiry->thema = $request->thema;
 		$inquiry->email = $request->email;
 		$inquiry->save();
-		return redirect()->route('inquiries.store')->with('message', 'Wir haben Deine Anfrage erhalten und melden uns schnellstmöglich bei Dir!');
+		return redirect()->route('inquiries.index')->with('message', 'Wir haben Deine Anfrage erhalten und melden uns schnellstmöglich bei Dir!');
     }
 
     /**

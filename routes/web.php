@@ -79,6 +79,8 @@ Route::get('/lehrer/unterrichtseinheiten/{unit}/aufgaben','BlockController@teach
 Route::get('/lehrer/unterrichtseinheiten/aufgabe/bearbeiten/{block}','BlockController@teacher_edit');
 Route::patch('/lehrer/unterrichtseinheiten/aufgabe/bearbeiten/{block}','BlockController@teacher_update');
 Route::delete('/lehrer/unterrichtseinheiten/aufgabe/löschen/{block}','BlockController@teacher_destroy');
+Route::get('/lehrer/{user}/copy/{unit}','UnitController@copy')->name('unit.copy');
+
 
 /*Routes for Differentiations*/
 Route::get('/lehrer/{user}/lernniveaus/übersicht','DifferentiationController@index');
@@ -89,7 +91,16 @@ Route::get('/lehrer/profile/diffOn/{user}','DifferentiationController@diffSwitch
 Route::get('/lehrer/profile/diffOff/{user}','DifferentiationController@diffSwitchOff');
 
 /*Routes for Inquiries*/
-Route::post('/lehrer/anfrage' , 'InquiryController@store')->name('inquiries.store');
+Route::post('/lehrer/anfrage', 'InquiryController@store')->name('inquiries.store');
+Route::get('/lehrer/register_soon','InquiryController@index')->name('inquiries.index');
+
+/*Schüler- und Klassenaccounts */
+Route::get('/lehrer/accounts','TeacherController@students');
+Route::post('/lehrer/klassenaccount/erstellen','StudentController@store');
+
+/*SchülerLogin*/
+Route::post('/schueler/login','Auth\StudentLoginController@login')->name('students.login');
+
 
 /* Homepage */
 Route::get('/', 'VischoolController@index')->name('vischool');
@@ -293,6 +304,7 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 // Registration Routes...
 Route::get('/register', 'Auth\RegisterController@showRegistrationForm');
 Route::post('/register', 'Auth\RegisterController@register')->name('register');
+
 
 // Password Reset Routes...
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
