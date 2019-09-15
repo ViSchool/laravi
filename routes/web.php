@@ -26,28 +26,12 @@ Route::get('/differentiations/getgroupdiff/{differentiation_group}/{teacherId}',
 Route::get('/mailable', 'AppController@sendBrokenLinks');
 
 /*Routes for Teachers*/
-Route::get('/lehrer', 'TeacherController@index');
-Route::get ('/lehrer/coaching', 'TeacherController@coaching');
-Route::get ('/lehrer/schulcoaching', 'TeacherController@schulcoaching');
-Route::get ('/lehrer/danke', 'TeacherController@thanks');
-
-
-Route::get('/backend/teacher', 'TeacherController@indexBackend')->name('backend.teacher.index');
-Route::get('/backend/teacher/{teacher}', 'TeacherController@showBackend')->name('backend.teacher.show');
-
-/*Routes for Search*/
-Route::get('/suche', 'SearchController@index');
-Route::get('/suche/contents/{query}', 'SearchController@searchContents');
-Route::get('/suche/units/{query}', 'SearchController@searchUnits');
-Route::get('/suche/topics/{query}', 'SearchController@searchTopics');
-Route::get('/suche/series/{query}', 'SearchController@searchSeries');
-
-
-
 /*Routes for Units*/
-Route::get('lehrer/unterrichtseinheiten' , 'Unitcontroller@index')->name('teacher.units');
+
+
+/*Routes for Lehrer Logout and profile*/
+Route::patch('/lehrer/{id}/passwortaendern','RegistrationController@change_password')->name('teacher.change_password');
 Route::get('lehrer/logout','Auth\LoginController@userLogout');
-Route::get('lehrer/units','TeacherController@allunits');
 Route::get('lehrer/lehrerkonto','TeacherController@lehrerkonto');
 
 //Routen, damit Lehrer selbst Themen einstellen kann und Statusänderungen dazu
@@ -64,6 +48,11 @@ Route::get('/lehrer/newContentPrivate/{content}','ContentController@teacherConte
 Route::get('/lehrer/newContentViSchool/{content}','ContentController@teacherContentViSchool');
 Route::get('/lehrer/newContentDelete/{content}','ContentController@destroy');
 
+//Routen damit Lehrer selbst Serien anlegen können
+Route::get('lehrer/serien','SerieController@index');
+Route::post('lehrer/serien','SerieController@teacher_store');
+
+
 //Routes for units and blocks, damit Lehrer selbst Unterrichtseinheiten und Aufgaben einstellen kann und Statusänderungen dazu
 Route::get('/lehrer/unterrichtseinheiten','TeacherController@units')->name('teacher.units');
 Route::get('/lehrer/unterrichtseinheiten/erstellen','TeacherController@create_unit');
@@ -74,13 +63,15 @@ Route::get('/lehrer/newUnitPrivate/{unit}','UnitController@teacherUnitPrivate');
 Route::get('/lehrer/newUnitViSchool/{unit}','UnitController@teacherUnitViSchool');
 Route::delete('/lehrer/newUnitDelete/{unit}','UnitController@destroy');
 Route::get('/lehrer/unterrichtseinheiten/{unit}/aufgabe','TeacherController@create_block')->name('teacher.block.create');
+Route::get('/lehrer/unterrichtseinheiten/{unit}/serie/{serie}','UnitController@save_unit_serie')->name('teacher.unit_serie.save');
+Route::post('/lehrer/unterrichtseinheiten/serie/erstellen', 'SerieController@teacher_store')->name('teacher.serie.create');
 Route::post('/lehrer/unterrichtseinheiten/aufgabe','BlockController@teacher_store');
 Route::get('/lehrer/unterrichtseinheiten/{unit}/aufgaben','BlockController@teacher_show');
 Route::get('/lehrer/unterrichtseinheiten/aufgabe/bearbeiten/{block}','BlockController@teacher_edit');
 Route::patch('/lehrer/unterrichtseinheiten/aufgabe/bearbeiten/{block}','BlockController@teacher_update');
 Route::delete('/lehrer/unterrichtseinheiten/aufgabe/löschen/{block}','BlockController@teacher_destroy');
 Route::get('/lehrer/{user}/copy/{unit}','UnitController@copy')->name('unit.copy');
-
+Route::get('/lehrer/units','TeacherController@allunits');
 
 /*Routes for Differentiations*/
 Route::get('/lehrer/{user}/lernniveaus/übersicht','DifferentiationController@index');
@@ -95,11 +86,41 @@ Route::post('/lehrer/anfrage', 'InquiryController@store')->name('inquiries.store
 Route::get('/lehrer/register_soon','InquiryController@index')->name('inquiries.index');
 
 /*Schüler- und Klassenaccounts */
-Route::get('/lehrer/accounts','TeacherController@students');
-Route::post('/lehrer/klassenaccount/erstellen','StudentController@store');
+
+Route::post('lehrer/schueleraccount/erstellen','StudentController@store');
+Route::post('lehrer/klassenaccount/erstellen','StudentController@store_classaccount');
+Route::post('lehrer/schueleraccount_liste/erstellen','StudentgroupController@store');
+Route::delete('/lehrer/schueleraccount/löschen/{id}', 'StudentController@destroy');
+Route::get('/lehrer/klassenaccounts','TeacherController@classes');
+Route::get('/lehrer/schueleraccounts','TeacherController@students')->name('schueleraccounts');
+Route::get('/lehrer/schuelergruppe/schueleraccounts_erstellen/{id}', 'StudentController@store_group')->name('store_studentgroup');
+Route::delete('/lehrer/schuelergruppe/löschen/{id}', 'StudentgroupController@destroy')->name('studentgroup_delete');
+//nur zu Testzwecken:
+Route::get('/lehrer/schuelergruppe/pdf/{id}','StudentgroupController@show')->name('show_studentgroup_pdf');
+
+
+Route::get ('/lehrer/coaching', 'TeacherController@coaching');
+Route::get ('/lehrer/schulcoaching', 'TeacherController@schulcoaching');
+Route::get ('/lehrer/danke', 'TeacherController@thanks');
+Route::get('/lehrer', 'TeacherController@index');
+
+Route::get('/backend/teacher', 'TeacherController@indexBackend')->name('backend.teacher.index');
+Route::get('/backend/teacher/{teacher}', 'TeacherController@showBackend')->name('backend.teacher.show');
+
+/*Routes for Search*/
+Route::get('/suche', 'SearchController@index');
+Route::get('/suche/contents/{query}', 'SearchController@searchContents');
+Route::get('/suche/units/{query}', 'SearchController@searchUnits');
+Route::get('/suche/topics/{query}', 'SearchController@searchTopics');
+Route::get('/suche/series/{query}', 'SearchController@searchSeries');
+
+
+
 
 /*SchülerLogin*/
-Route::post('/schueler/login','Auth\StudentLoginController@login')->name('students.login');
+
+Route::post('/schueler/login','Auth\StudentLoginController@login')->name('students.login.submit');
+Route::get('/schueler/logout','Auth\StudentLoginController@studentLogout')->name('students.logout');
 
 
 /* Homepage */

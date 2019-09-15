@@ -13,7 +13,7 @@ class Student extends Authenticatable
     use Notifiable;
     use HasRoles;
 
-    protected $guard_name = 'student';
+    protected $guard = 'student';
     /**
      * The attributes that are mass assignable.
      *
@@ -35,7 +35,13 @@ class Student extends Authenticatable
     public function user()
 	{
 		return $this->belongsTo('App\User');
-	}
+    }
+    
+    public function studentgroup()
+	{
+		return $this->belongsTo('App\Studentgroup');
+    }
+
     
     public static function get_current_student() {
 		return Auth::guard('student')->user();

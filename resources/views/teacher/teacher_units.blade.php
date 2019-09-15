@@ -32,24 +32,40 @@
     <hr> 
     <h3>Diese Lerneinheiten hast Du bereits erstellt:</h3>
     @foreach ($unitsBySubject as $subject_id => $units)
-    @php $subject = App\Subject::findOrFail($subject_id);@endphp
+        @php $subject = App\Subject::findOrFail($subject_id);@endphp
         <h3 class="mt-3 text-brand-blue">{{$subject->subject_title}}</h3>           
         <div class="table">
-            <table class="table table-striped table-sm my-5">
+            <table class="table-responsive-lg table-striped my-5 w-100">
                 <thead class="table-primary">
                     <tr>
                         <th scope="col">Titel der Lerneinheit</th>
                         <th scope="col">Thema</th>
+                        <th scope="col">gehört zur Serie</th>
                         <th class="text-center" scope="col">Anzahl <br> der <br> Aufgaben</th>
                         <th class="text-center" scope="col">Aktionen</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">Status</th>                        
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($units as $unit)
-                    <tr>   
+                    <tr class="p-5">   
                         <td >{{$unit->unit_title}}</td>
                         <td>{{$unit->topic->topic_title}}</td>
+                        <td>
+                            <div class="dropdown">
+                                @if($unit->serie_id > 0)
+                                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownSerieButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$unit->serie->serie_title}}</button>
+                                @else
+                                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownSerieButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Serie auswählen</button>
+                                @endif
+                                <div class="dropdown-menu mb-3" aria-labelledby="dropdownSerieButton" id="serie">
+                                    @foreach ($series as $serie)
+                                        <a class="dropdown-item" title="{{$serie->serie_description}}" href="/lehrer/unterrichtseinheiten/{{$unit->id}}/serie/{{$serie->id}}">{{$serie->serie_title}}</a> 
+                                    @endforeach
+                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#serieModal_{{$unit->id}}">Neue Serie erstellen</button>     
+                                </div>
+                            </div>
+                        </td>
                         <td class="text-center">{{$unit->blocks->count()}}</td>
                         <td class="text-center">
                             <div class="dropdown">
@@ -74,7 +90,7 @@
                                     @if($unit->status_id > 2)
                                     <a class="dropdown-item" title="Aufgabe hinzufügen" href="/lehrer/unterrichtseinheiten/{{$unit->id}}/aufgabe"><i class="far fa-plus-square"></i> Aufgabe hinzufügen</a>
                                     <a class="dropdown-item" title="Aufgabe hinzufügen" href="/lehrer/unterrichtseinheiten/{{$unit->id}}/aufgaben"><i class="far fa-edit"></i> Aufgabe(n) bearbeiten</a>
-                                <button class="dropdown-item mb-3" type="button" title="Lerneinheit löschen" data-toggle="modal" data-target="#deleteModal_{{$unit->id}}"><i class="fas fa-trash"></i> Lerneinheit komplett löschen</button>
+                                    <button class="dropdown-item mb-3" type="button" title="Lerneinheit löschen" data-toggle="modal" data-target="#deleteModal_{{$unit->id}}"><i class="fas fa-trash"></i> Lerneinheit komplett löschen</button>
                                         {{--@include('components.deleteCheck',['typeDelete'=>'unit','id'=>$unit->id])--}}
                                     @endif
                                 </div>
@@ -82,19 +98,68 @@
                         </td>
                         <td>{{$unit->status->status_name}}</td>
                     </tr>
+                    
+                    {{--Modal zum Löschen--}}
                     <div class="modal fade" id="deleteModal_{{$unit->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         @include('components.deleteCheck',['typeDelete'=>'unit','id'=>$unit->id, 'title'=>$unit->unit_title])
                     </div>
+                    {{-- Ende des Modal zum Löschen--}}
+
+                    {{--Modal zum Speichern einer neuen Serie--}}
+                    <div class="modal fade" id="serieModal_{{$unit->id}}" tabindex="-1" role="dialog" aria-labelledby="serieModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="serieModalLabel">Serie erstellen</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="POST" action="unterrichtseinheiten/serie/erstellen">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <input type="hidden" id="unit_id" name="unit_id" value="{{$unit->id}}">
+                                        <div class="form-group{{ $errors->has('serie_title') ? ' has-error' : '' }}">
+                                            <label for="serie_title" class="col-md-4 control-label">Name der Serie</label>
+                                            <div class="col-10">
+                                                <input id="serie_title" type="text" class="form-control" name="serie_title" value="{{ old('serie_title') }}" required>
+                                                @if ($errors->has('serie_title'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('serie_title') }}</strong>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group {{$errors->has('serie_description') ? 'has-error' : '' }}">
+                                            <label for="serie_description" class="col-md-4 control-label">Kurze Beschreibung zum Inhalt der Serie</label>
+                                            <div class="col-10">
+                                                <textarea id="serie_description" class="form-control" name="serie_description">{{ old('serie_description') }}</textarea>
+                                                @if ($errors->has('serie_description'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('serie_description') }}</strong>
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </div>     
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="sumbmit" class="btn btn-primary">Serie speichern</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {{--Ende des Modals zum Speichern der Serie--}}
+
+
                     @endforeach 
-                </tbody>
+                </tbody>     
             </table>
         </div>
-    
-
     @endforeach
 </div>
-
-
 
 @endsection
 

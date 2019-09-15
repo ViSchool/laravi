@@ -2,7 +2,10 @@
 
 <div class="row">
   <div class="col-12 col-md">
-		<a class="text-dark text-decoration-none" href="/"><h2 class="font-weight-bold">ViSchool</h2></a>
+    <a class="text-dark text-decoration-none" href="/"><h2 class="font-weight-bold">ViSchool</h2></a>
+    <ul class="list-unstyled text-small">
+      <li><a class="text-muted" href="/backend/">Admin</a></li>
+    </ul>
   </div>
   <div class="col-6 col-md">
     <h4 class="text-brand-blue">Lernen</h4>

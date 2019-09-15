@@ -11,7 +11,7 @@
             <div class="container">
               <div class="carousel-caption">
                 <h1>Lern digital!</h1>
-                <p><a class="btn btn-lg btn-primary" href="#" role="button">Zu den Inhalten</a></p>
+                <p><a class="btn btn-lg btn-primary" href="#vischool-subjects" role="button">Inhalte für Schüler</a></p>
               </div>
             </div>
           </div>
@@ -19,8 +19,8 @@
             <img class="second-slide" src="/images/banner.jpg" alt="Second slide">
             <div class="container">
               <div class="carousel-caption">
-                <h1>Lerne auf Deine Art!</h1>
-                <p><a class="btn btn-lg btn-primary" href="#" role="button">Zu den Inhalten</a></p>
+                <h1>Gestalte Deinen Unterricht digital!</h1>
+                <p><a class="btn btn-lg btn-primary" href="/lehrer" role="button">ViSchool für Lehrer</a></p>
               </div>
             </div>
           </div>
@@ -29,7 +29,7 @@
             <div class="container">
               <div class="carousel-caption">
                 <h1>Lerne ausgesucht gut!</h1>
-                <p><a class="btn btn-lg btn-primary" href="#" role="button">Zu den Inhalten</a></p>
+                <p><a class="btn btn-lg btn-primary" href="#vischool-subjects" role="button">Zu allen Fächern</a></p>
               </div>
             </div>
           </div>

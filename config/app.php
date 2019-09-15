@@ -184,7 +184,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\LinkChecker\LinkCheckerServiceProvider::class,
         Alaouy\Youtube\YoutubeServiceProvider::class,
-        
+        Barryvdh\Snappy\ServiceProvider::class,
 
     ],
 
@@ -240,6 +240,8 @@ return [
         'Carbon' => Carbon\Carbon::class,
         'Youtube' => Alaouy\Youtube\Facades\Youtube::class,
         'Vimeo' => Vimeo\Laravel\Facades\Vimeo::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 
     ],
 

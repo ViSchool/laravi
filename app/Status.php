@@ -24,4 +24,9 @@ class Status extends Model
 	{
 		return $this->hasMany(Unit::class);
 	}
+
+	public function series()
+	{
+		return $this->hasMany(Serie::class);
+	}
 }

@@ -19,7 +19,16 @@ class Serie extends Model
 	
 	public function units()
 	{
-		return $this->belongsToMany(Unit::class);
+		return $this->hasMany(Unit::class);
 	}
 	
+	public static function prettyDate($date) 
+	{
+		return $date->diffForHumans();
+	}
+
+	public function status()
+	{
+		return $this->belongsTo('App\Status');
+	}
 }

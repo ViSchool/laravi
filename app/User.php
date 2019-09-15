@@ -48,6 +48,11 @@ class User extends Authenticatable implements MustVerifyEmail
 	{
 		return $this->hasMany('App\Student','teacher_id');
     }
+
+    public function studentgroup()
+	{
+		return $this->hasMany('App\Studentgroup','teacher_id');
+    }
     
 
     public function units()

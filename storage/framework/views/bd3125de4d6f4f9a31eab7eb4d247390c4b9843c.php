@@ -15,6 +15,11 @@
  $teacher_id = $teacher->id;   
 ?>
 <div class="container mt-3">
+     <?php if(\Session::has('message')): ?>
+        <div class="alert alert-warning">
+            <p><?php echo \Session::get('message'); ?></p>
+    	</div>
+	<?php endif; ?>
     <div class="card mt-5 mb-5">
         <div class="card-header text-center">
             <h3 class="text-brand-blue m-3">Hallo <?php echo e($teacher->teacher_name); ?>! </h3> 
@@ -48,12 +53,13 @@
                 <!-- Button trigger modal -->
                 <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#passwordModal">
 Passwort ändern</button>
+               
 
                 <!-- Modal -->
                 <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <form method="POST" action="/lehrer/passwortändern" enctype="multipart/form-data">
+                        <form method="POST" action="/lehrer/<?php echo e($teacher_id); ?>/passwortaendern" enctype="multipart/form-data">
                             <?php echo csrf_field(); ?> <?php echo method_field('PATCH'); ?>
                                 
                                 <div class="modal-header">
@@ -103,7 +109,6 @@ Passwort ändern</button>
                     </div>
                 </div>
             </div>
-
             <hr>
 
             <h3 class="mt-3 mb-5">Einstellungen</h3>

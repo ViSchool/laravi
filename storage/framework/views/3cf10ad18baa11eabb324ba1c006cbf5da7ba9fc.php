@@ -30,24 +30,40 @@
     <hr> 
     <h3>Diese Lerneinheiten hast Du bereits erstellt:</h3>
     <?php $__currentLoopData = $unitsBySubject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject_id => $units): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-    <?php $subject = App\Subject::findOrFail($subject_id);?>
+        <?php $subject = App\Subject::findOrFail($subject_id);?>
         <h3 class="mt-3 text-brand-blue"><?php echo e($subject->subject_title); ?></h3>           
         <div class="table">
-            <table class="table table-striped table-sm my-5">
+            <table class="table-responsive-lg table-striped my-5 w-100">
                 <thead class="table-primary">
                     <tr>
                         <th scope="col">Titel der Lerneinheit</th>
                         <th scope="col">Thema</th>
+                        <th scope="col">gehört zur Serie</th>
                         <th class="text-center" scope="col">Anzahl <br> der <br> Aufgaben</th>
                         <th class="text-center" scope="col">Aktionen</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">Status</th>                        
                     </tr>
                 </thead>
                 <tbody>
                     <?php $__currentLoopData = $units; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <tr>   
+                    <tr class="p-5">   
                         <td ><?php echo e($unit->unit_title); ?></td>
                         <td><?php echo e($unit->topic->topic_title); ?></td>
+                        <td>
+                            <div class="dropdown">
+                                <?php if($unit->serie_id > 0): ?>
+                                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownSerieButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo e($unit->serie->serie_title); ?></button>
+                                <?php else: ?>
+                                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownSerieButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Serie auswählen</button>
+                                <?php endif; ?>
+                                <div class="dropdown-menu mb-3" aria-labelledby="dropdownSerieButton" id="serie">
+                                    <?php $__currentLoopData = $series; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $serie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <a class="dropdown-item" title="<?php echo e($serie->serie_description); ?>" href="/lehrer/unterrichtseinheiten/<?php echo e($unit->id); ?>/serie/<?php echo e($serie->id); ?>"><?php echo e($serie->serie_title); ?></a> 
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#serieModal_<?php echo e($unit->id); ?>">Neue Serie erstellen</button>     
+                                </div>
+                            </div>
+                        </td>
                         <td class="text-center"><?php echo e($unit->blocks->count()); ?></td>
                         <td class="text-center">
                             <div class="dropdown">
@@ -72,7 +88,7 @@
                                     <?php if($unit->status_id > 2): ?>
                                     <a class="dropdown-item" title="Aufgabe hinzufügen" href="/lehrer/unterrichtseinheiten/<?php echo e($unit->id); ?>/aufgabe"><i class="far fa-plus-square"></i> Aufgabe hinzufügen</a>
                                     <a class="dropdown-item" title="Aufgabe hinzufügen" href="/lehrer/unterrichtseinheiten/<?php echo e($unit->id); ?>/aufgaben"><i class="far fa-edit"></i> Aufgabe(n) bearbeiten</a>
-                                <button class="dropdown-item mb-3" type="button" title="Lerneinheit löschen" data-toggle="modal" data-target="#deleteModal_<?php echo e($unit->id); ?>"><i class="fas fa-trash"></i> Lerneinheit komplett löschen</button>
+                                    <button class="dropdown-item mb-3" type="button" title="Lerneinheit löschen" data-toggle="modal" data-target="#deleteModal_<?php echo e($unit->id); ?>"><i class="fas fa-trash"></i> Lerneinheit komplett löschen</button>
                                         
                                     <?php endif; ?>
                                 </div>
@@ -80,19 +96,68 @@
                         </td>
                         <td><?php echo e($unit->status->status_name); ?></td>
                     </tr>
+                    
+                    
                     <div class="modal fade" id="deleteModal_<?php echo e($unit->id); ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <?php echo $__env->make('components.deleteCheck',['typeDelete'=>'unit','id'=>$unit->id, 'title'=>$unit->unit_title], \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                     </div>
+                    
+
+                    
+                    <div class="modal fade" id="serieModal_<?php echo e($unit->id); ?>" tabindex="-1" role="dialog" aria-labelledby="serieModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="serieModalLabel">Serie erstellen</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="POST" action="unterrichtseinheiten/serie/erstellen">
+                                    <?php echo csrf_field(); ?>
+                                    <div class="modal-body">
+                                        <input type="hidden" id="unit_id" name="unit_id" value="<?php echo e($unit->id); ?>">
+                                        <div class="form-group<?php echo e($errors->has('serie_title') ? ' has-error' : ''); ?>">
+                                            <label for="serie_title" class="col-md-4 control-label">Name der Serie</label>
+                                            <div class="col-10">
+                                                <input id="serie_title" type="text" class="form-control" name="serie_title" value="<?php echo e(old('serie_title')); ?>" required>
+                                                <?php if($errors->has('serie_title')): ?>
+                                                    <span class="help-block">
+                                                        <strong><?php echo e($errors->first('serie_title')); ?></strong>
+                                                    </span>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group <?php echo e($errors->has('serie_description') ? 'has-error' : ''); ?>">
+                                            <label for="serie_description" class="col-md-4 control-label">Kurze Beschreibung zum Inhalt der Serie</label>
+                                            <div class="col-10">
+                                                <textarea id="serie_description" class="form-control" name="serie_description"><?php echo e(old('serie_description')); ?></textarea>
+                                                <?php if($errors->has('serie_description')): ?>
+                                                    <span class="help-block">
+                                                        <strong><?php echo e($errors->first('serie_description')); ?></strong>
+                                                    </span>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>     
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="sumbmit" class="btn btn-primary">Serie speichern</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
-                </tbody>
+                </tbody>     
             </table>
         </div>
-    
-
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </div>
-
-
 
 <?php $__env->stopSection(); ?>
 

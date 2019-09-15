@@ -106,10 +106,20 @@ class UnitController extends Controller
      * @param  \App\Unit  $unit
      * @return \Illuminate\Http\Response
      */
+    
+    public function save_unit_serie($unit_id, $serie_id) 
+    {    
+        $unit= Unit::findOrFail($unit_id);
+        $unit->serie_id = $serie_id;
+        $unit->save();
+        return redirect()->back();
+    }
+    
     public function show($id)
     {
         $unit = Unit::find($id);
     }
+
 
     /**
      * Show the form for editing the specified resource.

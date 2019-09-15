@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Serie;
 use Illuminate\Http\Request;
 use App\Admin;
+use App\Unit;
 use Auth;
 use Purifier;
 
@@ -39,7 +40,7 @@ class SerieController extends Controller
      */
     public function store(Request $request)
     {
-        	$this->validate(request(), [
+        $this->validate(request(), [
 		'serie_title' => 'required'
 		]);
 		$serie = new Serie;
@@ -51,6 +52,26 @@ class SerieController extends Controller
 		$serie->save();
 		return redirect()->route('backend.series.index');
     }
+
+    public function teacher_store(Request $request) 
+    {
+        $this->validate(request(), [
+		'serie_title' => 'required'
+        ]);
+        
+        $serie = new Serie;
+        $unit = Unit::findOrFail($request->unit_id);
+        $teacher = Auth::user();
+        $serie->serie_title = $request->serie_title;
+		$serie->user_id = $teacher->id;
+		$serie->serie_description = Purifier::clean($request->serie_desciption);
+		$serie->status_id = $unit->status_id;
+        $serie->save();
+        $unit->serie_id = $serie->id;
+        $unit->save();
+        return redirect()->back();
+    }
+
 
     /**
      * Display the specified resource.

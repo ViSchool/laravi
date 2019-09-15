@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Hash;
 
 class RegistrationController extends Controller
 {
@@ -31,25 +32,22 @@ class RegistrationController extends Controller
     
     }
     
-    public function change_password($id, $request) 
+    public function change_password($id, Request $request) 
     {
-    $this->validate(request(), [
-    	'name' => 'required',
-    	'email' => 'required|email',
+        $this->validate(request(), [
+    	'oldpassword' => 'required',
     	'password' => 'required|confirmed'	
     ]);
-    
-    
-    // create and save user
     $user = User::find($id);
-    if($user->password == $request->oldPassword) {
-         $user->password = $request->password;
+    if (Hash::check($request->oldpassword, $user->password)) 
+    {
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect()->back()->with('message','Wir haben Dein neues Passwort gespeichert.'); 
     }
     else {
-
-    }
-    $user->save();
-    return Redirect::intended('/');
+        return redirect()->back()->with('message','Das Passwort konnte nicht geändert werden. Dein altes Passwort stimmt nicht.');
+    };
     }
     
     public function change_settings($id, $request) 

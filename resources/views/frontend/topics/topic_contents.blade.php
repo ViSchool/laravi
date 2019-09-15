@@ -1,5 +1,9 @@
 @extends ('/layout')
 
+@section('stylesheets')
+	<link href="/css/rotating-card.css" rel="stylesheet" />
+@endsection
+
 @section ('page-header')
 <section id="page-header">
 <div class="container">
@@ -11,18 +15,76 @@
 
 		
 @section ('content')
-	@if (\Session::has('success'))
-    	<div class="alert alert-success">
-         <p>{!! \Session::get('success') !!}</p>
-    	</div>
-	@endif
+@if (\Session::has('success'))
+   <div class="alert alert-success">
+      <p>{!! \Session::get('success') !!}</p>
+   </div>
+@endif
 
 
 <section id="privateUnits">
 	<div class="container m-4">
-		@if (count($privateUnits) !== 0) 
+		@if (count($privateUnits) !== 0 || count($privateSeries)!== 0)
 		<h4 class="mt-3">Private Lerneinheiten zum Thema "{{$topic->topic_title}}"</h4>
 		<div class="row justify-content-start">
+
+			@foreach ($privateSeries as $privateSerie)
+			@php
+				 $privateSerieUnits = App\Unit::where('serie_id',$privateSerie->id)->get();
+			@endphp
+				<div class="col">
+					<div class="card-container-flip manual-flip">
+						<div class="card-flip">
+							<div class="front-flip">
+								<div class="cover-flip">
+									<img src="/images/topic_back.jpeg"/>
+								</div>
+								<div class="user-flip">
+									@foreach ($privateSerieUnits as $privateSerieUnit)
+										@if ($privateSerieUnit->unit_img_thumb !== NULL)
+											<img class="img-circle" src="/images/units/{{$privateSerieUnit->unit_img_thumb}}"/> 
+											@break
+										@endif 
+									@endforeach 
+									<img class="img-circle" src="/images/logo_cool.jpg"/>
+								</div>
+								<div class="content-flip">
+									 <div class="main-flip">
+										 <h3 class="name-flip">{{$privateSerie->serie_title}}</h3>
+										 <p class="small text-center">Status: {{$privateSerie->status->status_name}} </p>
+									</div>
+									<div class="footer-flip">
+										<p class="small">{{$privateSerie->units_count}} Unterrichtseinheiten</p>
+										<button class="btn btn-simple" onclick="rotateCard(this)">
+                                    <i class="fa fa-mail-forward"></i> Mehr erfahren
+                              </button>
+                     		</div>								
+								</div>															
+							</div> <!--end front panel -->
+							<div class="back-flip">
+								<div class="header-flip">
+									<h5 class="mb-1">Beschreibung:</h5>
+                         	<p class="small">{{$privateSerie->serie_description}}</p>
+								<div class="content-flip">
+                     		<div class="main-flip">
+                         		<h5 class="">Diese Lerneinheiten gehören zur Serie:</h5>
+										@foreach ($privateSerieUnits as $privateSerieUnit)
+											<a class="small" href="/lerneinheit/{{$privateSerieUnit->id}}">{{$privateSerieUnit->unit_title}}</a>
+										@endforeach 
+									</div>
+									<div class="footer-flip">
+										<button class="btn btn-simple" rel="tooltip" title="umdrehen" onclick="rotateCard(this)">
+                                <i class="fa fa-reply"></i> Zurück
+                            	</button>
+                 				</div>	 
+                     	</div>
+                 		</div>
+						</div>
+					</div>
+				</div>
+			@endforeach
+
+
 			@foreach ($privateUnits as $privateUnit)
 				<div class="col">
 					<div class="card m-3" style="width:200px">	
@@ -208,6 +270,33 @@
   	trigger: 'hover focus'
   })
 });
+</script>
+
+<script type="text/javascript">
+    $().ready(function(){
+        $('[rel="tooltip"]').tooltip();
+
+        $('a.scroll-down').click(function(e){
+            e.preventDefault();
+            scroll_target = $(this).data('href');
+             $('html, body').animate({
+                 scrollTop: $(scroll_target).offset().top - 60
+             }, 1000);
+        });
+
+    });
+
+    function rotateCard(btn){
+        var $card = $(btn).closest('.card-container-flip');
+        console.log($card);
+        if($card.hasClass('hover')){
+            $card.removeClass('hover');
+        } else {
+            $card.addClass('hover');
+        }
+    }
+
+
 </script>
 @endsection		
 

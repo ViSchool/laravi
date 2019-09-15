@@ -14,9 +14,9 @@ class Unit extends Model
 	protected $presenter = 'App\Presenters\datePresenter';
 	
 	use Searchable;
-   public function series()
+   public function serie()
 	{
-		return $this->belongsToMany('App\Serie');
+		return $this->belongsTo('App\Serie');
 	}
     
     public function reviews()

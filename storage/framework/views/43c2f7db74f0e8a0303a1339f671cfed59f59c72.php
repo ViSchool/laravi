@@ -1,3 +1,7 @@
+<?php $__env->startSection('stylesheets'); ?>
+	<link href="/css/rotating-card.css" rel="stylesheet" />
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('page-header'); ?>
 <section id="page-header">
 <div class="container">
@@ -9,18 +13,76 @@
 
 		
 <?php $__env->startSection('content'); ?>
-	<?php if(\Session::has('success')): ?>
-    	<div class="alert alert-success">
-         <p><?php echo \Session::get('success'); ?></p>
-    	</div>
-	<?php endif; ?>
+<?php if(\Session::has('success')): ?>
+   <div class="alert alert-success">
+      <p><?php echo \Session::get('success'); ?></p>
+   </div>
+<?php endif; ?>
 
 
 <section id="privateUnits">
 	<div class="container m-4">
-		<?php if(count($privateUnits) !== 0): ?> 
+		<?php if(count($privateUnits) !== 0 || count($privateSeries)!== 0): ?>
 		<h4 class="mt-3">Private Lerneinheiten zum Thema "<?php echo e($topic->topic_title); ?>"</h4>
 		<div class="row justify-content-start">
+
+			<?php $__currentLoopData = $privateSeries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $privateSerie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+			<?php
+				 $privateSerieUnits = App\Unit::where('serie_id',$privateSerie->id)->get();
+			?>
+				<div class="col">
+					<div class="card-container-flip manual-flip">
+						<div class="card-flip">
+							<div class="front-flip">
+								<div class="cover-flip">
+									<img src="/images/topic_back.jpeg"/>
+								</div>
+								<div class="user-flip">
+									<?php $__currentLoopData = $privateSerieUnits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $privateSerieUnit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+										<?php if($privateSerieUnit->unit_img_thumb !== NULL): ?>
+											<img class="img-circle" src="/images/units/<?php echo e($privateSerieUnit->unit_img_thumb); ?>"/> 
+											<?php break; ?>
+										<?php endif; ?> 
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+									<img class="img-circle" src="/images/logo_cool.jpg"/>
+								</div>
+								<div class="content-flip">
+									 <div class="main-flip">
+										 <h3 class="name-flip"><?php echo e($privateSerie->serie_title); ?></h3>
+										 <p class="small text-center">Status: <?php echo e($privateSerie->status->status_name); ?> </p>
+									</div>
+									<div class="footer-flip">
+										<p class="small"><?php echo e($privateSerie->units_count); ?> Unterrichtseinheiten</p>
+										<button class="btn btn-simple" onclick="rotateCard(this)">
+                                    <i class="fa fa-mail-forward"></i> Mehr erfahren
+                              </button>
+                     		</div>								
+								</div>															
+							</div> <!--end front panel -->
+							<div class="back-flip">
+								<div class="header-flip">
+									<h5 class="mb-1">Beschreibung:</h5>
+                         	<p class="small"><?php echo e($privateSerie->serie_description); ?></p>
+								<div class="content-flip">
+                     		<div class="main-flip">
+                         		<h5 class="">Diese Lerneinheiten gehören zur Serie:</h5>
+										<?php $__currentLoopData = $privateSerieUnits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $privateSerieUnit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+											<a class="small" href="/lerneinheit/<?php echo e($privateSerieUnit->id); ?>"><?php echo e($privateSerieUnit->unit_title); ?></a>
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+									</div>
+									<div class="footer-flip">
+										<button class="btn btn-simple" rel="tooltip" title="umdrehen" onclick="rotateCard(this)">
+                                <i class="fa fa-reply"></i> Zurück
+                            	</button>
+                 				</div>	 
+                     	</div>
+                 		</div>
+						</div>
+					</div>
+				</div>
+			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
 			<?php $__currentLoopData = $privateUnits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $privateUnit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 				<div class="col">
 					<div class="card m-3" style="width:200px">	
@@ -208,6 +270,33 @@
   	trigger: 'hover focus'
   })
 });
+</script>
+
+<script type="text/javascript">
+    $().ready(function(){
+        $('[rel="tooltip"]').tooltip();
+
+        $('a.scroll-down').click(function(e){
+            e.preventDefault();
+            scroll_target = $(this).data('href');
+             $('html, body').animate({
+                 scrollTop: $(scroll_target).offset().top - 60
+             }, 1000);
+        });
+
+    });
+
+    function rotateCard(btn){
+        var $card = $(btn).closest('.card-container-flip');
+        console.log($card);
+        if($card.hasClass('hover')){
+            $card.removeClass('hover');
+        } else {
+            $card.addClass('hover');
+        }
+    }
+
+
 </script>
 <?php $__env->stopSection(); ?>		
 

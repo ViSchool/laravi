@@ -21,7 +21,7 @@
 				@endforeach
 			</select>
 			<label>Übersichtsseite für Icons:</label>
-			<a href="https://fontawesome.com/icons?d=gallery" target="_blank">Font Awesome Gallery</a>
+			<a href="https://fontawesome.com/icons?d=gallery&m=free" target="_blank">Font Awesome Gallery</a>
 		</div>
 		
 		

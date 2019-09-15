@@ -318,7 +318,14 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
-
+<script>
+      $(function () {
+  $('.tipp_popover').popover({
+    container: 'body',
+    html: 'true',
+  })
+})
+</script>
 
 <?php $__env->stopSection(); ?>
 

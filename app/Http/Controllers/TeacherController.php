@@ -13,6 +13,8 @@ use App\Tool;
 use App\Differentiation;
 use App\Block;
 use App\Student;
+use App\Studentgroup;
+use App\Serie;
 use Auth;
 
 class TeacherController extends Controller
@@ -63,8 +65,8 @@ class TeacherController extends Controller
     {
         $teacher = Auth::user();
         $schools = School::all();
-        $studentsCount = User::role('Schüler')->where('teacher_id',$teacher->id)->count();
-        $classCount = User::role('Klasse')->where('teacher_id',$teacher->id)->count();
+        $studentsCount = Student::role('Schüler')->where('teacher_id',$teacher->id)->count();
+        $classCount = Student::role('Klasse')->where('teacher_id',$teacher->id)->count();
         $differentiations = Differentiation::where('user_id',$teacher->id)->get();
         return view ('teacher.teacher_profile', compact('teacher','schools','studentsCount','classCount'));
     }
@@ -93,19 +95,34 @@ class TeacherController extends Controller
         $teacher = Auth::user();
         $subjects = Subject::all();
         $units = Unit::where('user_id',$teacher->id)->get();
+        $series = Serie::where([
+            ['user_id', $teacher->id],
+            ['status_id','>',2],
+            ])->get();
         $unitsBySubject = $units->groupBy('subject_id')->all();
-        return view ('teacher.teacher_units', compact('teacher','units','unitsBySubject','subjects'));
+        return view ('teacher.teacher_units', compact('teacher','units','series','unitsBySubject','subjects'));
     }
 
     public function students() 
     {
         $teacher = Auth::user();
-        $students = Student::where('teacher_id',$teacher->id)->get();
-        $classes = Student::where([
+        $students = Student::role('Schüler')->where([
             ['teacher_id',$teacher->id],
-            ['class_account',1]
+            ['studentgroup_id', NULL],           
+            ])->get();
+        $studentgroups = Studentgroup::where('teacher_id',$teacher->id)->get();
+        return view ('teacher.teacher_studentaccount', compact('teacher','students','studentgroups'));
+    }
+
+    public function classes() 
+    {
+        $teacher = Auth::user();
+        $classes = Student::role('Klasse')->where('teacher_id',$teacher->id)->get();
+        $privateunits = Unit::where([
+            ['user_id',$teacher->id],
+            ['status_id',3]
         ])->get();
-        return view ('teacher.teacher_students', compact('teacher','students','classes'));
+        return view ('teacher.teacher_classaccount', compact('teacher','classes','privateunits'));
     }
 
     public function create_unit() 
