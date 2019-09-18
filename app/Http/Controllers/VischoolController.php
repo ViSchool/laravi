@@ -65,9 +65,9 @@ class VischoolController extends BaseController
 		$student = Auth::guard('student')->user();
 		$topic = Topic::find($id);
 		$publicContents = $topic->content->where('status_id',1)->sortByDesc('updated_at');
-		$publicUnits = $topic->unit->where('status_id',1)->sortByDesc('updated_at');
+		$publicUnits = $topic->unit->where('status_id',1)->where('serie_id',NULL)->sortByDesc('updated_at');
 		$series = $topic->unit->where('serie_id','>',0)->pluck('serie_id')->unique();
-		$publicSeries = Serie::whereIn('id', $series)->where('status_id', 1)->get();
+		$publicSeries = Serie::whereIn('id', $series)->where('status_id', 1)->withCount('units')->get();
 		
 		if (isset ($teacher)){
 			$privateContents = $topic->content->whereIn('status_id',[2,3])->where('user_id',$teacher->teacher_id)->sortByDesc('updated_at');

@@ -48,11 +48,11 @@
 						@hasanyrole('Lehrer (free)|Lehrer (premium)|Schüler')
 							<a class="dropdown-item" href="/lehrer/themen">Meine Themen</a>
 							<a class="dropdown-item" href="/lehrer/inhalte">Meine Inhalte</a>
-							<a class="dropdown-item" href="/lehrer/unterrichtseinheiten">Meine Unterrichtseinheiten</a>
+							<a class="dropdown-item" href="/lehrer/unterrichtseinheiten">Meine Lerneinheiten</a>
 						@else
 							<a class="dropdown-item disabled" href="http://">Meine Themen</a>
 							<a class="dropdown-item disabled" href="http://">Meine Inhalte</a>
-							<a class="dropdown-item disabled" href="http://">Meine Unterrichtseinheiten</a>
+							<a class="dropdown-item disabled" href="http://">Meine Lerneinheiten</a>
 						@endhasanyrole
 						@hasanyrole('Lehrer (free)|Lehrer (premium)')
 							<a class="dropdown-item" href="/lehrer/klassenaccounts">Meine Klassenaccounts</a>

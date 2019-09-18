@@ -143,7 +143,7 @@ Route::get('/subjects/{id}', 'VischoolController@subject_show')->name('frontend.
 Route::get('/topic/{topic}', 'VischoolController@topic_show')->name('frontend.topic');
 Route::get('/contents', 'VischoolController@contents_index');
 Route::get('/content/{content}', 'VischoolController@content_show')->name('frontend.contents.show');
-Route::get('/units', 'VischoolController@units_index');
+/*NICHT BENUTZT: Route::get('/units', 'VischoolController@units_index')->name('frontend.units.index');*/
 Route::get('/unit', 'VischoolController@unit_show');
 Route::get('/unit/{unit}/{diff}', 'VischoolController@unit_diff')->name('units.filterdiffs');
 Route::get('/lerneinheiten/{topic}', 'VischoolController@units_topic');

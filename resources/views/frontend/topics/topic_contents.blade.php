@@ -64,7 +64,8 @@
 							<div class="back-flip">
 								<div class="header-flip">
 									<h5 class="mb-1">Beschreibung:</h5>
-                         	<p class="small">{{$privateSerie->serie_description}}</p>
+									<p class="small">{{$privateSerie->serie_description}}</p>
+								</div>
 								<div class="content-flip">
                      		<div class="main-flip">
                          		<h5 class="">Diese Lerneinheiten gehören zur Serie:</h5>
@@ -72,12 +73,12 @@
 											<a class="small" href="/lerneinheit/{{$privateSerieUnit->id}}">{{$privateSerieUnit->unit_title}}</a>
 										@endforeach 
 									</div>
-									<div class="footer-flip">
-										<button class="btn btn-simple" rel="tooltip" title="umdrehen" onclick="rotateCard(this)">
-                                <i class="fa fa-reply"></i> Zurück
-                            	</button>
-                 				</div>	 
-                     	</div>
+								</div>
+								<div class="footer-flip">
+									<button class="btn btn-simple" rel="tooltip" title="umdrehen" onclick="rotateCard(this)">
+                              <i class="fa fa-reply"></i> Zurück
+                           </button>
+                 			</div>	 
                  		</div>
 						</div>
 					</div>
@@ -173,9 +174,73 @@
 
 <section id="topic_units">
 	<div class="container m-4">
-		@if (count($publicUnits) !== 0) 
+		@if (count($publicUnits) !== 0 || count($publicSeries) !== 0) 
 		<h4 class="mt-3">Komplette Lerneinheiten zum Thema "{{$topic->topic_title}}"</h4>
 		<div class="row justify-content-start">
+			
+			@foreach ($publicSeries as $publicSerie)
+			@php
+				 $publicSerieUnits = App\Unit::where('serie_id',$publicSerie->id)->limit(6)->get();
+				 $publicSerieTopic = $publicSerieUnits->first()->topic_id;
+			@endphp
+				<div class="col">
+					<div class="card-container-flip manual-flip">
+						<div class="card-flip">
+							<div class="front-flip">
+								<div class="cover-flip">
+									<img src="/images/topic_back.jpeg"/>
+								</div>
+								<div class="user-flip">
+									@foreach ($publicSerieUnits as $publicSerieUnit)
+										@if ($publicSerieUnit->unit_img_thumb !== NULL)
+											<img class="img-circle" src="/images/units/{{$privateSerieUnit->unit_img_thumb}}"/> 
+											@break
+										@endif 
+									@endforeach 
+									<img class="img-circle" src="/images/logo_cool.jpg"/>
+								</div>
+								<div class="content-flip">
+									<div class="main-flip">
+									 	<a href="/lerneinheiten/{{$publicSerieTopic}}"><h3 class="name-flip">{{$publicSerie->serie_title}}</h3></a>	
+									</div>
+									<div class="footer-flip">
+										<p class="small">{{$publicSerie->units_count}} Unterrichtseinheiten</p>
+										<button class="btn btn-simple" onclick="rotateCard(this)">
+                                    <i class="fa fa-mail-forward"></i> Mehr erfahren
+                              </button>
+                     		</div>								
+								</div>															
+							</div> <!--end front panel -->
+							<div class="back-flip">
+								<div class="header-flip bg-warning">
+									<h5 class="mb-1">Beschreibung:</h5>
+                         	<p class="small">{{$publicSerie->serie_description}}</p>
+								</div>
+								<div class="content-flip">
+                     		<div class="main-flip">
+                         		<h5 class="m-3">Diese Lerneinheiten gehören zur Serie:</h5>
+										<ul class="list-unstyled">
+										 @foreach ($publicSerieUnits as $publicSerieUnit)
+											<li><a class="small mx-3" href="/lerneinheit/{{$publicSerieUnit->id}}">{{$publicSerieUnit->unit_title}}</a></li> 
+										@endforeach
+										@if ($publicSerieUnits->count() > 6)
+											<li><a href="/lerneinheiten/{{$publicSerieTopic}}">...</a></li>
+										@endif
+										</ul>	
+									</div>
+								</div>
+								<div class="footer-flip">
+									<button class="btn btn-simple" rel="tooltip" title="umdrehen" onclick="rotateCard(this)">
+                             <i class="fa fa-reply"></i> Zurück
+                         	</button>
+                 			</div>	 
+                 		</div>
+						</div>
+					</div>
+				</div>
+			@endforeach
+
+			
 			@foreach ($publicUnits as $publicUnit)
 				<div class="col">
 					<div class="card m-3" style="width:200px">	
