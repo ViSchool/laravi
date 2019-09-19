@@ -28,6 +28,7 @@
 		<h4 class="mt-3">Private Lerneinheiten zum Thema "{{$topic->topic_title}}"</h4>
 		<div class="row justify-content-start">
 
+			@if(count($privateSeries)!==0)
 			@foreach ($privateSeries as $privateSerie)
 			@php
 				 $privateSerieUnits = App\Unit::where('serie_id',$privateSerie->id)->get();
@@ -84,6 +85,7 @@
 					</div>
 				</div>
 			@endforeach
+			@endif
 
 
 			@foreach ($privateUnits as $privateUnit)
