@@ -227,7 +227,7 @@
 											<li><a class="small mx-3" href="/lerneinheit/{{$publicSerieUnit->id}}">{{$publicSerieUnit->unit_title}}</a></li> 
 										@endforeach
 										@if ($publicSerieUnits->count() > 3)
-											<li><a href="/lerneinheiten/{{$publicSerieTopic}}">...</a></li>
+											<a href="/lerneinheiten/{{$publicSerieTopic}}"> <li>weitere Lerneinheiten</li></a>
 										@endif
 										</ul>	
 									</div>
