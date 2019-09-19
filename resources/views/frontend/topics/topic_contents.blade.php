@@ -183,7 +183,7 @@
 			
 			@foreach ($publicSeries as $publicSerie)
 			@php
-				 $publicSerieUnits = App\Unit::where('serie_id',$publicSerie->id)->limit(3)->get();
+				 $publicSerieUnits = App\Unit::where('serie_id',$publicSerie->id)->limit(2)->get();
 				 $publicSerieTopic = $publicSerieUnits->first()->topic_id;
 			@endphp
 				<div class="col">
@@ -226,8 +226,8 @@
 										 @foreach ($publicSerieUnits as $publicSerieUnit)
 											<li><a class="small mx-3" href="/lerneinheit/{{$publicSerieUnit->id}}">{{$publicSerieUnit->unit_title}}</a></li> 
 										@endforeach
-										@if ($publicSerieUnits->count() > 3)
-											<a href="/lerneinheiten/{{$publicSerieTopic}}"> <li>weitere Lerneinheiten</li></a>
+										@if (($publicSerieUnits->count()) > 2)
+											<li><a href="/lerneinheiten/{{$publicSerieTopic}}"> weitere Lerneinheiten...</a></li>
 										@endif
 										</ul>	
 									</div>
