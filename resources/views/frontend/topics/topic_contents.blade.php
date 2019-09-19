@@ -87,7 +87,7 @@
 			@endforeach
 			@endif
 
-
+			@if(count($privateUnits)!==0)
 			@foreach ($privateUnits as $privateUnit)
 				<div class="col">
 					<div class="card m-3" style="width:200px">	
@@ -115,7 +115,8 @@
     					</div>
   					</div>
   				</div>
-  			@endforeach		 	
+			  @endforeach	
+			  @endif	 	
 		</div>
 		<hr>
 		@endif
