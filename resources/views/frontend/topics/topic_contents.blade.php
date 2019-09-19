@@ -223,12 +223,12 @@
                      		<div class="main-flip">
                          		<h5 class="m-3">Diese Lerneinheiten gehören zur Serie:</h5>
 										<ul class="list-unstyled">
-										 @foreach ($publicSerieUnits as $publicSerieUnit)
+										@foreach ($publicSerieUnits as $publicSerieUnit)
 											<li><a class="small mx-3" href="/lerneinheit/{{$publicSerieUnit->id}}">{{$publicSerieUnit->unit_title}}</a></li> 
 										@endforeach
-										@if (($publicSerieUnits->count()) > 2)
+										
 											<li><a href="/lerneinheiten/{{$publicSerieTopic}}"> weitere Lerneinheiten...</a></li>
-										@endif
+										
 										</ul>	
 									</div>
 								</div>
