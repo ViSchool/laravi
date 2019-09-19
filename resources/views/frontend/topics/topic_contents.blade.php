@@ -196,7 +196,7 @@
 								<div class="user-flip">
 									@foreach ($publicSerieUnits as $publicSerieUnit)
 										@if ($publicSerieUnit->unit_img_thumb !== NULL)
-											<img class="img-circle" src="/images/units/{{$privateSerieUnit->unit_img_thumb}}"/> 
+											<img class="img-circle" src="/images/units/{{$publicSerieUnit->unit_img_thumb}}"/> 
 											@break
 										@endif 
 									@endforeach 
