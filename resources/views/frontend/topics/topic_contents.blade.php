@@ -43,15 +43,15 @@
 								<div class="user-flip">
 									@foreach ($privateSerieUnits as $privateSerieUnit)
 										@if ($privateSerieUnit->unit_img_thumb !== NULL)
-											<img class="img-circle" src="/images/units/{{$privateSerieUnit->unit_img_thumb}}"/> 
+											<img class="rounded" src="/images/units/{{$privateSerieUnit->unit_img_thumb}}"/> 
 											@break
 										@endif 
 									@endforeach 
-									<img class="img-circle" src="/images/logo_cool.jpg"/>
+									<img class="rounded" src="/images/logo_cool.jpg"/>
 								</div>
 								<div class="content-flip">
 									 <div class="main-flip">
-										 <h3 class="name-flip">{{$privateSerie->serie_title}}</h3>
+										 <a href="/lerneinheiten/serie/{{$privateSerieUnit->serie_id}}"><h3 class="name-flip">{{$privateSerie->serie_title}}</h3></a>	
 										 <p class="small text-center">Status: {{$privateSerie->status->status_name}} </p>
 									</div>
 									<div class="footer-flip">
@@ -70,9 +70,12 @@
 								<div class="content-flip">
                      		<div class="main-flip">
                          		<h5 class="">Diese Lerneinheiten gehören zur Serie:</h5>
-										@foreach ($privateSerieUnits as $privateSerieUnit)
-											<a class="small" href="/lerneinheit/{{$privateSerieUnit->id}}">{{$privateSerieUnit->unit_title}}</a>
-										@endforeach 
+										<ul class="list-group">
+											@foreach ($privateSerieUnits as $privateSerieUnit)
+												<li class="list-group-item py-0 px-2 border-0 list-group-item-action"><a class="small" href="/lerneinheit/{{$privateSerieUnit->id}}">{{$privateSerieUnit->unit_title}}</a></li>
+											@endforeach 
+										</ul>
+										<a class="text-center btn-sm btn-primary mx-4 mt-2" href="/lerneinheiten/{{$privateSerieTopic}}"> ...alle Lerneinheiten</a>
 									</div>
 								</div>
 								<div class="footer-flip">
@@ -196,15 +199,15 @@
 								<div class="user-flip">
 									@foreach ($publicSerieUnits as $publicSerieUnit)
 										@if ($publicSerieUnit->unit_img_thumb !== NULL)
-											<img class="img-circle" src="/images/units/{{$publicSerieUnit->unit_img_thumb}}"/> 
+											<img class="rounded" src="/images/units/{{$publicSerieUnit->unit_img_thumb}}"/> 
 											@break
 										@endif 
 									@endforeach 
-									<img class="img-circle" src="/images/logo_cool.jpg"/>
+									<img class="rounded" src="/images/logo_cool.jpg"/>
 								</div>
 								<div class="content-flip">
 									<div class="main-flip">
-									 	<a href="/lerneinheiten/{{$publicSerieTopic}}"><h3 class="name-flip">{{$publicSerie->serie_title}}</h3></a>	
+									 	<a href="/lerneinheiten/serie/{{$publicSerieUnit->serie_id}}"><h3 class="name-flip">{{$publicSerie->serie_title}}</h3></a>	
 									</div>
 									<div class="footer-flip">
 										<p class="small">{{$publicSerie->units_count}} Unterrichtseinheiten</p>
@@ -222,12 +225,13 @@
 								<div class="content-flip">
                      		<div class="main-flip">
                          		<h5 class="m-3">Diese Lerneinheiten gehören zur Serie:</h5>
-										<ul class="list-unstyled">
+										<ul class="list-group">
 										@foreach ($publicSerieUnits as $publicSerieUnit)
-											<li><a class="small mx-3" href="/lerneinheit/{{$publicSerieUnit->id}}">{{$publicSerieUnit->unit_title}}</a></li> 
+											<li class="list-group-item py-0 px-2 border-0 list-group-item-action"><a class="small" href="/lerneinheit/{{$publicSerieUnit->id}}">{{$publicSerieUnit->unit_title}}</a></li> 
+											
 										@endforeach
-										
-											<li><a href="/lerneinheiten/{{$publicSerieTopic}}"> weitere Lerneinheiten...</a></li>
+											 
+											<a class=" text-center btn-sm btn-primary mx-4 mt-2" href="/lerneinheiten/serie/{{$publicSerieUnit->serie_id}}"> ...alle Lerneinheiten</a>
 										
 										</ul>	
 									</div>

@@ -148,6 +148,7 @@ Route::get('/unit', 'VischoolController@unit_show');
 Route::get('/unit/{unit}/{diff}', 'VischoolController@unit_diff')->name('units.filterdiffs');
 Route::get('/lerneinheiten/{topic}', 'VischoolController@units_topic');
 Route::get('/lerneinheit/{unit}', 'VischoolController@unit_show');
+Route::get('/lerneinheiten/serie/{serie}', 'VischoolController@units_serie');
 
 
 /*Routes to Backend*/

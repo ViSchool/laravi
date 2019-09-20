@@ -96,7 +96,7 @@
     width: 100%;
 }
 .card-flip .user-flip{
-    border-radius: 50%;
+    border-radius: 20%;
     display: block;
     height: 120px;
     margin: -55px auto 0;
@@ -119,6 +119,7 @@
 }
 .card-flip .back-flip .content-flip .main-flip {
     height: 215px;
+    overflow: scroll;
 }
 .card-flip .name-flip {
     font-size: 22px;

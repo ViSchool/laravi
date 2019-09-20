@@ -26,6 +26,7 @@
 		<h4 class="mt-3">Private Lerneinheiten zum Thema "<?php echo e($topic->topic_title); ?>"</h4>
 		<div class="row justify-content-start">
 
+			<?php if(count($privateSeries)!==0): ?>
 			<?php $__currentLoopData = $privateSeries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $privateSerie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 			<?php
 				 $privateSerieUnits = App\Unit::where('serie_id',$privateSerie->id)->get();
@@ -40,11 +41,11 @@
 								<div class="user-flip">
 									<?php $__currentLoopData = $privateSerieUnits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $privateSerieUnit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 										<?php if($privateSerieUnit->unit_img_thumb !== NULL): ?>
-											<img class="img-circle" src="/images/units/<?php echo e($privateSerieUnit->unit_img_thumb); ?>"/> 
+											<img class="rounded" src="/images/units/<?php echo e($privateSerieUnit->unit_img_thumb); ?>"/> 
 											<?php break; ?>
 										<?php endif; ?> 
 									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
-									<img class="img-circle" src="/images/logo_cool.jpg"/>
+									<img class="rounded" src="/images/logo_cool.jpg"/>
 								</div>
 								<div class="content-flip">
 									 <div class="main-flip">
@@ -67,9 +68,12 @@
 								<div class="content-flip">
                      		<div class="main-flip">
                          		<h5 class="">Diese Lerneinheiten gehören zur Serie:</h5>
-										<?php $__currentLoopData = $privateSerieUnits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $privateSerieUnit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-											<a class="small" href="/lerneinheit/<?php echo e($privateSerieUnit->id); ?>"><?php echo e($privateSerieUnit->unit_title); ?></a>
-										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+										<ul class="list-group">
+											<?php $__currentLoopData = $privateSerieUnits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $privateSerieUnit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+												<li class="list-group-item py-0 px-2 border-0 list-group-item-action"><a class="small" href="/lerneinheit/<?php echo e($privateSerieUnit->id); ?>"><?php echo e($privateSerieUnit->unit_title); ?></a></li>
+											<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+										</ul>
+										<a class="text-center btn-sm btn-primary mx-4 mt-2" href="/lerneinheiten/<?php echo e($privateSerieTopic); ?>"> ...alle Lerneinheiten</a>
 									</div>
 								</div>
 								<div class="footer-flip">
@@ -82,8 +86,9 @@
 					</div>
 				</div>
 			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+			<?php endif; ?>
 
-
+			<?php if(count($privateUnits)!==0): ?>
 			<?php $__currentLoopData = $privateUnits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $privateUnit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 				<div class="col">
 					<div class="card m-3" style="width:200px">	
@@ -112,7 +117,8 @@
     					</div>
   					</div>
   				</div>
-  			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>		 	
+			  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>	
+			  <?php endif; ?>	 	
 		</div>
 		<hr>
 		<?php endif; ?>
@@ -179,7 +185,7 @@
 			
 			<?php $__currentLoopData = $publicSeries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $publicSerie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 			<?php
-				 $publicSerieUnits = App\Unit::where('serie_id',$publicSerie->id)->limit(6)->get();
+				 $publicSerieUnits = App\Unit::where('serie_id',$publicSerie->id)->limit(2)->get();
 				 $publicSerieTopic = $publicSerieUnits->first()->topic_id;
 			?>
 				<div class="col">
@@ -192,15 +198,15 @@
 								<div class="user-flip">
 									<?php $__currentLoopData = $publicSerieUnits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $publicSerieUnit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 										<?php if($publicSerieUnit->unit_img_thumb !== NULL): ?>
-											<img class="img-circle" src="/images/units/<?php echo e($privateSerieUnit->unit_img_thumb); ?>"/> 
+											<img class="rounded" src="/images/units/<?php echo e($publicSerieUnit->unit_img_thumb); ?>"/> 
 											<?php break; ?>
 										<?php endif; ?> 
 									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
-									<img class="img-circle" src="/images/logo_cool.jpg"/>
+									<img class="rounded" src="/images/logo_cool.jpg"/>
 								</div>
 								<div class="content-flip">
 									<div class="main-flip">
-									 	<a href="/lerneinheiten/<?php echo e($publicSerieTopic); ?>"><h3 class="name-flip"><?php echo e($publicSerie->serie_title); ?></h3></a>	
+									 	<a href="/lerneinheiten/serie/<?php echo e($publicSerieUnit->serie_id); ?>"><h3 class="name-flip"><?php echo e($publicSerie->serie_title); ?></h3></a>	
 									</div>
 									<div class="footer-flip">
 										<p class="small"><?php echo e($publicSerie->units_count); ?> Unterrichtseinheiten</p>
@@ -218,13 +224,14 @@
 								<div class="content-flip">
                      		<div class="main-flip">
                          		<h5 class="m-3">Diese Lerneinheiten gehören zur Serie:</h5>
-										<ul class="list-unstyled">
-										 <?php $__currentLoopData = $publicSerieUnits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $publicSerieUnit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-											<li><a class="small mx-3" href="/lerneinheit/<?php echo e($publicSerieUnit->id); ?>"><?php echo e($publicSerieUnit->unit_title); ?></a></li> 
+										<ul class="list-group">
+										<?php $__currentLoopData = $publicSerieUnits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $publicSerieUnit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+											<li class="list-group-item py-0 px-2 border-0 list-group-item-action"><a class="small" href="/lerneinheit/<?php echo e($publicSerieUnit->id); ?>"><?php echo e($publicSerieUnit->unit_title); ?></a></li> 
+											
 										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-										<?php if($publicSerieUnits->count() > 6): ?>
-											<li><a href="/lerneinheiten/<?php echo e($publicSerieTopic); ?>">...</a></li>
-										<?php endif; ?>
+											 
+											<a class=" text-center btn-sm btn-primary mx-4 mt-2" href="/lerneinheiten/serie/<?php echo e($publicSerieUnit->serie_id); ?>"> ...alle Lerneinheiten</a>
+										
 										</ul>	
 									</div>
 								</div>

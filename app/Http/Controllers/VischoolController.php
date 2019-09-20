@@ -187,6 +187,18 @@ class VischoolController extends BaseController
 	/*$units = Unit::all();
 	return view('frontend.units.index', compact('units')); */
 	}
+
+	public function units_serie($id) {
+	$serie = Serie::find($id);
+	$units = Unit::where('serie_id','=',$id)->get();
+	$topic = $units->first()->topic_id;
+	//get reviews
+	$reviews = Review::where('content_id',$topic)->get();
+	$average_score = $reviews->avg('overall_score');
+	return view('frontend.units.units_serie', compact('serie','units','average_score'));
+	/*$units = Unit::all();
+	return view('frontend.units.index', compact('units')); */
+	}
 	
 	public function unit_show($id) {
 	$unit = Unit::find($id);
