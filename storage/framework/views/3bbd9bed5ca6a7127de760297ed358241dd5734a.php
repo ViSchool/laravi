@@ -10,7 +10,7 @@
   <div class="col-6 col-md">
     <h4 class="text-brand-blue">Lernen</h4>
     <ul class="list-unstyled text-small">
-      <li><a class="text-muted" href="#">Fächer</a></li>
+      <li><a class="text-muted" href="#vischool-subjects">Fächer</a></li>
       <li><a class="text-muted" href="#">Komplette Unterrichtseinheiten</a></li>
       <li><a class="text-muted" href="#"></a></li>
       <li><a class="text-muted" href="#"></a></li>
@@ -22,9 +22,9 @@
     <h4 class="text-brand-blue">Lehrer</h4>
     <ul class="list-unstyled text-small">
       <li><a class="text-muted" href="/lehrer/register_soon">Registrieren</a></li>
-      <li><a class="text-muted" href="#">Anmelden</a></li>
-      <li><a class="text-muted" href="#">Angebote für Lehrer</a></li>
-      <li><a class="text-muted" href="#">Beratungsangebot für Schulen</a></li>
+      <li><a class="text-muted" href="/login">Anmelden</a></li>
+      <li><a class="text-muted" href="/lehrer">Angebote für Lehrer</a></li>
+      <li><a class="text-muted" href="/lehrer/schulcoaching">Beratungsangebot für Schulen</a></li>
     </ul>
   </div>
   <div class="col-6 col-md">
@@ -69,3 +69,4 @@
 	
 </footer>
 
+<?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/layouts/footer.blade.php ENDPATH**/ ?>

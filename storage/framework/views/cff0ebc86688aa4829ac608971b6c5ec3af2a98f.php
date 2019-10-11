@@ -80,7 +80,7 @@
                     
                 </tr>
             <div class="modal fade" id="deleteModal_<?php echo e($block->id); ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <?php echo $__env->make('components.deleteCheck',['typeDelete'=>'block','id'=>$block->id,'title'=>$block->title], \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    <?php echo $__env->make('components.deleteCheck',['typeDelete'=>'block','id'=>$block->id,'title'=>$block->title], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>    
             </tbody>
@@ -93,4 +93,4 @@
 <?php $__env->startSection('scripts'); ?>  
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/teacher/teacher_blocks.blade.php ENDPATH**/ ?>

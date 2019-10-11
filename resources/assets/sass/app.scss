@@ -547,3 +547,42 @@ h1, h2 {
 	opacity: 1;
 }
 
+/* Filter
+-------------------------------------------------------*/ 
+
+#filter_sidebar {
+    min-width: 180px;
+    max-width: 180px;
+    min-height: 100vh;
+    z-index: 9999;
+    transition: all 0.3s;
+    background-color: lightgrey;
+}
+
+#filter_sidebar.active {
+    margin-left: -180px;
+}
+
+#filter_sidebar ul.components {
+    padding: 20px 0;
+}
+
+#filter_sidebar ul p {
+    padding: 10px;
+}
+
+#filter_sidebar ul li {
+    padding: 10px;
+    font-size: 0.9em;
+}
+
+
+@media (max-width: 720px) {
+    #filter_sidebar {
+        margin-left: -180px;
+    }
+    #filter_sidebar.active {
+        margin-left: 0;
+    }
+}
+

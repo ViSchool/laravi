@@ -7,9 +7,6 @@
                 url: '/topics/get/'+subjectId,
                 type:"GET",
                 dataType:"json",
-                beforeSend: function(){
-                    $('#loader').css("visibility", "visible");
-                },
 
                 success:function(data) {
 

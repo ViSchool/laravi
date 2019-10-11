@@ -36,6 +36,8 @@
 			</div>
 		</section>
 		</div>
+
+
 	<h4>Letzte gemeldete Fehler</h4>
 		<div class="table-responsive">
 			<table class="table table-striped">
@@ -64,4 +66,4 @@
         </main>
       </div>
     </div>
-<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/backend/main.blade.php ENDPATH**/ ?>

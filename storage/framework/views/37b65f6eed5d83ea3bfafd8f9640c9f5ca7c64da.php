@@ -278,4 +278,4 @@ Einen neuen Inhalt erstellen</button>
 
 <script src="/js/dynamic_content_link.js"></script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/teacher/teacher_contents.blade.php ENDPATH**/ ?>

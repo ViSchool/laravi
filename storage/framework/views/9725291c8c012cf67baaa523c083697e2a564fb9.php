@@ -72,4 +72,4 @@
         
       </div>
     </div>
-  </div>
+  </div><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/components/deleteCheck.blade.php ENDPATH**/ ?>

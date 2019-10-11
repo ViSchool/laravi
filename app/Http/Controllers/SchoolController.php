@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\School;
+use App\User;
+use App\Unit;
 use Purifier;
 use Illuminate\Http\Request;
 
@@ -13,6 +15,15 @@ class SchoolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    // public function school_page($schule)
+    // {
+    //     $school = School::where('school_vischoolUrl','=', $schule)->first();
+    //     $teachers = User::where('school_id',$school->id)->pluck('id');
+    //     $units = Unit::whereIn('user_id',$teachers)->get(); 
+    //     return view('frontend.schools.school_page',compact('units','contents','topics','subjects'));
+    // }
+    
     public function index()
     {
         $schools = School::orderBy('created_at', 'desc')->paginate(10);

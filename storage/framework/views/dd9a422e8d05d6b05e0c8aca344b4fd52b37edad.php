@@ -20,3 +20,4 @@
 	</div>
 </div>
 </section>
+<?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/layouts/team.blade.php ENDPATH**/ ?>

@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Topic;
 use App\Subject;
+use App\Tag;
+use Auth;
+use App\Admin;
+use App\User;
 use Illuminate\Http\Request;
 use Image;
 
@@ -27,8 +31,10 @@ class TopicController extends Controller
      */
     public function create() 
 	{
-		$subjects = Subject::orderBy('created_at', 'desc')->get();
-        return view('backend.create_topics', compact('subjects'));
+        $subjects = Subject::orderBy('subject_title', 'asc')->get();
+        $tags = Tag::orderBy('tag_name','asc')->get();
+        $admin = Auth::guard('admin')->user();
+        return view('backend.create_topics', compact('subjects','tags'));
 
 	}
 
@@ -46,11 +52,25 @@ class TopicController extends Controller
         ]);
         $topic =new Topic;
         $topic->topic_title = $request->topic_title;
+        $user = Admin::find($request->admin_id);
+        $teacher = User::where('email',$user->email)->first();
+        $topic->user_id = $teacher->id;
+        $topic->status_id = 2;
         
 		//Save alle data from create_topics form
-		$topic->save();	
-		$topic->subjects()->sync($request->subjects, false);
-       	//return to overview of topics
+        $topic->save();	
+        //sync topic with all subjects
+        $topic->subjects()->sync($request->subjects, false);
+        
+        //save new tags and sync
+        if ($request->filled('tags')){
+         	$tags = Tag::syncTags($request);
+         	$topic->tags()->sync($tags, false);
+         } elseif (
+        	$topic->tags()->sync($request->tags, false)
+        );
+
+        //return to overview of topics
         return redirect('backend/topics');
     }
 
@@ -69,7 +89,7 @@ class TopicController extends Controller
         $topic->save();	
 		$topic->subjects()->sync($request->subject_id, false);
        	//return to overview of topics
-        return redirect('lehrer/inhalte');
+        return redirect('lehrer/themen');
     }
     
     //Privat veröffentlichen -  vom Lehrer erstelltes Thema 
@@ -113,8 +133,9 @@ class TopicController extends Controller
     {
         
         $topic = Topic::find($id);
-        $subjects = Subject::all();
-        return view ('backend.show_topics', compact('topic','subjects'));
+        $currentSubjects = $topic->subjects->pluck('subject_title')->all();
+        $subjects = Subject::orderBy('subject_title', 'asc')->get();
+        return view ('backend.show_topics', compact('topic','subjects','currentSubjects'));
     }
 
     /**
@@ -164,6 +185,7 @@ class TopicController extends Controller
     {
         $topic = Topic::findOrFail($id);
         $topic->subjects()->detach();
+        $topic->tags()->detach();
         $topic->delete();
         return redirect()->back();
     }

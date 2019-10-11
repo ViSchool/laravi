@@ -3,7 +3,7 @@
           <h4 class="mb-4"> Serie "<?php echo e($serie->serie_title); ?>" bearbeiten</h4>
 
 <div class="container">
-	<?php echo $__env->make('layouts.errors', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<?php echo $__env->make('layouts.errors', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 	
 	<form method="POST" action="<?php echo e(route('series.update',$serie->id)); ?>">
 		<?php echo e(csrf_field()); ?> <?php echo e(method_field('PATCH')); ?>
@@ -67,4 +67,4 @@
 </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('backend.layout_backend', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('backend.layout_backend', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/backend/show_series.blade.php ENDPATH**/ ?>

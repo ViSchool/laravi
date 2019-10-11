@@ -61,4 +61,4 @@
 			</div>
 		</div>
 	</div>	
-</section> 
+</section> <?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/layouts/about.blade.php ENDPATH**/ ?>

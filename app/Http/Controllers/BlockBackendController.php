@@ -8,6 +8,9 @@ use App\Block;
 use App\Content;
 use App\Topic;
 use App\Differentiation;
+use Auth;
+use App\User;
+use App\Admin;
 use Purifier;
 use Validator;
 
@@ -31,42 +34,49 @@ class BlockBackendController extends Controller
     public function create_step1($id)
     {
     	$unit = Unit::find($id);
-    	$differentiations = Differentiation::where('user_id', null)->get();
-    	return view('backend.create_blocks_step1', compact('unit','differentiations') );
+        $differentiations = Differentiation::where('user_id', null)->get();
+        $contents = Content::where('topic_id',$unit->topic_id)->get();
+        $topics = Topic::where('id','!=',$unit->topic_id)->get();
+        $user = Auth::guard('admin')->user();
+        $teacher = User::where('email',$user->email)->first();
+        if($unit->differentiation_group == 'Standard') {
+            $differentiations = Differentiation::where('differentiation_group', 'Standard')->get();
+        } else {
+            $differentiations = Differentiation::where('user_id',$teacher->id)->where('differentiation_group', $unit->differentiation_group)->get();
+        }
+        return view('backend.create_blocks', compact('unit','differentiations','contents','topics') );
 
     }
 
-	public function create_step2($id)
-    {
-    	$block = Block::find($id);
-    	$unit = Unit::find($block->unit_id);
-    	$contents = Content::where('topic_id',$unit->topic_id)->get();
-    	$topics = Topic::where('id','!=',$unit->topic_id)->get();
-    	return view('backend.create_blocks_step2', compact('block','unit','contents','topics'));
-    }
+// 	public function create_step2($id)
+//     {
+//     	$block = Block::find($id);
+//     	$unit = Unit::find($block->unit_id);
+//     	$contents = Content::where('topic_id',$unit->topic_id)->get();
+//     	$topics = Topic::where('id','!=',$unit->topic_id)->get();
+//     	return view('backend.create_blocks_step2', compact('block','unit','contents','topics'));
+//     }
 
-	public function create_step3($id)
-    {
-    	$block = Block::find($id);
-    	$unit = Unit::find($block->unit_id);
-    	$contents = Content::where('topic_id',$unit->topic_id)->get();
-    	$topics = Topic::where('id','!=',$unit->topic_id)->get();
-    	return view('backend.create_blocks_step3', compact('block','unit','contents','topics'));
-    }
+// 	public function create_step3($id)
+//     {
+//     	$block = Block::find($id);
+//     	$unit = Unit::find($block->unit_id);
+//     	$contents = Content::where('topic_id',$unit->topic_id)->get();
+//     	$topics = Topic::where('id','!=',$unit->topic_id)->get();
+//     	return view('backend.create_blocks_step3', compact('block','unit','contents','topics'));
+//     }
 
-public function create_step4($id)
-    {
-    	$block = Block::find($id);
-    	$unit = Unit::find($block->unit_id);
-    	$contents = Content::where('topic_id',$unit->topic_id)->get();
-    	$topics = Topic::where('id','!=',$unit->topic_id)->get();
-    	return view('backend.create_blocks_step4', compact('block','unit','contents','topics'));
-    }
+// public function create_step4($id)
+//     {
+//     	$block = Block::find($id);
+//     	$unit = Unit::find($block->unit_id);
+//     	$contents = Content::where('topic_id',$unit->topic_id)->get();
+//     	$topics = Topic::where('id','!=',$unit->topic_id)->get();
+//     	return view('backend.create_blocks_step4', compact('block','unit','contents','topics'));
+//     }
 
 public function store(Request $request)
     {
-
-
      /* Store a newly created resource in storage.
       @param  \Illuminate\Http\Request  $request*/
     	$this->validate(request(), [
@@ -74,24 +84,44 @@ public function store(Request $request)
         'time'=> 'required', 
         ]);
         $block = new Block;
-        	if ($request->alternative != "keine") {
-        		$blockAlternative = Block::findOrFail($request->alternative);
-        		$block->order = $blockAlternative->order;
-        		$block->alternative = $blockAlternative->id;
-        	}
-        	else {
-        	$unit = Unit::find($request->unit_id);
-            $block->order = $unit->blocks->max('order') + 1;
-        	}
+        $unit = Unit::find($request->unit_id);
         $block->title = $request->title;
         $block->time = $request->time;
         $block->unit_id = $request->unit_id;
-        
-        	
-        	$block->differentiation_id = $request->differentiation;
+        $block->task = Purifier::clean($request->task);
+        $block->tips = $request->tipp;
+        if (isset($request->content_id_dif)) {
+            $block->content_id = $request->content_id_dif;
+        } elseif (isset($request->content_id)) {
+            $block->content_id = $request->content_id;
+        }
+
+        //  if block ist created with differentiation, 
+        if (isset($request->differentiation_id)) {
+            $block->differentiation_id = $request->differentiation_id;
+            $block->order = $unit->blocks->max('order') + 1;
+            //get other differentiation_ids from the same group
+            $currentDifferentiation = Differentiation::find($request->differentiation_id);
+            $otherDifferentiations = Differentiation::where([
+                ['differentiation_group',$currentDifferentiation->differentiation_group],
+                ['id','!=',$currentDifferentiation->id]
+            ])->get();
+            //loop over all of them and make for each differentiation a copy of the first task
+            foreach ($otherDifferentiations as $otherDifferentiation) {
+                $newblock = $block->replicate();
+                $newblock->differentiation_id = $otherDifferentiation->id;
+                $newblock->push();
+                }
+            $block->save();
+        } else {
+            $block->differentiation_id = 13;
+            $block->order = $unit->blocks->max('order') + 1;
+            $block->save();
+        }
+
         $block->save();
         
-        return redirect()->route('backend.blocks.create_step2',[$block->id]);
+        return redirect()->route('backend.units.show',[$unit->id]);
     }
 
 public function store_contents(Request $request, $id)
@@ -119,10 +149,19 @@ public function store_contents(Request $request, $id)
         		$blockAlternative = Block::find($block->alternative);
         	}
         $unit = Unit::find($block->unit_id);
+        $differentiation = Differentiation::find($block->differentiation_id);
         $content = Content::find($block->content_id);
-        $differentiations = Differentiation::where('user_id',null)->get();
+        $allContents = Content::where('topic_id',$unit->topic_id)->get();
+        $topics = Topic::where('id','!=',$unit->topic_id)->get();
+        $admin = Admin::where('id',$unit->user_id)->first();
+        $teacher = User::where('email',$admin->email)->first();
+        if($unit->differentiation_group == 'Standard') {
+            $otherDifferentiations = Differentiation::where('differentiation_group', 'Standard')->get();
+        } else {
+            $otherDifferentiations = Differentiation::where('user_id',$teacher->id)->where('differentiation_group', $unit->differentiation_group)->get();
+        }
 		
-        return view ('backend.show_blocks', compact('block','unit','content', 'ordernumber','differentiations','blockAlternative'));
+        return view ('backend.show_blocks', compact('block','unit','content', 'ordernumber','otherDifferentiations', 'allContents', 'topics','differentiation'));
     }
 
 
@@ -148,23 +187,44 @@ public function store_contents(Request $request, $id)
     {
         $this->validate(request(), [
         'title' => 'required', 
+        'time'=> 'required', 
+
         ]);
         $block = Block::find($id);
-        	if ($request->alternative != "keine") {
-        		$blockAlternative = Block::findOrFail($request->alternative);
-        		$block->order = $blockAlternative->order;
-        		$block->alternative = $blockAlternative->id;
-            }
-            else {
-                $block->alternative = NULL;
-                $unit = Unit::find($block->unit_id);
-                $block->order = $unit->blocks->max('order') + 1;
-            }
+        $unit = Unit::find($request->unit_id);
         $block->title = $request->title;
         $block->time = $request->time;
+        $block->task = Purifier::clean($request->task);
+        $block->tips = $request->tipp;
+        if (isset($request->content_id_dif)) {
+            $block->content_id = $request->content_id_dif;
+        } elseif (isset($request->content_id)) {
+            $block->content_id = $request->content_id;
+        }
         $block->unit_id = $request->unit_id;
-        $block->differentiation_id = $request->differentiation;
-        $block->save();
+        if ($block->differentiation_id !== $request->differentiation_id) {
+            if ($request->differentiation_id == 13) {
+                $blocksToDelete = Block::where('unit_id',$block->unit_id)->where('order',$block->order)->where('id','!=',$block->id)->get();
+                foreach($blocksToDelete as $blockToDelete) {
+                    $blockToDelete->delete();
+                }
+            } else {
+                $block->differentiation_id = $request->differentiation_id;
+                //get other differentiation_ids from the same group
+                    $currentDifferentiation = Differentiation::find($request->differentiation_id);
+                    $otherDifferentiations = Differentiation::where([
+                        ['differentiation_group',$currentDifferentiation->differentiation_group],
+                        ['id','!=',$currentDifferentiation->id]
+                        ])->get();
+                //loop over all of them and make for each differentiation a copy of the first task
+                foreach ($otherDifferentiations as $otherDifferentiation) {
+                    $newblock = $block->replicate();
+                    $newblock->differentiation_id = $otherDifferentiation->id;
+                    $newblock->push();
+                    }
+                }
+            }
+            $block->save();
         
         return redirect()->route('backend.units.show',[$block->unit_id]);
     }

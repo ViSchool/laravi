@@ -40,7 +40,10 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Adresse</label>
+                            <label for="email" class="col-md-4 control-label">
+                                E-Mail Adresse 
+                                <p class="small">Bitte benutze hier Deine Emailadresse der Schule, da wir Deinen Account verifizieren.</p>
+                            </label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
@@ -53,9 +56,70 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('school_id') ? ' has-error' : '' }}">
-                            <label for="school_id" class="col-md-4 control-label">ViSchool-Schulaccount</label>
+                       <div class="form-group{{ $errors->has('contract') ? ' has-error' : '' }}">
+                            <label for="contract" class="control-label px-4">Wähle das von Dir gewünschte Angebot:</label>
+                            <div class="card-deck p-3">
+                                <div class="card mb-3" style="min-width:200px;">
+                                    <div class="card-header bg-warning">
+                                       <div class="form-check form-check-inline d-flex justify-content-start">
+                                            <input class="form-check-input mr-4" type="radio" name="contract" id="kostenlos_radio" value="free">
+                                            <label class="form-check-label" for="kostenlos_radio">Kostenlos</label>
+                                        </div> 
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="pl-2 m-2">
+                                            <li class="small">5 private Lerneinheiten</li> 
+                                            <li class="small">1 Jahr technischer Support</li> 
+                                        </ul>
+                                    </div>
+                                    <div class="card-footer text-center ">
+                                        <small><br></small>
+                                        <small class="">kostenlos</small>
+                                    </div>
+                                </div>
+                                <div class="card mb-3" style="min-width:200px;">
+                                    <div class="card-header bg-warning">
+                                       <div class="form-check form-check-inline d-flex justify-content-start">
+                                            <input class="form-check-input mr-4" type="radio" name="contract" id="lehrer_radio" value="premium">
+                                            <label class="form-check-label text-black" for="lehrer_radio">Lehrer</label>
+                                        </div> 
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="pl-2 m-2">
+                                            <li class="small">30 private Lerneinheiten</li> 
+                                            <li class="small">1 Jahr kostenloser technischer und inhaltlicher Support</li>
+                                            <li class="small">6 Monate kostenlos testen</li>    
+                                        </ul>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <br>
+                                        <small class="" >12 Euro/ Jahr</small>
+                                    </div>
+                                </div>
+                                <div class="card mb-3" style="min-width:200px;">
+                                    <div class="card-header bg-warning">
+                                       <div class="form-check form-check-inline d-flex justify-content-start">
+                                            <input class="form-check-input mr-4" type="radio" name="contract" id="schule_radio" value="premium">
+                                            <label class="form-check-label" for="schule_radio"> Schulaccount</label>
+                                        </div> 
+                                    </div>
+                                    <div class="card-body">
+                                        <small>Bitte wähle unten Deine Schule aus</small>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <small class="">kostenlos für Lehrer der Schule</small>
+                                    </div>
+                                </div>
+                            </div>
+                            @if ($errors->has('contract'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('contract') }}</strong>
+                                </span>
+                            @endif
+                        </div>
 
+                        <div class="mt-4 form-group{{ $errors->has('school_id') ? ' has-error' : '' }}">
+                            <label for="school_id" class="col-md-4 control-label">ViSchool-Schulaccount</label>
                             <div class="col-md-6">
                                 <select class="form-control" name="school_id" id="school_id">
                                     <option value="">Bitte auswählen, wenn ViSchool-Schulaccount existiert</option>

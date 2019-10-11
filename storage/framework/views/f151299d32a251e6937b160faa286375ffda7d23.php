@@ -9,4 +9,4 @@
 			</div>
 		</div>
 	<?php endif; ?>
-	
+	<?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/layouts/errors.blade.php ENDPATH**/ ?>

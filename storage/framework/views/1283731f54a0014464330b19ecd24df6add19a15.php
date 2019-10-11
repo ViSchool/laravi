@@ -4,7 +4,7 @@
           <hr></hr>
 
 <div class="container">
-	<?php echo $__env->make('layouts.errors', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<?php echo $__env->make('layouts.errors', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <form method="POST" action="/backend/contents" enctype="multipart/form-data">
 <?php echo e(csrf_field()); ?>
 
@@ -271,4 +271,4 @@ $(document).ready(function() {
 
 <script src="<?php echo e(asset('js/ddd_subject_topic.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('backend.layout_backend', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('backend.layout_backend', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/backend/create_contents.blade.php ENDPATH**/ ?>

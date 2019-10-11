@@ -2,7 +2,15 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Notifications\Messages\MailMessage;
+use App\Mail\EmailVerification;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,8 +40,17 @@ class AppServiceProvider extends ServiceProvider
         {
         		$view->with('admin' , \App\Admin::get_current_admin());
         });
-        
-  	}
+
+        // Override the email notification for verifying email
+        VerifyEmail::toMailUsing(function ($notifiable,$url){
+            $mail = new MailMessage;
+            $mail->subject('Bitte bestätige Deine Emailadresse bei ViSchool!');
+            $mail->markdown('emails.verify-email', ['url' => $url]);
+            $mail->from('info@vischool.de');
+            return $mail;
+        });
+    
+  }
 
     /**
      * Register any application services.

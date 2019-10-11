@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://localhost:8000'),
 
     /*
     |--------------------------------------------------------------------------
@@ -166,8 +166,8 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Creitive\Breadcrumbs\BreadcrumbsServiceProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
-        Vimeo\Laravel\VimeoServiceProvider::class,
-        Hedii\ArtisanLogCleaner\ArtisanLogCleanerServiceProvider::class,
+    
+        
     
 		
         /*
@@ -182,7 +182,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Spatie\LinkChecker\LinkCheckerServiceProvider::class,
         Alaouy\Youtube\YoutubeServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
 

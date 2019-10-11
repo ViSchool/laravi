@@ -14,8 +14,9 @@ class TagController extends Controller
      */
         public function index() 
     {
-    	$tags = Tag::orderBy('tag_name','asc')->get();
-        return view('/backend/tags', compact('tags'));
+        $tags = Tag::orderBy('tag_name','asc')->get();
+        $taggroups = $tags->where('tag_group','!=','ohne')->unique('tag_group')->pluck('tag_group')->all();
+        return view('/backend/tags', compact('tags','taggroups'));
     }
 
 
@@ -40,7 +41,14 @@ class TagController extends Controller
         $this->validate(request(), [
         'tag_name' => 'required',
      ]);
-        Tag::create(request(['tag_name','tag_group']));
+        $tag = new Tag;
+        $tag->tag_name = $request->tag_name;
+        if ($request->tag_group == 'new') {
+            $tag->tag_group = $request->new_tag_group;
+        } else {
+            $tag->tag_group = $request->tag_group;
+        }
+        $tag->save();
         return redirect('backend/tags');
     }
 
@@ -53,7 +61,9 @@ class TagController extends Controller
     public function show($id)
     {
         $tag = Tag::find($id);
-        return view('backend/single_tag', compact('tag'));
+        $tags = Tag::orderBy('tag_name','asc')->get();
+        $taggroups = $tags->where('tag_group','!=','ohne')->where('tag_group','!=',$tag->tag_group)->unique('tag_group')->pluck('tag_group')->all();
+        return view('backend/single_tag', compact('tag','taggroups'));
     }
 
     /**
@@ -76,7 +86,18 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate(request(), [
+        'tag_name' => 'required',
+     ]);
+        $tag = Tag::find($id);
+        $tag->tag_name = $request->tag_name;
+        if ($request->tag_group == 'new') {
+            $tag->tag_group = $request->new_tag_group;
+        } else {
+            $tag->tag_group = $request->tag_group;
+        }
+        $tag->save();
+        return redirect('backend/tags');
     }
 
     /**

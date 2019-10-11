@@ -13,6 +13,11 @@ class Tag extends Model
 		return $this->belongsToMany('App\Content');
 	}
 	
+	public function topics()
+	{
+		return $this->belongsToMany('App\Topic');
+	}
+
 	public function posts()
 	{
 		return $this->belongsToMany('App\Post');

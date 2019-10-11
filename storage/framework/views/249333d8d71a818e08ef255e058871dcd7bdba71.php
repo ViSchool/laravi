@@ -14,4 +14,4 @@
 		<?php endif; ?>
 			<?php $rating--; ?>
 	<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-<?php endif; ?>
+<?php endif; ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/components/rating_stars.blade.php ENDPATH**/ ?>

@@ -29,4 +29,8 @@ class Status extends Model
 	{
 		return $this->hasMany(Serie::class);
 	}
+
+	public static function admin_approvals() {
+		return static::where('id', 2)->first();
+	}
 }

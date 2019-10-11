@@ -16,6 +16,7 @@ use App\Review;
 use App\question;
 use App\Differentiation;
 use App\Serie;
+use App\Tag;
 use Auth;
 
 class VischoolController extends BaseController
@@ -50,7 +51,8 @@ class VischoolController extends BaseController
 		else{
 			$privateTopics = [];
 		}
-		return view('frontend.subjects.subject_topics', compact('subject', 'publicTopics','privateTopics'));
+		$klassenstufeTags = Tag::where('tag_group','Klassenstufe')->get();
+		return view('frontend.subjects.subject_topics', compact('subject', 'publicTopics','privateTopics','klassenstufeTags'));
 	} 
 	
 

@@ -16,7 +16,7 @@
 						<div class="card-body">
 							<a href="/lerneinheit/<?php echo e($unit->id); ?>"><h4 class="card-title"><?php echo e($unit->unit_title); ?></h4></a>
 							<p class="card-text">			
-							<?php echo $__env->make('components.rating_stars',['$average_score' => $average_score], \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+							<?php echo $__env->make('components.rating_stars',['$average_score' => $average_score], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 							</p>
 							<hr></hr>
 							<p><h4>Darum geht's:</h4>
@@ -39,4 +39,4 @@
 		
 
 	
-<?php echo $__env->make('/layout', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('/layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/frontend/units/units_topic.blade.php ENDPATH**/ ?>

@@ -20,6 +20,11 @@ class Topic extends Model
 		return $this->belongsToMany('App\Subject');
 	}
 	
+	public function tags()
+	{
+		return $this->belongsToMany(Tag::class);
+	}
+
 	public function content()
 	{
 		return $this->hasMany(Content::class);

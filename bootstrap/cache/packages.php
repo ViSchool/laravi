@@ -10,11 +10,11 @@
       'Youtube' => 'Alaouy\\Youtube\\Facades\\Youtube',
     ),
   ),
-  'algolia/laravel-scout-settings' => 
+  'algolia/scout-extended' => 
   array (
     'providers' => 
     array (
-      0 => 'Algolia\\Settings\\ServiceProvider',
+      0 => 'Algolia\\ScoutExtended\\ScoutExtendedServiceProvider',
     ),
   ),
   'barryvdh/laravel-snappy' => 
@@ -36,7 +36,7 @@
       0 => 'BeyondCode\\DumpServer\\DumpServerServiceProvider',
     ),
   ),
-  'creitive/laravel5-breadcrumbs' => 
+  'creitive/laravel6-breadcrumbs' => 
   array (
     'providers' => 
     array (
@@ -72,25 +72,11 @@
       'Image' => 'Intervention\\Image\\Facades\\Image',
     ),
   ),
-  'laravel/nexmo-notification-channel' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Illuminate\\Notifications\\NexmoChannelServiceProvider',
-    ),
-  ),
   'laravel/scout' => 
   array (
     'providers' => 
     array (
       0 => 'Laravel\\Scout\\ScoutServiceProvider',
-    ),
-  ),
-  'laravel/slack-notification-channel' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Illuminate\\Notifications\\SlackChannelServiceProvider',
     ),
   ),
   'laravel/tinker' => 
@@ -111,6 +97,13 @@
       'Purifier' => 'Mews\\Purifier\\Facades\\Purifier',
     ),
   ),
+  'nesbot/carbon' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Carbon\\Laravel\\ServiceProvider',
+    ),
+  ),
   'nunomaduro/collision' => 
   array (
     'providers' => 
@@ -123,13 +116,6 @@
     'providers' => 
     array (
       0 => 'Spatie\\CookieConsent\\CookieConsentServiceProvider',
-    ),
-  ),
-  'spatie/laravel-link-checker' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Spatie\\LinkChecker\\LinkCheckerServiceProvider',
     ),
   ),
   'spatie/laravel-permission' => 

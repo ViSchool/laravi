@@ -26,12 +26,12 @@
         >
         <div class="card mb-3">
             <div class="card-header text-center">
-                <h3 class="text-brand-blue m-3">Schritt 1: Unterrichtseinheit anlegen</h3> 
+                <h3 class="text-brand-blue m-3">Schritt 1: Lerneinheit anlegen</h3> 
             </div>
             <div class="card-body">
                 
                 <div class="form-group<?php echo e($errors->has('unit_title') ? ' has-error' : ''); ?>">
-                    <label for="unit_title" class="col-10 control-label">Titel der Unterrichtseinheit</label>
+                    <label for="unit_title" class="col-10 control-label">Titel der Lerneinheit</label>
                     <div class="col-10">
                         <input id="unit_title" type="text" class="form-control" name="unit_title" value="<?php echo e(old('unit_title')); ?>" required>
                         <?php if($errors->has('unit_title')): ?>
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="form-group<?php echo e($errors->has('unit_description') ? ' has-error' : ''); ?>">
-                    <label for="unit_description" class="col-10 col-form-label mb-0 pb-0">Kurzbeschreibung der Unterrichtseinheit</label>
+                    <label for="unit_description" class="col-10 col-form-label mb-0 pb-0">Kurzbeschreibung der Lerneinheit</label>
                     <label for="unit_description" class="col-10 col-form-label mt-0 pt-0">
                         <small class="text-muted"> Beschreibe hier kurz was die Schüler mit der Einheit lernen sollen.</small>
                     </label>
@@ -149,4 +149,4 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/teacher/teacher_unitsCreate.blade.php ENDPATH**/ ?>

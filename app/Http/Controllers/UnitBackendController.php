@@ -18,6 +18,8 @@ use Youtube;
 use App\Content;
 use App\Block;
 use App\Serie;
+use App\User;
+use App\Status;
 use Purifier;
 use Image;
 
@@ -36,7 +38,7 @@ class UnitBackendController extends Controller
     public function index()
     {
         $units = Unit::orderBy('created_at', 'desc')->paginate(10);
-        $subjects = Subject::orderBy('subject_title','asc)')->get();
+        $subjects = Subject::orderBy('subject_title','asc')->get();
         return view('/backend/index_units', compact('units','subjects','admin'));
     }
     
@@ -67,13 +69,11 @@ class UnitBackendController extends Controller
     {
     	$subjects = Subject::orderBy('subject_title', 'asc')->get();
         $topics = Topic::orderBy('topic_title', 'asc')->get();
-        	$series = Serie::orderBy('serie_title','asc')->get();
-        /* $tags = Tag::orderBy('tag_name','asc')->get();
-        $devices = Device::all();
-        $portals = Portal::orderBy('portal_title','asc')->get();
-        $tools = Tool::all();
-        $types = Type::all();
-         */return view('backend.create_units', compact('subjects','topics','admin','series') );
+        $series = Serie::orderBy('serie_title','asc')->get();
+        $user = Auth::guard('admin')->user();
+        $teacher = User::where('email',$user->email)->first();
+        $differentiation_groups = $teacher->differentiations->where('differentiation_group','!=','Alle')->pluck('differentiation_group')->unique();
+        return view('backend.create_units', compact('subjects','topics','admin','series','user','teacher','differentiation_groups') );
 
     }
     /**
@@ -96,6 +96,8 @@ class UnitBackendController extends Controller
         $unit->unit_title = $request->unit_title;
         $unit->unit_description = $request->unit_description;
         $unit->user_id = Auth::guard('admin')->user()->id;
+        $unit->serie_id = $request->serie;
+        $unit->differentiation_group = $request->differentiation_group;
         	//Save Image
 		if ($request->hasFile('unit_img')){
 			$image = $request->file('unit_img');
@@ -114,7 +116,6 @@ class UnitBackendController extends Controller
 		}
         	
         $unit->save();
-        $unit->series()->attach($request->serie_id);
         return redirect()->route('backend.units.index');
 
     }
@@ -130,9 +131,13 @@ class UnitBackendController extends Controller
         $unit = Unit::find($id);
         $subjects = Subject::where('id','!=',$unit->subject_id)->orderBy('subject_title','asc')->get();
         $currentSubject = $unit->subject;
-        $currentSerie = $unit->series()->orderBy('serie_title')->first();
+        $currentSerie = $unit->serie;
         $series = Serie::all();
-        return view ('backend.show_units', compact('series','unit','subjects','currentSubject','currentSerie'));
+        $user = Auth::guard('admin')->user();
+        $teacher = User::where('email',$user->email)->first();
+        $differentiation_groups = $teacher->differentiations->where('differentiation_group','!=','Alle')->pluck('differentiation_group')->unique();
+        $statuses = Status::all();
+        return view ('backend.show_units', compact('series','unit','subjects','currentSubject','currentSerie','user','differentiation_groups','statuses'));
     }
 
     /**
@@ -167,6 +172,8 @@ class UnitBackendController extends Controller
         $unit->unit_title = $request->unit_title;
         $unit->unit_description = $request->unit_description;
         $unit->user_id = Auth::user()->id;
+        $unit->serie_id = $request->serie;
+        $unit->differentiation_group = $request->differentiation_group;
         	//Save Image
 		if ($request->hasFile('unit_img')){
 			$image = $request->file('unit_img');
@@ -182,9 +189,8 @@ class UnitBackendController extends Controller
 			Image::make($image)->resize(null, 50, function ($constraint) {
 				$constraint->aspectRatio();})->save($location_big);
 			$unit->unit_img_thumb = $filename_thumb;
-		}
-		$unit->series()->sync($request->series, false);
-      
+        }
+        $unit->status_id = $request->status_id;      
         $unit->save();
         
         return redirect()->route('backend.units.show',[$unit->id]);

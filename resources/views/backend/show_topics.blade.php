@@ -7,7 +7,7 @@
 <div class="container">
 	<div class="container">	
  	<form method="POST" action="{{route('topics.update',[$topic->id])}}"> 	
-	 {{ csrf_field() }} {{ method_field('PATCH') }}
+	 @csrf @method('PATCH')
 		
 	 	<div class="form-group">
 			<label class="text-muted" for="topic_title">Dieses Thema ist erstellt durch:</label>
@@ -19,6 +19,20 @@
 			<input type="text" class="form-control" id="topic_title" name="topic_title" value="{{$topic->topic_title}}">
 		</div>
 		
+		<div class="form-group">
+		<label>Fach/Fächer auswählen:</label>
+			<div class="card">
+				<div style="column-count: 3">
+					@foreach ($subjects as $subject)	
+						<div class="form-check mx-2">
+							<input type="checkbox" class="form-check-input" id="{{$subject->id}}" value="{{$subject->id}}" name="subjects[]" @if (in_array($subject->subject_title, $currentSubjects)) checked @endif>
+							<label class="form-check-label" for="">{{$subject->subject_title}}</label>
+						</div>
+					@endforeach
+				</div>
+			</div>
+		</div>
+
 		<div class="form-group">
 			<label for="subjects">Das Thema gehört zum Fach:</label>
 			<select class="form-control" id="subjects" multiple="multiple" name="subjects[]"> 

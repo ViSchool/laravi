@@ -155,7 +155,7 @@
                                 <option value="">Bitte auswählen</option>
                             @endempty
                             @foreach($differentiations as $differentiation)
-                        <option value="{{$differentiation->id}}">{{$differentiation->differentiation_title}}</option>
+                                <option value="{{$differentiation->id}}">{{$differentiation->differentiation_title}}</option>
                             @endforeach
                             <option value="13">Alle</option>
                         </select>

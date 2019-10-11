@@ -17,6 +17,7 @@ return [
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN', 'mg.vischool.net'),
         'secret' => env('MAILGUN_SECRET'),
+        'endpoint' => 'api.eu.mailgun.net'
     ],
 
     'ses' => [

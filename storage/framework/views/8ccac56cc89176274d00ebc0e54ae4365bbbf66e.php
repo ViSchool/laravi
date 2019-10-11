@@ -73,4 +73,4 @@
 
 
 </body>
-</html>
+</html><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/PDF/teacher_studentgroup.blade.php ENDPATH**/ ?>

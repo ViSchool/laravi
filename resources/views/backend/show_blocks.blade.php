@@ -6,88 +6,158 @@
 @endsection
 
 @section('main')
-    <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-          <div class="container">
-          <h4>Lerneinheit:<a href="/backend/units/{{$unit->id}}"> {{$unit->unit_title}}</a></h4>
-          <h5>Aufgabe: {{$block->title}}</h5>
-          </div>
-          <hr></hr>
-
-<div class="container">
-@include('layouts.errors')
-
-	<form method="POST" action="{{route('backend.blocks.update',[$block->id])}}" enctype="multipart/form-data">
-		{{ csrf_field() }} {{ method_field('PATCH') }}
-		
-		<div class="input-group mb-3">
-			<div class="input-group-prepend">
-				<label class="input-group-text">Überschrift für die Aufgabe:</label>
-			</div>
-			<input value="{{$block->title}}" type="text" class="form-control" id="title" name="title">
-		</div>
-		<!-- <div class="form-group mb-3">
-			<label class="mb-0">Aufgabentext:</label>
-			<textarea class="form-control task-summernote" id="task" name="task" aria-label="task" aria-describedby="task"></textarea>
-		</div> -->
-		<input type="hidden" name="unit_id" value="{{$unit->id}}">
+	<main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+		@include('layouts.errors')		
+		<div class="card m-3">
+			<div class="card-header bg-warning">
+				<h5>Aufgabe "{{$block->title}}" bearbeiten</h5>
+			</div>	 
+			<form class="my-3" method="POST" action="{{route('backend.blocks.update',[$block->id])}}" enctype="multipart/form-data">
+				{{ csrf_field() }} {{ method_field('PATCH') }}
 				
-		<div class="input-group mb-3">
-			<div class="input-group-prepend">
-				<label class="input-group-text" for="time">Zeit für die Aufgabe:</label>
-			</div>
-			<input value="{{$block->time}}" type="text" class="form-control" size="2" maxlength="2" id="time" name="time"></input>
-			<div class="input-group-append">
-				<span class="input-group-text">Minuten</span>
-			</div>
-		</div>
-		<div class="input-group mb-3">
-		<div class="input-group-prepend">
-			<label class="input-group-text" for="differentiation">Bestimmte Schülergruppe:</label>
-		</div>
-		<select class="form-control" id="differentiation" name="differentiation">
-			<option value="{{$block->differentiation->id}}">{{$block->differentiation->differentiation_title}}</option>
-			@foreach($differentiations as $differentiation)
-				<option value="{{$differentiation->id}}">{{$differentiation->differentiation_title}}</option>
-			@endforeach
+				<input type="hidden" name="unit_id" value="{{$block->unit_id}}">
 
-		</select>
-	</div>
-	<div class="input-group mb-3">
-		<div class="input-group-prepend">
-			<label class="input-group-text" for="alternative">Alternative zu dieser Aufgabe:</label>
+				<div class="form-group">
+					<label for="title" class="col-md-6 control-label">Überschrift für die Aufgabe:</label>
+					<div class="col-lg-10">
+						<input id="title" type="text" class="form-control {{$errors->has('title') ? 'is-invalid' : ''}}" name="title" value="{{$block->title}}" required autofocus>
+						@if ($errors->has('title'))
+							<span class="help-block">
+								<strong class="text-danger">{{ $errors->first('title') }}</strong>
+							</span>
+						@endif
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="task" class="col-md-6 control-label">Aufgabentext:</label>
+					<div class="col-lg-10">
+					<textarea class="form-control mb-3 task-summernote" rows="8" id="task" name="task" aria-label="task" aria-describedby="task" autofocus>{!!$block->task!!}</textarea>
+						@if ($errors->has('task'))
+							<span class="help-block">
+								<strong class="text-danger">{{ $errors->first('task') }}</strong>
+							</span>
+						@endif
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="content_id" class="col-md-6 control-label">Digitalen Inhalt aus der Datenbank auswählen:</label>
+					<div class="col-lg-10">
+					<select id="content_id" name="content_id" class="form-control" autofocus>
+						@if (isset($content->id))
+							<option value="{{$content->id}}">{{$content->content_title}}</option>
+						@else 
+							<option value="">Bitte auswählen</option>
+						@endif
+						@foreach($allContents as $allContent)
+							<option value="{{$allContent->id}}">{{$allContent->type->content_type}}: {{$allContent->content_title}}</option>
+						@endforeach
+						<option value="diftopic">Inhalt aus einem anderen Fach auswählen</option>
+					</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div id="choosetopic" class="d-none">
+						<label class="col-md-6 control-label" for="topi_id_dif">Inhalte aus anderen Fächern</label>
+						<div class="col-lg-10">
+						<select id="topic_id_dif" name="topic_id_dif" class="form-control mb-3" autofocus>
+							<option value="">Bitte anderes Thema auswählen</option>
+							@foreach ($topics as $topic)
+								<option value="{{$topic->id}}">{{$topic->topic_title}}</option>
+							@endforeach
+						</select>
+						<select id="content_id_dif" name="content_id_dif" class="form-control" autofocus>
+							<option value="">Zuerst Thema auswählen</option>
+						</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-10">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<label class="input-group-text"for="time">Zeit für die Aufgabe:</label>
+						</div>
+						<input class="form-control" type="text" maxlength="2" id="time" name="time" value="{{$block->time}}">
+						<div class="input-group-append">
+							<span class="input-group-text">Minuten</span>
+						</div>
+						@if ($errors->has('time'))
+							<span class="help-block">
+								<strong class="text-danger">{{ $errors->first('time') }}</strong>
+							</span>
+						@endif
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="task" class="col-md-6 control-label">Tipp (optional):</label>
+					<div class="col-lg-10">
+					<textarea class="form-control mb-3" rows="3" id="tipp" name="tipp" aria-label="tipp" aria-describedby="tipp" autofocus>{!!$block->tips!!}</textarea>
+						@if ($errors->has('tipp'))
+							<span class="help-block">
+								<strong class="text-danger">{{ $errors->first('tipp') }}</strong>
+							</span>
+						@endif
+					</div>
+				</div>
+
+            <div class="form-group{{ $errors->has('differentiation_id') ? ' has-error' : '' }}">
+               <label for="differentiation_id" class="col-lg-10 control-label">Differenzierung von Lernniveaus</label>
+               <label for="differentiation_id" class="col-lg-10 col-form-label mt-0 pt-0">
+                  <small class="text-muted">Die Aufgabe kann für unterschiedliche Lernniveaus der Gruppe <span class="font-weight-bold">"{{$unit->differentiation_group}}"</span> differenziert werden. Wähle hier das entsprechende Niveau aus oder wähle "Alle", wenn keine Differenzierung erfolgen soll.</small>
+					</label>
+					<div class="col-lg-10 input-group">
+						<div class="input-group-prepend">
+    						<label class="input-group-text" for="differentiation_id">Lernniveau:</label>
+  						</div>
+						<select class="custom-select" id="differentiation_id" name="differentiation_id">
+							@if($differentiation->id !== 13)
+								<option value="{{$differentiation->id}}">{{$differentiation->differentiation_title}}</option>
+								<option value="13">Keine Differenzierung für diese Aufgabe</option>
+							@else 
+								<option value="{{$differentiation->id}}">{{$differentiation->differentiation_title}}</option>
+								@foreach($otherDifferentiations as $otherDifferentiation)
+                           <option value="{{$otherDifferentiation->id}}">{{$otherDifferentiation->differentiation_title}}</option>
+                        @endforeach
+							@endif
+						</select>
+					</div>
+				</div>
+				
+				<div class="col-lg-10">
+					<button class="btn btn-primary form-control" type="submit">Änderungen in dieser Aufgabe speichern</button>
+				</div>
+			</form>	
 		</div>
-		<select class="form-control" id="alternative" name="alternative">
-			@if($block->alternative != NULL)
-			<option value="{{$blockAlternative->id}}">{{$blockAlternative->title}} ({{$blockAlternative->differentiation->differentiation_title}})</option>
-			@else 
-			<option value="keine">Bitte auswählen</option>
-			@endif
-			<option value="keine">(noch) keine</option>
-			@foreach($unit->blocks as $option_block)
-				<option value="{{$option_block->id}}">{{$option_block->title}} ({{$option_block->differentiation->differentiation_title}})</option>
-			@endforeach
-		</select>
-	</div>
-		
-		<button class="btn btn-primary form-control" type="submit">Änderungen in dieser Aufgabe speichern</button>
-</form>	
-<hr></hr>
+		<hr>
 
 <div>
 	<h4>Vorschau für diese Aufgabe</h4>
-	@php 
-		$firstblock_order = $unit->blocks->min('order');
+	
+	{{-- Calculate position of blocks irrespective of differentited blocks --}}
+	@php
+		$numberOfBlocks= $unit->blocks->unique('order');
 		$ordernumber = 0;
+		foreach ($numberOfBlocks as $currentBlock) {
+			if	($currentBlock->order !== $block->order) {
+				$ordernumber++;
+			} else {
+				$ordernumber++;
+			break;
+			}
+		}
 	@endphp
 	
 	<div class="card my-1" style="border-color:#03c4eb">
-				<!-- CardHeader -->
-				<div class="card-header text-white" role="tab" style="background-image: url('/images/banner.jpg')">
-					<div class="row mb-4">
-						@php $ordernumber ++; @endphp
-						<div class="col-10">
-							Aufgabe {{$ordernumber}} von {{$unit->blocks->count()}}
-						</div>
+		<!-- CardHeader -->
+		<div class="card-header text-white" role="tab" style="background-image: url('/images/banner.jpg')">
+			<div class="row mb-4">
+				<div class="col-lg-10">
+					Aufgabe {{$ordernumber}} von {{count($numberOfBlocks)}}
+				</div>
 					</div>
 					<div class="row mb-2">
 						<div class="col-9">	
@@ -151,13 +221,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					
-
-
-				<div class="card-footer text-right">
-					<a href="/backend/blocks/create2/{{$block->id}}" class="card-link">Aufgabentext oder Digitalen Inhalt bearbeiten</a>
-				</div>	
+					</div>	
 			</div>
 </div>
 
@@ -177,24 +241,29 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
 <script>
 	$(document).ready(function() {
-	var markupStr = '{!!$block->task!!}';
 	$('.task-summernote').summernote({
-        height: 130,
-        toolbar: [],
-        focus: true
-      });
-	
-	$('.task-summernote').summernote('code', markupStr);
+		toolbar: [
+		['style', ['bold', 'italic', 'underline', 'clear']],
+		['fontsize', ['fontsize']],
+		['color', ['color']],
+		['para', ['ul', 'ol', 'paragraph']],
+		]
 	});
-	
+	});
 </script>
+
 <script>
-      $('.task-summernote').summernote({
-        height: 130,
-        toolbar: [],
-        focus: true
-      });
+$(document).ready(function() {
+$('#content_id').change(function() {
+ if ($(this).val() == 'diftopic') {
+     var topic = document.getElementById('choosetopic');
+     topic.classList.add('d-block');
+     topic.classList.remove('d-none');
+  }
+});
+});
 </script>
 
 <script src="{{asset('js/ddd_subject_topic.js')}}"></script>
+<script src="{{asset('js/ddd_topic_content.js')}}"></script>
 @endsection

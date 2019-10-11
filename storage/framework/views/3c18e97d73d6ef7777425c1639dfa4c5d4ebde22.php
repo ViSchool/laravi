@@ -80,3 +80,4 @@
     <script src="<?php echo e(asset('js/app.js')); ?>"></script>
 </body>
 </html>
+<?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/layouts/app.blade.php ENDPATH**/ ?>

@@ -10,7 +10,7 @@
 					<h1 class="mt-3 text-capitalize text-info">ViSchool für Lehrer</h1>
 					<h3 class="lead text-white">Du willst digitaler unterrichten, hast aber keine Zeit oder Erfahrung? Starte mit fertigen Unterrichtseinheiten oder lass Dich von uns <a href="#coaching">kostenlos</a> zu Deinen eigenen Unterrichtsideen beraten.</h3>
 					<p>
-						<a href="/register" class="btn btn-primary my-2">Als Lehrer bei ViSchool anmelden</a>
+						<a href="/lehrer/register_soon" class="btn btn-primary my-2">Als Lehrer bei ViSchool anmelden</a>
 						<button type="button" class="btn btn-secondary my-2 text-white" data-toggle="modal" data-target="#actionModal">Beratung zu digitalem Unterricht anfragen</button>
 					</p>
 					</div>
@@ -85,84 +85,103 @@
 	<h2 class="text-brand-blue">Nutze fertige Unterrichtseinheiten zu vielen Themen</h2>
 	<p>Nutze die Unterrichtseinheiten, die von Lehrern bereits im Unterricht eingesetzt und erprobt wurden. Sie sind kostenlos und können sofort auch ohne Anmeldung eingesetzt werden. Willst Du die Einheiten nach Deinen Vorstellungen anpassen, musst Du Dir <a href="#">hier</a> einen ViSchool-Lehrerzugang erstellen. </p>
 	
-<div class="carousel slide mt-5" data-ride="carousel">
-   <div class="carousel-inner">
-       <div class="carousel-item active bg-white">
-           <div class="row">
-							<?php $__currentLoopData = $unitsSet01; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-								<div class="col">
-									<div class="card text-center">
-										<?php if(isset($unit->unit_img)): ?>
-											<img class="card-img-top" src="/images/units/<?php echo e($unit->unit_img); ?>" alt="Lerneinheiten01">	
-										<?php endif; ?> 
-										<?php if(empty($unit->unit_img)): ?>
-											<img class="card-img-top" src="/images/banner_small.jpeg" alt="Unit" >
-										<?php endif; ?>
-											<div class="card-body m-0">
-												<a href="/lerneinheit/<?php echo e($unit->id); ?>"><?php echo e($unit->unit_title); ?></a>
-											</div>
-									</div>
-								</div>
-							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-           </div>
-			 </div>
-			 <?php if(count($unitsSet02)!= 0): ?>
-			 <div class="carousel-item bg-white">	 
-					 <div class="row">
-               <?php $__currentLoopData = $unitsSet02; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-								<div class="col-3">
-									<div class="card text-center m-0 p-0">
-										<?php if(isset($unit->unit_img)): ?>
-											<img class="card-img-top" src="/images/units/<?php echo e($unit->unit_img); ?>" alt="Lerneinheiten01">	
-										<?php endif; ?> 
-										<?php if(empty($unit->unit_img)): ?>
-											<img class="card-img-top" src="/images/topic_back.jpeg" alt="Unit" >
-										<?php endif; ?>
-										<div class="d-none d-sm-block">
-											<div class="card-body">
-												<a href="/lerneinheit/<?php echo e($unit->id); ?>"><?php echo e($unit->unit_title); ?></a>
-											</div>
-										</div>
-										<div class="d-block d-sm-none">
-											<div class="card-body text-muted">
-   											<a href="/lerneinheit/<?php echo e($unit->id); ?>"><?php echo e($unit->unit_title); ?></a>
-  										</div>
-										</div>
-									</div>
-								</div>
-							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-           </div>
-			 </div>
-			 <?php endif; ?>
-			 <?php if(count($unitsSet03)!= 0): ?>
-			 <div class="carousel-item bg-white">	 
-					 <div class="row">
-						<?php $__currentLoopData = $unitsSet03; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-								<div class="col">
-									<div class="card p-2 text-center">
-										<?php if(isset($unit->unit_img)): ?>
-											<img class="card-img-top" src="/images/units/<?php echo e($unit->unit_img); ?>" alt="Lerneinheiten01">	
-										<?php endif; ?> 
-										<?php if(empty($unit->unit_img)): ?>
-											<img class="card-img-top" src="/images/banner_small.jpeg" alt="Unit" >
-										<?php endif; ?>
-										<div class="d-none d-sm-block">
-											<div class="card-body">
-												<a href="/lerneinheit/<?php echo e($unit->id); ?>"><?php echo e($unit->unit_title); ?></a>
-											</div>
-										</div>
-										<div class="d-block d-sm-none">
-											<div class="card-body text-muted">
-   											<a href="/lerneinheit/<?php echo e($unit->id); ?>"><?php echo e($unit->unit_title); ?></a>
-  										</div>
-										</div>
-									</div>
-								</div>
-							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
-           </div>
-			 </div>
-			 <?php endif; ?>
-   </div>
+
+<div class="d-flex justify-content-center my-5">
+<div class="carousel slide" data-ride="carousel">
+	<div class="carousel-inner" >
+		
+		<div class="carousel-item active bg-white" style="height:100%">
+			<div class="card-deck">
+				<?php $__currentLoopData = $unitsSet01; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					<div class="card" style="max-width: 300px;">
+						<div class="card-header m-0 p-0" style="height:150px; overflow:hidden">
+							<?php if(isset($unit->unit_img)): ?>
+								<img class="card-img-top align-middle" style="width:100%;height:100%;object-fit:cover;" src="/images/units/<?php echo e($unit->unit_img); ?>" alt="Lerneinheiten01">	
+							<?php endif; ?> 
+							<?php if(empty($unit->unit_img)): ?>
+								<img class="card-img-top" src="/images/banner.jpg" alt="Unit" style="height:100%">
+							<?php endif; ?>
+						</div>
+						<div class="d-none d-sm-block">
+							<div class="card-body">
+								<a href="/lerneinheit/<?php echo e($unit->id); ?>"><?php echo e($unit->unit_title); ?></a>
+							</div>
+						</div>
+						<div class="d-block d-sm-none">
+							<div class="card-body text-muted">
+								<a href="/lerneinheit/<?php echo e($unit->id); ?>"><?php echo e($unit->unit_title); ?></a>
+							</div>
+						</div>
+					</div>
+				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+			</div>
+		</div>
+		
+
+		<?php if(count($unitsSet02)!= 0): ?>
+		
+		<div class="carousel-item bg-white" style="height:100%">
+			<div class="card-deck">
+				<?php $__currentLoopData = $unitsSet02; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					<div class="card" style="max-width: 300px;">
+						<div class="card-header m-0 p-0" style="height:150px; overflow:hidden">
+							<?php if(isset($unit->unit_img)): ?>
+								<img class="card-img-top align-middle" style="width:100%;height:100%;object-fit:cover;" src="/images/units/<?php echo e($unit->unit_img); ?>" alt="Lerneinheiten01">	
+							<?php endif; ?> 
+							<?php if(empty($unit->unit_img)): ?>
+								<img class="card-img-top" src="/images/banner.jpg" alt="Unit" style="height:100%">
+							<?php endif; ?>
+						</div>
+						<div class="d-none d-sm-block">
+							<div class="card-body">
+								<a href="/lerneinheit/<?php echo e($unit->id); ?>"><?php echo e($unit->unit_title); ?></a>
+							</div>
+						</div>
+						<div class="d-block d-sm-none">
+							<div class="card-body text-muted">
+								<a href="/lerneinheit/<?php echo e($unit->id); ?>"><?php echo e($unit->unit_title); ?></a>
+							</div>
+						</div>
+					</div>
+				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+			</div>
+		</div>
+		
+		<?php endif; ?>
+
+		<?php if(count($unitsSet03)!= 0): ?>
+		
+		<div class="carousel-item bg-white" style="height:100%">
+			<div class="card-deck">
+				<?php $__currentLoopData = $unitsSet03; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					<div class="card" style="max-width: 300px;">
+						<div class="card-header m-0 p-0" style="height:150px; overflow:hidden">
+							<?php if(isset($unit->unit_img)): ?>
+								<img class="card-img-top align-middle" style="width:100%;height:100%;object-fit:cover;" src="/images/units/<?php echo e($unit->unit_img); ?>" alt="Lerneinheiten01">	
+							<?php endif; ?> 
+							<?php if(empty($unit->unit_img)): ?>
+								<img class="card-img-top" src="/images/banner.jpg" alt="Unit" style="height:100%">
+							<?php endif; ?>
+						</div>
+						<div class="d-none d-sm-block">
+							<div class="card-body">
+								<a href="/lerneinheit/<?php echo e($unit->id); ?>"><?php echo e($unit->unit_title); ?></a>
+							</div>
+						</div>
+						<div class="d-block d-sm-none">
+							<div class="card-body text-muted">
+								<a href="/lerneinheit/<?php echo e($unit->id); ?>"><?php echo e($unit->unit_title); ?></a>
+							</div>
+						</div>
+					</div>
+				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+			</div>
+		</div>
+		
+		<?php endif; ?>
+
+	</div>
+</div>
 </div>
 
 
@@ -175,22 +194,7 @@
 	<img class="img-fluid mb-3" src="/images/unit_example.jpeg"></img>
 	<p>Du kannst selbst Unterrichtseinheiten auf Basis aller bei uns hinterlegten Inhalte erstellen. Alles digital? Nein, unsere Unterrichtseinheiten können sowohl ganz klassische Unterrichtselemente enthalten, als auch digitale, wie Videos, Quizzes und Onlineaufgaben. Fehlt Dir ein Inhalt, dann kannst Du ihn selbst hinzufügen. Melde Dich an, um diese Funktionen zu nutzen.</p>
 	
-	<hr></hr>
-	<h2 class="text-brand-blue">Lerne Tools kennen</h2>
-	<p>Es gibt zahlreiche kostenlos nutzbare Tools, die Du für Deinen Unterricht nutzen kannst. Wie Du sie anwendest, erklären wir Dir hier. </p>
-		<hr></hr>
-	<h2 class="text-brand-red">Unser Bewertungssystem</h2>
-	<div class="row">
-		<div class="col">
-		<img class="img-fluid" src="/images/logo_aha.jpg"></img>
-		</div>
-		<div class="col">
-		<img class="img-fluid" src="/images/logo_cool.jpg"></img>
-		</div>
-		<div class="col">
-		<img class="img-fluid" src="/images/logo_wirkt.jpg"></img>
-		</div>
-	</div>
+	
 	
 	<hr></hr>
 	<h2 class="text-brand-blue">Coaching für Lehrer und Schulen</h2>
@@ -216,4 +220,4 @@
 
 <?php $__env->startSection('scripts'); ?>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/teacher/teacher_welcome.blade.php ENDPATH**/ ?>

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\ViSchoolVerifyEmailNotification;
+use App\Mail\EmailVerification;
 
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -32,7 +33,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'password', 'remember_token',
     ];
 
-    
     
     public function post()
 	{

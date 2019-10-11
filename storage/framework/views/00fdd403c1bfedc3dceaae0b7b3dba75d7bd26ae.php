@@ -24,3 +24,4 @@
 		</div>
 </div>
 </section>
+<?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/layouts/blog.blade.php ENDPATH**/ ?>

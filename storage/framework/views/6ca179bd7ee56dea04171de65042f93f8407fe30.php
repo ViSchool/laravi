@@ -1,7 +1,8 @@
 <header>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 	<button class="btn" type="button" data-toggle="collapse" data-target="#admin_user" aria-expanded="false" aria-controls="admin_user">
-		<i class="fas fa-user fa-inverse"> <?php echo e($admin->name); ?></i>
+    <i class="fas fa-user fa-inverse"> </i>
+    <small class="text-white"><?php echo e($admin->name); ?></small>
 	</button>
         
 	<a class="navbar-brand" href="#">Dashboard</a>
@@ -28,7 +29,7 @@
               <a class="nav-link" href="/backend/contents">Inhalte</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/backend/units">Unterrichtseinheiten</a>
+              <a class="nav-link" href="/backend/units">Lerneinheiten</a>
             </li>
             	<li class="nav-item">
               <a class="nav-link" href="/backend/series">Serien</a>
@@ -50,4 +51,4 @@
         </div>
       </nav>
 		
-    </header>
+    </header><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/backend/header.blade.php ENDPATH**/ ?>

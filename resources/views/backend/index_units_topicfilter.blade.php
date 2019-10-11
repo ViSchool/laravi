@@ -19,13 +19,14 @@
 				<a class="btn btn-info m-1" href="{{route('backend.units.filtertopics',['topic' => $topic->id , 'subject' => $currentSubject->id])}}">{{$topic->topic_title}}</a>
 			@endforeach
 		</div>
-		<table class="table">
+		<table class="table table-hover table-sm">
 			<thead>
 				<tr>
 					<th>Titel der Unterrichtseinheit</th>
 					<th>Thema</th>
 					<th>Fach</th>
 					<th>dazugehörige Serie</th>
+					<th>Status</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -34,7 +35,11 @@
 					<td><a href="{{route ('backend.units.show',[$unit->id])}}">{{$unit->unit_title}}</a></td>	
 					<td>{{$unit->topic->topic_title}}</td>
 					<td>{{$unit->subject->subject_title}}</td>
-					<td>tbd: $unit->series</td>
+					<td>
+						@if ($unit->serie_id !== NULL)
+						{{$unit->serie->serie_title}}
+						@endif
+					</td>
 				</tr>
 				@endforeach
 			</tbody>

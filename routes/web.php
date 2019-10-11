@@ -28,6 +28,9 @@ Route::get('/mailable', 'AppController@sendBrokenLinks');
 /*Routes for Teachers*/
 /*Routes for Units*/
 
+/*Routes for Schools*/
+// Route::get('/{schule}', 'SchoolController@school_page');
+
 
 /*Routes for Lehrer Logout and profile*/
 Route::patch('/lehrer/{id}/passwortaendern','RegistrationController@change_password')->name('teacher.change_password');
@@ -98,7 +101,7 @@ Route::delete('/lehrer/schuelergruppe/löschen/{id}', 'StudentgroupController@de
 //nur zu Testzwecken:
 Route::get('/lehrer/schuelergruppe/pdf/{id}','StudentgroupController@show')->name('show_studentgroup_pdf');
 
-
+Route::get ('/lehrer/verified', 'TeacherController@verified');
 Route::get ('/lehrer/coaching', 'TeacherController@coaching');
 Route::get ('/lehrer/schulcoaching', 'TeacherController@schulcoaching');
 Route::get ('/lehrer/danke', 'TeacherController@thanks');
@@ -162,7 +165,9 @@ Route::post('/password/email' , 'Auth\AdminForgotPasswordController@sendResetLin
 Route::get('/password/reset' , 'Auth\AdminForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
 Route::post('/password/reset' , 'Auth\AdminResetPasswordController@reset');
 Route::get('/password/reset/{token}' , 'Auth\AdminResetPasswordController@showResetForm')->name('admin.password.reset');
+Route::get('/freigaben', 'BackendController@approvals')->name('admin.approvals');
 Route::get('/', 'BackendController@index')->name('admin.dashboard');
+
 });
 
 
@@ -213,6 +218,7 @@ Route::patch('/backend/topics/{topic}','TopicController@update')->name('topics.u
 Route::get('backend/topics/approve/{topic}','TopicController@teacherTopicApprove');
 
 
+
 /*Routes for contents database*/
 Route::get('/backend/contents', 'ContentController@index')->name('backend.contents');
 Route::get('/backend/contents/subjectfilter/{subject}', 'ContentController@index_subject')->name('backend.contents.filtersubjects');
@@ -223,12 +229,14 @@ Route::post('/backend/contents', 'ContentController@store');
 Route::get('/backend/contents/{content}', 'ContentController@show')->name('backend.contents.show');
 Route::delete('/backend/contents/{content}','ContentController@destroy')->name('contents.destroy');
 Route::patch('/backend/contents/{content}','ContentController@update')->name('contents.update');
-Route::get('backend/topics/approve/{content}','TopicController@teacherContentApprove');
+Route::get('/backend/contents/adminapproval/{content}','ContentController@teacherContentApprove')->name('contents.adminapproval');
+
 
 /*Routes for tags database*/
 Route::get('/backend/tags', 'TagController@index');
 Route::get('/backend/tags/{tag}', 'TagController@show');
 Route::post('/backend/tags', 'TagController@store');
+Route::patch('/backend/tags/{tag}', 'TagController@update');
 Route::delete('/backend/tags/{tag}','TagController@destroy')->name('tags.destroy');
 
 /*Routes for permissions database*/
@@ -338,5 +346,4 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::get('email/verify', 'Auth\VerificationController@show')->name('verification.notice'); 
 Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify'); 
 Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'ViSchoolControll@index')->name('home');

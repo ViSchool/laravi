@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/lehrer/danke';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -75,6 +75,7 @@ class RegisterController extends Controller
      */
     protected function create($request)
     {   
+        $role = $request['contract'];
         $user = User::create([
             'teacher_name' => $request['teacher_name'],
             'teacher_surname' => $request['teacher_surname'],
@@ -85,14 +86,19 @@ class RegisterController extends Controller
             'user_name' => $request['email'],
             
         ]);
+        
         $user->teacher_id = $user->id;
         if (isset($request->newsletter)){
             $user->newsletter = $request->newsletter;
         }
         $user->save();
-        $user->assignRole('Lehrer (free)');
+        if ($role == "premium") {
+            $user->assignRole('Lehrer (premium)');
+        } else {
+            $user->assignRole('Lehrer (free)');
+        }
+        
         return $user;
-        
-        
     }
+
 }

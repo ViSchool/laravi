@@ -48,9 +48,9 @@
             </small>
     </div>
     <div class="card-footer bg-success text-white d-flex justify-content-between">
-        <small>Diesen Inhalt auswählen: </small>
+        <label for="chooseContent-{{$content->id}}"><small>Diesen Inhalt auswählen: </small></label>
         {{--<input type="hidden" value="{{$content->id}}" id="contentIdInput" name="contentID">
         <a href="/lehrer/unterrichtseinheiten/{{$unit->id}}/aufgabe/{{$content->id}}"><i class="far fa-check-square fa-2x" style="color:green"></i></button> --}}
-        <input class="with-font" type="radio" name="chooseContent" id="chooseContent-{{$content->id}}" value="{{$content->id}}">
+        <input class="form-check-input position-static" type="radio" name="chooseContent" id="chooseContent-{{$content->id}}" value="{{$content->id}}">
     </div>
 </div>

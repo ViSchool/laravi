@@ -36,6 +36,8 @@
 			</div>
 		</section>
 		</div>
+
+
 	<h4>Letzte gemeldete Fehler</h4>
 		<div class="table-responsive">
 			<table class="table table-striped">

@@ -34,3 +34,4 @@
         <?php endif; ?>
     </ul>
 <?php endif; ?>
+<?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/vendor/pagination/bootstrap-4.blade.php ENDPATH**/ ?>

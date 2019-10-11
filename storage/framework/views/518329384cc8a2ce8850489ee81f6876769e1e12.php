@@ -44,3 +44,4 @@
         </a>
       </div> 
 <!-- Ende Hero Section -->
+<?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/layouts/hero.blade.php ENDPATH**/ ?>

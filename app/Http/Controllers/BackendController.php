@@ -9,6 +9,7 @@ use App\Subject;
 use App\Topic;
 use App\Unit;
 use App\Content;
+use App\Status;
 use Auth;
 use App\Mistake;
 
@@ -23,10 +24,10 @@ class BackendController extends Controller
     public function index() 
     {
     	$mistakes = Mistake::admin_mistake();
-    	$nrSubjects = Subject::all()->count();
+		$nrSubjects = Subject::all()->count();
     	$nrTopics = Topic::all()->count();
     	$nrContents = Content::all()->count();
-    	$nrUnits = Unit::all()->count();
+		$nrUnits = Unit::all()->count();
 		return view('backend.vischool_backend', compact('admin','mistakes','nrSubjects','nrTopics','nrContents','nrUnits'));
 	}
     
@@ -34,6 +35,10 @@ class BackendController extends Controller
 	return view('backend.admin_subjects', compact('subjects'));
 	}
 	
-	
+	public function approvals()
+	{
+		$status = Status::find(2);
+		return view('backend.index_approvals',compact('status'));
+	}
 	
 }

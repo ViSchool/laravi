@@ -17,7 +17,7 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav">
 				<li class="nav-item active">
-					<a class="nav-link mx-2" href="/">Home <span class="sr-only">(current)</span></a>
+					<a class="nav-link mx-2" href="/">Startseite <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFaecher" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fächer</a>
@@ -82,7 +82,7 @@
 						<?php else: ?>
 						
 							<!-- Schülerlogin -->
-							<?php echo $__env->make('layouts.errors', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>	
+							<?php echo $__env->make('layouts.errors', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>	
 							<form action="/schueler/login" method="post" class="p-4 m-3" style="min-width: 200px;">
 							<?php echo csrf_field(); ?>	
 								<div class="form-group">
@@ -152,3 +152,4 @@
 
 
 
+<?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/layouts/nav.blade.php ENDPATH**/ ?>

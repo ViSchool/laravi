@@ -18,9 +18,16 @@
 				<div class="form-group">
 					<label for="tag-group">Tag-Gruppe:</label>
 					<select class="form-control mb-4" id="tag_group" name="tag_group">
-						<option value="ohne"></option>
-						<option>Klassenstufe</option>
+						<option value="">ohne</option>
+							@foreach ($taggroups as $taggroup )
+								<option>{{$taggroup}}</option>
+							@endforeach
+								<option value="new">Neue Taggruppe</option>
 					</select>
+					<div id="new_tag_group_container" class="d-none">
+						<label  for="new_tag-group">Name der neuen Tag-Gruppe:</label>
+						<input type="text" class="form-control" id="new_tag_group" name="new_tag_group">
+					</div>	
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary">Tag eintragen</button>
@@ -29,11 +36,15 @@
 			</div>
 			</form>
 		</div>
+
+		
+
+
 	</div>
 		<table class="table">
 			<thead>
 				<tr>
-					<th>ID</th>
+					<th>Bearbeiten</th>
 					<th>Tag</th>
 					<th>Tag-Gruppe</th>
 					<th>Löschen</th>
@@ -42,19 +53,34 @@
 			<tbody>
 				@foreach ($tags as $tag)
 				<tr>
-					<td>{{$tag->id}}</td>
+					<td></td>
 					<td><a href="/backend/tags/{{$tag->id}}">{{$tag->tag_name}}</a></td>	
 					<td>{{$tag->tag_group}}</td>
-					<td><form method="POST" action="{{route('tags.destroy',[$tag->id])}}">
-				{{ csrf_field() }} {{ method_field('DELETE') }}
-					<button class="btn btn-link" type="submit"><i class="far fa-trash-alt"></i></button>
-			</form>
-		</div>
-		</td>
+					<td>
+						<form method="POST" action="{{route('tags.destroy',[$tag->id])}}">
+							{{ csrf_field() }} {{ method_field('DELETE') }}
+							<button class="btn btn-link" type="submit"><i class="far fa-trash-alt"></i></button>
+						</form>
+					</td>
 				</tr>
 				@endforeach
 			</tbody>
 		</table>
-		<hr></hr>
+		<hr>
 </div>
+@endsection
+
+@section('scripts')
+	
+<script>
+$(document).ready(function() {
+$('#tag_group').change(function() {
+ if ($(this).val() == 'new') {
+     new_tag_group_container.classList.remove('d-none');
+  }
+});
+});
+</script>
+
+
 @endsection

@@ -15,7 +15,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        $roles = Role::whereIn('id',[1,2])->get();
         $permissions = Permission::all();
         return view('backend.permissions',compact('roles','permissions'));
     }

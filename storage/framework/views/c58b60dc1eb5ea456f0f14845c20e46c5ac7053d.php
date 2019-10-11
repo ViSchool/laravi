@@ -23,3 +23,4 @@
 	</section>		
 
 
+<?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/layouts/subjects.blade.php ENDPATH**/ ?>

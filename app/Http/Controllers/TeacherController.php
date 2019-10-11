@@ -21,8 +21,8 @@ class TeacherController extends Controller
 {
 	public function __construct() 
     {
-         $this->middleware('auth' , ['except'=> ['index','coaching','schulcoaching','indexBackend','showBackend']]);
-         $this->middleware('verified' , ['except'=> ['index','coaching','schulcoaching','indexBackend','showBackend']]);
+         $this->middleware('auth' , ['except'=> ['index','coaching','schulcoaching','indexBackend','showBackend','verified']]);
+         $this->middleware('verified' , ['except'=> ['index','coaching','schulcoaching','indexBackend','showBackend','verified']]);
      }
     
 	
@@ -35,6 +35,11 @@ class TeacherController extends Controller
     $unitsSet02 = Unit::orderBy('updated_at', 'desc')->skip(3)->take(3)->get();
     $unitsSet03 = Unit::orderBy('updated_at', 'desc')->skip(6)->take(3)->get();
     return view ('teacher.teacher_welcome', compact('subjects', 'unit01','units', 'unitsSet01','unitsSet02','unitsSet03'));
+    }
+
+    public function verified()
+    {
+        return view ('teacher.teacher_verified');
     }
 
     public function coaching()
@@ -139,10 +144,11 @@ class TeacherController extends Controller
         $teacher = Auth::user();
         $unit = Unit::findOrFail($unit_id);
         $blocks = Block::where('unit_id',$unit->id);
-        $differentiations = Differentiation::where([
-            ['user_id',$teacher->id],
-            ['differentiation_group',$unit->differentiation_group]
-        ])->get();
+        if($unit->differentiation_group == 'Standard') {
+            $differentiations = Differentiation::where('differentiation_group', 'Standard')->get();
+        } else {
+            $differentiations = Differentiation::where('user_id',$teacher->id)->where('differentiation_group', $unit->differentiation_group)->get();
+        }
         $contents = Content::where('topic_id', $unit->topic_id)->get();
         return view ('teacher.teacher_blocksCreate', compact('teacher','unit','differentiations','contents','blocks','differentiation_groups'));
     }
