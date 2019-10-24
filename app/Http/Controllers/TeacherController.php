@@ -30,10 +30,10 @@ class TeacherController extends Controller
     {
     $subjects = Subject::all();
     $unit01 = Unit::orderBy('updated_at', 'desc')->take(1)->first();
-    $units = Unit::orderBy('updated_at', 'desc')->skip(1)->take(10)->get();
-    $unitsSet01 = Unit::orderBy('updated_at', 'desc')->take(3)->get();
-    $unitsSet02 = Unit::orderBy('updated_at', 'desc')->skip(3)->take(3)->get();
-    $unitsSet03 = Unit::orderBy('updated_at', 'desc')->skip(6)->take(3)->get();
+    $units = Unit::where('status_id',1)->orderBy('updated_at', 'desc')->skip(1)->take(10)->get();
+    $unitsSet01 = Unit::where('status_id',1)->orderBy('updated_at', 'desc')->take(3)->get();
+    $unitsSet02 = Unit::where('status_id',1)->orderBy('updated_at', 'desc')->skip(3)->take(3)->get();
+    $unitsSet03 = Unit::where('status_id',1)->orderBy('updated_at', 'desc')->skip(6)->take(3)->get();
     return view ('teacher.teacher_welcome', compact('subjects', 'unit01','units', 'unitsSet01','unitsSet02','unitsSet03'));
     }
 
@@ -92,7 +92,7 @@ class TeacherController extends Controller
         $teacher = Auth::user();
         $subjects = Subject::all();
         $topics = Topic::where('user_id',$teacher->id)->get();
-        return view ('teacher.teacher_topics', compact('teacher','contents','topics','subjects'));
+        return view ('teacher.teacher_topics', compact('teacher','contents','topics','subjects','currentSubjects'));
     }
 
     public function units() 

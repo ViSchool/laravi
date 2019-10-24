@@ -7,13 +7,12 @@
 
 <section class="jumbotron p-2 mb-5">	
 	<div class="container-fluid" style="background-image:url(/images/banner_small.jpeg);">
-			<div class="row">
+			<div class="row ml-5">
 				<div class="col-8">
-					<h1 class="mt-3 text-capitalize text-info">ViSchool für Lehrer</h1>
+					<h1 class="mt-3 text-info">ViSchool für Lehrer</h1>
 					<h3 class="lead text-white">Du willst digitaler unterrichten, hast aber keine Zeit oder Erfahrung? Starte mit fertigen Unterrichtseinheiten oder lass Dich von uns <a href="#coaching">kostenlos</a> zu Deinen eigenen Unterrichtsideen beraten.</h3>
-					<p>
+					<p class="text-center">
 						<a href="/lehrer/register_soon" class="btn btn-primary my-2">Als Lehrer bei ViSchool anmelden</a>
-						<button type="button" class="btn btn-secondary my-2 text-white" data-toggle="modal" data-target="#actionModal">Beratung zu digitalem Unterricht anfragen</button>
 					</p>
 					</div>
 					
@@ -26,51 +25,6 @@
 			
     </div>
   </section>
-
-
-<!-- Modal für Call to Action -->
-<div class="modal" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="actionModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="actionModalLabel">Wie können wir Dich unterstützen?</h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="/lehrer/anfrage" method="POST">
-		{{ csrf_field() }}
-          <div class="form-group">
-            <label for="lehrerName" class="col-form-label">Dein Name:</label>
-            <input type="text" class="form-control" id="lehrerName" name="lehrername">
-          </div>
-          <div class="form-group">
-            <label for="fach" class="col-form-label">Dein Fach:</label>
-            <input type="text" class="form-control" id="subject" name="fach">
-          </div>
-          	<div class="form-group">
-            <label for="thema" class="col-form-label">Dein Unterrichtsthema:</label>
-            <input type="text" class="form-control" id="thema" name="thema">
-          </div>
-          <div class="form-group">
-            <label for="email" class="col-form-label">Emailadresse unter der wir Dich erreichen:</label>
-            <input type="email" class="form-control" id="email" name="email">
-					</div>
-					<small>Wir erheben Deine Daten aus diesem Kontaktformular lediglich, um Dich zu unserem Beratungsangebot per Email zu kontaktieren.  Näheres hierzu kannst Du unserer <a href="/datenschutz#kontakt">Datenschutzerklärung</a>  entnehmen. </small>
-					
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn-sm btn-secondary" data-dismiss="modal">Abbrechen</button>
-        <button type="submit" class="btn-sm btn-primary">Anfrage senden</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-
-
 @endsection
 		
 @section ('content')

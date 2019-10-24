@@ -1,24 +1,70 @@
 <!-- Navigation -->
-<div id="vischool_nav">
-	<nav class="navbar navbar-expand-md fixed-top navbar-light">	
+
+
+<nav class="navbar navbar-expand-md navbar-light flex-column align-items-start mb-0">
+	
+	<div id="vischool_nav" class="w-100 d-flex justify-content-between">
+		<button class="navbar-toggler m-0 p-0 border-0" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+         <span class="navbar-toggler-icon"></span>
+      </button>  
 		<!-- Brand -->
 		<a class="navbar-brand" href="/">ViSchool</a>
 		<!-- Suche -->
+		<div class="d-none d-md-block mt-2">
+			<form action="/suche" enctype="multipart/form-data">
+			<?php echo csrf_field(); ?>
+   			<input type="search" class="form-control mx-4" placeholder="&#xf002 Themen, Inhalte und Lerneinheiten suchen" name="search" style="width:50vw; font-size:12px;">	
+				<button class="btn btn-link" type="submit"></i></button>
+			</form>
+		</div>
+		<!-- User Button  -->
+		<div id="userLoggedButton" class="mr-4 d-none d-md-block">
+			<div class="dropdown mr-1">
+    			<a class="btn btn-link box-shadow:none" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,80">
+					<span class="fa-stack" style="vertical-align: top; color:gray">
+						<i class="far fa-circle fa-stack-2x"></i>
+						<i class="fas fa-user fa-stack-1x"></i>
+					</span>
+					<p><small class="text-secondary">Dein Lehrer Zugang</small></p> 
+				</a>
+				<div class="dropdown-menu border-0 shadow mr-2" aria-labelledby="dropdownMenuOffset" style="max-width: 200px;">
+					<?php if(auth()->check() && auth()->user()->hasAnyRole('Lehrer (free)|Lehrer (premium)')): ?>
+						<p><small >Du bist eingeloggt als <?php echo e(Auth::user()->teacher_name); ?> (Lehrer)</small></p>
+						<a href="/lehrer/logout" class="btn-sm btn-primary text-white ml-1"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+					<?php endif; ?>
+					<?php if(auth()->check() && auth()->user()->hasAnyRole('Schüler')): ?>
+						<p><small>Du bist eingeloggt als <?php echo e(Auth::guard('student')->user()->student_name); ?> 
+								<?php if(Auth::guard('student')->user()->class_account == 1): ?> 
+									(Klasse)
+								<?php else: ?> 
+									(Schüler) 
+								<?php endif; ?>
+							</small></p>
+						<a href="/schueler/logout" class="btn-sm btn-primary text-white ml-1"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+					<?php endif; ?>
+					<?php if(auth()->guard()->guest()): ?>
+						<p class="ml-4"><small>Du bist nicht eingeloggt.</small></p>
+						<p><a href="/login" class="btn-sm btn-primary text-white ml-4"> <i class="fas fa-sign-in-alt"></i> Lehrer-Login</a></p>
+						
+						<p><a href="/register" class="btn-sm btn-link ml-3">Registrieren</a></p>
+					<?php endif; ?>
+    			</div>
+			</div>	
+		</div>
+	</div>
+
+	<div class="w-100 d-md-none">
 		<form action="/suche" enctype="multipart/form-data">
 			<?php echo csrf_field(); ?>
-   			<input type="search" class="form-control" placeholder="Suche" name="search">	
-			<button class="d-none" type="submit"></button>
-		</form>
-		<!-- Toggler on small displays -->
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-				
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav">
-				<li class="nav-item active">
-					<a class="nav-link mx-2" href="/">Startseite <span class="sr-only">(current)</span></a>
-				</li>
+				<div class="search d-flex px-5 justify-content-center input-group">
+   				<input type="search" class="form-control mx-2" placeholder="&#xf002 Inhalte und mehr suchen" name="search">	
+					<button class="d-none" type="submit"></button>
+				</div>
+			</form>
+	</div>
+
+   <div class="collapse navbar-collapse">
+        	<ul class="navbar-nav">
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFaecher" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Fächer</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownSubjects">
@@ -100,7 +146,6 @@
 						<?php endif; ?>		
 					</div>
 				</li>
-
 				<li class="nav-item">
 					<a class="nav-link mx-2" href="/blog">Blog</a>					
 				</li>
@@ -111,44 +156,8 @@
 						<a class="dropdown-item" href="/datenschutz">Datenschutz</a>
 					</div>	
 				</li>
-
-
-				<?php if(auth()->guard()->check()): ?>
-				<li class="nav-item dropdown ml-5">
-					<div class="mt-2 btn-group dropleft">
-						<a class="btn btn-outline-success nav-link dropdown-toggle" href="#" id="navbarDropdownLoggedIn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class=" fas fa-user-graduate"></i></a>
-					
-						<div class="dropdown-menu" aria-labelledby="navbarDropdownLoggedIn">
-							<small>Lehreraccount: <span class="text-brand-blue"><?php echo e(Auth::user()->teacher_name); ?></span></small>
-							<a class="btn btn-warning dropdown-item" href="lehrer/logout">Logout</a>
-						</div>
-					</div>
-				</li>
-				<?php endif; ?>
-
-				<?php if(Auth::guard('student')->check()): ?>
-				<li class="nav-item dropdown ml-5">
-					<div class="mt-2 btn-group dropleft">
-						<a class="btn btn-outline-success nav-link dropdown-toggle" href="#" id="navbarDropdownLoggedIn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class=" fas fa-user"></i></a>
-					
-						<div class="dropdown-menu" aria-labelledby="navbarDropdownLoggedIn">
-							<small>
-								<?php if(Auth::guard('student')->user()->class_account == 1): ?>
-								Klassenaccount: <span class="text-brand-red"><?php echo e(Auth::guard('student')->user()->student_name); ?></span>
-								<?php else: ?>
-								Schüleraccount: <span class="text-brand-red"><?php echo e(Auth::guard('student')->user()->student_name); ?></span>
-								<?php endif; ?>
-							</small>
-							<a class="btn btn-warning dropdown-item" href="/schueler/logout">Logout</a>
-						</div>
-					</div>
-				</li>
-				<?php endif; ?>
-
 			</ul>
-		</div>  
-	</nav>
-</div>
+</nav>
 
 
 

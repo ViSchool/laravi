@@ -39,7 +39,8 @@ Route::get('lehrer/lehrerkonto','TeacherController@lehrerkonto');
 
 //Routen, damit Lehrer selbst Themen einstellen kann und Statusänderungen dazu
 Route::get('lehrer/themen','TeacherController@topics');
-Route::post('lehrer/themen','TopicController@teacher_store');
+Route::post('lehrer/themen/speichern','TopicController@teacher_store');
+Route::post('lehrer/themen/bearbeiten/{topic}','TopicController@teacher_update');
 Route::get('lehrer/newTopicPrivate/{topic}','TopicController@teacherTopicPrivate');
 Route::get('lehrer/newTopicViSchool/{topic}','TopicController@teacherTopicViSchool');
 Route::get('lehrer/newTopicDelete/{topic}','TopicController@destroy');

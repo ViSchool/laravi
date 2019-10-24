@@ -6,7 +6,7 @@
 <section id="page-header">
 <div class="d-flex justify-content-between align-items-center">
 	<h2 class="m-4 text-dark"><?php echo e($subject->subject_title); ?></h2>
-	<?php if(count($publicTopics) + count($privateTopics) > 6): ?>
+	<?php if(count($publicTopics) + count($privateTopics) > 200): ?>
 	<div class="m-4 px-4 d-block d-md-none">
 		<button id="btnSidebarCollapse" class="btn btn-light" type="button">
 			<i id="btnFilterIcon" class="fas fa-filter"></i>
@@ -19,7 +19,7 @@
 		
 <?php $__env->startSection('content'); ?>
 <div class="d-flex w-100">
-	<?php if(count($publicTopics) + count($privateTopics) > 6): ?>
+	<?php if(count($publicTopics) + count($privateTopics) > 200): ?>
 	<nav id="filter_sidebar">
 		<ul class="list-unstyled components ">
          <h4 class="mx-5">Themen filtern</h4>
@@ -41,28 +41,6 @@
 					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </ul>
 			</li>
-			
-
-         <li>
-         	<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-            <ul class="collapse list-unstyled" id="pageSubmenu">
-         		<li>
-                  <a href="#">Page 1</a>
-               </li>
-               <li>
-                  <a href="#">Page 2</a>
-               </li>
-               <li>
-               	<a href="#">Page 3</a>
-               </li>
-            </ul>
-         </li>
-         <li>
-         	<a href="#">Portfolio</a>
-         </li>
-         <li>
-            <a href="#">Contact</a>
-         </li>
       </ul>
 	</nav>
 	<?php endif; ?>

@@ -5,12 +5,13 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Für den Lehrerzugang anmelden</div>
+                <div class="panel-heading bg-warning text-center"><h4 class="mb-0">Für den Lehrerzugang anmelden</h4></div>
 
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="/register" enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        
+                        @honeypot
+
                         <div class="form-group{{ $errors->has('teacher_name') ? ' has-error' : '' }}">
                             <label for="teacher_name" class="col-md-4 control-label">Name</label>
 
@@ -57,8 +58,9 @@
                         </div>
 
                        <div class="form-group{{ $errors->has('contract') ? ' has-error' : '' }}">
-                            <label for="contract" class="control-label px-4">Wähle das von Dir gewünschte Angebot:</label>
-                            <div class="card-deck p-3">
+                            <label for="contract" class="control-label px-4 ml-5">Wähle das von Dir gewünschte Angebot:</label>
+                            <p class="small px-4 ml-5">Teste alle Angebote zunächst kostenlos. Kurz vor Ende des Testzeitraums bitten wir Dich, ggf. die entsprechende Zahlung vorzunehmen, damit das von Dir gewählte Paket weiter zur Verfügung steht.</p>
+                            <div class="card-deck p-3 m-3">
                                 <div class="card mb-3" style="min-width:200px;">
                                     <div class="card-header bg-warning">
                                        <div class="form-check form-check-inline d-flex justify-content-start">
@@ -74,7 +76,7 @@
                                     </div>
                                     <div class="card-footer text-center ">
                                         <small><br></small>
-                                        <small class="">kostenlos</small>
+                                        <p class="m-0 p-0 font-weight-bold">kostenlos</p>
                                     </div>
                                 </div>
                                 <div class="card mb-3" style="min-width:200px;">
@@ -87,13 +89,13 @@
                                     <div class="card-body">
                                         <ul class="pl-2 m-2">
                                             <li class="small">30 private Lerneinheiten</li> 
-                                            <li class="small">1 Jahr kostenloser technischer und inhaltlicher Support</li>
+                                            <li class="small">kostenloser technischer und inhaltlicher Support</li>
                                             <li class="small">6 Monate kostenlos testen</li>    
                                         </ul>
                                     </div>
                                     <div class="card-footer text-center">
                                         <br>
-                                        <small class="" >12 Euro/ Jahr</small>
+                                        <p class="m-0 p-0 font-weight-bold" >12 Euro/ Jahr</p>
                                     </div>
                                 </div>
                                 <div class="card mb-3" style="min-width:200px;">
@@ -104,10 +106,10 @@
                                         </div> 
                                     </div>
                                     <div class="card-body">
-                                        <small>Bitte wähle unten Deine Schule aus</small>
+                                        <small>Bitte wähle unten Deine Schule aus.</small>
                                     </div>
                                     <div class="card-footer text-center">
-                                        <small class="">kostenlos für Lehrer der Schule</small>
+                                        <p class="m-0 p-0 font-weight-bold">kostenlos für Lehrer der Schule</p>
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +124,7 @@
                             <label for="school_id" class="col-md-4 control-label">ViSchool-Schulaccount</label>
                             <div class="col-md-6">
                                 <select class="form-control" name="school_id" id="school_id">
-                                    <option value="">Bitte auswählen, wenn ViSchool-Schulaccount existiert</option>
+                                    <option value="">Bitte auswählen</option>
                                     @foreach ($schools as $school )
                                         <option value="{{$school->id}}">{{$school->school_name}}</option>
                                     @endforeach
@@ -157,21 +159,8 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
-
-                        <div class="form-group{{ $errors->has('newsletter') ? ' has-error' : '' }}">
-                            <div class="col-md-6">
-                                <input class="form-check-input mt-2" type="checkbox" aria-label="Checkbox for Newsletter" id="newsletter" name="newsletter" value="1">
-                                <label for="newsletter" class="form-check-label ml-5">ViSchool-Newsletter abbonieren?</label>
-                                @if ($errors->has('newsletter'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('newsletter') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
                         <hr>
-                        <div class="form-group col-md-6">
+                        <div class="form-group m-5">
                                 <strong>
                                     Einverständniserklärung zur Erhebung personenbezogener Daten
                                 </strong>
@@ -183,8 +172,8 @@
                             </div>
                         
                         <div class="form-group{{ $errors->has('data_privacy') ? ' has-error' : '' }}">
-                            <div class="col-md-6">
-                                <input class="form-check-input mt-2" type="checkbox" aria-label="Checkbox for Data Privacy" id="data_privacy" name="data_privacy" value="1">
+                            <div class="col-md-10 ml-5">
+                                <input class="form-check-input mt-2" type="checkbox" aria-label="Checkbox for Data Privacy" id="data_privacy" name="data_privacy" value="1" required>
                                 <label for="data_privacy" class="form-check-label ml-5">Ich willige in die Erhebung meiner personenbezogenen Daten ein.</label>
                                 @if ($errors->has('data_privacy'))
                                     <span class="help-block">
@@ -194,6 +183,17 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('newsletter') ? ' has-error' : '' }}">
+                            <div class="col-md-10 ml-5">
+                                <input class="form-check-input mt-2" type="checkbox" aria-label="Checkbox for Newsletter" id="newsletter" name="newsletter" value="1">
+                                <label for="newsletter" class="form-check-label ml-5">ViSchool-Newsletter abonnieren?</label>
+                                @if ($errors->has('newsletter'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('newsletter') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4 d-flex justify-content-center">

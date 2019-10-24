@@ -32,15 +32,6 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="form-group">
-			<label for="subjects">Das Thema gehört zum Fach:</label>
-			<select class="form-control" id="subjects" multiple="multiple" name="subjects[]"> 
-			@foreach ($subjects as $subject)
-			<option value="{{$subject->id}}">{{$subject->subject_title}}</option> 
-			@endforeach
-			</select>
-		</div>
 				
 		<div class="form-group">
 			<button type="submit" class="btn btn-secondary">Änderungen speichern</button>

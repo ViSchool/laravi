@@ -77,7 +77,7 @@ class TopicController extends Controller
      public function teacher_store(Request $request)
     {
 		$this->validate(request(), [
-        'topic_title' => 'required|max:255|unique:topics',
+        'topic_title' => 'required|max:255|unique:topics,topic_title',
         'user_id' => 'required|numeric',
         
         ]);
@@ -174,6 +174,22 @@ class TopicController extends Controller
         return redirect('backend/topics');
     }
     
+    public function teacher_update(Request $request, $id)
+    {
+        $this->validate(request(), [
+        'topic_title' => 'required',
+        ]);
+        
+        $topic = Topic::findOrFail($id);
+        $topic->topic_title = $request->topic_title;
+        
+		//Save alle data from create_topics form
+        $topic->save();
+        $topic->subjects()->sync($request->subjects);
+		
+        //return to overview of topics
+        return redirect('lehrer/themen');
+    }
 
     /**
      * Remove the specified resource from storage.

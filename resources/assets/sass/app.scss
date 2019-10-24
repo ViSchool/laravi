@@ -79,6 +79,12 @@
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
+//Fontawsome
+@import "resources/assets/sass/fontawesome_scss/fontawesome.scss";
+@import "resources/assets/sass/fontawesome_scss/solid.scss";
+@import "resources/assets/sass/fontawesome_scss/regular.scss";
+@import "resources/assets/sass/fontawesome_scss/brands.scss";
+
 $font-primary: 'Raleway', Arial, sans-serif;
 $font-secondary: 'Cabin Sketch', sans-serif;
 
@@ -145,6 +151,13 @@ $form-group-margin-bottom:       30px !default;
 /* Padding below the footer and lighter body text */
 
 /*Radio Inputs as font-awesome inputs*/
+
+input[type=search] {
+  font-family: 'Font Awesome 5 Free',sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 10px;
+}
 
 input[type=radio].with-font {
     border: 0;
@@ -282,15 +295,32 @@ h1, h2 {
 /* Navbar
 -------------------------------------------------- */
 
-#vischool_nav{
-		.navbar-brand {
+#vischool_nav {
+    @media only screen and (max-width: 600px) {
+    .navbar-brand {
+		font-family: Cabin Sketch;
+		font-size: 7vw;
+    font-weight: bold;
+      }
+    } 
+    @media only screen and (min-width: 600.02px) {
+    .navbar-brand {
 		font-family: Cabin Sketch;
 		font-size: 30px;
 		font-weight: bold;
 		}
-		ul.nav a:hover a:focus a:active {
+    }
+    
+    #userLoggedButton::after {
+        outline: none !important;
+        box-shadow: none;
+        border-width: 0;
+        box-sizing: content-box;
+    }
+
+    ul.nav a:hover a:focus a:active {
 		color: black  !important; 
-		}
+    }
 }
 
 

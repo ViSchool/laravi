@@ -29,6 +29,7 @@
         "nesbot/carbon": "^2.24",
         "spatie/crawler": "^4.2",
         "spatie/laravel-cookie-consent": "^2.6",
+        "spatie/laravel-honeypot": "^1.4",
         "spatie/laravel-permission": "^3.0",
         "vimeo/laravel": "dev-master"
     },

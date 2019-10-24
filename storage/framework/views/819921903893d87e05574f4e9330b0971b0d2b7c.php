@@ -23,31 +23,87 @@
     <table class="table table-striped">
         <thead class="table-primary">
             <tr>
-                <th scope="col">Thema</th>
-                <th colspan="2" scope="col">bearbeiten</th>
+                <th scope="col">Thema bearbeiten</th>
+                <th scope="col">Fächer</th>
+                <th scope="col"> Status bearbeiten</th>
                 <th scope="col">Status</th>
                 <th scope="col">löschen</th>
             </tr>
         </thead>
         <tbody>
             <?php $__currentLoopData = $topics; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $topic): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php
+                $currentSubjects = $topic->subjects->pluck('subject_title')->all();
+            ?>
              <tr>   
-                <td><?php echo e($topic->topic_title); ?></td>
                 <td>
-                    <?php switch($topic->status_id):
-                        case (1): ?>
-                            <i class="text-muted fas fa-lock-open"></i>
-                        <?php break; ?>
-                        <?php case (2): ?>
-                            <i class="text-muted fas fa-hourglass-half"></i>
-                        <?php break; ?>
-                        <?php case (3): ?>
-                             <a href="/lehrer/newTopicViSchool/<?php echo e($topic->id); ?>">
-                            <i class="fas fa-upload"></i></a> 
-                        <?php break; ?> 
-                        <?php default: ?>
-                            <a href="/lehrer/newTopicPrivate/<?php echo e($topic->id); ?>"><i class="fas fa-user-check"></i></a>
-                    <?php endswitch; ?>
+                    <button type="button" class="p-0 m-0 btn btn-link" data-toggle="modal" data-target="#editTopicModal">
+                        <?php echo e($topic->topic_title); ?>
+
+                    </button>
+                </td>
+
+                    <!-- Modal Thema bearbeiten -->
+                    <div class="modal fade" id="editTopicModal" tabindex="-1" role="dialog" aria-labelledby="newTopicModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <form method="POST" action="/lehrer/themen/bearbeiten/<?php echo e($topic->id); ?>" enctype="multipart/form-data">
+                                <?php echo csrf_field(); ?> 
+                                                
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="editTopicModalLabel">Thema "<?php echo e($topic->topic_title); ?>" bearbeiten</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">    
+                                        <input type="hidden" value="<?php echo e($teacher->id); ?>" name="user_id">
+                                        <div class="form-group<?php echo e($errors->has('topic_title') ? ' has-error' : ''); ?>">
+                                            <label for="topic_title" class="col-md-4 control-label">Name des Themas</label>
+                                            <div class="col-10">
+                                            <input id="topic_title" type="text" class="form-control" name="topic_title" value="<?php echo e($topic->topic_title); ?>" required>
+                                                <?php if($errors->has('topic_title')): ?>
+                                                    <span class="help-block">
+                                                        <strong><?php echo e($errors->first('topic_title')); ?></strong>
+                                                    </span>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group<?php echo e($errors->has('subject_id') ? ' has-error' : ''); ?>">
+		                                    <label>Fach/Fächer auswählen:</label>
+			                                <div class="card">
+				                                <div style="column-count: 3">
+					                                <?php $__currentLoopData = $subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>	
+						                                <div class="form-check mx-2">
+							                                <input type="checkbox" class="form-check-input mt-2" id="<?php echo e($subject->id); ?>" value="<?php echo e($subject->id); ?>" name="subjects[]" <?php if(in_array($subject->subject_title, $currentSubjects)): ?> checked <?php endif; ?>>
+							                                <label class="font-weight-normal form-check-label ml-4" for=""><?php echo e($subject->subject_title); ?></label>
+                                                        </div>
+                                                        <?php if($errors->has('subject_id')): ?>
+                                                            <span class="help-block">
+                                                                <strong><?php echo e($errors->first('subject_id')); ?></strong>
+                                                            </span>
+                                                        <?php endif; ?>
+					                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+				                                </div>
+			                                </div>
+		                                </div>        
+                                    </div>    
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                                        <button type="submit" class="btn btn-primary">Änderungen speichern</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                <td>
+                    <?php $__currentLoopData = $topic->subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php echo e($subject->subject_title); ?>
+
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </td>
                 <td>
                     <?php switch($topic->status_id):
@@ -56,16 +112,20 @@
                         <?php case (2): ?>
                         <?php break; ?>
                         <?php case (3): ?>
-                            An ViSchool zur Freigabe senden
+                            <a href="/lehrer/newTopicViSchool/<?php echo e($topic->id); ?>">    
+                                An ViSchool zur Freigabe senden
+                            </a>
                         <?php break; ?> 
                         <?php default: ?>
-                            Privat veröffentlichen (Lehrerfreigabe)
+                            <a href="/lehrer/newTopicPrivate/<?php echo e($topic->id); ?>">
+                                Privat veröffentlichen (Lehrerfreigabe)
+                            </a>
                     <?php endswitch; ?>
                 </td>
                 <td><?php echo e($topic->status->status_name); ?></td>
-                <td>
+                <td class="text-center">
                     <?php if($topic->status_id != 1): ?>
-                <a href="/lehrer/newTopicDelete/<?php echo e($topic->id); ?>"><i class="fas fa-trash"></i></a>
+                        <a href="/lehrer/newTopicDelete/<?php echo e($topic->id); ?>"><i class="fas fa-trash"></i></a>
                     <?php else: ?>
                         Thema ist bereits veröffentlicht, löschen ist nicht mehr möglich
                     <?php endif; ?>
@@ -73,8 +133,11 @@
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tr>
             <tr>
-                <td colspan="5"> <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#newTopicModal">
-Ein neues Thema erstellen</button></td>
+                <td colspan="5"> 
+                    <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#newTopicModal">
+                        Ein neues Thema erstellen
+                    </button>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -83,9 +146,8 @@ Ein neues Thema erstellen</button></td>
     <div class="modal fade" id="newTopicModal" tabindex="-1" role="dialog" aria-labelledby="newTopicModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="POST" action="/lehrer/themen" enctype="multipart/form-data">
-                <?php echo csrf_field(); ?> 
-                                
+                <form method="POST" action="/lehrer/themen/speichern" enctype="multipart/form-data">
+                <?php echo csrf_field(); ?>             
                     <div class="modal-header">
                         <h5 class="modal-title" id="neTopicModalLabel">Ein neues Thema erstellen</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -95,9 +157,9 @@ Ein neues Thema erstellen</button></td>
                     <div class="modal-body">    
                         <input type="hidden" value="<?php echo e($teacher->id); ?>" name="user_id">
                         <div class="form-group<?php echo e($errors->has('topic_title') ? ' has-error' : ''); ?>">
-                            <label for="topic_title" class="col-md-4 control-label">Name des Themas</label>
-                             <div class="col-10">
-                             <input id="topic_title" type="text" class="form-control" name="topic_title" value="<?php echo e(old('topic_title')); ?>" required>
+                            <label for="topic_title" class="col-6 control-label">Name des Themas</label>
+                            <div class="col-10">
+                                <input id="topic_title" type="text" class="form-control" name="topic_title" value="<?php echo e(old('topic_title')); ?>" required>
                                 <?php if($errors->has('topic_title')): ?>
                                     <span class="help-block">
                                         <strong><?php echo e($errors->first('topic_title')); ?></strong>
@@ -106,29 +168,24 @@ Ein neues Thema erstellen</button></td>
                             </div>
                         </div>
                         <div class="form-group<?php echo e($errors->has('subject_id') ? ' has-error' : ''); ?>">
-                            <label for="subject_id" class="col-md-4 control-label">Das Thema gehört zum Fach</label>
-                             <div class="col-10">
-                                <select id="subject_id" class="form-control" name="subject_id" required>
-                                <?php if(old('subject_id') != NULL): ?>   
-                                <option value="<?php echo e(old('subject_id')); ?>">
-                                    <?php $old_subject = App\Subject::findOrFail(old('subject_id'));
-                                    ?>
-                                    <?php echo e($old_subject->subject_title); ?>
-
-                                </option>
-                                <?php endif; ?>
-                                <?php $__currentLoopData = $subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($subject->id); ?>"><?php echo e($subject->subject_title); ?></option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                                <?php if($errors->has('subject_id')): ?>
-                                    <span class="help-block">
-                                        <strong><?php echo e($errors->first('subject_id')); ?></strong>
-                                    </span>
-                                <?php endif; ?>
-                            </div>
-                        </div>         
-                    </div>    
+		                    <label for="subjects" class="col-6 control-label">Fach/Fächer auswählen:</label>
+                                <div class="card">
+				                    <div style="column-count: 3">
+					                    <?php $__currentLoopData = $subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>	
+						                    <div class="form-check">
+							                    <input type="checkbox" class="form-check-input mt-2" id="<?php echo e($subject->id); ?>" value="<?php echo e($subject->id); ?>" name="subjects[]">
+							                    <label class="font-weight-normal form-check-label ml-4" for=""><?php echo e($subject->subject_title); ?></label>
+                                            </div>
+                                            <?php if($errors->has('subject_id')): ?>
+                                                <span class="help-block">
+                                                    <strong><?php echo e($errors->first('subject_id')); ?></strong>
+                                                </span>
+                                            <?php endif; ?>
+					                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+				                    </div>
+                                </div>
+                            </div>                          
+                        </div>    
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
                         <button type="submit" class="btn btn-primary">Thema speichern</button>
@@ -137,6 +194,10 @@ Ein neues Thema erstellen</button></td>
             </div>
         </div>
     </div>
+
+
+
+
 </div>
 <?php $__env->stopSection(); ?>
 

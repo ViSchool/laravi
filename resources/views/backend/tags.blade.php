@@ -41,11 +41,10 @@
 
 
 	</div>
-		<table class="table">
+		<table class="table table-sm">
 			<thead>
 				<tr>
-					<th>Bearbeiten</th>
-					<th>Tag</th>
+					<th>Tag (zum Bearbeiten klicken)</th>
 					<th>Tag-Gruppe</th>
 					<th>Löschen</th>
 				</tr>
@@ -53,7 +52,6 @@
 			<tbody>
 				@foreach ($tags as $tag)
 				<tr>
-					<td></td>
 					<td><a href="/backend/tags/{{$tag->id}}">{{$tag->tag_name}}</a></td>	
 					<td>{{$tag->tag_group}}</td>
 					<td>

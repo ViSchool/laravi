@@ -118,6 +118,13 @@
       0 => 'Spatie\\CookieConsent\\CookieConsentServiceProvider',
     ),
   ),
+  'spatie/laravel-honeypot' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Spatie\\Honeypot\\HoneypotServiceProvider',
+    ),
+  ),
   'spatie/laravel-permission' => 
   array (
     'providers' => 

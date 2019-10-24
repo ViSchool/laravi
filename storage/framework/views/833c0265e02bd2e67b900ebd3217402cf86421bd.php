@@ -30,15 +30,6 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="form-group">
-			<label for="subjects">Das Thema gehört zum Fach:</label>
-			<select class="form-control" id="subjects" multiple="multiple" name="subjects[]"> 
-			<?php $__currentLoopData = $subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-			<option value="<?php echo e($subject->id); ?>"><?php echo e($subject->subject_title); ?></option> 
-			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-			</select>
-		</div>
 				
 		<div class="form-group">
 			<button type="submit" class="btn btn-secondary">Änderungen speichern</button>
