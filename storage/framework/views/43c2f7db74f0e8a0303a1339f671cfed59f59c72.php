@@ -4,8 +4,8 @@
 
 <?php $__env->startSection('page-header'); ?>
 <section id="page-header">
-<div class="container">
-	<h2 class="my-4 text-dark"><?php echo e($topic->topic_title); ?></h2>
+<div class="d-flex justify-content-between align-items-center">
+	<h2 class="m-4 text-dark"><?php echo e($topic->topic_title); ?></h2>
 </div>
 </section>
 <?php $__env->stopSection(); ?>
@@ -20,6 +20,11 @@
 				<p><?php echo \Session::get('success'); ?></p>
 			</div>
 		<?php endif; ?>
+
+		<div class="container-fluid">
+			<?php echo $breadcrumbs->render(); ?>
+
+		</div>
 
 		<section id="privateUnits">
 			<div class="container m-4">

@@ -11,13 +11,17 @@
     },
     "devDependencies": {
         "axios": "^0.19.0",
-        "cross-env": "^5.2.0",
-        "laravel-mix": "^1.0",
-        "lodash": "^4.17.15"
+        "bootstrap": "^4.0.0",
+        "cross-env": "^5.2.1",
+        "jquery": "^3.2",
+        "laravel-mix": "^5.0.0",
+        "lodash": "^4.17.15",
+        "popper.js": "^1.12",
+        "sass": "^1.23.1",
+        "sass-loader": "^8.0.0"
     },
     "dependencies": {
         "font-awesome": "^4.7.0",
-        "moment": "^2.22.2",
-        "vue-table-component": "^1.9.2"
+        "moment": "^2.24.0"
     }
 }

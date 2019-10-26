@@ -15,7 +15,7 @@
 		{{ csrf_field() }}
 			
 			<div class="form-group">
-				<label for="unit_title" class="col-md-6 control-label">Titel der Lerneinheit:</label>
+				<label for="unit_title" class="col-md-6 col-form-label">Titel der Lerneinheit:</label>
 				<div class="col-md-10">
 				<input id="unit_title" type="text" class="form-control {{$errors->has('unit_title') ? 'is-invalid' : ''}}" name="unit_title" value="{{old('unit_title')}}" required autofocus>
 					@if ($errors->has('unit_title'))
@@ -27,7 +27,7 @@
 			</div>
 			
 			<div class="form-group mb-3">
-				<label for="unit_description" class="col-md-6 control-label">Kurzbeschreibung der Lerneinheit:</label>
+				<label for="unit_description" class="col-md-6 col-form-label">Kurzbeschreibung der Lerneinheit:</label>
 				<div class="col-md-10">
 					<textarea class="form-control" id="unit_description" name="unit_description" aria-label="description" aria-describedby="description"></textarea>
 					@if ($errors->has('unit_description'))

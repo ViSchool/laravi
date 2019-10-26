@@ -1,14 +1,14 @@
 <!-- section for about us -->
 <section id="vischool-about">
 	<div class="row">
-			<div class="col text-center m-3">
-				<h2>Was ist die ViSchool</h2>
-				<p>ViSchool: [wi-skul] = Virtual School = Virtuelle Schule</p>
-			</div>
-			</div>
+		<div class="col text-center m-3">
+			<h2>Was ist die ViSchool</h2>
+			<p>ViSchool: [wi-skul] = Virtual School = Virtuelle Schule</p>
+		</div>
+	</div>
 	<div class="container">
-		<div class="row">
-			<div class="col float-left"></div>
+		<div class="row  m-3">
+			<div class="col text-center"></div>
 				<p> Mit der ViSchool kann man immer in die Schule gehen und es macht auch noch Spaß. Mal schnell eben noch mal ein Thema nacharbeiten, ein paar Übungen oder ein Merkblatt zu einem Thema aus Eurem Unterricht? Das findet Ihr alles hier. </p>
 				<p>Damit Ihr schnell das richtige findet, haben wir drei einfache Kriterien entwickelt, mit denen unsere Inhalte bewertet werden. </p>
 			</div>
@@ -29,7 +29,7 @@
 		</div>
 	</div>
 	<div class="container">
-		<div class="row">
+		<div class="row m-3">
 			<div class="col">
 				<p>Für jedes Kriterium gibt es 5 Sterne, kennt Ihr ja schon von anderen Seiten. </p>
 			</div>

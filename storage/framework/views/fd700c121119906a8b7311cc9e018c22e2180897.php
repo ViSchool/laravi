@@ -1,7 +1,7 @@
 <!-- Navigation -->
 
 
-<nav class="navbar navbar-expand-md navbar-light flex-column align-items-start mb-0">
+<nav class="navbar navbar-expand-md navbar-light flex-column align-items-start mb-3">
 	
 	<div id="vischool_nav" class="w-100 d-flex justify-content-between">
 		<button class="navbar-toggler m-0 p-0 border-0" type="button" data-toggle="collapse" data-target=".navbar-collapse">
@@ -13,7 +13,7 @@
 		<div class="d-none d-md-block mt-2">
 			<form action="/suche" enctype="multipart/form-data">
 			<?php echo csrf_field(); ?>
-   			<input type="search" class="form-control mx-4" placeholder="&#xf002 Themen, Inhalte und Lerneinheiten suchen" name="search" style="width:50vw; font-size:12px;">	
+   			<input type="search" class="form-control mx-4" placeholder="&#xf002    Themen, Inhalte und Lerneinheiten suchen" name="search" style="width:50vw; font-size:12px;">	
 				<button class="btn btn-link" type="submit"></i></button>
 			</form>
 		</div>
@@ -56,8 +56,8 @@
 	<div class="w-100 d-md-none">
 		<form action="/suche" enctype="multipart/form-data">
 			<?php echo csrf_field(); ?>
-				<div class="search d-flex px-5 justify-content-center input-group">
-   				<input type="search" class="form-control mx-2" placeholder="&#xf002 Inhalte und mehr suchen" name="search">	
+				<div class="search d-flex px-5 justify-content-center">
+   				<input type="search" class="form-control mx-2" placeholder="&#xf002     Inhalte und mehr suchen" name="search">	
 					<button class="d-none" type="submit"></button>
 				</div>
 			</form>
@@ -74,15 +74,15 @@
 					</div>
 				</li>
 				<li class="nav-item dropdown">
-					<a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownLehrer" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Lehrer</a>
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLehrer" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Lehrer</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownLehrer">
 						<?php if(auth()->guard()->guest()): ?>
-							<a class="btn-sm btn-primary dropdown-item" href="/login">Anmelden</a>
+							<a class="btn btn-primary w-100 text-left" href="/login">Anmelden</a>
 							<a class="dropdown-item" href="/lehrer/register_soon">Als Lehrer registrieren</a>
 							<a class="dropdown-item" href="/lehrer">Angebote für Lehrer</a>
 						<?php endif; ?>
 						<?php if(auth()->guard()->check()): ?>
-							<a class="btn-sm btn-primary dropdown-item" href="/lehrer/logout">Logout</a>	
+							<a class="btn btn-primary dropdown-item" href="/lehrer/logout">Logout</a>	
 						<?php endif; ?>
 						<div class="dropdown-divider">
 						</div>
@@ -114,7 +114,7 @@
 				</li>
 
 				<li class="nav-item dropdown">
-					<a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownStudent" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Schüler</a>
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownStudent" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Schüler</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownStudent">
 						<?php if(Auth::guard('student')->check()): ?>
 							<p class="dropdown-item text-success">Du bist eingeloggt als <?php echo e(Auth::guard('student')->user()->student_name); ?> 
@@ -147,10 +147,10 @@
 					</div>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link mx-2" href="/blog">Blog</a>					
+					<a class="nav-link" href="/blog">Blog</a>					
 				</li>
 				<li class="nav-item dropdown">
-					<a class="nav-link mx-2 dropdown-toggle" href="#" id="navbarDropdownRechtliches" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rechtliches</a>
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRechtliches" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rechtliches</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownRechtliches">
 						<a class="dropdown-item" href="/impressum">Impressum</a>
 						<a class="dropdown-item" href="/datenschutz">Datenschutz</a>

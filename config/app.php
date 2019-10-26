@@ -166,6 +166,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Creitive\Breadcrumbs\BreadcrumbsServiceProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class,
     
         
     
@@ -241,6 +242,7 @@ return [
         'Vimeo' => Vimeo\Laravel\Facades\Vimeo::class,
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
 
     ],
 

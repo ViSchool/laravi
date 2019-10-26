@@ -55,7 +55,7 @@ Einen neuen Inhalt erstellen</button>
 
 
                         <div class="form-group<?php echo e($errors->has('content_title') ? ' has-error' : ''); ?>">
-                            <label for="content_title" class="col-10 control-label">Name des Inhalts</label>
+                            <label for="content_title" class="col-10 col-form-label">Name des Inhalts</label>
                              <div class="col-10">
                              <input id="content_title" type="text" class="form-control" name="content_title" value="<?php echo e(old('content_title')); ?>" required>
                                 <?php if($errors->has('content_title')): ?>
@@ -67,7 +67,7 @@ Einen neuen Inhalt erstellen</button>
                         </div>
 
                         <div class="form-group<?php echo e($errors->has('tool_id') ? ' has-error' : ''); ?>">
-                            <label for="content_provider" class="col-10 control-label">Der Inhalt stammt von folgendem Anbieter:</label>
+                            <label for="content_provider" class="col-10 col-form-label">Der Inhalt stammt von folgendem Anbieter:</label>
                             <div class="col-10">
                                 <select class="form-control" id="tool_id" name="tool_id">
 				                    <?php if((old('tool_id')) !== null): ?>
@@ -89,7 +89,7 @@ Einen neuen Inhalt erstellen</button>
                         </div>
 
                         <div class="form-group<?php echo e($errors->has('content_link') ? ' has-error' : ''); ?>">
-                            <label for="content_link" class="col-10 control-label">Link zum Inhalt</label>
+                            <label for="content_link" class="col-10 col-form-label">Link zum Inhalt</label>
                             <br>
                             <small id="examplelink" class="text-muted col-10">Beispiellink</small>
                              <div class="col-11">
@@ -104,7 +104,7 @@ Einen neuen Inhalt erstellen</button>
 
 
                         <div class="form-group<?php echo e($errors->has('subject_id') ? ' has-error' : ''); ?>">
-                            <label for="topic_id" class="col-10 control-label">Der Inhalt gehört zu folgendem Fach</label>
+                            <label for="topic_id" class="col-10 col-form-label">Der Inhalt gehört zu folgendem Fach</label>
                              <div class="col-10">
                                <select class="form-control" id="subject_id" name="subject_id">
 				                    <?php if((old('subject_id')) !== null): ?>
@@ -129,7 +129,7 @@ Einen neuen Inhalt erstellen</button>
                             </div>
                         </div>
                         <div class="form-group<?php echo e($errors->has('topic_id') ? ' has-error' : ''); ?>">
-                            <label for="topic_id" class="col-10 control-label">Der Inhalt gehört zu folgendem Thema</label>
+                            <label for="topic_id" class="col-10 col-form-label">Der Inhalt gehört zu folgendem Thema</label>
                              <div class="col-10">
                                 <select class="form-control" id="topic_id" name="topic_id">
                                     <?php if((old('topic_id')) !== null): ?>

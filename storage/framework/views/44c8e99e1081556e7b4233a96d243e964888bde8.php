@@ -105,13 +105,14 @@
 						<?php if(isset($unit->differentiation_group)): ?>
 							<option value="<?php echo e($unit->differentiation_group); ?>"><?php echo e($unit->differentiation_group); ?></option>
 						<?php endif; ?>
+						<option value="">Keine Differenzierung</option>
+						<option value="Standard">Standard</option>
                 	<?php if(isset($differentiation_groups)): ?>
                   	<?php $__currentLoopData = $differentiation_groups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $differentiation_group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                   		<option value="<?php echo e($differentiation_group); ?>"><?php echo e($differentiation_group); ?></option>
                   	<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                   <?php endif; ?>
-						  <option value="Standard">Standard</option>
-						  <option value="">Keine Differenzierung</option>
+						  
                </select>
             </div>
          </div>

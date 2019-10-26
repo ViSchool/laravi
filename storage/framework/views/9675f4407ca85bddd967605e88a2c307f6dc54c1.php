@@ -2,15 +2,15 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+            <div class="card">
+                <div class="card-header bg-white">Login</div>
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="<?php echo e(route('login')); ?>">
+                <div class="card-body">
+                    <form class="" method="POST" action="<?php echo e(route('login')); ?>">
                         <?php echo csrf_field(); ?>
 
-                        <div class="form-group<?php echo e($errors->has('email') ? ' has-error' : ''); ?>">
-                            <label for="email" class="col-md-4 control-label">E-Mailadresse</label>
+                        <div class="form-group<?php echo e($errors->has('email') ? ' invalid' : ''); ?>">
+                            <label for="email" class="col-md-4 col-form-label">E-Mailadresse</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="<?php echo e(old('email')); ?>" required autofocus>
@@ -23,8 +23,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group<?php echo e($errors->has('password') ? ' has-error' : ''); ?>">
-                            <label for="password" class="col-md-4 control-label">Password</label>
+                        <div class="form-group<?php echo e($errors->has('password') ? ' invalid' : ''); ?>">
+                            <label for="password" class="col-md-4 col-form-label">Password</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" required>

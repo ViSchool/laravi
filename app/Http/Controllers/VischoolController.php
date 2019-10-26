@@ -18,6 +18,8 @@ use App\Differentiation;
 use App\Serie;
 use App\Tag;
 use Auth;
+use Jenssegers\Agent\Agent;
+
 
 class VischoolController extends BaseController
 
@@ -31,8 +33,10 @@ class VischoolController extends BaseController
 	public function index() {
 	
 	$subjects = Subject::nav_sub();
-	$posts = Post::get_five_posts(); 
-	return view('vischool', compact('subjects','posts'));
+	$posts = Post::get_five_posts();
+	$agent = new Agent();
+	$browser = $agent->browser();
+	return view('vischool', compact('subjects','posts','browser'));
 	}
 	
 	public function subjects_index() {
@@ -66,6 +70,10 @@ class VischoolController extends BaseController
 		$teacher = Auth::user();
 		$student = Auth::guard('student')->user();
 		$topic = Topic::find($id);
+		$breadcrumbs = Breadcrumbs::addCrumb('Startseite', '/');
+		$breadcrumbs = Breadcrumbs::addCrumb($topic->subjects()->first()->subject_title , '/subjects/'. $topic->subjects()->first()->id);
+		$breadcrumbs = Breadcrumbs::addCrumb($topic->topic_title,'/topic/'. $topic->id);
+
 		$publicContents = $topic->content->where('status_id',1)->sortByDesc('updated_at');
 		$publicUnits = $topic->unit->where('status_id',1)->where('serie_id',NULL)->sortByDesc('updated_at');
 		$series = $topic->unit->where('serie_id','>',0)->pluck('serie_id')->unique();
@@ -88,7 +96,7 @@ class VischoolController extends BaseController
 			$privateSeries = [];
 
 		}
-		return view('frontend.topics.topic_contents', compact('publicContents','privateContents','topic','publicUnits','privateUnits','privateSeries','publicSeries'));
+		return view('frontend.topics.topic_contents', compact('breadcrumbs','publicContents','privateContents','topic','publicUnits','privateUnits','privateSeries','publicSeries'));
 	} 
 
 

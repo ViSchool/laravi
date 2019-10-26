@@ -86,8 +86,8 @@ class TopicController extends Controller
         $topic->status_id = 5;
         $topic->user_id = $request->user_id;
 		//Save alle data from create_topics form
-        $topic->save();	
-		$topic->subjects()->sync($request->subject_id, false);
+        $topic->save();
+		$topic->subjects()->sync($request->subjects, false);
        	//return to overview of topics
         return redirect('lehrer/themen');
     }

@@ -64,8 +64,8 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">    
-                                    <div class="form-group{{ $errors->has('oldpassword') ? ' has-error' : '' }}">
-                                        <label for="oldpassword" class="col-md-4 control-label">Altes Passwort</label>
+                                    <div class="form-group{{ $errors->has('oldpassword') ? ' invalid' : '' }}">
+                                        <label for="oldpassword" class="col-md-4 col-form-label">Altes Passwort</label>
                                         <div class="col-md-12">
                                             <input id="oldpassword" type="password" class="form-control" name="oldpassword" required>
                                             @if ($errors->has('oldpassword'))
@@ -75,8 +75,8 @@
                                             @endif
                                         </div>
                                     </div>                                         
-                                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                        <label for="password" class="col-md-4 control-label">Neues Passwort</label>
+                                    <div class="form-group{{ $errors->has('password') ? ' invalid' : '' }}">
+                                        <label for="password" class="col-md-4 col-form-label">Neues Passwort</label>
                                         <div class="col-md-12">
                                             <input id="password" type="password" class="form-control" name="password" required>
                                             @if ($errors->has('password'))
@@ -87,7 +87,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="password-confirm" class="col-md-4 control-label">Neues Passwort bestätigen</label>
+                                        <label for="password-confirm" class="col-md-4 col-form-label">Neues Passwort bestätigen</label>
                                         <div class="col-md-12">
                                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                                         </div>
@@ -113,7 +113,7 @@
                             checked="checked"
                         @endif
                         class="custom-control-input" id="differentiationSwitch" name="differentiation_on">
-                        <label class="custom-control-label" for="differentiationSwitch"></label>
+                        <label class="custom-col-form-label" for="differentiationSwitch"></label>
                     </div>
                 </div>
                 <div id="editDiff" 
@@ -132,7 +132,7 @@
                     <label class="col-7">Newsletter abbonieren? </label>
                     <div class="custom-control custom-switch">
                         <input type="checkbox"  class="custom-control-input" id="customSwitch2" name="newsletter">
-                        <label class="custom-control-label" for="customSwitch2"></label>
+                        <label class="custom-col-form-label" for="customSwitch2"></label>
                     </div>
                 </div>
             </div>            

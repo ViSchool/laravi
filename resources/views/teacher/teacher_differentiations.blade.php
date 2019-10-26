@@ -58,7 +58,7 @@
                 @csrf
                     <div class="card-header">
                     <input type="hidden" id="teacher_id" name="teacher_id" value="{{$teacher->id}}">
-                        <div class="form-group{{ $errors->has('differentiation_group') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('differentiation_group') ? ' invalid' : '' }}">
                             <label for="differentiation_group" class=" col-12 col-form-label text-brand-blue">Name der neuen Gruppe:</label>
                             <div class="col-12">
                                 <input id="differentiation_group" type="text" class="form-control" name="differentiation_group" required>
@@ -71,7 +71,7 @@
                         </div>     
                     </div>
                     <div class="card-body">         
-                        <div class="form-group{{ $errors->has('differentiations') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('differentiations') ? ' invalid' : '' }}">
                             <label for="differentiations" class=" col-12 col-form-label"> <small>Zu dieser Gruppe gehören folgende Lernniveaus:</small></label>
                             <div class="col-12">
                                 <div class="input-group">

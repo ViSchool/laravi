@@ -76,8 +76,22 @@
 // Variables
 @import "variables";
 
-// Bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+//Bootstrap Customization
+$theme-colors: (
+  primary: #428bca
+);
+
+//$font-size-base: 1rem !default; // Assumes the browser default, typically `16px`
+$font-size-base: 0.8rem; // Assumes the browser default, typically `16px`
+
+//$spacer: 1rem !default;
+$spacer: 0.8rem !default;
+
+
+//Ende Bootstrap Customization
+
+//Bootstrap
+@import "node_modules/bootstrap/scss/bootstrap";
 
 //Fontawsome
 @import "resources/assets/sass/fontawesome_scss/fontawesome.scss";
@@ -91,7 +105,6 @@ $font-secondary: 'Cabin Sketch', sans-serif;
 $brand-blue: #03c4eb !default;
 $brand-red: #ff3333 !default;
 $brand-yellow: #ffff00 !default;
-
 
 $brand-white: #fff;
 $brand-black: #000;
@@ -156,7 +169,7 @@ input[type=search] {
   font-family: 'Font Awesome 5 Free',sans-serif;
   font-style: normal;
   font-weight: 900;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 input[type=radio].with-font {
@@ -274,7 +287,7 @@ h1, h2 {
 
 .breadcrumb {
 	background-color: $brand-white;
-	font-size: 1.2rem;
+	font-size: 0.6rem;
 }
 
 .post_body {
@@ -311,6 +324,8 @@ h1, h2 {
 		}
     }
     
+    
+
     #userLoggedButton::after {
         outline: none !important;
         box-shadow: none;
@@ -319,9 +334,10 @@ h1, h2 {
     }
 
     ul.nav a:hover a:focus a:active {
-		color: black  !important; 
+      color: black  !important;
     }
 }
+
 
 
 /* Page Header
@@ -356,9 +372,10 @@ h1, h2 {
   z-index: 10;
 }
 
+
 /* Declare heights because of positioning of img element */
 .carousel-item {
-  height: 32rem;
+  height: 20rem;
   background-color: #777;
 }
 .carousel-item > img {
@@ -366,7 +383,7 @@ h1, h2 {
   top: 0;
   left: 0;
   min-width: 100%;
-  height: 32rem;
+  height: 20rem;
 }
 #myCarousel {
 	@include transition(1s);
@@ -391,18 +408,15 @@ h1, h2 {
 		font-weight: bold;
 	}
 	h4,h5 {
-		font-family: $font-primary;
+    font-family: $font-primary;
+    font-size:1rem;
 		color: $brand-black;
 	}
 	background: $brand-body-color;
 }
 
 #subject-topics {
-	.item {
-   	position:relative;
-    padding-top:20px;
-  	display:inline-block;
-	}
+
 	.notify-badge {
     position: absolute;
   	right:-20px;
@@ -484,14 +498,7 @@ h1, h2 {
 /*toolbox
 -------------------------------*/
 
-#toolbox {
-	label {
-		color: $brand-white;
-		font-weight: normal;
-		font-size: 1.125rem;
-	}
-	background: $brand-blue;
-}
+
 
 /* ViSchool-Footer
 ------------------------- */
@@ -615,4 +622,5 @@ h1, h2 {
         margin-left: 0;
     }
 }
+
 

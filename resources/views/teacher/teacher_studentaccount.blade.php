@@ -104,8 +104,8 @@ Schüleraccount automatisch erstellen</button>
                         <input type="hidden" value="{{$teacher->id}}" name="user_id">
                         <input type="hidden" value="0" name="class_account">
                         
-                        <div class="form-group{{ $errors->has('student_name') ? ' has-error' : '' }}">
-                            <label for="student_name" class="col-md-4 control-label">Benutzername für den Schüleraccount</label>
+                        <div class="form-group{{ $errors->has('student_name') ? ' invalid' : '' }}">
+                            <label for="student_name" class="col-md-4 col-form-label">Benutzername für den Schüleraccount</label>
                              <div class="col-10">
                              <input id="student_name" type="text" class="form-control" name="student_name" value="{{ old('student_name') }}" required>
                                 @if ($errors->has('student_name'))
@@ -116,8 +116,8 @@ Schüleraccount automatisch erstellen</button>
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Passwort für den Klassenaccount</label>
+                        <div class="form-group{{ $errors->has('password') ? ' invalid' : '' }}">
+                            <label for="password" class="col-md-4 col-form-label">Passwort für den Klassenaccount</label>
                              <div class="col-10">
                              <input id="password" type="text" class="form-control" name="password" value="{{ old('password') }}" required>
                                 @if ($errors->has('password'))
@@ -154,8 +154,8 @@ Schüleraccount automatisch erstellen</button>
                         <input type="hidden" value="{{$teacher->id}}" name="user_id">
                         <input type="hidden" value="0" name="class_account">
                         
-                        <div class="form-group{{ $errors->has('number') ? ' has-error' : '' }}">
-                            <label for="number" class="col-md-4 control-label">Wieviele Schüleraccounts willst Du erstellen?</label>
+                        <div class="form-group{{ $errors->has('number') ? ' invalid' : '' }}">
+                            <label for="number" class="col-md-4 col-form-label">Wieviele Schüleraccounts willst Du erstellen?</label>
                              <div class="col-10">
                              <input id="number" type="number" class="form-control" name="number" value="{{ old('number') }}" required>
                                 @if ($errors->has('number'))
@@ -166,8 +166,8 @@ Schüleraccount automatisch erstellen</button>
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('group_of_students') ? ' has-error' : '' }}">
-                            <label for="group_of_students" class="col-md-4 control-label">Name für die Schülergruppe</label>
+                        <div class="form-group{{ $errors->has('group_of_students') ? ' invalid' : '' }}">
+                            <label for="group_of_students" class="col-md-4 col-form-label">Name für die Schülergruppe</label>
                              <div class="col-10">
                              <input id="group_of_students" type="text" class="form-control" name="group_of_students" value="{{ old('group_of_students') }}" required>
                                 @if ($errors->has('group_of_students'))

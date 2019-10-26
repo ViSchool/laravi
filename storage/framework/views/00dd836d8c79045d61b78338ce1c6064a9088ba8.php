@@ -27,8 +27,8 @@
             <h4 class="card-title text-brand-blue text-center">Deine Anfrage</h4>
          </div>
          <div class="card-body">
-            <div class="form-group<?php echo e($errors->has('lehrername') ? ' has-error' : ''); ?>">
-               <label for="lehrername" class="col-10 control-label">Dein Name:</label>
+            <div class="form-group<?php echo e($errors->has('lehrername') ? ' invalid' : ''); ?>">
+               <label for="lehrername" class="col-10 col-form-label">Dein Name:</label>
                <div class="col-10">
                   <input id="lehrername" type="text" class="form-control" name="lehrername" value="<?php echo e(old('lehrername')); ?>">
                   <?php if($errors->has('lehrername')): ?>                        
@@ -39,8 +39,8 @@
                </div>
             </div>
                      
-            <div class="form-group<?php echo e($errors->has('fach') ? ' has-error' : ''); ?>">
-               <label for="fach" class="col-10 control-label">Dein Fach:</label>
+            <div class="form-group<?php echo e($errors->has('fach') ? ' invalid' : ''); ?>">
+               <label for="fach" class="col-10 col-form-label">Dein Fach:</label>
                <div class="col-10">
                   <input id="fach" type="text" class="form-control" name="fach" value="<?php echo e(old('fach')); ?>" >
                   <?php if($errors->has('fach')): ?>
@@ -51,8 +51,8 @@
                </div>
             </div>
                      
-            <div class="form-group<?php echo e($errors->has('thema') ? ' has-error' : ''); ?>">
-               <label for="thema" class="col-10 control-label">Dein Unterrichtsthema:</label>
+            <div class="form-group<?php echo e($errors->has('thema') ? ' invalid' : ''); ?>">
+               <label for="thema" class="col-10 col-form-label">Dein Unterrichtsthema:</label>
                <div class="col-10">
                   <input id="thema" type="text" class="form-control" name="thema" value="<?php echo e(old('thema')); ?>" >
                   <?php if($errors->has('thema')): ?>
@@ -63,8 +63,8 @@
                </div>
             </div>
                      
-            <div class="form-group<?php echo e($errors->has('email') ? ' has-error' : ''); ?>">
-               <label for="email" class="col-10 control-label">Emailadresse unter der wir Dich erreichen:</label>
+            <div class="form-group<?php echo e($errors->has('email') ? ' invalid' : ''); ?>">
+               <label for="email" class="col-10 col-form-label">Emailadresse unter der wir Dich erreichen:</label>
                <div class="col-10">
                   <input id="email" type="email" class="form-control" name="email" value="<?php echo e(old('email')); ?>" required>
                   <?php if($errors->has('email')): ?>

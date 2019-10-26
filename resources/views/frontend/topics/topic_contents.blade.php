@@ -6,8 +6,8 @@
 
 @section ('page-header')
 <section id="page-header">
-<div class="container">
-	<h2 class="my-4 text-dark">{{$topic->topic_title}}</h2>
+<div class="d-flex justify-content-between align-items-center">
+	<h2 class="m-4 text-dark">{{$topic->topic_title}}</h2>
 </div>
 </section>
 @endsection
@@ -22,6 +22,10 @@
 				<p>{!! \Session::get('success') !!}</p>
 			</div>
 		@endif
+
+		<div class="container-fluid">
+			{!!$breadcrumbs->render()!!}
+		</div>
 
 		<section id="privateUnits">
 			<div class="container m-4">

@@ -59,8 +59,8 @@
                                     </div>
                                     <div class="modal-body">    
                                         <input type="hidden" value="{{$teacher->id}}" name="user_id">
-                                        <div class="form-group{{ $errors->has('topic_title') ? ' has-error' : '' }}">
-                                            <label for="topic_title" class="col-md-4 control-label">Name des Themas</label>
+                                        <div class="form-group{{ $errors->has('topic_title') ? ' invalid' : '' }}">
+                                            <label for="topic_title" class="col-md-4 col-form-label">Name des Themas</label>
                                             <div class="col-10">
                                             <input id="topic_title" type="text" class="form-control" name="topic_title" value="{{$topic->topic_title}}" required>
                                                 @if ($errors->has('topic_title'))
@@ -70,7 +70,7 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="form-group{{ $errors->has('subject_id') ? ' has-error' : '' }}">
+                                        <div class="form-group{{ $errors->has('subject_id') ? ' invalid' : '' }}">
 		                                    <label>Fach/Fächer auswählen:</label>
 			                                <div class="card">
 				                                <div style="column-count: 3">
@@ -156,8 +156,8 @@
                     </div>
                     <div class="modal-body">    
                         <input type="hidden" value="{{$teacher->id}}" name="user_id">
-                        <div class="form-group{{ $errors->has('topic_title') ? ' has-error' : '' }}">
-                            <label for="topic_title" class="col-6 control-label">Name des Themas</label>
+                        <div class="form-group{{ $errors->has('topic_title') ? ' invalid' : '' }}">
+                            <label for="topic_title" class="col-6 col-form-label">Name des Themas</label>
                             <div class="col-10">
                                 <input id="topic_title" type="text" class="form-control" name="topic_title" value="{{ old('topic_title') }}" required>
                                 @if ($errors->has('topic_title'))
@@ -167,8 +167,8 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('subject_id') ? ' has-error' : '' }}">
-		                    <label for="subjects" class="col-6 control-label">Fach/Fächer auswählen:</label>
+                        <div class="form-group{{ $errors->has('subject_id') ? ' invalid' : '' }}">
+		                    <label for="subjects" class="col-6 col-form-label">Fach/Fächer auswählen:</label>
                                 <div class="card">
 				                    <div style="column-count: 3">
 					                    @foreach ($subjects as $subject)	

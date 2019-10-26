@@ -58,8 +58,8 @@
                                     </div>
                                     <div class="modal-body">    
                                         <input type="hidden" value="<?php echo e($teacher->id); ?>" name="user_id">
-                                        <div class="form-group<?php echo e($errors->has('topic_title') ? ' has-error' : ''); ?>">
-                                            <label for="topic_title" class="col-md-4 control-label">Name des Themas</label>
+                                        <div class="form-group<?php echo e($errors->has('topic_title') ? ' invalid' : ''); ?>">
+                                            <label for="topic_title" class="col-md-4 col-form-label">Name des Themas</label>
                                             <div class="col-10">
                                             <input id="topic_title" type="text" class="form-control" name="topic_title" value="<?php echo e($topic->topic_title); ?>" required>
                                                 <?php if($errors->has('topic_title')): ?>
@@ -69,7 +69,7 @@
                                                 <?php endif; ?>
                                             </div>
                                         </div>
-                                        <div class="form-group<?php echo e($errors->has('subject_id') ? ' has-error' : ''); ?>">
+                                        <div class="form-group<?php echo e($errors->has('subject_id') ? ' invalid' : ''); ?>">
 		                                    <label>Fach/Fächer auswählen:</label>
 			                                <div class="card">
 				                                <div style="column-count: 3">
@@ -156,8 +156,8 @@
                     </div>
                     <div class="modal-body">    
                         <input type="hidden" value="<?php echo e($teacher->id); ?>" name="user_id">
-                        <div class="form-group<?php echo e($errors->has('topic_title') ? ' has-error' : ''); ?>">
-                            <label for="topic_title" class="col-6 control-label">Name des Themas</label>
+                        <div class="form-group<?php echo e($errors->has('topic_title') ? ' invalid' : ''); ?>">
+                            <label for="topic_title" class="col-6 col-form-label">Name des Themas</label>
                             <div class="col-10">
                                 <input id="topic_title" type="text" class="form-control" name="topic_title" value="<?php echo e(old('topic_title')); ?>" required>
                                 <?php if($errors->has('topic_title')): ?>
@@ -167,8 +167,8 @@
                                 <?php endif; ?>
                             </div>
                         </div>
-                        <div class="form-group<?php echo e($errors->has('subject_id') ? ' has-error' : ''); ?>">
-		                    <label for="subjects" class="col-6 control-label">Fach/Fächer auswählen:</label>
+                        <div class="form-group<?php echo e($errors->has('subject_id') ? ' invalid' : ''); ?>">
+		                    <label for="subjects" class="col-6 col-form-label">Fach/Fächer auswählen:</label>
                                 <div class="card">
 				                    <div style="column-count: 3">
 					                    <?php $__currentLoopData = $subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>	

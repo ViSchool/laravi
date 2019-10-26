@@ -23,7 +23,7 @@
 		{{ csrf_field() }} {{ method_field('PATCH') }}
 			
 			<div class="form-group">
-				<label for="unit_title" class="col-md-6 control-label">Titel der Unterrichtseinheit:</label>
+				<label for="unit_title" class="col-md-6 col-form-label">Titel der Unterrichtseinheit:</label>
 				<div class="col-lg-10">
 					<input id="unit_title" type="text" class="form-control {{ $errors->has('unit_title') ? 'invalid' : '' }}" name="unit_title" value="{{$unit->unit_title}}" required autofocus>
 					@if ($errors->has('unit_title'))
@@ -36,7 +36,7 @@
 
 
 			<div class="form-group mb-3">
-				<label for="unit_description" class="col-md-6 control-label">Kurzbeschreibung der Unterrichtseinheit:</label>
+				<label for="unit_description" class="col-md-6 col-form-label">Kurzbeschreibung der Unterrichtseinheit:</label>
 				<div class="col-lg-10">
 					<textarea class="form-control" id="unit_description" name="unit_description" aria-label="description" aria-describedby="description">{{$unit->unit_description}}</textarea>
 					@if ($errors->has('unit_description'))
@@ -106,13 +106,14 @@
 						@isset($unit->differentiation_group)
 							<option value="{{$unit->differentiation_group}}">{{$unit->differentiation_group}}</option>
 						@endisset
+						<option value="">Keine Differenzierung</option>
+						<option value="Standard">Standard</option>
                 	@isset($differentiation_groups)
                   	@foreach ($differentiation_groups as $differentiation_group)
                   		<option value="{{$differentiation_group}}">{{$differentiation_group}}</option>
                   	@endforeach
                   @endisset
-						  <option value="Standard">Standard</option>
-						  <option value="">Keine Differenzierung</option>
+						  
                </select>
             </div>
          </div>

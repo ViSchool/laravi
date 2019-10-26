@@ -65,8 +65,8 @@ Einen neuen Klassenaccount erstellen</button></td>
                     <div class="modal-body">    
                         <input type="hidden" value="{{$teacher->id}}" name="user_id">
                         <input type="hidden" value="1" name="class_account">
-                        <div class="form-group{{ $errors->has('student_name') ? ' has-error' : '' }}">
-                            <label for="student_name" class="col-md-4 control-label">Benutzername für den Klassenaccount</label>
+                        <div class="form-group{{ $errors->has('student_name') ? ' invalid' : '' }}">
+                            <label for="student_name" class="col-md-4 col-form-label">Benutzername für den Klassenaccount</label>
                              <div class="col-10">
                              <input id="student_name" type="text" class="form-control" name="student_name" value="{{ old('student_name') }}" required>
                                 @if ($errors->has('student_name'))
@@ -77,8 +77,8 @@ Einen neuen Klassenaccount erstellen</button></td>
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Passwort für den Klassenaccount</label>
+                        <div class="form-group{{ $errors->has('password') ? ' invalid' : '' }}">
+                            <label for="password" class="col-md-4 col-form-label">Passwort für den Klassenaccount</label>
                              <div class="col-10">
                              <input id="password" type="text" class="form-control" name="password" required>
                                 @if ($errors->has('password'))
@@ -89,8 +89,8 @@ Einen neuen Klassenaccount erstellen</button></td>
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('units') ? ' has-error' : '' }}">
-                            <label for="units" class="col-md-4 control-label">Zugang auf bestimmte Unterrichtseinheiten beschränken</label>
+                        <div class="form-group{{ $errors->has('units') ? ' invalid' : '' }}">
+                            <label for="units" class="col-md-4 col-form-label">Zugang auf bestimmte Unterrichtseinheiten beschränken</label>
                              <div class="col-10">
                                 <select class="form-control select2-multi" name="units[]" id="units" multiple="multiple">
                                     @foreach ($privateunits as $privateunit)

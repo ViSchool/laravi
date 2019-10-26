@@ -1,19 +1,21 @@
 @extends('layout')
 
 @section('content')
+
+
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading bg-warning text-center"><h4 class="mb-0">Für den Lehrerzugang anmelden</h4></div>
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header bg-warning text-center"><h4 class="mb-0">Für den Lehrerzugang anmelden</h4></div>
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="/register" enctype="multipart/form-data">
+                <div class="card-body">
+                    <form class="" method="POST" action="/register" enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        @honeypot
+                        {{-- @honeypot --}}
 
-                        <div class="form-group{{ $errors->has('teacher_name') ? ' has-error' : '' }}">
-                            <label for="teacher_name" class="col-md-4 control-label">Name</label>
+                        <div class="form-row form-group{{ $errors->has('teacher_name') ? ' invalid' : '' }}">
+                            <label for="teacher_name" class="col-md-4 col-form-label">Name</label>
 
                             <div class="col-md-6">
                                 <input id="teacher_name" type="text" class="form-control" name="teacher_name" value="{{ old('teacher_name') }}"  autofocus>
@@ -26,8 +28,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('teacher_surname') ? ' has-error' : '' }}">
-                            <label for="teacher_surname" class="col-md-4 control-label">Nachname</label>
+                        <div class=" form-row form-group{{ $errors->has('teacher_surname') ? ' invalid' : '' }}">
+                            <label for="teacher_surname" class="col-md-4 col-form-label">Nachname</label>
 
                             <div class="col-md-6">
                                 <input id="teacher_surname" type="text" class="form-control" name="teacher_surname" value="{{ old('teacher_surname') }}" required autofocus>
@@ -40,8 +42,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">
+                        <div class="form-row form-group{{ $errors->has('email') ? ' invalid' : '' }}">
+                            <label for="email" class="col-md-4 col-form-label">
                                 E-Mail Adresse 
                                 <p class="small">Bitte benutze hier Deine Emailadresse der Schule, da wir Deinen Account verifizieren.</p>
                             </label>
@@ -57,9 +59,9 @@
                             </div>
                         </div>
 
-                       <div class="form-group{{ $errors->has('contract') ? ' has-error' : '' }}">
-                            <label for="contract" class="control-label px-4 ml-5">Wähle das von Dir gewünschte Angebot:</label>
-                            <p class="small px-4 ml-5">Teste alle Angebote zunächst kostenlos. Kurz vor Ende des Testzeitraums bitten wir Dich, ggf. die entsprechende Zahlung vorzunehmen, damit das von Dir gewählte Paket weiter zur Verfügung steht.</p>
+                       <div class="form-group{{ $errors->has('contract') ? ' invalid' : '' }}">
+                            <label for="contract" class="col-form-label">Wähle das von Dir gewünschte Angebot:</label>
+                            <p class="small">Teste alle Angebote zunächst kostenlos. Kurz vor Ende des Testzeitraums bitten wir Dich, ggf. die entsprechende Zahlung vorzunehmen, damit das von Dir gewählte Paket weiter zur Verfügung steht.</p>
                             <div class="card-deck p-3 m-3">
                                 <div class="card mb-3" style="min-width:200px;">
                                     <div class="card-header bg-warning">
@@ -120,8 +122,8 @@
                             @endif
                         </div>
 
-                        <div class="mt-4 form-group{{ $errors->has('school_id') ? ' has-error' : '' }}">
-                            <label for="school_id" class="col-md-4 control-label">ViSchool-Schulaccount</label>
+                        <div class="form-row mt-4 form-group{{ $errors->has('school_id') ? ' invalid' : '' }}">
+                            <label for="school_id" class="col-md-4 col-form-label">ViSchool-Schulaccount</label>
                             <div class="col-md-6">
                                 <select class="form-control" name="school_id" id="school_id">
                                     <option value="">Bitte auswählen</option>
@@ -138,8 +140,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Passwort</label>
+                        <div class=" form-row form-group{{ $errors->has('password') ? ' invalid' : '' }}">
+                            <label for="password" class="col-md-4 col-form-label">Passwort</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" required>
@@ -152,8 +154,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Passwort bestätigen</label>
+                        <div class="form-row form-group">
+                            <label for="password-confirm" class="col-md-4 col-form-label">Passwort bestätigen</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
@@ -171,9 +173,9 @@
                                 </p>
                             </div>
                         
-                        <div class="form-group{{ $errors->has('data_privacy') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('data_privacy') ? ' invalid' : '' }}">
                             <div class="col-md-10 ml-5">
-                                <input class="form-check-input mt-2" type="checkbox" aria-label="Checkbox for Data Privacy" id="data_privacy" name="data_privacy" value="1" required>
+                                <input class="form-check-input mt-2" type="checkbox" aria-label="Checkbox for Data Privacy" id="data_privacy" name="data_privacy" required>
                                 <label for="data_privacy" class="form-check-label ml-5">Ich willige in die Erhebung meiner personenbezogenen Daten ein.</label>
                                 @if ($errors->has('data_privacy'))
                                     <span class="help-block">
@@ -183,7 +185,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('newsletter') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('newsletter') ? ' invalid' : '' }}">
                             <div class="col-md-10 ml-5">
                                 <input class="form-check-input mt-2" type="checkbox" aria-label="Checkbox for Newsletter" id="newsletter" name="newsletter" value="1">
                                 <label for="newsletter" class="form-check-label ml-5">ViSchool-Newsletter abonnieren?</label>
