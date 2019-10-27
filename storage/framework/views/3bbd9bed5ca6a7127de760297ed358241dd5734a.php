@@ -1,4 +1,4 @@
-<footer id="vischool-footer" class="container-fluid py-3">
+<footer id="vischool-footer" class="container-fluid mt-5 py-3 mb-0 shadow-sm">
 
 <div class="row">
   <div class="col-12 col-md">

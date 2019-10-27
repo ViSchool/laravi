@@ -7,7 +7,7 @@
 <?php if($level === 'error'): ?>
 # <?php echo app('translator')->get('Whoops!'); ?>
 <?php else: ?>
-# <?php echo app('translator')->get('Hello!'); ?>
+# <?php echo app('translator')->get('Hallo, '); ?>
 <?php endif; ?>
 <?php endif; ?>
 
@@ -48,16 +48,15 @@
 <?php echo e($salutation); ?>
 
 <?php else: ?>
-<?php echo app('translator')->get('Regards'); ?>,<br><?php echo e(config('app.name')); ?>
-
+<?php echo app('translator')->get('Beste Grüße'); ?>,<br> <?php echo app('translator')->get('Dein'); ?> <?php echo e(config('app.name')); ?> <?php echo app('translator')->get('Team'); ?>
 <?php endif; ?>
 
 
 <?php if(isset($actionText)): ?>
 <?php $__env->startComponent('mail::subcopy'); ?>
 <?php echo app('translator')->get(
-    "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\n".
-    'into your web browser: [:actionURL](:actionURL)',
+    "Solltest Du Schwierigkeiten mit dem Button \":actionText\" haben, kopiere die folgende URL \n".
+    'in die Adresszeile Deines Browsers: [:actionURL](:actionURL)',
     [
         'actionText' => $actionText,
         'actionURL' => $actionUrl,

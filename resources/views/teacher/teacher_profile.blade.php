@@ -45,6 +45,7 @@
                     @endisset
                     " readonly>
             </div> 
+            
             <div class="row d-flex align-items-center mb-3">
                 <label class="col-4">Passwort ändern? </label>
                 <!-- Button trigger modal -->
@@ -102,40 +103,41 @@
                     </div>
                 </div>
             </div>
+            
             <hr>
+            
             <h3 class="mt-3 mb-5">Einstellungen</h3>
-            <div class="form-group">
-                <div class="row d-flex align-items-center">
-                    <label class="col-7">Individuelle Lernniveaus nutzen</label>
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox"  
-                        @if ($teacher->differentiation_on == 1)
-                            checked="checked"
-                        @endif
-                        class="custom-control-input" id="differentiationSwitch" name="differentiation_on">
-                        <label class="custom-col-form-label" for="differentiationSwitch"></label>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item border-0 my-0">
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="differentiationSwitch"  @if ($teacher->differentiation_on == 1) checked="checked" @endif>
+                            <label class="custom-control-label" for="differentiationSwitch">Individuelle Lernniveaus für die Binnendifferenzierung nutzen</label>
+                        </div>
                     </div>
-                </div>
-                <div id="editDiff" 
-                    @if ($teacher->differentiation_on == 1) 
-                        class="d-block" 
-                    @else
-                        class="d-none"
-                    @endif>
-                    <div  class="row d-flex align-items-center">
-                        <small class="col-7 mb-3"> <a href="/lehrer/{{$teacher->id}}/lernniveaus/übersicht">Individuelle Lernniveaus bearbeiten</a></small>
+                    <div class="form-group">
+                        <div id="editDiff"  
+                            @if ($teacher->differentiation_on == 1) 
+                                class="d-block"
+                            @else
+                                class="d-none"
+                            @endif
+                        >
+                            <div class="form-row my-0">
+                                <small class="ml-5 mb-3 mt-0"> <a href="/lehrer/{{$teacher->id}}/lernniveaus/übersicht">Individuelle Lernniveaus bearbeiten</a></small>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row d-flex align-items-center mb-3">
-                    <label class="col-7">Newsletter abbonieren? </label>
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox"  class="custom-control-input" id="customSwitch2" name="newsletter">
-                        <label class="custom-col-form-label" for="customSwitch2"></label>
+                </li>
+                <li class="list-group-item border-0">
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="newsletterSwitch"   @if ($teacher->newsletter == 1) checked="checked" @endif>
+                            <label class="custom-control-label" for="newsletterSwitch">Newsletter abonnieren?</label>
+                        </div>
                     </div>
-                </div>
-            </div>            
+                </li>
+            </ul>            
             <hr>
             <h3 class="mt-3 mb-5">Statistik</h3>
             <div class="row d-flex align-items-center mb-3">
@@ -162,7 +164,6 @@
                 <label for="contents" class="col-7">Klassenaccounts:</label>
                 <input id="contents" type="number" class="col-2 text-center"  value="{{$classCount}}" readonly>
             </div>
-
         </div>
         <div class="card-footer text-muted pt-5">
            Registriert: {{\Carbon\Carbon::parse($teacher->created_at)->diffForHumans()}}
@@ -175,7 +176,7 @@
 
 @section('scripts')
 <script>
-    $('document').ready(function () {
+$('document').ready(function () {
    $('#differentiationSwitch').change(function () {
       var diffOn = $('#differentiationSwitch').prop('checked');
       console.log(diffOn);

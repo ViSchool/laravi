@@ -1,7 +1,7 @@
 <!-- Navigation -->
 
 
-<nav class="navbar navbar-expand-md navbar-light flex-column align-items-start mb-3">
+<nav class="navbar navbar-expand-md navbar-light flex-column align-items-start mb-3 shadow-sm">
 	
 	<div id="vischool_nav" class="w-100 d-flex justify-content-between">
 		<button class="navbar-toggler m-0 p-0 border-0" type="button" data-toggle="collapse" data-target=".navbar-collapse">

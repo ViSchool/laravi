@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\ViSchoolVerifyEmailNotification;
+use App\Notifications\CustomResetPasswordNotification;
 use App\Mail\EmailVerification;
 
 
@@ -21,7 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'teacher_name', 'teacher_surname','user_name','email', 'password','school_id', 'teacher_id','newsletter'
+        'teacher_name', 'teacher_surname','user_name','email', 'password','school_id', 'teacher_id','newsletter' ,'data_privacy'
     ];
 
     /**
@@ -32,6 +33,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new CustomResetPasswordNotification($token));
+    }
 
     
     public function post()
