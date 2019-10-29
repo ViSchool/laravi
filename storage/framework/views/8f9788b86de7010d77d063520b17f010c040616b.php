@@ -1,11 +1,5 @@
 <?php $__env->startSection('content'); ?>
-<?php if($errors->any()): ?>    
-    <ul>
-    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <li><?php echo e($error); ?></li>
-    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-    </ul>
-<?php endif; ?>
+
 
 <div class="container">
     <div class="row">
@@ -50,7 +44,7 @@
                         <div class="form-row form-group<?php echo e($errors->has('email') ? ' invalid' : ''); ?>">
                             <label for="email" class="col-md-4 col-form-label">
                                 E-Mail Adresse 
-                                <p class="small">Bitte benutze hier Deine Emailadresse der Schule, da wir Deinen Account verifizieren.</p>
+                                <p class="small">Bitte benutze hier Deine Emailadresse der Schule, da wir Deinen Account verifizieren. Du bekommst im Anschluss an Deine Anmeldung eine Email, in der Du Deine Emailadresse bestätigen kannst.</p>
                             </label>
 
                             <div class="col-md-6">

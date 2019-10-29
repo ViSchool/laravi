@@ -11,6 +11,7 @@ use App\Content;
 use App\Tool;
 use App\Mail\brokenLinks;
 use App\Differentiation;
+use Auth;
 
 class AppController extends Controller
 {
@@ -22,14 +23,23 @@ class AppController extends Controller
 
      public function getDynamicTopics($id) 
      {
-        $topics = Subject::find($id)->topics->pluck("topic_title","id");
+        $teacher = Auth::user();
+        $publicTopics = Subject::find($id)->topics->where('status_id',1)->pluck("topic_title","id");
+        if(isset($teacher)) {
+        $privateTopics = Subject::find($id)->topics->where('status_id','>',1)->where('user_id',$teacher->id)->pluck("topic_title","id");
+        }
+        if(isset($privateTopics)) {
+            $topics = $publicTopics->merge($privateTopics);
+        } else {
+            $topics = $publicTopics;
+        }       
 
         return json_encode($topics);
-    }
+    } 
     
     public function getDynamicContents($id) 
      {
-        $contents = Content::where('topic_id',$id)->pluck("content_title","id");
+        $contents = Content::where('topic_id',$id)->where('status_id',1)->pluck("content_title","id");
 
         return json_encode($contents);
     }

@@ -50,7 +50,7 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $this->validate(request(), [
-        'student_name' => 'required', 
+        'student_name' => 'required|unique:students', 
         'password' => 'required'
         ]);
         
@@ -61,13 +61,13 @@ class StudentController extends Controller
         $student->teacher_id = $request->user_id;
         $student->save();
         $student->assignRole('Schüler');
-        return view('teacher.teacher_studentaccount');
+        return back();
     }
 
     public function store_classaccount(Request $request)
     {
         $this->validate(request(), [
-        'student_name' => 'required', 
+        'student_name' => 'required|unique:students', 
         'password' => 'required'
         ]);
         
@@ -78,7 +78,7 @@ class StudentController extends Controller
         $student->teacher_id = $request->user_id;
         $student->save();
         $student->assignRole('Klasse');
-        return view('teacher.teacher_classaccount');
+        return back();
     }
 
 

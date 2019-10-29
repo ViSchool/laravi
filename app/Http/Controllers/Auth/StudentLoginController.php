@@ -43,7 +43,7 @@ class StudentLoginController extends Controller
     
     public function studentLogout()
     {
-    	Auth::guard('student')->logout();
-    	return redirect(route('vischool'));
+		 Auth::guard('student')->logout();
+    	return redirect()->route('vischool');
     }
 }

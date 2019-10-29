@@ -45,12 +45,12 @@
 	</nav>
 	<?php endif; ?>
 
-	<div id="subject-topics">
+	<div class="topics">
 		<div class="container">
-				<?php if(count($privateTopics) > 0): ?>
-					<div class="row mt-5 ml-3">
+			<?php if(count($privateTopics) > 0): ?>
+				<div class="row mt-5 ml-3">
 					<h3>Private Themen</h3>
-					</div>
+				</div>
 				<div class="d-flex flex-wrap align-content-center justify-content-center">
 					<?php $__currentLoopData = $privateTopics; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $privateTopic): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 						<div class="card m-4 text-white" style="width:150px" >
@@ -75,8 +75,9 @@
 				<div class="row mt-3 ml-3">
 					<h3>Öffentliche Themen</h3>
 				</div>
-				<?php endif; ?>
-				<div class="d-flex flex-wrap align-content-center justify-content-center">
+			<?php endif; ?>
+				
+			<div class="d-flex flex-wrap align-content-center justify-content-center">
 				<?php $__currentLoopData = $publicTopics; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $topic): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 					<div class="card m-4 text-white" style="width:150px" >
 						<?php if($topic->updated_at->diffInDays() < 10): ?>
@@ -96,6 +97,7 @@
 					</div>
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>	
 			</div>
+
 		</div>
 	</div>
 </div>

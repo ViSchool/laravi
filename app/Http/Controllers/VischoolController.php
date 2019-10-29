@@ -47,11 +47,15 @@ class VischoolController extends BaseController
 	
 	public function subject_show ($id) {
 		$teacher = Auth::user();
+		$student = Auth::guard('student')->user();
 		$subject = Subject::find($id);
 		$publicTopics = $subject->topics->where('status_id',1);
 		if (isset ($teacher)){
 			$privateTopics = $subject->topics->whereIn('status_id',[2,3])->where('user_id',$teacher->teacher_id);	
 		}
+		elseif (isset ($student)){
+			$privateTopics = $subject->topics->whereIn('status_id',[2,3])->where('user_id',$student->teacher_id)->sortByDesc('updated_at');
+		}	
 		else{
 			$privateTopics = [];
 		}
@@ -110,6 +114,12 @@ class VischoolController extends BaseController
 	
 	{
 	$content = Content::find($id);
+	$agent = new Agent();
+	if($agent->isPhone()) {
+		$device = "klein";
+	} else {
+		$device ="groß";
+	};
 	$breadcrumbs = Breadcrumbs::addCrumb('Startseite', '/');
 	$breadcrumbs = Breadcrumbs::addCrumb($content->subject->subject_title , '/subjects/'. $content->subject->id);
 	$breadcrumbs = Breadcrumbs::addCrumb($content->topic->topic_title,'/topic/'. $content->topic->id);
@@ -176,7 +186,7 @@ class VischoolController extends BaseController
 		['id','!=',$content->id]
 		])->inRandomOrder()->take(3)->get();
 
-	return view('frontend.contents.show_contents', compact('breadcrumbs','content','aspect_ratio', 'reviews','average_score','question','finalResult','correctAnswers','relatedContents'));
+	return view('frontend.contents.show_contents', compact('device','breadcrumbs','content','aspect_ratio', 'reviews','average_score','question','finalResult','correctAnswers','relatedContents'));
 	}
 
 

@@ -117,8 +117,8 @@
                                     <?php echo csrf_field(); ?>
                                     <div class="modal-body">
                                         <input type="hidden" id="unit_id" name="unit_id" value="<?php echo e($unit->id); ?>">
-                                        <div class="form-group<?php echo e($errors->has('serie_title') ? ' has-error' : ''); ?>">
-                                            <label for="serie_title" class="col-md-4 control-label">Name der Serie</label>
+                                        <div class="form-group<?php echo e($errors->has('serie_title') ? ' invalid' : ''); ?>">
+                                            <label for="serie_title" class="col-md-4 col-form-label">Name der Serie</label>
                                             <div class="col-10">
                                                 <input id="serie_title" type="text" class="form-control" name="serie_title" value="<?php echo e(old('serie_title')); ?>" required>
                                                 <?php if($errors->has('serie_title')): ?>
@@ -129,8 +129,8 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="form-group <?php echo e($errors->has('serie_description') ? 'has-error' : ''); ?>">
-                                            <label for="serie_description" class="col-md-4 control-label">Kurze Beschreibung zum Inhalt der Serie</label>
+                                        <div class="form-group <?php echo e($errors->has('serie_description') ? 'invalid' : ''); ?>">
+                                            <label for="serie_description" class="col-md-4 col-form-label">Kurze Beschreibung zum Inhalt der Serie</label>
                                             <div class="col-10">
                                                 <textarea id="serie_description" class="form-control" name="serie_description"><?php echo e(old('serie_description')); ?></textarea>
                                                 <?php if($errors->has('serie_description')): ?>

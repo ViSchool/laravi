@@ -35,13 +35,19 @@
                 <td>
                 </td>
                 <td>
-                    <a href="/lehrer/klassenaccount/löschen/<?php echo e($class->id); ?>"><i class="fas fa-trash"></i></a>
+                    <form action="/lehrer/klassenaccount/loeschen/<?php echo e($class->id); ?>" method="post">
+                        <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
+                        <button class="btn text-brand-red" type="submit"><i class="fas fa-trash"></i></button>
+                    </form>
                 </td>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tr>
             <tr>
-                <td colspan="5"> <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#newGroupModal">
-Einen neuen Klassenaccount erstellen</button></td>
+                <td colspan="5"> 
+                    <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#newGroupModal">
+                        Einen neuen Klassenaccount erstellen
+                    </button>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -63,8 +69,8 @@ Einen neuen Klassenaccount erstellen</button></td>
                     <div class="modal-body">    
                         <input type="hidden" value="<?php echo e($teacher->id); ?>" name="user_id">
                         <input type="hidden" value="1" name="class_account">
-                        <div class="form-group<?php echo e($errors->has('student_name') ? ' has-error' : ''); ?>">
-                            <label for="student_name" class="col-md-4 control-label">Benutzername für den Klassenaccount</label>
+                        <div class="form-group<?php echo e($errors->has('student_name') ? ' invalid' : ''); ?>">
+                            <label for="student_name" class="col-md-4 col-form-label">Benutzername für den Klassenaccount</label>
                              <div class="col-10">
                              <input id="student_name" type="text" class="form-control" name="student_name" value="<?php echo e(old('student_name')); ?>" required>
                                 <?php if($errors->has('student_name')): ?>
@@ -75,8 +81,8 @@ Einen neuen Klassenaccount erstellen</button></td>
                             </div>
                         </div>
 
-                        <div class="form-group<?php echo e($errors->has('password') ? ' has-error' : ''); ?>">
-                            <label for="password" class="col-md-4 control-label">Passwort für den Klassenaccount</label>
+                        <div class="form-group<?php echo e($errors->has('password') ? ' invalid' : ''); ?>">
+                            <label for="password" class="col-md-4 col-form-label">Passwort für den Klassenaccount</label>
                              <div class="col-10">
                              <input id="password" type="text" class="form-control" name="password" required>
                                 <?php if($errors->has('password')): ?>
@@ -87,22 +93,7 @@ Einen neuen Klassenaccount erstellen</button></td>
                             </div>
                         </div>
 
-                        <div class="form-group<?php echo e($errors->has('units') ? ' has-error' : ''); ?>">
-                            <label for="units" class="col-md-4 control-label">Zugang auf bestimmte Unterrichtseinheiten beschränken</label>
-                             <div class="col-10">
-                                <select class="form-control select2-multi" name="units[]" id="units" multiple="multiple">
-                                    <?php $__currentLoopData = $privateunits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $privateunit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($privateunit->id); ?>"><?php echo e($privateunit->unit_title); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    <option value=""></option>
-                                </select>
-                                <?php if($errors->has('units')): ?>
-                                    <span class="help-block">
-                                        <strong><?php echo e($errors->first('units')); ?></strong>
-                                    </span>
-                                <?php endif; ?>
-                            </div>
-                        </div>
+                        
 
                     </div>    
                     <div class="modal-footer">

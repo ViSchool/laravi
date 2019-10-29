@@ -45,7 +45,7 @@
                         <div class="form-row form-group{{ $errors->has('email') ? ' invalid' : '' }}">
                             <label for="email" class="col-md-4 col-form-label">
                                 E-Mail Adresse 
-                                <p class="small">Bitte benutze hier Deine Emailadresse der Schule, da wir Deinen Account verifizieren.</p>
+                                <p class="small">Bitte benutze hier Deine Emailadresse der Schule, da wir Deinen Account verifizieren. Du bekommst im Anschluss an Deine Anmeldung eine Email, in der Du Deine Emailadresse bestätigen kannst.</p>
                             </label>
 
                             <div class="col-md-6">

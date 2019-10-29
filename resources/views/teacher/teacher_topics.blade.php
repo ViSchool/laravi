@@ -19,7 +19,7 @@
     <h3>Deine selbst erstellten Themen</h3>
     <p>"Themen" sind die Überschriften unter denen bestimmte Inhalte und Unterrichtseinheiten zusammengefasst werden. Beispiele findest Du auf der ViSchool Seite. Wenn Dir Themen auf unserer Seite fehlen, zu denen Du gerne Inhalte anlegen möchstest, dann kannst Du sie hier erstellen und siehst auch die Übersicht der Themen, die Du bereits erstellt hast.
     </p>
-    <p>Themen, die Du erstellst, findest Du zunächst nur in Deinem privaten Bereich. Das heißt alle nur Du und die von Dir erstellten Klassenaccounts können dieses Thema sehen. Möchtest Du, dass das Thema auch auf der öffentlichen ViSchool-Seite zu sehen ist, musst Du das Thema zur Veröffentlichung von der ViSchool freigeben lassen.</p>
+    <p>Themen, die Du erstellst, findest Du zunächst nur in Deinem Lehrerbereich unter "Meine Themen". Willst Du sie nur Deiner Klasse anzeigen, kannst Du sie "privat veröffentlichen". Ändere dazu den Status hier auf der Seite. Dann können nur Du und die von Dir erstellten Klassen-/Schüleraccounts dieses Thema auf der ViSchool-Seite sehen. Möchtest Du, dass das Thema auch auf der öffentlichen ViSchool-Seite zu sehen ist, musst Du das Thema zur Veröffentlichung von der ViSchool freigeben lassen.</p>
 </div>
 <div class="container">
     <table class="table table-striped">

@@ -44,7 +44,7 @@ Schüleraccount automatisch erstellen</button>
              <tr>   
                 <td colspan="2">{{$student->student_name}}</td>
                 <td>
-                    <form action="/lehrer/schueleraccount/löschen/{{$student->id}}" method="post">
+                    <form action="/lehrer/schueleraccount/loeschen/{{$student->id}}" method="post">
                         @csrf @method('DELETE')
                         <button class="btn text-brand-red" type="submit"><i class="fas fa-trash"></i></button>
                     </form>

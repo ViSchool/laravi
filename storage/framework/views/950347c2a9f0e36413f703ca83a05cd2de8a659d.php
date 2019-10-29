@@ -42,7 +42,7 @@ Schüleraccount automatisch erstellen</button>
              <tr>   
                 <td colspan="2"><?php echo e($student->student_name); ?></td>
                 <td>
-                    <form action="/lehrer/schueleraccount/löschen/<?php echo e($student->id); ?>" method="post">
+                    <form action="/lehrer/schueleraccount/loeschen/<?php echo e($student->id); ?>" method="post">
                         <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
                         <button class="btn text-brand-red" type="submit"><i class="fas fa-trash"></i></button>
                     </form>
@@ -102,8 +102,8 @@ Schüleraccount automatisch erstellen</button>
                         <input type="hidden" value="<?php echo e($teacher->id); ?>" name="user_id">
                         <input type="hidden" value="0" name="class_account">
                         
-                        <div class="form-group<?php echo e($errors->has('student_name') ? ' has-error' : ''); ?>">
-                            <label for="student_name" class="col-md-4 control-label">Benutzername für den Schüleraccount</label>
+                        <div class="form-group<?php echo e($errors->has('student_name') ? ' invalid' : ''); ?>">
+                            <label for="student_name" class="col-md-4 col-form-label">Benutzername für den Schüleraccount</label>
                              <div class="col-10">
                              <input id="student_name" type="text" class="form-control" name="student_name" value="<?php echo e(old('student_name')); ?>" required>
                                 <?php if($errors->has('student_name')): ?>
@@ -114,8 +114,8 @@ Schüleraccount automatisch erstellen</button>
                             </div>
                         </div>
 
-                        <div class="form-group<?php echo e($errors->has('password') ? ' has-error' : ''); ?>">
-                            <label for="password" class="col-md-4 control-label">Passwort für den Klassenaccount</label>
+                        <div class="form-group<?php echo e($errors->has('password') ? ' invalid' : ''); ?>">
+                            <label for="password" class="col-md-4 col-form-label">Passwort für den Klassenaccount</label>
                              <div class="col-10">
                              <input id="password" type="text" class="form-control" name="password" value="<?php echo e(old('password')); ?>" required>
                                 <?php if($errors->has('password')): ?>
@@ -152,8 +152,8 @@ Schüleraccount automatisch erstellen</button>
                         <input type="hidden" value="<?php echo e($teacher->id); ?>" name="user_id">
                         <input type="hidden" value="0" name="class_account">
                         
-                        <div class="form-group<?php echo e($errors->has('number') ? ' has-error' : ''); ?>">
-                            <label for="number" class="col-md-4 control-label">Wieviele Schüleraccounts willst Du erstellen?</label>
+                        <div class="form-group<?php echo e($errors->has('number') ? ' invalid' : ''); ?>">
+                            <label for="number" class="col-md-4 col-form-label">Wieviele Schüleraccounts willst Du erstellen?</label>
                              <div class="col-10">
                              <input id="number" type="number" class="form-control" name="number" value="<?php echo e(old('number')); ?>" required>
                                 <?php if($errors->has('number')): ?>
@@ -164,8 +164,8 @@ Schüleraccount automatisch erstellen</button>
                             </div>
                         </div>
 
-                        <div class="form-group<?php echo e($errors->has('group_of_students') ? ' has-error' : ''); ?>">
-                            <label for="group_of_students" class="col-md-4 control-label">Name für die Schülergruppe</label>
+                        <div class="form-group<?php echo e($errors->has('group_of_students') ? ' invalid' : ''); ?>">
+                            <label for="group_of_students" class="col-md-4 col-form-label">Name für die Schülergruppe</label>
                              <div class="col-10">
                              <input id="group_of_students" type="text" class="form-control" name="group_of_students" value="<?php echo e(old('group_of_students')); ?>" required>
                                 <?php if($errors->has('group_of_students')): ?>

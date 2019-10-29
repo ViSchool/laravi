@@ -17,7 +17,7 @@
     <h3>Deine selbst erstellten Inhalte</h3>
     <p>"Inhalte" sind einzelne Videos oder Aufgaben, die Du im Internet findest oder selbst erstellt und bei einem anderen Dienst speicherst. Typische Beispiele sind Youtube- oder Vimeo-Videos, h5p-Aufgaben oder andere Aufgaben auf Webseiten. Um einen Inhalt selbst einzustellen, brauchen wir zunächst nur den Link, mit dem der Inhalte dargestellt wird. Je mehr Informationen Ihr uns dabei gebt, desto besser können wir den Inhalt erkennen und einbinden. Sollte das einmal nicht klappen, keine Sorge: Wir schauen uns alle Inhalte noch einmal an und korrigieren falls nötig. 
     </p>
-    <p>Inhalte, die Du erstellst, findest Du zunächst nur in Deinem privaten Bereich. Das heißt nur Du und die von Dir erstellten Klassenaccounts können diesen Inhalt sehen. Möchtest Du, dass der Inhalt auch auf der öffentlichen ViSchool-Seite zu sehen ist, musst Du den Inhalt zur Veröffentlichung von der ViSchool freigeben lassen. Auch vor der Freigabe kannst Du den Inhalt in Deinen Unterrichtseinheiten einsetzen. Unterrichtseinheiten, die einen nicht von der ViSchool freigegebenen Inhalte enthalten, können auch nur in Deinem privaten Bereich angezeigt werden.</p>
+    <p>Inhalte, die Du erstellst, findest Du zunächst nur in Deinem Lehrerbereich unter "Meine Themen". Willst Du sie nur Deiner Klasse anzeigen, kannst Du sie "privat veröffentlichen". Ändere dazu den Status hier auf der Seite. Dann können nur Du und die von Dir erstellten Klassen-/Schüleraccounts dieses Thema auf der ViSchool-Seite sehen. Möchtest Du, dass das Thema auch auf der öffentlichen ViSchool-Seite zu sehen ist, musst Du das Thema zur Veröffentlichung von der ViSchool freigeben lassen. Auch vor der Freigabe kannst Du den Inhalt in Deinen Unterrichtseinheiten einsetzen. Unterrichtseinheiten, die einen nicht von der ViSchool freigegebenen Inhalte enthalten, können auch nur in Deinem privaten Bereich angezeigt werden.</p>
 </div>
 <div class="container">
      <button type="button" class="btn btn-primary form-control" data-toggle="modal" data-target="#newContentModal">
@@ -54,7 +54,7 @@ Einen neuen Inhalt erstellen</button>
                         name="teacherOrStudent">
 
 
-                        <div class="form-group<?php echo e($errors->has('content_title') ? ' has-error' : ''); ?>">
+                        <div class="form-group<?php echo e($errors->has('content_title') ? ' invalid' : ''); ?>">
                             <label for="content_title" class="col-10 col-form-label">Name des Inhalts</label>
                              <div class="col-10">
                              <input id="content_title" type="text" class="form-control" name="content_title" value="<?php echo e(old('content_title')); ?>" required>
@@ -66,7 +66,7 @@ Einen neuen Inhalt erstellen</button>
                             </div>
                         </div>
 
-                        <div class="form-group<?php echo e($errors->has('tool_id') ? ' has-error' : ''); ?>">
+                        <div class="form-group<?php echo e($errors->has('tool_id') ? ' invalid' : ''); ?>">
                             <label for="content_provider" class="col-10 col-form-label">Der Inhalt stammt von folgendem Anbieter:</label>
                             <div class="col-10">
                                 <select class="form-control" id="tool_id" name="tool_id">
@@ -83,12 +83,11 @@ Einen neuen Inhalt erstellen</button>
 				                    <?php $__currentLoopData = $tools; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tool): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>	
 					                    <option value="<?php echo e($tool->id); ?>"><?php echo e($tool->tool_title); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="">Anderer Anbieter</option>
                                 </select>
                             </div>    
                         </div>
 
-                        <div class="form-group<?php echo e($errors->has('content_link') ? ' has-error' : ''); ?>">
+                        <div class="form-group<?php echo e($errors->has('content_link') ? ' invalid' : ''); ?>">
                             <label for="content_link" class="col-10 col-form-label">Link zum Inhalt</label>
                             <br>
                             <small id="examplelink" class="text-muted col-10">Beispiellink</small>
@@ -103,7 +102,7 @@ Einen neuen Inhalt erstellen</button>
                         </div>
 
 
-                        <div class="form-group<?php echo e($errors->has('subject_id') ? ' has-error' : ''); ?>">
+                        <div class="form-group<?php echo e($errors->has('subject_id') ? ' invalid' : ''); ?>">
                             <label for="topic_id" class="col-10 col-form-label">Der Inhalt gehört zu folgendem Fach</label>
                              <div class="col-10">
                                <select class="form-control" id="subject_id" name="subject_id">
@@ -121,14 +120,14 @@ Einen neuen Inhalt erstellen</button>
 					                    <option value="<?php echo e($subject->id); ?>"><?php echo e($subject->subject_title); ?></option>
 				                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                              </select>
-            <?php if($errors->has('topic_id')): ?>
+                                <?php if($errors->has('topic_id')): ?>
                                     <span class="help-block">
                                         <strong><?php echo e($errors->first('topic_id')); ?></strong>
                                     </span>
                                 <?php endif; ?>
                             </div>
                         </div>
-                        <div class="form-group<?php echo e($errors->has('topic_id') ? ' has-error' : ''); ?>">
+                        <div class="form-group<?php echo e($errors->has('topic_id') ? ' invalid' : ''); ?>">
                             <label for="topic_id" class="col-10 col-form-label">Der Inhalt gehört zu folgendem Thema</label>
                              <div class="col-10">
                                 <select class="form-control" id="topic_id" name="topic_id">

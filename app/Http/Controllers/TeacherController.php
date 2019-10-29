@@ -83,7 +83,7 @@ class TeacherController extends Controller
         $contents = Content::where('user_id',$teacher->id)->get();
         $contentsBySubject = $contents->groupBy('subject_id')->all();
         $topics = Topic::all();
-        $tools = Tool::all();
+        $tools = Tool::orderBy('tool_title')->get();
         return view ('teacher.teacher_contents', compact('tools','teacher','contentsBySubject','topics','subjects'));
     }
 

@@ -30,8 +30,8 @@
             </div>
             <div class="card-body">
                 
-                <div class="form-group<?php echo e($errors->has('unit_title') ? ' has-error' : ''); ?>">
-                    <label for="unit_title" class="col-10 control-label">Titel der Lerneinheit</label>
+                <div class="form-group<?php echo e($errors->has('unit_title') ? ' invalid' : ''); ?>">
+                    <label for="unit_title" class="col-10 col-form-label">Titel der Lerneinheit</label>
                     <div class="col-10">
                         <input id="unit_title" type="text" class="form-control" name="unit_title" value="<?php echo e(old('unit_title')); ?>" required>
                         <?php if($errors->has('unit_title')): ?>
@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                <div class="form-group<?php echo e($errors->has('unit_description') ? ' has-error' : ''); ?>">
+                <div class="form-group<?php echo e($errors->has('unit_description') ? ' invalid' : ''); ?>">
                     <label for="unit_description" class="col-10 col-form-label mb-0 pb-0">Kurzbeschreibung der Lerneinheit</label>
                     <label for="unit_description" class="col-10 col-form-label mt-0 pt-0">
                         <small class="text-muted"> Beschreibe hier kurz was die Schüler mit der Einheit lernen sollen.</small>
@@ -57,8 +57,8 @@
                     </div>
                 </div>
 
-                <div class="form-group<?php echo e($errors->has('subject_id') ? ' has-error' : ''); ?>">
-                    <label for="topic_id" class="col-10 control-label">Die Unterrichtseinheit gehört zu folgendem Fach</label>
+                <div class="form-group<?php echo e($errors->has('subject_id') ? ' invalid' : ''); ?>">
+                    <label for="topic_id" class="col-10 col-form-label">Die Unterrichtseinheit gehört zu folgendem Fach</label>
                     <div class="col-10">
                         <select class="form-control" id="subject_id" name="subject_id">
 				            <?php if((old('subject_id')) !== null): ?>
@@ -83,8 +83,8 @@
                     </div>
                 </div>
                         
-                <div class="form-group<?php echo e($errors->has('topic_id') ? ' has-error' : ''); ?>">
-                    <label for="topic_id" class="col-10 control-label">Die Unterrichtseinheit gehört zu folgendem Thema</label>
+                <div class="form-group<?php echo e($errors->has('topic_id') ? ' invalid' : ''); ?>">
+                    <label for="topic_id" class="col-10 col-form-label">Die Unterrichtseinheit gehört zu folgendem Thema</label>
                     <div class="col-10">
                         <select class="form-control" id="topic_id" name="topic_id">
                             <?php if((old('topic_id')) !== null): ?>
@@ -112,8 +112,8 @@
                 </div>
                 
                 <?php if($teacher->differentiation_on == 1): ?>    
-                <div class="form-group<?php echo e($errors->has('differentiation_group') ? ' has-error' : ''); ?>">
-                    <label for="differentiation_id" class="col-10 control-label">Differenzierung von Lernniveaus</label>
+                <div class="form-group<?php echo e($errors->has('differentiation_group') ? ' invalid' : ''); ?>">
+                    <label for="differentiation_id" class="col-10 col-form-label">Differenzierung von Lernniveaus</label>
                     <label for="differentiation_id" class="col-10 col-form-label mt-0 pt-0">
                         <small class="text-muted">Wenn die Aufgabe nur von bestimmten Schülern bearbeitet werden soll, dann wähle hier die Gruppe von Lernniveaus aus, die Du für diese Unterrichtseinheit benutzen möchtest. Ansonsten wähle "Keine Differenzierung".</small>
                     </label>

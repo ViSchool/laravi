@@ -53,7 +53,7 @@
 						<div class="container">
 							<a href="<?php echo e($content->content_link); ?>"><small class="text-muted">Quelle: <?php echo e($content->content_link); ?></small></a>
 						</div>
-						<iframe src="<?php echo e($content->content_link); ?>" style="width:600px height:800px" allowfullscreen>Der Browser zeigt leider das Dokument nicht richtig an. Hier ist der Inhalt zum Anschauen in einem neuen Fenster: <a href="<?php echo e($content->content_link); ?>"><?php echo e($content->content_title); ?></a></iframe>
+						<iframe src="<?php echo e($content->content_link); ?>" width="100%" height="600" allowfullscreen>Der Browser zeigt leider das Dokument nicht richtig an. Hier ist der Inhalt zum Anschauen in einem neuen Fenster: <a href="<?php echo e($content->content_link); ?>"><?php echo e($content->content_title); ?></a></iframe>
 					</div>
 				<?php break; ?>
 				<?php case (5): ?> 

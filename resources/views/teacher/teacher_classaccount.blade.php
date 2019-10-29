@@ -37,13 +37,19 @@
                 <td>
                 </td>
                 <td>
-                    <a href="/lehrer/klassenaccount/löschen/{{$class->id}}"><i class="fas fa-trash"></i></a>
+                    <form action="/lehrer/klassenaccount/loeschen/{{$class->id}}" method="post">
+                        @csrf @method('DELETE')
+                        <button class="btn text-brand-red" type="submit"><i class="fas fa-trash"></i></button>
+                    </form>
                 </td>
             @endforeach
             </tr>
             <tr>
-                <td colspan="5"> <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#newGroupModal">
-Einen neuen Klassenaccount erstellen</button></td>
+                <td colspan="5"> 
+                    <button type="button" class="btn-sm btn-primary" data-toggle="modal" data-target="#newGroupModal">
+                        Einen neuen Klassenaccount erstellen
+                    </button>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -89,7 +95,7 @@ Einen neuen Klassenaccount erstellen</button></td>
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('units') ? ' invalid' : '' }}">
+                        {{-- <div class="form-group{{ $errors->has('units') ? ' invalid' : '' }}">
                             <label for="units" class="col-md-4 col-form-label">Zugang auf bestimmte Unterrichtseinheiten beschränken</label>
                              <div class="col-10">
                                 <select class="form-control select2-multi" name="units[]" id="units" multiple="multiple">
@@ -104,7 +110,7 @@ Einen neuen Klassenaccount erstellen</button></td>
                                     </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
                     </div>    
                     <div class="modal-footer">

@@ -94,7 +94,8 @@ Route::get('/lehrer/register_soon','InquiryController@index')->name('inquiries.i
 Route::post('lehrer/schueleraccount/erstellen','StudentController@store');
 Route::post('lehrer/klassenaccount/erstellen','StudentController@store_classaccount');
 Route::post('lehrer/schueleraccount_liste/erstellen','StudentgroupController@store');
-Route::delete('/lehrer/schueleraccount/löschen/{id}', 'StudentController@destroy');
+Route::delete('/lehrer/schueleraccount/loeschen/{id}', 'StudentController@destroy');
+Route::delete('/lehrer/klassenaccount/loeschen/{id}', 'StudentController@destroy');
 Route::get('/lehrer/klassenaccounts','TeacherController@classes');
 Route::get('/lehrer/schueleraccounts','TeacherController@students')->name('schueleraccounts');
 Route::get('/lehrer/schuelergruppe/schueleraccounts_erstellen/{id}', 'StudentController@store_group')->name('store_studentgroup');

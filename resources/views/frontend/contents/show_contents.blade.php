@@ -54,7 +54,7 @@
 						<div class="container">
 							<a href="{{$content->content_link}}"><small class="text-muted">Quelle: {{$content->content_link}}</small></a>
 						</div>
-						<iframe src="{{$content->content_link}}" style="width:600px height:800px" allowfullscreen>Der Browser zeigt leider das Dokument nicht richtig an. Hier ist der Inhalt zum Anschauen in einem neuen Fenster: <a href="{{$content->content_link}}">{{$content->content_title}}</a></iframe>
+						<iframe src="{{$content->content_link}}" width="100%" height="600" allowfullscreen>Der Browser zeigt leider das Dokument nicht richtig an. Hier ist der Inhalt zum Anschauen in einem neuen Fenster: <a href="{{$content->content_link}}">{{$content->content_title}}</a></iframe>
 					</div>
 				@break
 				@case(5) 

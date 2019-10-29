@@ -16355,7 +16355,7 @@ h1, h2 {
   color: #000;
 }
 
-#subject-topics .notify-badge {
+.topics .notify-badge {
   position: absolute;
   right: -20px;
   top: 10px;
@@ -16365,7 +16365,7 @@ h1, h2 {
   padding: 2px 5px;
   font-size: 12px;
 }
-#subject-topics .content-badge {
+.topics .content-badge {
   position: absolute;
   bottom: 20px;
   text-align: center;

@@ -46,12 +46,12 @@
 	</nav>
 	@endif
 
-	<div id="subject-topics">
+	<div class="topics">
 		<div class="container">
-				@if (count($privateTopics) > 0)
-					<div class="row mt-5 ml-3">
+			@if (count($privateTopics) > 0)
+				<div class="row mt-5 ml-3">
 					<h3>Private Themen</h3>
-					</div>
+				</div>
 				<div class="d-flex flex-wrap align-content-center justify-content-center">
 					@foreach ($privateTopics as $privateTopic)
 						<div class="card m-4 text-white" style="width:150px" >
@@ -76,8 +76,9 @@
 				<div class="row mt-3 ml-3">
 					<h3>Öffentliche Themen</h3>
 				</div>
-				@endif
-				<div class="d-flex flex-wrap align-content-center justify-content-center">
+			@endif
+				
+			<div class="d-flex flex-wrap align-content-center justify-content-center">
 				@foreach ($publicTopics as $topic)
 					<div class="card m-4 text-white" style="width:150px" >
 						@if ($topic->updated_at->diffInDays() < 10)
@@ -97,6 +98,7 @@
 					</div>
 				@endforeach	
 			</div>
+
 		</div>
 	</div>
 </div>
