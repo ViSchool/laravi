@@ -86,7 +86,7 @@ class UnitController extends Controller
         'subject_id' => 'required',
         'unit_title'=> 'required|max:255'
         ]);
-
+        
         $unit = new Unit;
         $unit->subject_id = $request->subject_id;
         $unit->topic_id = $request->topic_id;

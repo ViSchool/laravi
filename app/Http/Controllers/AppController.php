@@ -29,7 +29,7 @@ class AppController extends Controller
         $privateTopics = Subject::find($id)->topics->where('status_id','>',1)->where('user_id',$teacher->id)->pluck("topic_title","id");
         }
         if(isset($privateTopics)) {
-            $topics = $publicTopics->merge($privateTopics);
+            $topics = $publicTopics->union($privateTopics);
         } else {
             $topics = $publicTopics;
         }       
