@@ -276,14 +276,13 @@
 										{{$publicUnit->unit_description}}
 									</p>
 								</div>
-								<div class="card-footer">
-									<small class="text-muted">Zuletzt aktualisiert: {{$publicUnit->updated_at->diffForHumans()}}</small>
+								<div class="card-footer flex-column align-items-center justify-content-center">
+									<small class="text-muted">Aktualisiert: {{$publicUnit->updated_at->diffForHumans()}}</small>
+									@if (Auth::check())
+										<a class="btn btn-primary w-100" href="/lehrer/{{Auth::user()->id}}/copy/{{$publicUnit->id}}" title="Lerneinheit in meinen Account kopieren"><i class="far fa-copy"></i><small> Lerneinheit kopieren</small> </a>
+									@endif
 								</div>
-								@if (Auth::check())
-								<div class="card-footer">
-								<a href="/lehrer/{{Auth::user()->id}}/copy/{{$publicUnit->id}}" title="Lerneinheit in meinen Account kopieren"><i class="far fa-copy"></i></a>
-								</div>
-								@endif
+								
 							</div>
 						</div>
 					@endforeach		 	

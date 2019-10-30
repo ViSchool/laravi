@@ -32,8 +32,8 @@
             </div>
             <div class="card-body">
                 
-                <div class="form-group<?php echo e($errors->has('block_title') ? ' has-error' : ''); ?>">
-                    <label for="title" class="col-10 control-label">Überschrift für die Aufgabe</label>
+                <div class="form-group<?php echo e($errors->has('block_title') ? ' invalid' : ''); ?>">
+                    <label for="title" class="col-10 col-form-label">Überschrift für die Aufgabe</label>
                     <div class="col-10">
                         <input id="block_title" type="text" class="form-control" name="block_title" value="<?php echo e(old('block_title')); ?>" required>
                         <?php if($errors->has('block_title')): ?>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
 
-                <div class="form-group<?php echo e($errors->has('task') ? ' has-error' : ''); ?>">
+                <div class="form-group<?php echo e($errors->has('task') ? ' invalid' : ''); ?>">
                     <label for="task" class="col-10 col-form-label mb-0 pb-0">Aufgabentext</label>
                     <label for="task" class="col-10 col-form-label mt-0 pt-0">
                         <small class="text-muted"> Schreibe hier möglichst präzise, was der Schüler tun soll, z.B.: <span class="text-muted font-italic">Schau Dir das folgende Video an.</span> </small>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
 
-                <div class="form-group<?php echo e($errors->has('content_id') ? ' has-error' : ''); ?>">
+                <div class="form-group<?php echo e($errors->has('content_id') ? ' invalid' : ''); ?>">
                     <label for="content_id_button" class="col-10 col-form-label mb-0 pb-0">Digitalen Inhalt hinzufügen (optional)</label>
                     <label for="content_id_button" class="col-10 col-form-label mt-0 pt-0">
                         <small class="text-muted"> Wenn Du der Aufgabe einen digitalen Inhalt hinzufügen willst, such Dir über den Button einen Inhalt aus.</small>
@@ -107,8 +107,8 @@
                 </div>
 
 
-                <div class="form-group<?php echo e($errors->has('time') ? ' has-error' : ''); ?>">
-                    <label for="time" class="col-10 control-label">Zeit für die Aufgabe</label>
+                <div class="form-group<?php echo e($errors->has('time') ? ' invalid' : ''); ?>">
+                    <label for="time" class="col-10 col-form-label">Zeit für die Aufgabe in Minuten</label>
                     <div class="col-10">
                         <input id="time" type="number" class="form-control" name="time" value="<?php echo e(old('time')); ?>" required>
                         <?php if($errors->has('time')): ?>
@@ -119,7 +119,7 @@
                     </div>
                 </div>
 
-                <div class="form-group<?php echo e($errors->has('tipp') ? ' has-error' : ''); ?>">
+                <div class="form-group<?php echo e($errors->has('tipp') ? ' invalid' : ''); ?>">
                     <label for="task" class="col-10 col-form-label mb-0 pb-0">Tipp (optional)</label>
                     <label for="task" class="col-10 col-form-label mt-0 pt-0">
                         <small class="text-muted"> Hier kannst Du den Schülern noch einen Tipp für Ihre Aufgabe mitgeben.</small>
@@ -135,8 +135,8 @@
                 </div>
 
                 <?php if($unit->differentiation_group !== Null): ?>
-                <div class="form-group<?php echo e($errors->has('differentiation_id') ? ' has-error' : ''); ?>">
-                    <label for="differentiation_id" class="col-10 control-label">Differenzierung von Lernniveaus</label>
+                <div class="form-group<?php echo e($errors->has('differentiation_id') ? ' invalid' : ''); ?>">
+                    <label for="differentiation_id" class="col-10 col-form-label">Differenzierung von Lernniveaus</label>
                     <label for="differentiation_id" class="col-10 col-form-label mt-0 pt-0">
                         <small class="text-muted">Die Aufgabe kann für unterschiedliche Lernniveaus der Gruppe <span class="font-weight-bold">"<?php echo e($unit->differentiation_group); ?>"</span> differenziert werden. Wähle hier das entsprechende Niveau aus oder wähle "Alle", wenn keine Differenzierung erfolgen soll.</small>
                     </label>

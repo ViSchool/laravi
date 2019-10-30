@@ -1,7 +1,7 @@
 <?php $__env->startSection('page-header'); ?>
 <section id="page-header">
-<div class="container">
-	<h2 class="my-4 text-dark">Lerneinheiten aus der Serie "<?php echo e($serie->serie_title); ?>"</h2>
+<div class="d-flex justify-content-between align-items-center">
+	<h2 class="m-4 text-dark">Lerneinheiten aus der Serie "<?php echo e($serie->serie_title); ?>"</h2>
 </div>
 </section>
 <?php $__env->stopSection(); ?>
@@ -24,9 +24,12 @@
 
 							</p>
 						</div>
-						<div class="card-footer">
-      						<small class="text-muted">Zuletzt aktualisiert: <?php echo e($unit->updated_at); ?></small>
-    					</div>
+						<div class="card-footer flex-column align-items-center justify-content-center">
+							<small class="text-muted">Aktualisiert: <?php echo e($unit->updated_at->diffForHumans()); ?></small>
+							<?php if(Auth::check()): ?>
+								<a class="btn btn-primary w-100" href="/lehrer/<?php echo e(Auth::user()->id); ?>/copy/<?php echo e($unit->id); ?>" title="Lerneinheit in meinen Account kopieren"><i class="far fa-copy"></i><small> Lerneinheit kopieren </small> </a>
+							<?php endif; ?>
+						</div>
   					
   					</div>
   					</div>

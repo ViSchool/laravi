@@ -64,7 +64,7 @@
 								<a href="/topic/<?php echo e($privateTopic->id); ?>">
 									<div class="card-text d-flex align-content-between justify-content-center">
 										<h5 class="text-white text-center"><?php echo e($privateTopic->topic_title); ?></h5>
-										<p class="content-badge badge-info"><?php echo e($privateTopic->content()->count()); ?> Inhalte</p>	
+										<p class="content-badge badge-info"><?php echo e($privateTopic->content->count()); ?> Inhalte</p>	
 									</div>
 								</a>	
 							</div>
@@ -90,7 +90,8 @@
 							<a href="/topic/<?php echo e($topic->id); ?>">
 								<div class="card-text d-flex align-content-between justify-content-center">
 									<h5 class="text-white text-center"><?php echo e($topic->topic_title); ?></h5>
-									<p class="content-badge badge-primary"> <?php echo e($topic->content()->count()); ?> Inhalte</p>	
+										
+									<p class="content-badge badge-primary"> <?php echo e($topic->content->where('status_id',1)->count()); ?> Inhalte</p>	
 								</div>
 							</a>	
 						</div>

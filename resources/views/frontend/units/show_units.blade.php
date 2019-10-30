@@ -130,29 +130,71 @@
 										<a href="/content/{{$content->id}}" target="_blank">
 										<div class="card border border-primary w-75">
 											@isset ($content->content_img)
-													<img class="card-img p-2" src="/images/contents/{{$content->content_img}}" alt="Bild:{{$content->content_title}}" style="max-height: 100%; width:auto;">
+												<img class="card-img p-2" src="/images/contents/{{$content->content_img}}" alt="Bild:{{$content->content_title}}" style="max-height: 100%; width:auto;">
+												<div class="card-img-overlay d-flex justify-content-center align-items-center">
+													<span class="fa-stack fa-3x card-text">
+														<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+														<i class="far fa-play-circle  fa-stack-1x"></i>
+													</span>
+												</div>
 											@endisset 
 											@empty ($content->content_img) 
 												@switch($content->tool_id)
 													@case(1)
 														<img class="p-4 card-img" src="https://img.youtube.com/vi/{{$content->toolspecific_id}}/mqdefault.jpg">
+														<div class="card-img-overlay d-flex justify-content-center align-items-center">
+															<span class="fa-stack fa-3x card-text">
+																<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+																<i class="far fa-play-circle  fa-stack-1x"></i>
+															</span>
+														</div>
+													@break
+													@case(6)
+														<img class="p-2 card-img" src="/images/topic_back.jpeg">
+														<div class="card-img-overlay d-flex justify-content-center align-items-center">
+															<p class="text-white">{{$content->content_title}}</p>
+															<p>
+																<span class="fa-stack fa-3x card-text">
+																	<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+																	<i class="far fa-play-circle  fa-stack-1x"></i>
+																</span>
+															</p>
+														</div>
 													@break
 													@case(7)
 														<img class="p-2 card-img" src="{{$content->img_thumb_url}}">
+														<div class="card-img-overlay d-flex justify-content-center align-items-center">
+															<span class="fa-stack fa-3x card-text">
+																<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+																<i class="far fa-play-circle  fa-stack-1x"></i>
+															</span>
+														</div>
 													@break
 													@default
 														@isset ($content->portal->portal_img)
 															<img src="/images/portals/{{$content->portal->portal_img}}" class="card-img p-2">
+															<div class="card-img-overlay d-flex justify-content-center align-items-center">
+																<span class="fa-stack fa-3x card-text">
+																	<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+																	<i class="far fa-play-circle  fa-stack-1x"></i>
+																</span>
+															</div>
 														@endisset
+														@empty ($content->portal->portal_img)
+															<img class="p-2 card-img" src="/images/topic_back.jpeg">
+															<div class="card-img-overlay d-flex justify-content-center align-items-center">
+																<p class="text-white">{{$content->content_title}}</p>
+																<p>
+																	<span class="fa-stack fa-3x card-text">
+																		<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+																		<i class="far fa-play-circle  fa-stack-1x"></i>
+																	</span>
+																</p>
+															</div>
+														@endempty
 													@break
 												@endswitch
 											@endempty
-											<div class="card-img-overlay d-flex justify-content-center align-items-center">
-												<span class="fa-stack fa-3x card-text">
-													<i class="fas fa-square fa-inverse fa-stack-2x"></i>
-													<i class="far fa-play-circle  fa-stack-1x"></i>
-												</span>
-											</div>
 										</div>
 										</a>		
 									@endisset										

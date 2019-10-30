@@ -60,7 +60,7 @@ class VischoolController extends BaseController
 			$privateTopics = [];
 		}
 		$klassenstufeTags = Tag::where('tag_group','Klassenstufe')->get();
-		return view('frontend.subjects.subject_topics', compact('subject', 'publicTopics','privateTopics','klassenstufeTags'));
+		return view('frontend.subjects.subject_topics', compact('subject', 'publicTopics','privateTopics','klassenstufeTags','topicsCount'));
 	} 
 	
 
@@ -82,7 +82,7 @@ class VischoolController extends BaseController
 		$publicUnits = $topic->unit->where('status_id',1)->where('serie_id',NULL)->sortByDesc('updated_at');
 		$series = $topic->unit->where('serie_id','>',0)->pluck('serie_id')->unique();
 		$publicSeries = Serie::whereIn('id', $series)->where('status_id', 1)->withCount('units')->get();
-		
+
 		if (isset ($teacher)){
 			$privateContents = $topic->content->whereIn('status_id',[2,3])->where('user_id',$teacher->teacher_id)->sortByDesc('updated_at');
 			$privateUnits = $topic->unit->whereIn('status_id',[2,3])->where('user_id',$teacher->teacher_id)->where('serie_id',NULL)->sortByDesc('updated_at');
@@ -232,7 +232,6 @@ class VischoolController extends BaseController
 		$blocks = Block::where('unit_id',$unit->id)->orderBy('order')->get();
 		return view('frontend.units.show_units', compact('unit','blocks'));
 		}
-/*     return view('frontend.units.show', compact('unit')); */
 	} 
 	
 	public function unit_diff($id,$diff) {

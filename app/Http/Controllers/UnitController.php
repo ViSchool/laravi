@@ -115,6 +115,14 @@ class UnitController extends Controller
         return redirect()->back();
     }
     
+    public function save_unit_serieNull($unit_id) {
+
+        $unit= Unit::findOrFail($unit_id);
+        $unit->serie_id = NULL;
+        $unit->save();
+        return redirect()->back();
+    }
+
     public function show($id)
     {
         $unit = Unit::find($id);

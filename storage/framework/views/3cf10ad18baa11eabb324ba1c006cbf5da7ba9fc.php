@@ -60,6 +60,7 @@
                                     <?php $__currentLoopData = $series; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $serie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <a class="dropdown-item" title="<?php echo e($serie->serie_description); ?>" href="/lehrer/unterrichtseinheiten/<?php echo e($unit->id); ?>/serie/<?php echo e($serie->id); ?>"><?php echo e($serie->serie_title); ?></a> 
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <a class="dropdown-item" title="<?php echo e($serie->serie_description); ?>" href="/lehrer/unterrichtseinheiten/<?php echo e($unit->id); ?>/keineSerie">Gehört zu keiner Serie</a> 
                                     <button type="button" class="btn btn-link" data-toggle="modal" data-target="#serieModal_<?php echo e($unit->id); ?>">Neue Serie erstellen</button>     
                                 </div>
                             </div>
@@ -142,7 +143,7 @@
                                         </div>     
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
                                         <button type="sumbmit" class="btn btn-primary">Serie speichern</button>
                                     </div>
                                 </form>

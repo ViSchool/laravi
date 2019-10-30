@@ -129,29 +129,71 @@
 										<a href="/content/<?php echo e($content->id); ?>" target="_blank">
 										<div class="card border border-primary w-75">
 											<?php if(isset($content->content_img)): ?>
-													<img class="card-img p-2" src="/images/contents/<?php echo e($content->content_img); ?>" alt="Bild:<?php echo e($content->content_title); ?>" style="max-height: 100%; width:auto;">
+												<img class="card-img p-2" src="/images/contents/<?php echo e($content->content_img); ?>" alt="Bild:<?php echo e($content->content_title); ?>" style="max-height: 100%; width:auto;">
+												<div class="card-img-overlay d-flex justify-content-center align-items-center">
+													<span class="fa-stack fa-3x card-text">
+														<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+														<i class="far fa-play-circle  fa-stack-1x"></i>
+													</span>
+												</div>
 											<?php endif; ?> 
 											<?php if(empty($content->content_img)): ?> 
 												<?php switch($content->tool_id):
 													case (1): ?>
 														<img class="p-4 card-img" src="https://img.youtube.com/vi/<?php echo e($content->toolspecific_id); ?>/mqdefault.jpg">
+														<div class="card-img-overlay d-flex justify-content-center align-items-center">
+															<span class="fa-stack fa-3x card-text">
+																<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+																<i class="far fa-play-circle  fa-stack-1x"></i>
+															</span>
+														</div>
+													<?php break; ?>
+													<?php case (6): ?>
+														<img class="p-2 card-img" src="/images/topic_back.jpeg">
+														<div class="card-img-overlay d-flex justify-content-center align-items-center">
+															<p class="text-white"><?php echo e($content->content_title); ?></p>
+															<p>
+																<span class="fa-stack fa-3x card-text">
+																	<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+																	<i class="far fa-play-circle  fa-stack-1x"></i>
+																</span>
+															</p>
+														</div>
 													<?php break; ?>
 													<?php case (7): ?>
 														<img class="p-2 card-img" src="<?php echo e($content->img_thumb_url); ?>">
+														<div class="card-img-overlay d-flex justify-content-center align-items-center">
+															<span class="fa-stack fa-3x card-text">
+																<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+																<i class="far fa-play-circle  fa-stack-1x"></i>
+															</span>
+														</div>
 													<?php break; ?>
 													<?php default: ?>
 														<?php if(isset($content->portal->portal_img)): ?>
 															<img src="/images/portals/<?php echo e($content->portal->portal_img); ?>" class="card-img p-2">
+															<div class="card-img-overlay d-flex justify-content-center align-items-center">
+																<span class="fa-stack fa-3x card-text">
+																	<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+																	<i class="far fa-play-circle  fa-stack-1x"></i>
+																</span>
+															</div>
+														<?php endif; ?>
+														<?php if(empty($content->portal->portal_img)): ?>
+															<img class="p-2 card-img" src="/images/topic_back.jpeg">
+															<div class="card-img-overlay d-flex justify-content-center align-items-center">
+																<p class="text-white"><?php echo e($content->content_title); ?></p>
+																<p>
+																	<span class="fa-stack fa-3x card-text">
+																		<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+																		<i class="far fa-play-circle  fa-stack-1x"></i>
+																	</span>
+																</p>
+															</div>
 														<?php endif; ?>
 													<?php break; ?>
 												<?php endswitch; ?>
 											<?php endif; ?>
-											<div class="card-img-overlay d-flex justify-content-center align-items-center">
-												<span class="fa-stack fa-3x card-text">
-													<i class="fas fa-square fa-inverse fa-stack-2x"></i>
-													<i class="far fa-play-circle  fa-stack-1x"></i>
-												</span>
-											</div>
 										</div>
 										</a>		
 									<?php endif; ?>										

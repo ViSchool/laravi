@@ -65,7 +65,7 @@
 								<a href="/topic/{{$privateTopic->id}}">
 									<div class="card-text d-flex align-content-between justify-content-center">
 										<h5 class="text-white text-center">{{$privateTopic->topic_title}}</h5>
-										<p class="content-badge badge-info">{{$privateTopic->content()->count()}} Inhalte</p>	
+										<p class="content-badge badge-info">{{$privateTopic->content->count()}} Inhalte</p>	
 									</div>
 								</a>	
 							</div>
@@ -91,7 +91,8 @@
 							<a href="/topic/{{$topic->id}}">
 								<div class="card-text d-flex align-content-between justify-content-center">
 									<h5 class="text-white text-center">{{$topic->topic_title}}</h5>
-									<p class="content-badge badge-primary"> {{$topic->content()->count()}} Inhalte</p>	
+										
+									<p class="content-badge badge-primary"> {{$topic->content->where('status_id',1)->count()}} Inhalte</p>	
 								</div>
 							</a>	
 						</div>

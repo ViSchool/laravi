@@ -101,7 +101,7 @@ class BlockController extends Controller
         }
         
         
-        return redirect()->route('teacher.units');
+        return redirect()->route('teacher.unit.block', ['unit'=> $unit->id]);
     }
     /**
      * Display the specified resource.

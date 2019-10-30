@@ -2,8 +2,8 @@
 
 @section ('page-header')
 <section id="page-header">
-<div class="container">
-	<h2 class="my-4 text-dark">Lerneinheiten aus der Serie "{{$serie->serie_title}}"</h2>
+<div class="d-flex justify-content-between align-items-center">
+	<h2 class="m-4 text-dark">Lerneinheiten aus der Serie "{{$serie->serie_title}}"</h2>
 </div>
 </section>
 @endsection
@@ -25,9 +25,12 @@
 							 {{$unit->unit_description}}
 							</p>
 						</div>
-						<div class="card-footer">
-      						<small class="text-muted">Zuletzt aktualisiert: {{$unit->updated_at}}</small>
-    					</div>
+						<div class="card-footer flex-column align-items-center justify-content-center">
+							<small class="text-muted">Aktualisiert: {{$unit->updated_at->diffForHumans()}}</small>
+							@if (Auth::check())
+								<a class="btn btn-primary w-100" href="/lehrer/{{Auth::user()->id}}/copy/{{$unit->id}}" title="Lerneinheit in meinen Account kopieren"><i class="far fa-copy"></i><small> Lerneinheit kopieren </small> </a>
+							@endif
+						</div>
   					
   					</div>
   					</div>

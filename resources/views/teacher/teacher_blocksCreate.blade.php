@@ -110,7 +110,7 @@
 
 
                 <div class="form-group{{ $errors->has('time') ? ' invalid' : '' }}">
-                    <label for="time" class="col-10 col-form-label">Zeit für die Aufgabe</label>
+                    <label for="time" class="col-10 col-form-label">Zeit für die Aufgabe in Minuten</label>
                     <div class="col-10">
                         <input id="time" type="number" class="form-control" name="time" value="{{ old('time') }}" required>
                         @if ($errors->has('time'))

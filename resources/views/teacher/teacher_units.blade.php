@@ -62,6 +62,7 @@
                                     @foreach ($series as $serie)
                                         <a class="dropdown-item" title="{{$serie->serie_description}}" href="/lehrer/unterrichtseinheiten/{{$unit->id}}/serie/{{$serie->id}}">{{$serie->serie_title}}</a> 
                                     @endforeach
+                                        <a class="dropdown-item" title="{{$serie->serie_description}}" href="/lehrer/unterrichtseinheiten/{{$unit->id}}/keineSerie">Gehört zu keiner Serie</a> 
                                     <button type="button" class="btn btn-link" data-toggle="modal" data-target="#serieModal_{{$unit->id}}">Neue Serie erstellen</button>     
                                 </div>
                             </div>
@@ -144,7 +145,7 @@
                                         </div>     
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
                                         <button type="sumbmit" class="btn btn-primary">Serie speichern</button>
                                     </div>
                                 </form>

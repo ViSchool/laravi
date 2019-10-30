@@ -68,9 +68,10 @@ Route::get('/lehrer/newUnitViSchool/{unit}','UnitController@teacherUnitViSchool'
 Route::delete('/lehrer/newUnitDelete/{unit}','UnitController@destroy');
 Route::get('/lehrer/unterrichtseinheiten/{unit}/aufgabe','TeacherController@create_block')->name('teacher.block.create');
 Route::get('/lehrer/unterrichtseinheiten/{unit}/serie/{serie}','UnitController@save_unit_serie')->name('teacher.unit_serie.save');
+Route::get('/lehrer/unterrichtseinheiten/{unit}/keineSerie','UnitController@save_unit_serieNull')->name('teacher.unit_serie.null');
 Route::post('/lehrer/unterrichtseinheiten/serie/erstellen', 'SerieController@teacher_store')->name('teacher.serie.create');
 Route::post('/lehrer/unterrichtseinheiten/aufgabe','BlockController@teacher_store');
-Route::get('/lehrer/unterrichtseinheiten/{unit}/aufgaben','BlockController@teacher_show');
+Route::get('/lehrer/unterrichtseinheiten/{unit}/aufgaben','BlockController@teacher_show')->name('teacher.unit.block');
 Route::get('/lehrer/unterrichtseinheiten/aufgabe/bearbeiten/{block}','BlockController@teacher_edit');
 Route::patch('/lehrer/unterrichtseinheiten/aufgabe/bearbeiten/{block}','BlockController@teacher_update');
 Route::delete('/lehrer/unterrichtseinheiten/aufgabe/löschen/{block}','BlockController@teacher_destroy');
