@@ -22,7 +22,7 @@
 
 			
 			<div class="form-group">
-				<label for="unit_title" class="col-md-6 control-label">Titel der Unterrichtseinheit:</label>
+				<label for="unit_title" class="col-md-6 col-form-label">Titel der Unterrichtseinheit:</label>
 				<div class="col-lg-10">
 					<input id="unit_title" type="text" class="form-control <?php echo e($errors->has('unit_title') ? 'invalid' : ''); ?>" name="unit_title" value="<?php echo e($unit->unit_title); ?>" required autofocus>
 					<?php if($errors->has('unit_title')): ?>
@@ -35,7 +35,7 @@
 
 
 			<div class="form-group mb-3">
-				<label for="unit_description" class="col-md-6 control-label">Kurzbeschreibung der Unterrichtseinheit:</label>
+				<label for="unit_description" class="col-md-6 col-form-label">Kurzbeschreibung der Unterrichtseinheit:</label>
 				<div class="col-lg-10">
 					<textarea class="form-control" id="unit_description" name="unit_description" aria-label="description" aria-describedby="description"><?php echo e($unit->unit_description); ?></textarea>
 					<?php if($errors->has('unit_description')): ?>

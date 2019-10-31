@@ -17,7 +17,7 @@
 				<input type="hidden" name="unit_id" value="<?php echo e($block->unit_id); ?>">
 
 				<div class="form-group">
-					<label for="title" class="col-md-6 control-label">Überschrift für die Aufgabe:</label>
+					<label for="title" class="col-md-6 col-form-label">Überschrift für die Aufgabe:</label>
 					<div class="col-lg-10">
 						<input id="title" type="text" class="form-control <?php echo e($errors->has('title') ? 'is-invalid' : ''); ?>" name="title" value="<?php echo e($block->title); ?>" required autofocus>
 						<?php if($errors->has('title')): ?>
@@ -29,7 +29,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="task" class="col-md-6 control-label">Aufgabentext:</label>
+					<label for="task" class="col-md-6 col-form-label">Aufgabentext:</label>
 					<div class="col-lg-10">
 					<textarea class="form-control mb-3 task-summernote" rows="8" id="task" name="task" aria-label="task" aria-describedby="task" autofocus><?php echo $block->task; ?></textarea>
 						<?php if($errors->has('task')): ?>
@@ -41,7 +41,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="content_id" class="col-md-6 control-label">Digitalen Inhalt aus der Datenbank auswählen:</label>
+					<label for="content_id" class="col-md-6 col-form-label">Digitalen Inhalt aus der Datenbank auswählen:</label>
 					<div class="col-lg-10">
 					<select id="content_id" name="content_id" class="form-control" autofocus>
 						<?php if(isset($content->id)): ?>
@@ -59,7 +59,7 @@
 
 				<div class="form-group">
 					<div id="choosetopic" class="d-none">
-						<label class="col-md-6 control-label" for="topi_id_dif">Inhalte aus anderen Fächern</label>
+						<label class="col-md-6 col-form-label" for="topi_id_dif">Inhalte aus anderen Fächern</label>
 						<div class="col-lg-10">
 						<select id="topic_id_dif" name="topic_id_dif" class="form-control mb-3" autofocus>
 							<option value="">Bitte anderes Thema auswählen</option>
@@ -92,7 +92,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="task" class="col-md-6 control-label">Tipp (optional):</label>
+					<label for="task" class="col-md-6 col-form-label">Tipp (optional):</label>
 					<div class="col-lg-10">
 					<textarea class="form-control mb-3" rows="3" id="tipp" name="tipp" aria-label="tipp" aria-describedby="tipp" autofocus><?php echo $block->tips; ?></textarea>
 						<?php if($errors->has('tipp')): ?>
@@ -103,8 +103,8 @@
 					</div>
 				</div>
 
-            <div class="form-group<?php echo e($errors->has('differentiation_id') ? ' has-error' : ''); ?>">
-               <label for="differentiation_id" class="col-lg-10 control-label">Differenzierung von Lernniveaus</label>
+            <div class="form-group<?php echo e($errors->has('differentiation_id') ? ' invalid' : ''); ?>">
+               <label for="differentiation_id" class="col-lg-10 col-form-label">Differenzierung von Lernniveaus</label>
                <label for="differentiation_id" class="col-lg-10 col-form-label mt-0 pt-0">
                   <small class="text-muted">Die Aufgabe kann für unterschiedliche Lernniveaus der Gruppe <span class="font-weight-bold">"<?php echo e($unit->differentiation_group); ?>"</span> differenziert werden. Wähle hier das entsprechende Niveau aus oder wähle "Alle", wenn keine Differenzierung erfolgen soll.</small>
 					</label>

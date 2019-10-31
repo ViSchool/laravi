@@ -153,7 +153,7 @@ public function store_contents(Request $request, $id)
         $content = Content::find($block->content_id);
         $allContents = Content::where('topic_id',$unit->topic_id)->get();
         $topics = Topic::where('id','!=',$unit->topic_id)->get();
-        $admin = Admin::where('id',$unit->user_id)->first();
+        $admin = Auth::guard('admin')->user();
         $teacher = User::where('email',$admin->email)->first();
         if($unit->differentiation_group == 'Standard') {
             $otherDifferentiations = Differentiation::where('differentiation_group', 'Standard')->get();
