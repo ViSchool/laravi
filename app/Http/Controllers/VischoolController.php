@@ -126,13 +126,18 @@ class VischoolController extends BaseController
 	$breadcrumbs = Breadcrumbs::addCrumb($content->content_title,'/content/'. $content->id);
 	//calculate aspect ratio for Video
 	if ($content->tool_id == 1) {
-	$video=Video::where('content_id',$content->id)->first();
-	$aspect_calc = $video->video_maxWidth/$video->video_maxHeight;
-	if($aspect_calc < 1.5) 
-	$aspect_ratio = "4by3";	
-	else (
-	$aspect_ratio = "16by9"
-	);	
+		$video=Video::where('content_id',$content->id)->first();
+		if(isset ($video)) {
+			$aspect_calc = $video->video_maxWidth/$video->video_maxHeight;
+			if($aspect_calc < 1.5) 
+				$aspect_ratio = "4by3";	
+			else (
+				$aspect_ratio = "16by9"
+			);	
+		};
+		if(empty($video)) {
+			$aspect_ratio = "16by9";
+		}
 	};
 	//get reviews
 	$reviews = Review::where('content_id',$id)->get();
