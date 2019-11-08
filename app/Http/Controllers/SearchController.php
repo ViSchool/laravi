@@ -33,19 +33,19 @@ class SearchController extends Controller
     
     public function searchContents($query) 
     {
-        $contents = Content::search($query)->get();
+        $contents = Content::search($query)->where('status_id',1)->get();
         return view('frontend.search.search_results_contents', compact('contents','query'));
     }   
 
     public function searchUnits($query) 
     {
-        $units = Unit::search($query)->get();
+        $units = Unit::search($query)->where('status_id',1)->get();
         return view('frontend.search.search_results_units', compact('units','query'));
     }  
     
     public function searchTopics($query) 
     {
-        $topics = Topic::search($query)->get();
+        $topics = Topic::search($query)->where('status_id',1)->get();
         return view('frontend.search.search_results_topics', compact('topics','query'));
     }  
 
