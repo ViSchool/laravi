@@ -15,16 +15,16 @@ class SearchController extends Controller
 {
     public function index(Request $request) 
     {
-        $contents = Content::search($request->search)->get();
+        $contents = Content::search($request->search)->where('status_id',1)->get();
         $contents3 = $contents->slice(0,3)->all();
         $contentsCount = count($contents);
-        $units = Unit::search($request->search)->get();
+        $units = Unit::search($request->search)->where('status_id',1)->get();
         $units3 = $units->slice(0,3)->all();
         $unitsCount = count($units);
-        $topics = Topic::search($request->search)->get();
+        $topics = Topic::search($request->search)->where('status_id',1)->get();
         $topics3 = $topics->slice(0,3)->all();
         $topicsCount = count($topics);
-        $series = Serie::search($request->search)->get();
+        $series = Serie::search($request->search)->where('status_id',1)->get();
         $series3 = $series->slice(0,3)->all();
         $seriesCount = count($series);
         $query = $request->search; 
