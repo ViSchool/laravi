@@ -18,13 +18,14 @@
 					<td><a href="/backend/faq/<?php echo e($faq->id); ?>"><?php echo e($faq->faq_question); ?></a></td>	
 					<td><button class="btn btn-link mb-3" type="button" title="FAQ Frage löschen" data-toggle="modal" data-target="#deleteModal_<?php echo e($faq->id); ?>"><i class="fas fa-trash"></i></button></td>
 				</tr>
+				<div class="modal fade" id="deleteModal_<?php echo e($faq->id); ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         		<?php echo $__env->make('components.deleteCheck',['typeDelete'=>'faq','id'=>$faq->id, 'title'=>$faq->faq_question], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+      		</div>
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 			</tbody>
 		</table>
 
-		<div class="modal fade" id="deleteModal_<?php echo e($faq->id); ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-         <?php echo $__env->make('components.deleteCheck',['typeDelete'=>'faq','id'=>$faq->id, 'title'=>$faq->faq_question], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-      </div>
+		
 
 		<?php echo e($faqs->links()); ?>
 

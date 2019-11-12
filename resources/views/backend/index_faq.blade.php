@@ -20,13 +20,14 @@
 					<td><a href="/backend/faq/{{$faq->id}}">{{$faq->faq_question}}</a></td>	
 					<td><button class="btn btn-link mb-3" type="button" title="FAQ Frage löschen" data-toggle="modal" data-target="#deleteModal_{{$faq->id}}"><i class="fas fa-trash"></i></button></td>
 				</tr>
+				<div class="modal fade" id="deleteModal_{{$faq->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         		@include('components.deleteCheck',['typeDelete'=>'faq','id'=>$faq->id, 'title'=>$faq->faq_question])
+      		</div>
 				@endforeach
 			</tbody>
 		</table>
 
-		<div class="modal fade" id="deleteModal_{{$faq->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-         @include('components.deleteCheck',['typeDelete'=>'faq','id'=>$faq->id, 'title'=>$faq->faq_question])
-      </div>
+		
 
 		{{$faqs->links()}}
 		
