@@ -66,6 +66,13 @@
 		         </form>
             <?php break; ?>
 
+            <?php case ('faq'): ?>
+               <form method="POST" action="/backend/faq/<?php echo e($id); ?>">
+                  <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
+			         <button class="form-control btn btn-info" type="submit"> Frage löschen</button>
+		         </form>
+            <?php break; ?>
+
             <?php default: ?>
                Default case...
          <?php endswitch; ?>

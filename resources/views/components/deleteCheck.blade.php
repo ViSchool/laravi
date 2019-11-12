@@ -66,6 +66,13 @@
 		         </form>
             @break
 
+            @case('faq')
+               <form method="POST" action="/backend/faq/{{$id}}">
+                  @csrf @method('DELETE')
+			         <button class="form-control btn btn-info" type="submit"> Frage löschen</button>
+		         </form>
+            @break
+
             @default
                Default case...
          @endswitch

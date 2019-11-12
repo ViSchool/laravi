@@ -83,7 +83,7 @@ class TopicController extends Controller
         ]);
         $topic =new Topic;
         $topic->topic_title = $request->topic_title;
-        $topic->status_id = 5;
+        $topic->status_id = 2;
         $topic->user_id = $request->user_id;
 		//Save alle data from create_topics form
         $topic->save();

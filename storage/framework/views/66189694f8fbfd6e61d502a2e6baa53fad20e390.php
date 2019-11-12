@@ -37,8 +37,8 @@
 							<?php endif; ?>
 						<?php endif; ?>
 						<?php if($topic->status_id == 1): ?>
-                			<a href="/lehrer/newTopicDelete/<?php echo e($topic->id); ?>"><i class="fas fa-trash"></i></a>
-                    	<?php endif; ?>		
+                		<a href="/lehrer/newTopicDelete/<?php echo e($topic->id); ?>"><i class="fas fa-trash"></i></a>
+                  <?php endif; ?>		
 					</td>
 				</tr>
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

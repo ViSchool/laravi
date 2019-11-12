@@ -43,6 +43,9 @@
 		<li class="nav-item">
 				<a class="nav-link" href="/backend/teacher">Lehrer</a>
 		</li>
+		<li class="nav-item">
+				<a class="nav-link" href="/backend/faq">FAQs</a>
+		</li>
 	</ul>
 				
 	<ul class="nav nav-pills flex-column">

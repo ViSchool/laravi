@@ -79,6 +79,7 @@
 				
 			<div class="d-flex flex-wrap align-content-center justify-content-center">
 				<?php $__currentLoopData = $publicTopics; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $topic): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					<?php if($topic->content->count()>0): ?>
 					<div class="card m-4 text-white" style="width:150px" >
 						<?php if($topic->updated_at->diffInDays() < 10): ?>
 							<span class="badge-danger notify-badge">Neu</span>
@@ -96,6 +97,7 @@
 							</a>	
 						</div>
 					</div>
+					<?php endif; ?>
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>	
 			</div>
 

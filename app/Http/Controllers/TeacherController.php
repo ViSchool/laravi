@@ -16,6 +16,7 @@ use App\Student;
 use App\Studentgroup;
 use App\Serie;
 use Auth;
+use App\Faq;
 
 class TeacherController extends Controller
 {
@@ -57,6 +58,14 @@ class TeacherController extends Controller
 	return view ('teacher.teacher_thanks');
     }
 
+    public function faq()
+    {
+        $faqs = Faq::all();
+        $categories = $faqs->unique('faq_category')->pluck('faq_category')->all();
+        $firstCategory = array_shift($categories);
+        $minFirstCategory = trim(preg_replace('/\s+/', '', $firstCategory));
+        return view ('teacher.faq', compact('faqs','categories','firstCategory','minFirstCategory'));
+    }
 
     public function allunits()
     {

@@ -17,7 +17,7 @@
     <h3>Deine selbst erstellten Themen</h3>
     <p>"Themen" sind die Überschriften unter denen bestimmte Inhalte und Unterrichtseinheiten zusammengefasst werden. Beispiele findest Du auf der ViSchool Seite. Wenn Dir Themen auf unserer Seite fehlen, zu denen Du gerne Inhalte anlegen möchstest, dann kannst Du sie hier erstellen und siehst auch die Übersicht der Themen, die Du bereits erstellt hast.
     </p>
-    <p>Themen, die Du erstellst, findest Du zunächst nur in Deinem privaten Bereich. Das heißt alle nur Du und die von Dir erstellten Klassenaccounts können dieses Thema sehen. Möchtest Du, dass das Thema auch auf der öffentlichen ViSchool-Seite zu sehen ist, musst Du das Thema zur Veröffentlichung von der ViSchool freigeben lassen.</p>
+    <p>Themen, die Du erstellst, findest Du zunächst nur in Deinem Lehrerbereich unter "Meine Themen". Wenn Du ein neues Thema anlegst, dann stellen wir dies nach einer kurzen Prüfung direkt für andere Lehrer auch zur Verfügung. So lange wir das Thema noch nicht komplett freigegeben haben, kannst Du es noch ändern. Das verhindert, dass zuviele gleiche Themen angelegt werden. Du findest das Thema weiterhin bei Deinen Themen, Änderungen kannst Du aber nicht mehr vornehmen. Wenn Du ein weiteres Thema benötigst, welches noch fehlt, lege einfach noch eins an.</p>
 </div>
 <div class="container">
     <table class="table table-striped">
@@ -25,7 +25,6 @@
             <tr>
                 <th scope="col">Thema bearbeiten</th>
                 <th scope="col">Fächer</th>
-                <th scope="col"> Status bearbeiten</th>
                 <th scope="col">Status</th>
                 <th scope="col">löschen</th>
             </tr>
@@ -37,14 +36,18 @@
             ?>
              <tr>   
                 <td>
-                    <button type="button" class="p-0 m-0 btn btn-link" data-toggle="modal" data-target="#editTopicModal">
-                        <?php echo e($topic->topic_title); ?>
+                     <?php if($topic->status_id != 1): ?>
+                        <button type="button" class="btn btn-link text-center" data-toggle="modal" data-target="#editTopicModal_<?php echo e($topic->id); ?>">
+                            <?php echo e($topic->topic_title); ?>
 
-                    </button>
+                        </button>
+                    <?php else: ?>
+                       <small class="btn"> <?php echo e($topic->topic_title); ?> </small>
+                    <?php endif; ?>
                 </td>
 
                     <!-- Modal Thema bearbeiten -->
-                    <div class="modal fade" id="editTopicModal" tabindex="-1" role="dialog" aria-labelledby="newTopicModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="editTopicModal_<?php echo e($topic->id); ?>" tabindex="-1" role="dialog" aria-labelledby="editTopicModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                             <form method="POST" action="/lehrer/themen/bearbeiten/<?php echo e($topic->id); ?>" enctype="multipart/form-data">
@@ -105,29 +108,12 @@
 
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </td>
-                <td>
-                    <?php switch($topic->status_id):
-                        case (1): ?>
-                        <?php break; ?>
-                        <?php case (2): ?>
-                        <?php break; ?>
-                        <?php case (3): ?>
-                            <a href="/lehrer/newTopicViSchool/<?php echo e($topic->id); ?>">    
-                                An ViSchool zur Freigabe senden
-                            </a>
-                        <?php break; ?> 
-                        <?php default: ?>
-                            <a href="/lehrer/newTopicPrivate/<?php echo e($topic->id); ?>">
-                                Privat veröffentlichen (Lehrerfreigabe)
-                            </a>
-                    <?php endswitch; ?>
-                </td>
                 <td><?php echo e($topic->status->status_name); ?></td>
                 <td class="text-center">
                     <?php if($topic->status_id != 1): ?>
                         <a href="/lehrer/newTopicDelete/<?php echo e($topic->id); ?>"><i class="fas fa-trash"></i></a>
                     <?php else: ?>
-                        Thema ist bereits veröffentlicht, löschen ist nicht mehr möglich
+                       <small> Thema ist bereits veröffentlicht, Löschen ist nicht mehr möglich </small>
                     <?php endif; ?>
                 </td>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

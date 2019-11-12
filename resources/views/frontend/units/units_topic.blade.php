@@ -26,9 +26,9 @@
 							</p>
 						</div>
 						<div class="card-footer flex-column align-items-center justify-content-center">
-							<small class="text-muted">Aktualisiert: {{$publicUnit->updated_at->diffForHumans()}}</small>
+							<small class="text-muted">Aktualisiert: {{$unit->updated_at->diffForHumans()}}</small>
 							@if (Auth::check())
-								<a class="btn btn-primary w-100" href="/lehrer/{{Auth::user()->id}}/copy/{{$publicUnit->id}}" title="Lerneinheit in meinen Account kopieren"><i class="far fa-copy"></i><small> Lerneinheit kopieren</small> </a>
+								<a class="btn btn-primary w-100" href="/lehrer/{{Auth::user()->id}}/copy/{{$unit->id}}" title="Lerneinheit in meinen Account kopieren"><i class="far fa-copy"></i><small> Lerneinheit kopieren</small> </a>
 							@endif
 						</div>
   					

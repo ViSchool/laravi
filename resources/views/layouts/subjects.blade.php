@@ -12,8 +12,9 @@
 				<div class="fa-3x">
 					<span class="fa-stack m-2">
 						<a href="/subjects/{{$subject->id}}">
-						<i class="fas fa-circle fa-stack-2x" style="color:#03c4eb;"></i>
-						<i class="fa {{$subject->subject_icon}} fa-stack-1x fa-inverse"></i></a>
+							<i class="fas fa-circle fa-stack-2x" style="color:#03c4eb;"></i>
+							<i class="fa {{$subject->subject_icon}} fa-stack-1x fa-inverse"></i>
+						</a>
 					</span>
 				</div>
 				<h4><a href="/subjects/{{$subject->id}}">{{$subject->subject_title}}</a></h4>

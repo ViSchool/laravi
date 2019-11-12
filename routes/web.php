@@ -104,6 +104,7 @@ Route::delete('/lehrer/schuelergruppe/löschen/{id}', 'StudentgroupController@de
 //nur zu Testzwecken:
 Route::get('/lehrer/schuelergruppe/pdf/{id}','StudentgroupController@show')->name('show_studentgroup_pdf');
 
+Route::get ('/lehrer/faq', 'TeacherController@faq');
 Route::get ('/lehrer/verified', 'TeacherController@verified');
 Route::get ('/lehrer/coaching', 'TeacherController@coaching');
 Route::get ('/lehrer/schulcoaching', 'TeacherController@schulcoaching');
@@ -185,6 +186,14 @@ Route::get('/blog/tag/{tag}' , 'PostController@tag_frontend')->name('blog.tag');
 Route::get('/blog/{post}' , 'PostController@show_frontend')->name('blog.show');
 Route::delete('backend/blog/{post}','PostController@destroy')->name('posts.destroy');
 Route::patch('backend/blog/{post}','PostController@update')->name('posts.update');
+
+/*Routes for FAQs */
+Route::get('/backend/faq', 'FaqController@index')->name('backend.faq.index');
+Route::get('/backend/faq/create', 'FaqController@create')->name('backend.faq.create');
+Route::post('/backend/faq', 'FaqController@store')->name('backend.faq.store');
+Route::get('/backend/faq/{faq}', 'FaqController@show')->name('backend.faq.show');
+Route::delete('backend/faq/{faq}','FaqController@destroy')->name('backend.faq.destroy');
+Route::patch('backend/faq/{faq}','FaqController@update')->name('backend.faq.update');
 
 
 /*Routes for Permissions */

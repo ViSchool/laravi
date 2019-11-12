@@ -80,23 +80,25 @@
 				
 			<div class="d-flex flex-wrap align-content-center justify-content-center">
 				@foreach ($publicTopics as $topic)
-					<div class="card m-4 text-white" style="width:150px" >
-						@if ($topic->updated_at->diffInDays() < 10)
-							<span class="badge-danger notify-badge">Neu</span>
-						@endif
-						<a href="/topic/{{$topic->id}}">
-							<img class="card-img rounded img-thumbnail" src="/images/topic_back.jpeg" alt="Card image">
-						</a>
-						<div class="card-img-overlay">
+					@if($topic->content->count()>0)
+						<div class="card m-4 text-white" style="width:150px" >
+							@if ($topic->updated_at->diffInDays() < 10)
+								<span class="badge-danger notify-badge">Neu</span>
+							@endif
 							<a href="/topic/{{$topic->id}}">
-								<div class="card-text d-flex align-content-between justify-content-center">
-									<h5 class="text-white text-center">{{$topic->topic_title}}</h5>
-										
-									<p class="content-badge badge-primary"> {{$topic->content->where('status_id',1)->count()}} Inhalte</p>	
-								</div>
-							</a>	
+								<img class="card-img rounded img-thumbnail" src="/images/topic_back.jpeg" alt="Card image">
+							</a>
+							<div class="card-img-overlay">
+								<a href="/topic/{{$topic->id}}">
+									<div class="card-text d-flex align-content-between justify-content-center">
+										<h5 class="text-white text-center">{{$topic->topic_title}}</h5>
+											
+										<p class="content-badge badge-primary"> {{$topic->content->where('status_id',1)->count()}} Inhalte</p>	
+									</div>
+								</a>	
+							</div>
 						</div>
-					</div>
+					@endif
 				@endforeach	
 			</div>
 

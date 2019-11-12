@@ -39,8 +39,8 @@
 							@endif
 						@endif
 						@if($topic->status_id == 1)
-                			<a href="/lehrer/newTopicDelete/{{$topic->id}}"><i class="fas fa-trash"></i></a>
-                    	@endif		
+                		<a href="/lehrer/newTopicDelete/{{$topic->id}}"><i class="fas fa-trash"></i></a>
+                  @endif		
 					</td>
 				</tr>
 				@endforeach

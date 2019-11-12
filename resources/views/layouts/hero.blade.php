@@ -7,29 +7,29 @@
         </ol> 
 	<div class="carousel-inner">
           <div class="carousel-item active">
-            <img class="first-slide" src="/images/banner.jpg" alt="First slide">
+            <img class="first-slide" src="/images/tafel_schwarz_banner01.jpg" alt="First slide">
             <div class="container">
               <div class="carousel-caption">
                 <h1>Lern digital!</h1>
-                <p><a class="btn btn-lg btn-primary" href="#vischool-subjects" role="button">Inhalte für Schüler</a></p>
+                <p><a class="btn btn-lg btn-blue text-white font-weight-bold" href="#vischool-subjects" role="button">Inhalte für Schüler</a></p>
               </div>
             </div>
           </div>
           <div class="carousel-item">
-            <img class="second-slide" src="/images/banner.jpg" alt="Second slide">
+            <img class="second-slide" src="/images/tafel_schwarz_banner02.jpg" alt="Second slide">
             <div class="container">
               <div class="carousel-caption">
-                <h1>Gestalte Deinen Unterricht digital!</h1>
-                <p><a class="btn btn-lg btn-primary" href="/lehrer" role="button">ViSchool für Lehrer</a></p>
+                <h1 class="text-brand-blue">Gestalte Deinen Unterricht digital!</h1>
+                <p><a class="btn btn-lg btn-blue text-white font-weight-bold" href="/lehrer" role="button">ViSchool für Lehrer</a></p>
               </div>
             </div>
           </div>
           <div class="carousel-item">
-            <img class="third-slide" src="/images/banner.jpg">
+            <img class="third-slide" src="/images/tafel_schwarz_banner03.jpg">
             <div class="container">
               <div class="carousel-caption">
                 <h1>Lerne ausgesucht gut!</h1>
-                <p><a class="btn btn-lg btn-primary" href="#vischool-subjects" role="button">Zu allen Fächern</a></p>
+                <p><a class="btn btn-lg btn-blue text-white font-weight-bold" href="#vischool-subjects" role="button">Zu allen Fächern</a></p>
               </div>
             </div>
           </div>
