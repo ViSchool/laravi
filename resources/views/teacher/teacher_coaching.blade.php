@@ -6,7 +6,7 @@
 	<div class="d-flex justify-content-between align-items-center" style="background-image:url(/images/banner_small.jpeg); height:180px;">
 		<div class="d-flex flex-column" style="max-width: 600px;">
 			<h3 class="text-brand-yellow p-5 mb-auto">Du willst digitaler unterrichten, hast aber keine Zeit oder Erfahrung?</h3>
-			<a class="mt-auto m-5 btn btn-light text-brand-blue" href="/lehrer/register_soon">Jetzt Lehrerzugang erstellen und sofort starten!</a>
+			<a class="mt-auto m-5 btn btn-light text-brand-blue" href="/register">Jetzt Lehrerzugang erstellen und sofort starten!</a>
 		</div>
 		<img class="img-fluid m-5" src="/images/vischool_ipad.png" style="height:60%; transform: rotate(15deg);";"></img>
 	</div>

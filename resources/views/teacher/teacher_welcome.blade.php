@@ -10,9 +10,9 @@
 			<div class="row ml-5">
 				<div class="col-8">
 					<h1 class="mt-3 text-info">ViSchool für Lehrer</h1>
-					<h3 class="lead text-white">Du willst digitaler unterrichten, hast aber keine Zeit oder Erfahrung? Starte mit fertigen Unterrichtseinheiten oder lass Dich von uns <a href="#coaching">kostenlos</a> zu Deinen eigenen Unterrichtsideen beraten.</h3>
+					<h3 class="lead text-white">Du willst digitaler unterrichten, hast aber keine Zeit oder Erfahrung? Starte mit fertigen Lerneinheiten oder lass Dich von uns <a href="#coaching">kostenlos</a> zu Deinen eigenen Unterrichtsideen beraten.</h3>
 					<p class="text-center">
-						<a href="/lehrer/register_soon" class="btn btn-primary my-2">Als Lehrer bei ViSchool anmelden</a>
+						<a href="/register" class="btn btn-primary my-2">Als Lehrer bei ViSchool anmelden</a>
 					</p>
 					</div>
 					
@@ -36,8 +36,8 @@
 
 
 <div class="container my-5">
-	<h2 class="text-brand-blue">Nutze fertige Unterrichtseinheiten zu vielen Themen</h2>
-	<p>Nutze die Unterrichtseinheiten, die von Lehrern bereits im Unterricht eingesetzt und erprobt wurden. Sie sind kostenlos und können sofort auch ohne Anmeldung eingesetzt werden. Willst Du die Einheiten nach Deinen Vorstellungen anpassen, musst Du Dir <a href="#">hier</a> einen ViSchool-Lehrerzugang erstellen. </p>
+	<h2 class="text-brand-blue">Nutze fertige Lerneinheiten zu vielen Themen</h2>
+	<p>Nutze die Lerneinheiten, die von Lehrern bereits im Unterricht eingesetzt und erprobt wurden. Sie sind kostenlos und können sofort auch ohne Anmeldung eingesetzt werden. Willst Du die Einheiten nach Deinen Vorstellungen anpassen, musst Du Dir <a href="#">hier</a> einen ViSchool-Lehrerzugang erstellen. </p>
 	
 
 <div class="d-flex justify-content-center my-5">
@@ -140,13 +140,13 @@
 
 
 	<div class="d-flex justify-content-center mb-3">
-	<a href="/lehrer/units">Zu den fertigen Unterrichtseinheiten für alle Fächern</a>
+	<a href="/lehrer/units">Zu den fertigen Lerneinheiten für alle Fächern</a>
 	</div>
 	<hr></hr>
 
 	<h2 class="text-brand-red">Erweitere Deinen Unterricht mit digitalen Tools und Inhalten</h2>
 	<img class="img-fluid mb-3" src="/images/unit_example.jpeg"></img>
-	<p>Du kannst selbst Unterrichtseinheiten auf Basis aller bei uns hinterlegten Inhalte erstellen. Alles digital? Nein, unsere Unterrichtseinheiten können sowohl ganz klassische Unterrichtselemente enthalten, als auch digitale, wie Videos, Quizzes und Onlineaufgaben. Fehlt Dir ein Inhalt, dann kannst Du ihn selbst hinzufügen. Melde Dich an, um diese Funktionen zu nutzen.</p>
+	<p>Du kannst selbst Lerneinheiten auf Basis aller bei uns hinterlegten Inhalte erstellen. Alles digital? Nein, unsere Lerneinheiten können sowohl ganz klassische Unterrichtselemente enthalten, als auch digitale, wie Videos, Quizzes und Onlineaufgaben. Fehlt Dir ein Inhalt, dann kannst Du ihn selbst hinzufügen. Melde Dich an, um diese Funktionen zu nutzen.</p>
 	
 	{{-- <hr></hr>
 	<h2 class="text-brand-blue">Lerne Tools kennen</h2>
@@ -172,7 +172,7 @@
 			<a href="/lehrer/coaching"><img class="card-img-top" src="/images/schueler_laptop.jpg" alt="Card image cap"></a>
 			<div class="card-body">
 				<h4 class="card-title text-brand-red">Für Lehrer</h4>
-				<p class="card-text">Du fühlst Dich noch nicht sicher genug, selbst komplette Unterrichtseinheiten zu erstellen? Kein Problem, wir coachen Dich. <a href="/lehrer/coaching">Hier</a> findest Du weitere Informationen.</p>
+				<p class="card-text">Du fühlst Dich noch nicht sicher genug, selbst komplette Lerneinheiten zu erstellen? Kein Problem, wir coachen Dich. <a href="/lehrer/coaching">Hier</a> findest Du weitere Informationen.</p>
 			</div>
 		</div>
 		<div class="card">
