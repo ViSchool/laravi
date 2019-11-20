@@ -80,7 +80,7 @@
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownLehrer">
 						@guest
 							<a class="btn btn-primary w-100 text-left" href="/login">Anmelden</a>
-							<a class="dropdown-item" href="/lehrer/register_soon">Als Lehrer registrieren</a>
+							<a class="dropdown-item" href="/register">Als Lehrer registrieren</a>
 							<a class="dropdown-item" href="/lehrer">Angebote für Lehrer</a>
 						@endguest
 						@auth
@@ -96,7 +96,7 @@
 						@hasanyrole('Lehrer (free)|Lehrer (premium)|Schüler')
 							<a class="dropdown-item" href="/lehrer/themen">Meine Themen</a>
 							<a class="dropdown-item" href="/lehrer/inhalte">Meine Inhalte</a>
-							<a class="dropdown-item" href="/lehrer/unterrichtseinheiten">Meine Lerneinheiten</a>
+							<a class="dropdown-item" href="/lehrer/lerneinheiten">Meine Lerneinheiten</a>
 						@else
 							<a class="dropdown-item disabled" href="http://">Meine Themen</a>
 							<a class="dropdown-item disabled" href="http://">Meine Inhalte</a>

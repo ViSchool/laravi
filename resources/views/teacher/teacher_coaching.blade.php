@@ -39,7 +39,7 @@
 				</ul>
 			</div>
 			<div class="card-footer bg-white border-0 d-flex justify-content-center">
-        		<button type="button" class="btn btn-primary w-100">Jetzt kostenlos registrieren</button>
+        		<a href="/register" class="btn btn-primary w-100">Jetzt kostenlos registrieren</a>
       	</div>
     	</div>
     	<div class="card mb-4 shadow-sm">
@@ -56,7 +56,7 @@
 				</ul>
 			</div>
 			<div class="card-footer bg-white border-0 d-flex justify-content-center">
-        		<button type="button" class="btn btn-primary w-100">6 Monate kostenlos testen</button>
+        		<a href="/register" class="btn btn-primary w-100">6 Monate kostenlos testen</a>
       	</div>      	
     	</div>
 	</div>
