@@ -53,7 +53,7 @@
     </div>
 
     <div class="collapse multi-collapse" id="newGroup">
-        <div class="card mt-5 mb-5" style="width: 200px">
+        <div class="card mt-5 mb-5" style="width: 300px">
         <form method="POST" action="/lehrer/{{$teacher->id}}/lernniveaus/erstellen" enctype="multipart/form-data">
                 @csrf
                     <div class="card-header">
@@ -72,23 +72,21 @@
                     </div>
                     <div class="card-body">         
                         <div class="form-group{{ $errors->has('differentiations') ? ' invalid' : '' }}">
-                            <label for="differentiations" class=" col-12 col-form-label"> <small>Zu dieser Gruppe gehören folgende Lernniveaus:</small></label>
-                            <div class="col-12">
-                                <div class="input-group">
-                                    <input id="differentiation_1" type="text" class="form-control" name="differentiation_1" placeholder="Erstes Lernniveau" required>
-                                    <input id="differentiation_2" type="text" class="form-control" name="differentiation_2" placeholder="Zweites Lernniveau" required>
-                                    <input id="differentiation_3" type="text" class="form-control" name="differentiation_3" placeholder="Drittes Lernniveau (optional)">
-                                    <input id="differentiation_4" type="text" class="form-control" name="differentiation_4" placeholder="Viertes Lernniveau (optional)">
-                                    <input id="differentiation_5" type="text" class="form-control" name="differentiation_5" placeholder="Fünftes Lernniveau (optional)">
-                                </div>
+                            <label for="differentiations" class="col-12 col-form-label"> <small>Zu dieser Gruppe gehören folgende Lernniveaus:</small></label>
+                                <ul class="list-group list-group-flush ">
+                                    <li class="list-group-item border-0 p-2"><input id="differentiation_1" type="text" class="form-control" name="differentiation_1" placeholder="Erstes Lernniveau eintragen" required></li>
+                                    <li class="list-group-item border-0 p-2"><input id="differentiation_2" type="text" class="form-control" name="differentiation_2" placeholder="Zweites Lernniveau eintragen" required></li>
+                                    <li class="list-group-item border-0 p-2"><input id="differentiation_3" type="text" class="form-control" name="differentiation_3" placeholder="Drittes Lernniveau (optional)"></li>
+                                    <li class="list-group-item border-0 p-2"><input id="differentiation_4" type="text" class="form-control" name="differentiation_4" placeholder="Viertes Lernniveau (optional)"></li>
+                                    <li class="list-group-item border-0 p-2"><input id="differentiation_5" type="text" class="form-control" name="differentiation_5" placeholder="Fünftes Lernniveau (optional)"></li>
+                                </ul>
                                 @if ($errors->has('differentiations'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('differentiation_group') }}</strong>
                                     </span>
                                 @endif
-                            </div>
-                            <div class="col-12 mb-3 mt-3">
-                                <button class="btn-sm btn-primary" type="submit"> Lernniveaus speichern</button>
+                            <div class="col-12 mb-3 mt-3 d-flex justify-content-end">
+                                <button class="btn-sm btn-primary shadow" type="submit"> Lernniveaus speichern</button>
                             </div>
                         </div> 
                     </div>
