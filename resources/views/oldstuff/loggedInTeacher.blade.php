@@ -4,10 +4,10 @@
 	<ul class="nav nav-pills">
 		<i class="fas fa-wrench fa-2x fa-pull-right fa-border" style="color:white;"></i>
 		<li class="nav-item">
-			<a class="nav-link font-weight-bold text-white" href="#">Meine Unterrichtseinheiten</a>
+			<a class="nav-link font-weight-bold text-white" href="#">Meine Lerneinheiten</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link font-weight-bold text-white" href="#">Neue Unterrichtseinheit</a>
+			<a class="nav-link font-weight-bold text-white" href="#">Neue Lerneinheit</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link font-weight-bold text-white"  href="#">Tools</a>
@@ -24,10 +24,10 @@
 			<div class="bg-secondary">
 				<ul class="nav nav-pills">
 					<li class="nav-item">
-						<a class="nav-link font-weight-bold text-white" href="#">Meine Unterrichtseinheiten</a>
+						<a class="nav-link font-weight-bold text-white" href="#">Meine Lerneinheiten</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link font-weight-bold text-white" href="#">Neue Unterrichtseinheit</a>
+						<a class="nav-link font-weight-bold text-white" href="#">Neue Lerneinheit</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link font-weight-bold text-white"  href="#">Tools</a>

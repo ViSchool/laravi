@@ -14,6 +14,7 @@ use App\Portal;
 use App\Type;
 use App\Video;
 use Youtube;
+use Session;
 
 class ContentController extends Controller
 {
@@ -457,11 +458,17 @@ class ContentController extends Controller
        				$content->img_thumb_url = $vimeodata->thumbnail_url;
        			}
        			$content->content_duration = ceil($video->video_duration/60);
-       			$content->save();
-       	}	
-       	
+					$content->save();
+					 
+			}
+			if (isset($request->instant)) {
+				$instantContent = session(['content_title' => $content->content_title, 'content_id' => $content->id]);
+				return redirect()->back()->withInput($request->session()->all());
+			}
+       	else {
        	//return to overview of contents
-        return redirect('lehrer/inhalte');
+		  return redirect()->back();
+		  }
     }
 	
 	//als privaten Inhalt veröffentlichen

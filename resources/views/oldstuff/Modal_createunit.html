@@ -4,17 +4,17 @@
 			<div class="card">
 				<div class="card-header bg-brandyellow text-dark text-center">Toolbox</div>
 				<div class="card-body bg-info text-white">
-	      			<h3 class="card-title">Selbst Unterrichtseinheiten erstellen</h3>
-	      			<p class="card-text">Hier kannst Du ohne Vorkenntnisse Unterrichtseinheiten aus digitalen und analogen Elemenenten zusammenstellen</p>
+	      			<h3 class="card-title">Selbst Lerneinheiten erstellen</h3>
+	      			<p class="card-text">Hier kannst Du ohne Vorkenntnisse Lerneinheiten aus digitalen und analogen Elemenenten zusammenstellen</p>
 				</div>
 				<div class="card-footer bg-warning text-center">
 					<!-- Button to Open the Modal -->
 					@if (Auth::check()) 
-					<button type="button" class="badge bg-light text-dark" data-toggle="modal" data-target="#unit_dialog">Eigene Unterrichtseinheit erstellen
+					<button type="button" class="badge bg-light text-dark" data-toggle="modal" data-target="#unit_dialog">Eigene Lerneinheit erstellen
 					</button>
 					
 					@else 
-					<button type="button" class="badge bg-light text-dark" data-toggle="modal" data-target="#loginfirst_dialog">Eigene Unterrichtseinheit erstellen
+					<button type="button" class="badge bg-light text-dark" data-toggle="modal" data-target="#loginfirst_dialog">Eigene Lerneinheit erstellen
 					</button>
 					
 					@endif
@@ -35,12 +35,12 @@
 		</div>
 		<div class="col">
 			<div class="card">
-				<div class="card-header border-success">Unterrichtseinheiten</div>	
+				<div class="card-header border-success">Lerneinheiten</div>	
 				<div class="card-body">
-	      			<h5 class="card-title">Fertige Unterrichtseinheiten</h5>
-	      			<p class="card-text">Hier kannst Du fertige Unterrichtseinheiten finden, die Du sofort einsetzen kannst</p>
+	      			<h5 class="card-title">Fertige Lerneinheiten</h5>
+	      			<p class="card-text">Hier kannst Du fertige Lerneinheiten finden, die Du sofort einsetzen kannst</p>
 				</div>
-				<div class="card-footer border-success">x Unterrichtseinheiten</div>
+				<div class="card-footer border-success">x Lerneinheiten</div>
 			</div>
 
 		</div>
@@ -73,7 +73,7 @@
 							
       				<!-- Modal Header -->
       					<div class="modal-header">
-        						<h4 class="modal-title">Unterrichtseinheit erstellen</h4>
+        						<h4 class="modal-title">Lerneinheit erstellen</h4>
         						<button type="button" class="close" data-dismiss="modal">&times;</button>
       					</div>
 

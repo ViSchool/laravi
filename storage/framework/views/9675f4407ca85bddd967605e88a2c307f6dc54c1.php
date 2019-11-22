@@ -19,7 +19,7 @@
                     </div>
 
                     <div class=" form-row form-group<?php echo e($errors->has('password') ? ' invalid' : ''); ?>">
-                        <label for="password" class="col-md-4 col-form-label">Password</label>
+                        <label for="password" class="col-md-4 col-form-label">Passwort</label>
                         <div class="col-md-6">
                             <input id="password" type="password" class="form-control" name="password" required>
                             <?php if($errors->has('password')): ?>

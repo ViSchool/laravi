@@ -15,4 +15,9 @@ class Block extends Model
 	{
 		return $this->belongsTo('App\Differentiation');
 	}
+
+	public function content()
+	{
+		return $this->belongsTo('App\Content');
+	}
 }

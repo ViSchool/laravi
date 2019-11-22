@@ -6,7 +6,7 @@
 @section('page-header')
 <section id="page-header">
     <div class="container p-3">
-        <h4>Eine neue Unterrichtseinheit erstellen</h4>
+        <h4>Eine neue lerneinheit erstellen</h4>
     </div>
 </section> 
 @endsection
@@ -14,7 +14,7 @@
 @section('content')
 
 <div class="container mt-3">
-    <form method="POST" action="/lehrer/unterrichtseinheiten" enctype="multipart/form-data">
+    <form method="POST" action="/lehrer/lerneinheiten" enctype="multipart/form-data">
     @csrf 
         <input type="hidden" value="{{$teacher->id}}" name="user_id">
         <input 
@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="form-group{{ $errors->has('subject_id') ? ' invalid' : '' }}">
-                    <label for="topic_id" class="col-10 col-form-label">Die Unterrichtseinheit gehört zu folgendem Fach</label>
+                    <label for="topic_id" class="col-10 col-form-label">Die Lerneinheit gehört zu folgendem Fach</label>
                     <div class="col-10">
                         <select class="form-control" id="subject_id" name="subject_id">
 				            @if((old('subject_id')) !== null)
@@ -86,7 +86,7 @@
                 </div>
                         
                 <div class="form-group{{ $errors->has('topic_id') ? ' invalid' : '' }}">
-                    <label for="topic_id" class="col-10 col-form-label">Die Unterrichtseinheit gehört zu folgendem Thema</label>
+                    <label for="topic_id" class="col-10 col-form-label">Die Lerneinheit gehört zu folgendem Thema</label>
                     <div class="col-10">
                         <select class="form-control" id="topic_id" name="topic_id">
                             @if((old('topic_id')) !== null)
@@ -117,7 +117,7 @@
                 <div class="form-group{{ $errors->has('differentiation_group') ? ' invalid' : '' }}">
                     <label for="differentiation_id" class="col-10 col-form-label">Differenzierung von Lernniveaus</label>
                     <label for="differentiation_id" class="col-10 col-form-label mt-0 pt-0">
-                        <small class="text-muted">Wenn die Aufgabe nur von bestimmten Schülern bearbeitet werden soll, dann wähle hier die Gruppe von Lernniveaus aus, die Du für diese Unterrichtseinheit benutzen möchtest. Ansonsten wähle "Keine Differenzierung".</small>
+                        <small class="text-muted">Wenn die Aufgabe nur von bestimmten Schülern bearbeitet werden soll, dann wähle hier die Gruppe von Lernniveaus aus, die Du für diese Lerneinheit benutzen möchtest. Ansonsten wähle "Keine Differenzierung".</small>
                     </label>
                     <div class="col-10">
                         <select class="form-control" name="differentiation_group" id="differentiation_group">
@@ -137,7 +137,7 @@
             </div>
 
             <div class="card-footer d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary">Unterrichtseinheit anlegen</button> 
+                <button type="submit" class="btn btn-primary">Lerneinheit anlegen</button> 
             </div>
         </div>
     </form>       

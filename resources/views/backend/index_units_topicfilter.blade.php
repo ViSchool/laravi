@@ -3,13 +3,13 @@
 @section('main')
 <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3"> 
 	<div class="container">
-		<h2>Unterrichtseinheiten administrieren</h2>
+		<h2>Lerneinheiten administrieren</h2>
 		<a class="btn btn-primary"href="/backend/units">Alle anzeigen</a>
 	</div>
 
 	<div class="container">
 		<div class="my-4">
-			<p>Unterrichtseinheiten für das Fach 
+			<p>Lerneinheiten für das Fach 
 				<a class="btn-sm btn-primary" href="/backend/units/subjectfilter/{{$currentSubject->id}}">{{$currentSubject->subject_title}}
 				</a>
 			</p>	
@@ -22,7 +22,7 @@
 		<table class="table table-hover table-sm">
 			<thead>
 				<tr>
-					<th>Titel der Unterrichtseinheit</th>
+					<th>Titel der Lerneinheit</th>
 					<th>Thema</th>
 					<th>Fach</th>
 					<th>dazugehörige Serie</th>
@@ -46,7 +46,7 @@
 		</table>
 		<ul class="pagination">{{$units->links()}}</ul>
 		<hr></hr>
-	<a class="btn btn-primary" href="/backend/units/create">Neue Unterrichtseinheit erstellen</a>
+	<a class="btn btn-primary" href="/backend/units/create">Neue Lerneinheit erstellen</a>
 	
 </div>
 @endsection

@@ -3,7 +3,7 @@
 @section('main')
 
     <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-          <h4>Neue Serie mit Unterrichtseinheiten anlegen</h4>
+          <h4>Neue Serie mit Lerneinheiten anlegen</h4>
 
 <div class="container">	
 	@include('layouts.errors')

@@ -50,7 +50,6 @@
     </div>
     <div class="card-footer bg-success text-white d-flex justify-content-between">
         <label for="chooseContent-<?php echo e($content->id); ?>"><small>Diesen Inhalt auswählen: </small></label>
-        
         <input class="form-check-input position-static" type="radio" name="chooseContent" id="chooseContent-<?php echo e($content->id); ?>" value="<?php echo e($content->id); ?>">
     </div>
 </div>

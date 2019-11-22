@@ -13,7 +13,7 @@
 
 
 <div class="container mt-3">
-    <p>Lernniveaus bieten die Möglichkeit innerhalb einer Unterrichtseinheit einzelne Aufgaben zu differenzieren. Damit kannst Du eine Binnendifferenzierung für Deine Schüler realisieren. Die Namen für die einzelnen Lernniveaus sind jeweils in Gruppen angelegt und Du kannst für Deine Lernniveaus genau die Namen benutzen, die Ihr an Eurer Schule dafür vereinbart habt.</p>
+    <p>Lernniveaus bieten die Möglichkeit innerhalb einer Lerneinheit einzelne Aufgaben zu differenzieren. Damit kannst Du eine Binnendifferenzierung für Deine Schüler realisieren. Die Namen für die einzelnen Lernniveaus sind jeweils in Gruppen angelegt und Du kannst für Deine Lernniveaus genau die Namen benutzen, die Ihr an Eurer Schule dafür vereinbart habt.</p>
     
     <a href="/lehrer/<?php echo e($teacher->id); ?>/"></a>
 

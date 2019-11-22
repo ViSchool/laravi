@@ -1,7 +1,7 @@
 <?php $__env->startSection('main'); ?>
 
     <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-          <h4>Neue Serie mit Unterrichtseinheiten anlegen</h4>
+          <h4>Neue Serie mit Lerneinheiten anlegen</h4>
 
 <div class="container">	
 	<?php echo $__env->make('layouts.errors', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

@@ -4,7 +4,7 @@
 <!-- delete where not necessary -->
 <section id="page-header">
 	<div class="container-fluid ml-4 p-4">
-		<h4>Unterrichtseinheit: {{$unit->unit_title}}</h4>
+		<h4>Lerneinheit: {{$unit->unit_title}}</h4>
 	</div>
 </section>
 @endsection

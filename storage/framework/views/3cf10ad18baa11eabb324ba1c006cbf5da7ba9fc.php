@@ -15,12 +15,12 @@
 
 <div class="container mt-3">
     <h3>Deine selbst erstellten Lerneinheiten</h3>
-    <p>"Lerneinheiten" sind fertige Unterrichtsblöcke, die Schüler selbständig benutzen und bearbeiten können. Du kannst sie im Unterricht einsetzen, aber auch als Hausaufgabe oder für das selbständige Lernen. Wenn Du verschiedene Lerneinheiten zusammenfassen willst, kannst Du sie einer Serie zuordnen. Dann können Schüler nacheinander die einzelnen Unterrichtseinheiten bearbeiten. 
+    <p>"Lerneinheiten" sind fertige Unterrichtsblöcke, die Schüler selbständig benutzen und bearbeiten können. Du kannst sie im Unterricht einsetzen, aber auch als Hausaufgabe oder für das selbständige Lernen. Wenn Du verschiedene Lerneinheiten zusammenfassen willst, kannst Du sie einer Serie zuordnen. Dann können Schüler nacheinander die einzelnen Lerneinheiten bearbeiten. 
     </p>
-    <p>Lerneinheiten, die Du erstellst, findest Du zunächst nur in Deinem privaten Bereich. Das heißt nur Du und die von Dir erstellten Klassenaccounts können diesen Inhalt sehen. Möchtest Du, dass der Inhalt auch auf der öffentlichen ViSchool-Seite zu sehen ist, musst Du die Lerneinheit zur Veröffentlichung von der ViSchool freigeben lassen. Auch vor der Freigabe kannst Du die Unterrichtseinheit in Deinem Unterricht einsetzen. Unterrichtseinheiten, die einen nicht von der ViSchool freigegebenen Inhalte enthalten, können auch nur in Deinem privaten Bereich angezeigt werden.</p>
+    <p>Lerneinheiten, die Du erstellst, findest Du zunächst nur in Deinem privaten Bereich. Das heißt nur Du und die von Dir erstellten Klassenaccounts können diesen Inhalt sehen. Möchtest Du, dass der Inhalt auch auf der öffentlichen ViSchool-Seite zu sehen ist, musst Du die Lerneinheit zur Veröffentlichung von der ViSchool freigeben lassen. Auch vor der Freigabe kannst Du die Lerneinheit in Deinem Unterricht einsetzen. Lerneinheiten, die einen nicht von der ViSchool freigegebenen Inhalte enthalten, können auch nur in Deinem privaten Bereich angezeigt werden.</p>
 </div>
 <div class="container">
-    <a class="btn btn-primary form-control" href="/lehrer/unterrichtseinheiten/erstellen">Eine neue Lerneinheit erstellen</a>
+    <a class="btn btn-primary form-control" href="/lehrer/lerneinheiten/erstellen">Eine neue Lerneinheit erstellen</a>
 </div>
 
 <!--Anzeige der Inhalte-->
@@ -58,9 +58,9 @@
                                 <?php endif; ?>
                                 <div class="dropdown-menu mb-3" aria-labelledby="dropdownSerieButton" id="serie">
                                     <?php $__currentLoopData = $series; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $serie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <a class="dropdown-item" title="<?php echo e($serie->serie_description); ?>" href="/lehrer/unterrichtseinheiten/<?php echo e($unit->id); ?>/serie/<?php echo e($serie->id); ?>"><?php echo e($serie->serie_title); ?></a> 
+                                        <a class="dropdown-item" title="<?php echo e($serie->serie_description); ?>" href="/lehrer/lerneinheiten/<?php echo e($unit->id); ?>/serie/<?php echo e($serie->id); ?>"><?php echo e($serie->serie_title); ?></a> 
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        <a class="dropdown-item"  href="/lehrer/unterrichtseinheiten/<?php echo e($unit->id); ?>/keineSerie">Gehört zu keiner Serie</a> 
+                                        <a class="dropdown-item"  href="/lehrer/lerneinheiten/<?php echo e($unit->id); ?>/keineSerie">Gehört zu keiner Serie</a> 
                                     <button type="button" class="btn btn-link" data-toggle="modal" data-target="#serieModal_<?php echo e($unit->id); ?>">Neue Serie erstellen</button>     
                                 </div>
                             </div>
@@ -83,12 +83,12 @@
                                     <?php endswitch; ?>
 
                                     <?php if($unit->status_id == 5): ?>
-                                        <a class="dropdown-item" title="Lerneinheit bearbeiten" href="/lehrer/unterrichtseinheiten/bearbeiten/<?php echo e($unit->id); ?>"><i class="far fa-edit"></i> Lerneinheit bearbeiten</a>
+                                        <a class="dropdown-item" title="Lerneinheit bearbeiten" href="/lehrer/lerneinheiten/bearbeiten/<?php echo e($unit->id); ?>"><i class="far fa-edit"></i> Lerneinheit bearbeiten</a>
                                     <?php endif; ?>
                                     <button class="disabled dropdown-item" type="button" title="Eine Vorschau der Lerneinheit einblenden" data-toggle="modal" data-target="#previewModal"><i class="fas fa-glasses"></i> Vorschau</button>
                                     <?php if($unit->status_id > 2): ?>
-                                    <a class="dropdown-item" title="Aufgabe hinzufügen" href="/lehrer/unterrichtseinheiten/<?php echo e($unit->id); ?>/aufgabe"><i class="far fa-plus-square"></i> Aufgabe hinzufügen</a>
-                                    <a class="dropdown-item" title="Aufgabe hinzufügen" href="/lehrer/unterrichtseinheiten/<?php echo e($unit->id); ?>/aufgaben"><i class="far fa-edit"></i> Aufgabe(n) bearbeiten</a>
+                                    <a class="dropdown-item" title="Aufgabe hinzufügen" href="/lehrer/lerneinheiten/<?php echo e($unit->id); ?>/aufgabe"><i class="far fa-plus-square"></i> Aufgabe hinzufügen</a>
+                                    <a class="dropdown-item" title="Aufgabe hinzufügen" href="/lehrer/lerneinheiten/<?php echo e($unit->id); ?>/aufgaben"><i class="far fa-edit"></i> Aufgabe(n) bearbeiten</a>
                                     <button class="dropdown-item mb-3" type="button" title="Lerneinheit löschen" data-toggle="modal" data-target="#deleteModal_<?php echo e($unit->id); ?>"><i class="fas fa-trash"></i> Lerneinheit komplett löschen</button>
                                         
                                     <?php endif; ?>
@@ -114,7 +114,7 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form method="POST" action="unterrichtseinheiten/serie/erstellen">
+                                <form method="POST" action="lerneinheiten/serie/erstellen">
                                     <?php echo csrf_field(); ?>
                                     <div class="modal-body">
                                         <input type="hidden" id="unit_id" name="unit_id" value="<?php echo e($unit->id); ?>">

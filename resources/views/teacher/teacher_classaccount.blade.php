@@ -96,7 +96,7 @@
                         </div>
 
                         {{-- <div class="form-group{{ $errors->has('units') ? ' invalid' : '' }}">
-                            <label for="units" class="col-md-4 col-form-label">Zugang auf bestimmte Unterrichtseinheiten beschränken</label>
+                            <label for="units" class="col-md-4 col-form-label">Zugang auf bestimmte Lerneinheiten beschränken</label>
                              <div class="col-10">
                                 <select class="form-control select2-multi" name="units[]" id="units" multiple="multiple">
                                     @foreach ($privateunits as $privateunit)

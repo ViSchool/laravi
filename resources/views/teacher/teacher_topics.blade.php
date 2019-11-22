@@ -17,12 +17,12 @@
 
 <div class="container mt-3">
     <h3>Deine selbst erstellten Themen</h3>
-    <p>"Themen" sind die Überschriften unter denen bestimmte Inhalte und Unterrichtseinheiten zusammengefasst werden. Beispiele findest Du auf der ViSchool Seite. Wenn Dir Themen auf unserer Seite fehlen, zu denen Du gerne Inhalte anlegen möchstest, dann kannst Du sie hier erstellen und siehst auch die Übersicht der Themen, die Du bereits erstellt hast.
+    <p>"Themen" sind die Überschriften unter denen bestimmte Inhalte und Lerneinheiten zusammengefasst werden. Beispiele findest Du auf der ViSchool Seite. Wenn Dir Themen auf unserer Seite fehlen, zu denen Du gerne Inhalte anlegen möchstest, dann kannst Du sie hier erstellen und siehst auch die Übersicht der Themen, die Du bereits erstellt hast.
     </p>
     <p>Themen, die Du erstellst, findest Du zunächst nur in Deinem Lehrerbereich unter "Meine Themen". Wenn Du ein neues Thema anlegst, dann stellen wir dies nach einer kurzen Prüfung direkt für andere Lehrer auch zur Verfügung. So lange wir das Thema noch nicht komplett freigegeben haben, kannst Du es noch ändern. Das verhindert, dass zuviele gleiche Themen angelegt werden. Du findest das Thema weiterhin bei Deinen Themen, Änderungen kannst Du aber nicht mehr vornehmen. Wenn Du ein weiteres Thema benötigst, welches noch fehlt, lege einfach noch eins an.</p>
 </div>
 <div class="container">
-    <table class="table table-striped">
+    <table class="table table-responsive-sm table-striped">
         <thead class="table-primary">
             <tr>
                 <th scope="col">Thema bearbeiten</th>
@@ -153,18 +153,18 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('subject_id') ? ' invalid' : '' }}">
+                        <div class="form-group{{ $errors->has('subjects') ? ' invalid' : '' }}">
 		                    <label for="subjects" class="col-6 col-form-label">Fach/Fächer auswählen:</label>
                                 <div class="card">
 				                    <div style="column-count: 3">
 					                    @foreach ($subjects as $subject)	
 						                    <div class="form-check">
-							                    <input type="checkbox" class="form-check-input mt-2" id="{{$subject->id}}" value="{{$subject->id}}" name="subjects[]">
+							                    <input type="checkbox" class="form-check-input mt-2" id="{{$subject->id}}" value="{{$subject->id}}" name="subjects[]" required>
 							                    <label class="font-weight-normal form-check-label ml-4" for="">{{$subject->subject_title}}</label>
                                             </div>
-                                            @if ($errors->has('subject_id'))
+                                            @if ($errors->has('subjects'))
                                                 <span class="help-block">
-                                                    <strong>{{ $errors->first('subject_id') }}</strong>
+                                                    <strong>{{ $errors->first('subjects') }}</strong>
                                                 </span>
                                             @endif
 					                    @endforeach

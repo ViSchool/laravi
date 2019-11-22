@@ -141,11 +141,11 @@
             <hr>
             <h3 class="mt-3 mb-5">Statistik</h3>
             <div class="row d-flex align-items-center mb-3">
-                <label for="units" class="col-7">alle Unterrichtseinheiten:</label>
+                <label for="units" class="col-7">alle Lerneinheiten:</label>
                 <input id="units" type="number" class="col-2 text-center"  value="{{$teacher->units->count()}}" readonly>
             </div>
             <div class="row d-flex align-items-center mb-3">
-                <p class="col-7">davon private Unterrichtseinheiten:</p>
+                <p class="col-7">davon private Lerneinheiten:</p>
                 <input id="units" type="number" class="col-2 text-center"  value="{{$teacher->units->where('status_id', 3)->count()}}" readonly>
             </div>
             <div class="row d-flex align-items-center mb-3">

@@ -1,6 +1,6 @@
 <?php $__env->startSection('main'); ?>
     <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-          <h2>Neue Unterrichtseinheit anlegen</h2>
+          <h2>Neue Lerneinheit anlegen</h2>
           <hr></hr>
 
 <div class="container">

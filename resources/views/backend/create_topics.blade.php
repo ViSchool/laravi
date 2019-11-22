@@ -20,8 +20,8 @@
 				<div style="column-count: 3">
 					@foreach ($subjects as $subject)	
 						<div class="form-check mx-2">
-							<input type="checkbox" class="form-check-input" id="{{$subject->id}}" value="{{$subject->id}}" name="subjects[]">
-							<label class="form-check-label" for="">{{$subject->subject_title}}</label>
+							<input type="checkbox" class="form-check-input" id="{{$subject->id}}" value="{{$subject->id}}" name="subjects[]" required>
+							<label class="form-check-label" for="subjects">{{$subject->subject_title}}</label>
 						</div>
 					@endforeach
 				</div>

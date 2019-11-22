@@ -38,7 +38,7 @@
 			</div>
 		</div>
 		<div class="d-flex flex-row-reverse">
-		<button class="btn btn-primary my-5" type="submit">Tipp speichern und zurück zur Unterrichtseinheit</button>
+		<button class="btn btn-primary my-5" type="submit">Tipp speichern und zurück zur Lerneinheit</button>
 		</div>
 	</form>
 </div>

@@ -54,7 +54,7 @@
 												<p class="small text-center">Status: <?php echo e($privateSerie->status->status_name); ?> </p>
 											</div>
 											<div class="footer-flip">
-												<p class="small"><?php echo e($privateSerie->units_count); ?> Unterrichtseinheiten</p>
+												<p class="small"><?php echo e($privateSerie->units_count); ?> Lerneinheiten</p>
 												<button class="btn btn-simple" onclick="rotateCard(this)">
 														<i class="fa fa-mail-forward"></i> Mehr erfahren
 												</button>
@@ -212,7 +212,7 @@
 												<a href="/lerneinheiten/serie/<?php echo e($publicSerieUnit->serie_id); ?>"><h3 class="name-flip"><?php echo e($publicSerie->serie_title); ?></h3></a>	
 											</div>
 											<div class="footer-flip">
-												<p class="small"><?php echo e($publicSerie->units_count); ?> Unterrichtseinheiten</p>
+												<p class="small"><?php echo e($publicSerie->units_count); ?> Lerneinheiten</p>
 												<button class="btn btn-simple" onclick="rotateCard(this)">
 														<i class="fa fa-mail-forward"></i> Mehr erfahren
 												</button>

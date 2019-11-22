@@ -13,7 +13,7 @@
 
 	<div class="card m-3">
 		<div class="card-header bg-warning">
-			<h5>Aufgabe für die Unterrichtseinheit "<?php echo e($unit->unit_title); ?>" anlegen</h5>
+			<h5>Aufgabe für die Lerneinheit "<?php echo e($unit->unit_title); ?>" anlegen</h5>
 		</div>
 		<div>
 			<form class="my-3" method="POST" action="/backend/blocks" enctype="multipart/form-data">

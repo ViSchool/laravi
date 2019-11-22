@@ -48,8 +48,9 @@ class TopicController extends Controller
     {
 		$this->validate(request(), [
         'topic_title' => 'required',
-        
+        'subjects' => 'required',
         ]);
+
         $topic =new Topic;
         $topic->topic_title = $request->topic_title;
         $user = Admin::find($request->admin_id);
@@ -79,8 +80,9 @@ class TopicController extends Controller
 		$this->validate(request(), [
         'topic_title' => 'required|max:255|unique:topics,topic_title',
         'user_id' => 'required|numeric',
-        
+        'subjects' => 'required',
         ]);
+
         $topic =new Topic;
         $topic->topic_title = $request->topic_title;
         $topic->status_id = 2;
@@ -160,6 +162,7 @@ class TopicController extends Controller
     {
         $this->validate(request(), [
         'topic_title' => 'required',
+        'subjects' => 'required',
         ]);
         
         $topic = Topic::findOrFail($id);
@@ -178,6 +181,7 @@ class TopicController extends Controller
     {
         $this->validate(request(), [
         'topic_title' => 'required',
+        'subjects' => 'required',
         ]);
         
         $topic = Topic::findOrFail($id);

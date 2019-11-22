@@ -7,7 +7,7 @@
 
 @section('main')
     <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-          <h2>Neue Aufgabe für die Unterrichtseinheit <a href="/backend/units/{{$unit->id}}">"{{$unit->unit_title}}"</a> anlegen</h2>
+          <h2>Neue Aufgabe für die Lerneinheit <a href="/backend/units/{{$unit->id}}">"{{$unit->unit_title}}"</a> anlegen</h2>
           <h5>Schritt 1 von 4 - Überschrift für die Aufgabe</h5>
           <hr></hr>
 

@@ -46,11 +46,11 @@
 
 <hr></hr>
 <div class = "container">
-<h4>Unterrichtseinheiten zur Serie {{$serie->serie_title}}</h4>
+<h4>Lerneinheiten zur Serie {{$serie->serie_title}}</h4>
 		<table class="table">
 			<thead>
 				<tr>
-					<th>Name der Unterrichtseinheiten</th>
+					<th>Name der Lerneinheiten</th>
 					<th>Anzahl der Aufgaben in der Einheit</th>
 				</tr>
 			</thead>

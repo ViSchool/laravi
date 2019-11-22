@@ -58,6 +58,7 @@ class AppController extends Controller
     public function getChosenContent($id) 
      {
         $content = Content::where('id',$id)->pluck('content_title');
+        session()->forget('content_title');
         return json_encode($content);
     }
 
@@ -68,6 +69,12 @@ class AppController extends Controller
             ->whereIn('user_id', [$teacher_id, 23])
             ->pluck('id','differentiation_title');
         return json_encode($differentiations);
+    }
+
+    public function removeContentfromSession() 
+    {
+        session()->forget(['content_title','content_id']);
+        return back();
     }
 }
 

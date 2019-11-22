@@ -32,7 +32,7 @@
 				<div class="card-img-overlay">
 					<h2 class="card-text text-info">{{$nrUnits}}</h2>
 				</div>
-				<p class="mt-4">Unterrichtseinheiten</p>
+				<p class="mt-4">Lerneinheiten</p>
 			</div>
 		</section>
 		</div>

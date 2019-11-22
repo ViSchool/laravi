@@ -5,7 +5,7 @@
 <?php $__env->startSection('page-header'); ?>
 <section id="page-header">
     <div class="container p-3">
-        <h4>Neue Aufgabe zur Unterrichtseinheit "<?php echo e($unit->unit_title); ?>" hinzufügen</h4>
+        <h4>Neue Aufgabe zur Lerneinheit "<?php echo e($unit->unit_title); ?>" hinzufügen</h4>
     </div>
 </section> 
 <?php $__env->stopSection(); ?>
@@ -13,7 +13,7 @@
 <?php $__env->startSection('content'); ?>
 
 <div class="container mt-3">
-    <form method="POST" action="/lehrer/unterrichtseinheiten/aufgabe" enctype="multipart/form-data">
+    <form method="POST" action="/lehrer/lerneinheiten/aufgabe" enctype="multipart/form-data">
     <?php echo csrf_field(); ?> 
         <input type="hidden" value="<?php echo e($unit->id); ?>" name="unit_id">
         <input type="hidden" value="<?php echo e($teacher->id); ?>" name="user_id">
@@ -64,18 +64,49 @@
                     <label for="content_id_button" class="col-10 col-form-label mt-0 pt-0">
                         <small class="text-muted"> Wenn Du der Aufgabe einen digitalen Inhalt hinzufügen willst, such Dir über den Button einen Inhalt aus.</small>
                     </label>
-                    <div class="col-10 d-flex justify-content-start">
-                        <textarea readonly style="font-size: 80%;" class="col-7 mr-3" id="content_title" name="content_title" placeholder="Du hast noch keinen Inhalt ausgesucht"></textarea>
-                        <input type="hidden" id="content_id" name="content_id">
-                        <button  id="content_id_button" type="button" class=" btn-sm btn-primary form-control" data-toggle="modal" data-target="#chooseContentModal">
-                            Inhalt aussuchen
-                        </button>
+                    <div class="col-10 d-flex justify-content-start align-items-center">
+                        
+                        
+                        <?php if(Session::has('content_title')): ?>
+                            <div class="card bg-secondary mr-3" style="width: 150px;"> 
+                                <div class="card-body text-white text-center">
+                                   <small id="content_title"> <?php echo e(Session::get('content_title')); ?> </small>
+                                </div>
+                            </div>
+                            <input type="hidden" id="content_id" name="content_id" value="<?php echo e(Session::get('content_id')); ?>">
+                            <div>
+                                <button  id="content_id_button" type="button" class="my-2 btn-sm btn-primary form-control" data-toggle="modal" data-target="#chooseContentModal">
+                                    Inhalt aussuchen
+                                </button>
+                                <button  id="deleteContent" type="button" class="my-2 btn-sm btn-warning form-control">
+                                    Keinen Inhalt verwenden
+                                </button>
+                            </div>
+                        
+                        <?php else: ?>
+                            <?php
+                                session()->forget(['content_title','content_id']);
+                            ?>
+                            <div class="card bg-secondary mr-3" style="width: 150px;"> 
+                                <div class="card-body text-white text-center">
+                                   <small id="content_title"> Du hast noch keinen Inhalt ausgesucht. </small>
+                                </div>
+                            </div>
+                            <div>
+                                <button  id="content_id_button" type="button" class="my-2 btn-sm btn-primary form-control" data-toggle="modal" data-target="#chooseContentModal">
+                                    Inhalt aussuchen
+                                </button>
+                                <input type="hidden" id="content_id" name="content_id" value="">
+                                
+                                <button  id="deleteContent" type="button" class="d-none my-2 btn-sm btn-warning form-control ">
+                                    Keinen Inhalt verwenden
+                                </button>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                <div id="chosenContent" class="form-group">
-                </div>
-
+                
                 <div class="modal fade" id="chooseContentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
                         <div class="modal-content">
@@ -98,7 +129,8 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
                             </div>
-                            <div class="modal-footer">
+                            <div class="modal-footer d-flex">
+                                <button data-toggle="modal" data-dismiss="modal" data-target="#newInstantContentModal" id="newInstantContentModalCreate" type="button" class="btn btn-warning mr-auto">Neuer Inhalt</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
                                 <button data-toggle="modal" data-target="#chooseContentModal" id="chooseContentModalSave" type="button" class="btn btn-primary">Speichern</button>
                             </div>
@@ -168,7 +200,7 @@
             </div>            
                 
             <div class="card-footer d-flex justify-content-between">
-                <a href="/lehrer/unterrichtseinheiten" class="btn btn-outline-danger">Abbrechen</a>
+                <a href="/lehrer/lerneinheiten" class="btn btn-outline-danger">Abbrechen</a>
                 <button type="submit" class="btn btn-primary">Aufgabe speichern</button> 
             </div>
         </div>
@@ -176,35 +208,45 @@
 </div>    
 
 
+<?php echo $__env->make('teacher.teacher_components.newInstantContentModal',['tools'=>$tools,'subject_id'=>$unit->subject->id,'topic_id'=>$unit->topic->id], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
-
 <script src="<?php echo e(asset('js/ddd_subject_topic.js')); ?>"></script>
+<script src="<?php echo e(asset('js/unit_choose_existing_content.js')); ?>"></script>
+<script src="<?php echo e(asset('js/unit_choose_new_content.js')); ?>"></script>
+
 <script>
-    $('#chooseContentModal').ready(function() {
-        $('#chooseContentModalSave').click(function(){
-            var radios = $('input[name=chooseContent]');
-            for (var i=0, length = radios.length; i< length; i++)
-            {
-                if (radios[i].checked) 
-                {
-                    var contentIdBack = radios[i].value;
-                    break;
-                }
-            }
-            if(contentIdBack) {
-                $.ajax({
-                url: '/chosencontent/get/'+contentIdBack,
+//wenn Button "Keinen Inhalt verwenden" gedrückt wird dann
+$('#deleteContent').click(function() { 
+     //wenn ein neuer Inhalt eingestellt war
+     var content_id = document.getElementById('content_id');
+     if(content_id.value !== "") {
+        $.ajax({
+                url: '/removeContentfromSession',
                 type:"GET",
-                dataType:"json",
-                success:function(data) {
-                        $('#content_title').val(data);
+                success:function() {
+                        var deleteButton = document.getElementById('deleteContent');
+                        deleteButton.classList.add("d-none");
                         },
-                });
-            };
         });
+     }
+     //wenn ein vorhandener Inhalt eingestellt war
+     // Radio Button Auswahl wieder entfernen
+    var radios = document.getElementsByName('chooseContent');
+        for (var i=0, length = radios.length; i< length; i++) {
+            if (radios[i].checked) {
+                radios[i].checked = false;
+                break;
+            }
+        }
+    //im div mit der id "contentTitle" wieder einblenden Du hast noch keinen Inhalt ausgesucht
+    var content = document.getElementById('content_title');
+    content.innerHTML = 'Du hast noch keinen Inhalt ausgesucht.';
+    //Button zum Entfernen des Inhalts wieder ausblenden - Klasse "d-none" hinzufügen
+    var deleteButton = document.getElementById('deleteContent');
+    deleteButton.classList.add("d-none");
     });
 </script>
 

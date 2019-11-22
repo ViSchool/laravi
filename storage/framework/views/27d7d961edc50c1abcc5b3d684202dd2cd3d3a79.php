@@ -116,11 +116,11 @@
 
 <section id="search_results_units">
 <?php if($unitsCount == 0): ?>
-	<div class="container py-3">Es gibt keine Unterrichtseinheiten zu Deinem Suchbegriff.</div>
+	<div class="container py-3">Es gibt keine Lerneinheiten zu Deinem Suchbegriff.</div>
 <?php endif; ?>
 <?php if($unitsCount > 0): ?>
 	<div class="container my-4">
-		<p> Wir haben <a href="/suche/units/<?php echo e($query); ?>"><?php echo e($unitsCount); ?> Unterrichtseinheiten</a> gefunden:</p>
+		<p> Wir haben <a href="/suche/units/<?php echo e($query); ?>"><?php echo e($unitsCount); ?> Lerneinheiten</a> gefunden:</p>
 		<div class="row justify-content-start">
 			<?php $__currentLoopData = $units3; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 				<div class="col">

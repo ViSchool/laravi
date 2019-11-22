@@ -6,7 +6,7 @@
 @section('page-header')
 <section id="page-header">
     <div class="container p-3">
-    <h4>Aufgaben zur Unterrichtseinheit "{{$unit->unit_title}}"</h4>
+    <h4>Aufgaben zur Lerneinheit "{{$unit->unit_title}}"</h4>
     </div>
 </section> 
 @endsection
@@ -20,7 +20,7 @@
     <p>Klicke auf die einzelnen Aufgaben, um sie zu ändern oder füge eine neue Aufgabe ein.</p>
 </div>
 <div class="container">
-    <a class="btn btn-primary form-control" href="/lehrer/unterrichtseinheiten/{{$unit->id}}/aufgabe">Eine neue Aufgabe einfügen</a>
+    <a class="btn btn-primary form-control" href="/lehrer/lerneinheiten/{{$unit->id}}/aufgabe">Eine neue Aufgabe einfügen</a>
 </div>
 
 <!--Anzeige der Inhalte-->
@@ -74,7 +74,7 @@
                         @if ($alternative == 1)
                             <i class="mr-3 fas fa-exchange-alt" style="color:orange;"></i>
 					    @endisset
-                        <a href="/lehrer/unterrichtseinheiten/aufgabe/bearbeiten/{{$block->id}}">{{$block->title}}</a> 
+                        <a href="/lehrer/lerneinheiten/aufgabe/bearbeiten/{{$block->id}}">{{$block->title}}</a> 
                     </td>
                     <td class="text-center">{{$block->differentiation->differentiation_title}}</td>	
                     <td class="text-center">{{$block->time}}</td>

@@ -4,7 +4,7 @@
 <!-- delete where not necessary -->
 <section id="page-header">
 	<div class="container-fluid ml-4 p-4">
-		<h4>Unterrichtseinheit: {{$unit->unit_title}}</h4>
+		<h4>Lerneinheit: {{$unit->unit_title}}</h4>
 	</div>
 </section>
 @endsection
@@ -55,7 +55,7 @@
 				<div class="card-body">
 					<div class="row d-flex justify-content-center">
 						<div class=" col-10 col-md-8">
-							<p class="text-left">Diese Unterrichtseinheit enthält unterschiedliche Aufgaben für verschiedene Lernniveaus. Wähle Dir hier Dein Lernniveau aus, damit Du nur Deine Aufgaben siehst. Wenn Du nicht sicher bist, welches Lernniveau Du auswählen sollst, frage bitte Deinen Lehrer</p>
+							<p class="text-left">Diese Lerneinheit enthält unterschiedliche Aufgaben für verschiedene Lernniveaus. Wähle Dir hier Dein Lernniveau aus, damit Du nur Deine Aufgaben siehst. Wenn Du nicht sicher bist, welches Lernniveau Du auswählen sollst, frage bitte Deinen Lehrer</p>
 						</div>
 					</div>
 					<div class="row ">

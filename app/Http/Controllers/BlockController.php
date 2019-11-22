@@ -6,6 +6,7 @@ use App\Block;
 use Illuminate\Http\Request;
 use App\Unit;
 use App\Content;
+use App\Tool;
 use App\Differentiation;
 use Purifier;
 use Auth;
@@ -72,7 +73,11 @@ class BlockController extends Controller
         $block->title = $request->block_title;
         $block->task = Purifier::clean($request->task);
         $block->tips = Purifier::clean($request->tipp);
+        if(isset($request->content_id)) {
+            $block->content_id = $request->content_id;
+        } else {
         $block->content_id = $request->chooseContent;
+        };
         $block->time = $request->time;
         $block->unit_id = $request->unit_id;
         $unit = Unit::find($request->unit_id);
@@ -130,12 +135,14 @@ class BlockController extends Controller
     {
         $block = Block::find($id);
         $teacher = Auth::user();
+        $unit = $block->unit;
         $contents = Content::where('topic_id', $block->unit->topic_id)->get();
+        $tools = Tool::orderBy('tool_title','asc')->get();
         $differentiations = Differentiation::where([
             ['user_id',$teacher->id],
             ['differentiation_group',$block->unit->differentiation_group]
         ])->get();
-        return view('teacher.teacher_blocksEdit', compact('block','teacher','contents','differentiations'));
+        return view('teacher.teacher_blocksEdit', compact('block','teacher','contents','differentiations','tools','unit'));
     }
 
     /**

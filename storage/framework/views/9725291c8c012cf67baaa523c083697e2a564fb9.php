@@ -13,7 +13,7 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
          <?php switch($typeDelete):
             case ('block'): ?>
-               <form method="POST" action="/lehrer/unterrichtseinheiten/aufgabe/löschen/<?php echo e($id); ?>">
+               <form method="POST" action="/lehrer/lerneinheiten/aufgabe/löschen/<?php echo e($id); ?>">
                   <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
 			         <button class=" form-control btn btn-warning" type="submit"> Aufgabe löschen</button>
 		         </form>
@@ -62,7 +62,7 @@
             <?php case ('unit'): ?>
                <form method="POST" action="/lehrer/newUnitDelete/<?php echo e($id); ?>">
                   <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
-			         <button class="form-control btn btn-info" type="submit"> Unterrichtseinheit löschen</button>
+			         <button class="form-control btn btn-info" type="submit"> Lerneinheit löschen</button>
 		         </form>
             <?php break; ?>
 

@@ -1,6 +1,6 @@
 <?php $__env->startSection('main'); ?>
      <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3"> 
-          <div><h2>Unterrichtseinheiten administrieren
+          <div><h2>Lerneinheiten administrieren
           <a href="/backend/units/create"><i class="far fa-plus-square"></i></a></h2></div>
           
 
@@ -14,7 +14,7 @@
 		<table class="table table-hover table-sm">
 			<thead>
 				<tr>
-					<th>Titel der Unterrichtseinheit</th>
+					<th>Titel der Lerneinheit</th>
 					<th>Thema</th>
 					<th>Fach</th>
 					<th>dazugehörige Serie</th>
@@ -40,7 +40,7 @@
 		</table>
 		<ul class="pagination"><?php echo e($units->links()); ?></ul>
 		<hr>
-	<a class="btn btn-primary" href="/backend/units/create">Neue Unterrichtseinheit erstellen</a>
+	<a class="btn btn-primary" href="/backend/units/create">Neue Lerneinheit erstellen</a>
 	
 </div>
 <?php $__env->stopSection(); ?>

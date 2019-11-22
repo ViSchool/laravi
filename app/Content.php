@@ -74,6 +74,11 @@ class Content extends Model
 	{
 		return $this->belongsTo('App\Status');
 	}
+
+	public function blocks()
+	{
+		return $this->hasMany('App\Block');
+	}
 	
 	public static function parse_yturl($url) 
 	{

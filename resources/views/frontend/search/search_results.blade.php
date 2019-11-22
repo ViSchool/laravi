@@ -118,11 +118,11 @@
 
 <section id="search_results_units">
 @if($unitsCount == 0)
-	<div class="container py-3">Es gibt keine Unterrichtseinheiten zu Deinem Suchbegriff.</div>
+	<div class="container py-3">Es gibt keine Lerneinheiten zu Deinem Suchbegriff.</div>
 @endif
 @if($unitsCount > 0)
 	<div class="container my-4">
-		<p> Wir haben <a href="/suche/units/{{$query}}">{{$unitsCount}} Unterrichtseinheiten</a> gefunden:</p>
+		<p> Wir haben <a href="/suche/units/{{$query}}">{{$unitsCount}} Lerneinheiten</a> gefunden:</p>
 		<div class="row justify-content-start">
 			@foreach ($units3 as $unit)
 				<div class="col">

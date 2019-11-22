@@ -78,7 +78,7 @@ class UnitController extends Controller
         
         return redirect()->route('unit.edit',[$unit->id]);
     }
-    //Vom Lehrer erstellte Unterrichtseinheit speichern
+    //Vom Lehrer erstellte lerneinheit speichern
     public function teacher_store(Request $request)
     {
         $this->validate(request(), [
@@ -194,7 +194,7 @@ class UnitController extends Controller
         return redirect()->route('teacher.units');
     }
 
-    //ViSchool Admin gibt Unterrichtseinheit frei
+    //ViSchool Admin gibt lerneinheit frei
     public function teacherUnitApprove($id)
     {
         $unit = Unit::findOrFail($id);

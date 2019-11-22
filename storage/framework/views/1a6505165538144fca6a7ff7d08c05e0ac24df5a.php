@@ -4,7 +4,7 @@
 <?php $__env->startSection('page-header'); ?>
 <section id="page-header">
     <div class="container p-3">
-        <h4>Unterrichtseinheit "<?php echo e($unit->unit_title); ?>" ändern</h4>
+        <h4>Lerneinheit "<?php echo e($unit->unit_title); ?>" ändern</h4>
     </div>
 </section> 
 <?php $__env->stopSection(); ?>
@@ -12,7 +12,7 @@
 <?php $__env->startSection('content'); ?>
 
 <div class="container mt-3">
-<form method="POST" action="/lehrer/unterrichtseinheiten/bearbeiten/<?php echo e($unit->id); ?>" enctype="multipart/form-data">
+<form method="POST" action="/lehrer/lerneinheiten/bearbeiten/<?php echo e($unit->id); ?>" enctype="multipart/form-data">
     <?php echo csrf_field(); ?> <?php echo method_field('PATCH'); ?>
         <input type="hidden" value="<?php echo e($teacher->id); ?>" name="user_id">
         <input 
@@ -26,12 +26,12 @@
         >
         <div class="card mb-3">
             <div class="card-header text-center">
-                <h3 class="text-brand-blue m-3">Unterrichtseinheit ändern</h3> 
+                <h3 class="text-brand-blue m-3">Lerneinheit ändern</h3> 
             </div>
             <div class="card-body">
                 
                 <div class="form-group<?php echo e($errors->has('unit_title') ? ' has-error' : ''); ?>">
-                    <label for="unit_title" class="col-10 control-label">Titel der Unterrichtseinheit</label>
+                    <label for="unit_title" class="col-10 control-label">Titel der Lerneinheit</label>
                     <div class="col-10">
                         <input id="unit_title" type="text" class="form-control" name="unit_title" value="<?php echo e($unit->unit_title); ?>" required>
                         <?php if($errors->has('unit_title')): ?>
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="form-group<?php echo e($errors->has('unit_description') ? ' has-error' : ''); ?>">
-                    <label for="unit_description" class="col-10 col-form-label mb-0 pb-0">Kurzbeschreibung der Unterrichtseinheit</label>
+                    <label for="unit_description" class="col-10 col-form-label mb-0 pb-0">Kurzbeschreibung der Lerneinheit</label>
                     <label for="unit_description" class="col-10 col-form-label mt-0 pt-0">
                         <small class="text-muted"> Beschreibe hier kurz was die Schüler mit der Einheit lernen sollen.</small>
                     </label>
@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="form-group<?php echo e($errors->has('subject_id') ? ' has-error' : ''); ?>">
-                    <label for="subject_id" class="col-10 control-label">Die Unterrichtseinheit gehört zu folgendem Fach</label>
+                    <label for="subject_id" class="col-10 control-label">Die Lerneinheit gehört zu folgendem Fach</label>
                     <div class="col-10">
                         <select class="form-control" id="subject_id" name="subject_id">
 				            <?php if($unit->subject_id !== null): ?>
@@ -84,7 +84,7 @@
                 </div>
                         
                 <div class="form-group<?php echo e($errors->has('topic_id') ? ' has-error' : ''); ?>">
-                    <label for="topic_id" class="col-10 control-label">Die Unterrichtseinheit gehört zu folgendem Thema</label>
+                    <label for="topic_id" class="col-10 control-label">Die Lerneinheit gehört zu folgendem Thema</label>
                     <div class="col-10">
                         <select class="form-control" id="topic_id" name="topic_id">
                             <?php if($unit->topic_id !== null): ?>
@@ -114,7 +114,7 @@
                 <div class="form-group<?php echo e($errors->has('differentiation_group') ? ' has-error' : ''); ?>">
                     <label for="differentiation_id" class="col-10 control-label">Differenzierung von Lernniveaus</label>
                     <label for="differentiation_id" class="col-10 col-form-label mt-0 pt-0">
-                        <small class="text-muted">Wenn die Aufgabe nur von bestimmten Schülern bearbeitet werden soll, dann wähle hier die Gruppe von Lernniveaus aus, die Du für diese Unterrichtseinheit benutzen möchtest. Ansonsten wähle "Keine Differenzierung".</small>
+                        <small class="text-muted">Wenn die Aufgabe nur von bestimmten Schülern bearbeitet werden soll, dann wähle hier die Gruppe von Lernniveaus aus, die Du für diese Lerneinheit benutzen möchtest. Ansonsten wähle "Keine Differenzierung".</small>
                     </label>
                     <div class="col-10">
                         <select class="form-control" name="differentiation_group" id="differentiation_group">
@@ -136,7 +136,7 @@
             </div>
 
             <div class="card-footer d-flex justify-content-between">
-                <a href="/lehrer/unterrichtseinheiten" class="btn btn-outline-danger">Abbrechen</a>
+                <a href="/lehrer/lerneinheiten" class="btn btn-outline-danger">Abbrechen</a>
                 <button type="submit" class="btn btn-primary">Änderungen speichern</button> 
             </div>
         </div>

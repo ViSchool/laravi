@@ -150,7 +150,7 @@
 			</p>
 			<ul>
 				<li>Eingeloggt bleiben auf unserer Internetseite</li>
-				<li>Erstellen eigener Inhalte, Themen oder Unterrichtseinheiten durch Lehrer</li>
+				<li>Erstellen eigener Inhalte, Themen oder Lerneinheiten durch Lehrer</li>
 			</ul>
 			<p>
 				In diesen Zwecken liegt auch unser berechtigtes Interesse in der Verarbeitung der personenbezogenen Daten nach Art. 6 Abs. 1 lit. f DSGVO.

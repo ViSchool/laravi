@@ -56,7 +56,7 @@
 												<p class="small text-center">Status: {{$privateSerie->status->status_name}} </p>
 											</div>
 											<div class="footer-flip">
-												<p class="small">{{$privateSerie->units_count}} Unterrichtseinheiten</p>
+												<p class="small">{{$privateSerie->units_count}} Lerneinheiten</p>
 												<button class="btn btn-simple" onclick="rotateCard(this)">
 														<i class="fa fa-mail-forward"></i> Mehr erfahren
 												</button>
@@ -213,7 +213,7 @@
 												<a href="/lerneinheiten/serie/{{$publicSerieUnit->serie_id}}"><h3 class="name-flip">{{$publicSerie->serie_title}}</h3></a>	
 											</div>
 											<div class="footer-flip">
-												<p class="small">{{$publicSerie->units_count}} Unterrichtseinheiten</p>
+												<p class="small">{{$publicSerie->units_count}} Lerneinheiten</p>
 												<button class="btn btn-simple" onclick="rotateCard(this)">
 														<i class="fa fa-mail-forward"></i> Mehr erfahren
 												</button>

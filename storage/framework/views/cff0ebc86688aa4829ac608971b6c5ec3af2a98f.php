@@ -4,7 +4,7 @@
 <?php $__env->startSection('page-header'); ?>
 <section id="page-header">
     <div class="container p-3">
-    <h4>Aufgaben zur Unterrichtseinheit "<?php echo e($unit->unit_title); ?>"</h4>
+    <h4>Aufgaben zur Lerneinheit "<?php echo e($unit->unit_title); ?>"</h4>
     </div>
 </section> 
 <?php $__env->stopSection(); ?>
@@ -18,7 +18,7 @@
     <p>Klicke auf die einzelnen Aufgaben, um sie zu ändern oder füge eine neue Aufgabe ein.</p>
 </div>
 <div class="container">
-    <a class="btn btn-primary form-control" href="/lehrer/unterrichtseinheiten/<?php echo e($unit->id); ?>/aufgabe">Eine neue Aufgabe einfügen</a>
+    <a class="btn btn-primary form-control" href="/lehrer/lerneinheiten/<?php echo e($unit->id); ?>/aufgabe">Eine neue Aufgabe einfügen</a>
 </div>
 
 <!--Anzeige der Inhalte-->
@@ -72,7 +72,7 @@
                         <?php if($alternative == 1): ?>
                             <i class="mr-3 fas fa-exchange-alt" style="color:orange;"></i>
 					    <?php endif; ?>
-                        <a href="/lehrer/unterrichtseinheiten/aufgabe/bearbeiten/<?php echo e($block->id); ?>"><?php echo e($block->title); ?></a> 
+                        <a href="/lehrer/lerneinheiten/aufgabe/bearbeiten/<?php echo e($block->id); ?>"><?php echo e($block->title); ?></a> 
                     </td>
                     <td class="text-center"><?php echo e($block->differentiation->differentiation_title); ?></td>	
                     <td class="text-center"><?php echo e($block->time); ?></td>

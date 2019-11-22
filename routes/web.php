@@ -20,7 +20,7 @@ Route::get('tools/get/{id}', 'AppController@getDynamicTools'); //Route zu dynami
 Route::get('chosencontent/get/{id}', 'AppController@getChosenContent'); //Route zu chosen Content
 Route::get('chooseContent/{unit}/{id}', 'AppController@chooseContent'); 
 Route::get('/differentiations/getgroupdiff/{differentiation_group}/{teacherId}', 'AppController@getdifferentiations');
-
+Route::get('/removeContentfromSession', 'AppController@removeContentfromSession');
 
 /*Route für Mails*/
 Route::get('/mailable', 'AppController@sendBrokenLinks');
@@ -46,7 +46,7 @@ Route::get('lehrer/newTopicViSchool/{topic}','TopicController@teacherTopicViScho
 Route::get('lehrer/newTopicDelete/{topic}','TopicController@destroy');
 
 //Routen, damit Lehrer selbst Inhalte einstellen kann und Statusänderungen dazu
-Route::get('/lehrer/inhalte','TeacherController@contents');
+Route::get('/lehrer/inhalte','TeacherController@contents')->name('teacher.contents');
 Route::post('/lehrer/inhalte','ContentController@teacher_store');
 Route::get('/lehrer/newContentPrivate/{content}','ContentController@teacherContentPrivate');
 Route::get('/lehrer/newContentViSchool/{content}','ContentController@teacherContentViSchool');
@@ -57,24 +57,24 @@ Route::get('lehrer/serien','SerieController@index');
 Route::post('lehrer/serien','SerieController@teacher_store');
 
 
-//Routes for units and blocks, damit Lehrer selbst Unterrichtseinheiten und Aufgaben einstellen kann und Statusänderungen dazu
-Route::get('/lehrer/unterrichtseinheiten','TeacherController@units')->name('teacher.units');
-Route::get('/lehrer/unterrichtseinheiten/erstellen','TeacherController@create_unit');
-Route::post('/lehrer/unterrichtseinheiten','UnitController@teacher_store');
-Route::get('/lehrer/unterrichtseinheiten/bearbeiten/{unit}', 'UnitController@teacher_edit');
-Route::patch('/lehrer/unterrichtseinheiten/bearbeiten/{unit}','UnitController@teacher_update');
+//Routes for units and blocks, damit Lehrer selbst lerneinheiten und Aufgaben einstellen kann und Statusänderungen dazu
+Route::get('/lehrer/lerneinheiten','TeacherController@units')->name('teacher.units');
+Route::get('/lehrer/lerneinheiten/erstellen','TeacherController@create_unit');
+Route::post('/lehrer/lerneinheiten','UnitController@teacher_store');
+Route::get('/lehrer/lerneinheiten/bearbeiten/{unit}', 'UnitController@teacher_edit');
+Route::patch('/lehrer/lerneinheiten/bearbeiten/{unit}','UnitController@teacher_update');
 Route::get('/lehrer/newUnitPrivate/{unit}','UnitController@teacherUnitPrivate');
 Route::get('/lehrer/newUnitViSchool/{unit}','UnitController@teacherUnitViSchool');
 Route::delete('/lehrer/newUnitDelete/{unit}','UnitController@destroy');
-Route::get('/lehrer/unterrichtseinheiten/{unit}/aufgabe','TeacherController@create_block')->name('teacher.block.create');
-Route::get('/lehrer/unterrichtseinheiten/{unit}/serie/{serie}','UnitController@save_unit_serie')->name('teacher.unit_serie.save');
-Route::get('/lehrer/unterrichtseinheiten/{unit}/keineSerie','UnitController@save_unit_serieNull')->name('teacher.unit_serie.null');
-Route::post('/lehrer/unterrichtseinheiten/serie/erstellen', 'SerieController@teacher_store')->name('teacher.serie.create');
-Route::post('/lehrer/unterrichtseinheiten/aufgabe','BlockController@teacher_store');
-Route::get('/lehrer/unterrichtseinheiten/{unit}/aufgaben','BlockController@teacher_show')->name('teacher.unit.block');
-Route::get('/lehrer/unterrichtseinheiten/aufgabe/bearbeiten/{block}','BlockController@teacher_edit');
-Route::patch('/lehrer/unterrichtseinheiten/aufgabe/bearbeiten/{block}','BlockController@teacher_update');
-Route::delete('/lehrer/unterrichtseinheiten/aufgabe/löschen/{block}','BlockController@teacher_destroy');
+Route::get('/lehrer/lerneinheiten/{unit}/aufgabe','TeacherController@create_block')->name('teacher.block.create');
+Route::get('/lehrer/lerneinheiten/{unit}/serie/{serie}','UnitController@save_unit_serie')->name('teacher.unit_serie.save');
+Route::get('/lehrer/lerneinheiten/{unit}/keineSerie','UnitController@save_unit_serieNull')->name('teacher.unit_serie.null');
+Route::post('/lehrer/lerneinheiten/serie/erstellen', 'SerieController@teacher_store')->name('teacher.serie.create');
+Route::post('/lehrer/lerneinheiten/aufgabe','BlockController@teacher_store');
+Route::get('/lehrer/lerneinheiten/{unit}/aufgaben','BlockController@teacher_show')->name('teacher.unit.block');
+Route::get('/lehrer/lerneinheiten/aufgabe/bearbeiten/{block}','BlockController@teacher_edit');
+Route::patch('/lehrer/lerneinheiten/aufgabe/bearbeiten/{block}','BlockController@teacher_update');
+Route::delete('/lehrer/lerneinheiten/aufgabe/löschen/{block}','BlockController@teacher_destroy');
 Route::get('/lehrer/{user}/copy/{unit}','UnitController@copy')->name('unit.copy');
 Route::get('/lehrer/units','TeacherController@allunits');
 

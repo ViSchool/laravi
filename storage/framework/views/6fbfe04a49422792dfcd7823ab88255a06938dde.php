@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="ViSChool, digitale Bildung, lernen">
+    <meta name="description" content="ViSchool, digitale Bildung, lernen, zeitgemäße Bildung, digitaler Unterricht, Lerneinheiten, Mathe, Physik, Englisch, Deutsch">
     <meta name="author" content="Katharina Schedel | ViSchool">
     <link rel="icon" href="../../../../favicon.ico">
 

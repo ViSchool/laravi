@@ -4,15 +4,15 @@
 
 <?php $__env->startSection('main'); ?>
      <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3"> 
-          <h4>Serien mit Unterrichtseinheiten administrieren</h4>
+          <h4>Serien mit Lerneinheiten administrieren</h4>
 
 <div class="container">
-	<p>Hier sind alle Serien mit einzelnen Unterrichtseinheiten gelistet</p>
+	<p>Hier sind alle Serien mit einzelnen Lerneinheiten gelistet</p>
 		<table class="table">
 			<thead>
 				<tr>
 					<th>Titel der Serie</th>
-					<th>Anzahl zugehöriger Unterrichtseinheiten</th>
+					<th>Anzahl zugehöriger Lerneinheiten</th>
 					<th>Status</th>
 				</tr>
 			</thead>

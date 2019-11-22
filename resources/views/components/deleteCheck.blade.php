@@ -13,7 +13,7 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
          @switch($typeDelete)
             @case('block')
-               <form method="POST" action="/lehrer/unterrichtseinheiten/aufgabe/löschen/{{$id}}">
+               <form method="POST" action="/lehrer/lerneinheiten/aufgabe/löschen/{{$id}}">
                   @csrf @method('DELETE')
 			         <button class=" form-control btn btn-warning" type="submit"> Aufgabe löschen</button>
 		         </form>
@@ -62,7 +62,7 @@
             @case('unit')
                <form method="POST" action="/lehrer/newUnitDelete/{{$id}}">
                   @csrf @method('DELETE')
-			         <button class="form-control btn btn-info" type="submit"> Unterrichtseinheit löschen</button>
+			         <button class="form-control btn btn-info" type="submit"> Lerneinheit löschen</button>
 		         </form>
             @break
 

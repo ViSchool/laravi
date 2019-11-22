@@ -4,7 +4,7 @@
 
 	<section id="page-header">
 	<div class="container-fluid ml-4 p-4">
-		<h4>Unterrichtseinheiten erstellen</h4>
+		<h4>Lerneinheiten erstellen</h4>
 		
 	</div>
 	</section>
@@ -16,7 +16,7 @@
 	</div>
 	<div class="col" id="toolbox">
 		<div class="alert alert-warning d-md-none d-lg-none">
-			<p class="lead">Die Toolbox zum Erstellen eigener Unterrichtseinheiten ist für die Benutzung mit Tablets oder größeren Bildschirmen konzipiert. Die Toolbox funktioniert deshalb nicht auf dem Smartphone.</p>
+			<p class="lead">Die Toolbox zum Erstellen eigener Lerneinheiten ist für die Benutzung mit Tablets oder größeren Bildschirmen konzipiert. Die Toolbox funktioniert deshalb nicht auf dem Smartphone.</p>
 			@include('layouts.errors')
 		</div>
 		<div>
