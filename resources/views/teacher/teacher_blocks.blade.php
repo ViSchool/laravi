@@ -78,10 +78,10 @@
                     </td>
                     <td class="text-center">{{$block->differentiation->differentiation_title}}</td>	
                     <td class="text-center">{{$block->time}}</td>
-                <td class="text-center"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal_{{$block->id}}"><i class="far fa-trash-alt"></i></button></td>
+                    <td class="text-center"><button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteModal_{{$block->id}}"><i class="far fa-trash-alt"></i></button></td>
                     
                 </tr>
-            <div class="modal fade" id="deleteModal_{{$block->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="deleteModal_{{$block->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     @include('components.deleteCheck',['typeDelete'=>'block','id'=>$block->id,'title'=>$block->title])
                 </div>
                 @endforeach    

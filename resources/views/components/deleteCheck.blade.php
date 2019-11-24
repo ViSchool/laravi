@@ -7,7 +7,7 @@
         </button>
       </div>
       <div class="modal-body">
-      Du möchtest <strong>"{{$title}}"</strong>  löschen? Dann klicke unten auf Löschen, ansonsten kannst Du es auch einfach lassen. 
+      <p> Du möchtest <strong>"{{$title}}"</strong>  löschen? @if($typeDelete == 'block') Wenn die Aufgabe für mehrere Lernniveaus eingerichtet ist, werden alle Lernniveaus gelöscht. @endif </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
@@ -17,7 +17,7 @@
                   @csrf @method('DELETE')
 			         <button class=" form-control btn btn-warning" type="submit"> Aufgabe löschen</button>
 		         </form>
-            @break
+            @break 
          
             @case('content')
                Second case...

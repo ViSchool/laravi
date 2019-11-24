@@ -6,16 +6,16 @@
 @section('page-header')
 <section id="page-header">
     <div class="container p-3">
-        <h4>Lerneinheit "{{$unit->unit_title}}" ändern</h4>
+        <h4>Eine neue lerneinheit erstellen</h4>
     </div>
 </section> 
-@endsection 
+@endsection
 
 @section('content')
 
 <div class="container mt-3">
-<form method="POST" action="/lehrer/lerneinheiten/bearbeiten/{{$unit->id}}" enctype="multipart/form-data">
-    @csrf @method('PATCH')
+    <form method="POST" action="/lehrer/lerneinheiten" enctype="multipart/form-data">
+    @csrf 
         <input type="hidden" value="{{$teacher->id}}" name="user_id">
         <input 
             type="hidden" 
@@ -28,14 +28,14 @@
         >
         <div class="card mb-3">
             <div class="card-header text-center">
-                <h3 class="text-brand-blue m-3">Lerneinheit ändern</h3> 
+                <h3 class="text-brand-blue m-3">Schritt 1: Lerneinheit anlegen</h3> 
             </div>
             <div class="card-body">
                 
                 <div class="form-group{{ $errors->has('unit_title') ? ' invalid' : '' }}">
                     <label for="unit_title" class="col-10 col-form-label">Titel der Lerneinheit</label>
                     <div class="col-10">
-                        <input id="unit_title" type="text" class="form-control" name="unit_title" value="{{$unit->unit_title}}" required>
+                        <input id="unit_title" type="text" class="form-control" name="unit_title" value="{{ old('unit_title') }}" required>
                         @if ($errors->has('unit_title'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('unit_title') }}</strong>
@@ -50,7 +50,7 @@
                         <small class="text-muted"> Beschreibe hier kurz was die Schüler mit der Einheit lernen sollen.</small>
                     </label>
                     <div class="col-10">
-                        <textarea id="unit_description" class="form-control" name="unit_description">{{$unit->unit_description}}</textarea>
+                        <textarea id="unit_description" class="form-control" name="unit_description">{{old('unit_description')}}</textarea>
                         @if ($errors->has('unit_description'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('unit_description') }}</strong>
@@ -60,26 +60,26 @@
                 </div>
 
                 <div class="form-group{{ $errors->has('subject_id') ? ' invalid' : '' }}">
-                    <label for="subject_id" class="col-10 col-form-label">Die Lerneinheit gehört zu folgendem Fach</label>
+                    <label for="topic_id" class="col-10 col-form-label">Die Lerneinheit gehört zu folgendem Fach</label>
                     <div class="col-10">
                         <select class="form-control" id="subject_id" name="subject_id">
-				            @if($unit->subject_id !== null)
+				            @if((old('subject_id')) !== null)
                                 @php 
-                                    $subject_id_old = $unit->subject_id;
+                                    $subject_id_old = old('subject_id');
                                     $subject_old = App\Subject::where('id', '=' , $subject_id_old)->first();
                                 @endphp
                                 <option value="{{$subject_id_old}}">{{$subject_old->subject_title}}</option>
 				            @endif
-		                    @empty($unit->subject_id)
+		                    @empty(old('subject_id'))
                                 <option value=""></option>
                             @endempty
 		                    @foreach ($subjects as $subject)	
 					            <option value="{{$subject->id}}">{{$subject->subject_title}}</option>
 				            @endforeach
                         </select>
-                        @if ($errors->has('subject_id'))
+                        @if ($errors->has('topic_id'))
                             <span class="help-block">
-                                <strong>{{ $errors->first('subject_id') }}</strong>
+                                <strong>{{ $errors->first('topic_id') }}</strong>
                             </span>
                         @endif
                     </div>
@@ -89,14 +89,14 @@
                     <label for="topic_id" class="col-10 col-form-label">Die Lerneinheit gehört zu folgendem Thema</label>
                     <div class="col-10">
                         <select class="form-control" id="topic_id" name="topic_id">
-                            @if($unit->topic_id !== null)
+                            @if((old('topic_id')) !== null)
                                 @php 
-                                    $topic_id_old = $unit->topic_id;
+                                    $topic_id_old = old('topic_id');
                                     $topic_old = App\Topic::where('id', '=' , $topic_id_old)->first();
                                 @endphp
                                 <option value="{{$topic_id_old}}">{{$topic_old->topic_title}}</option>
                             @endif
-                            @empty($unit->topic_id)
+                            @empty(old('topic_id'))
                                 <option>Zuerst Fach auswählen</option>
                             @endempty
                         </select>
@@ -112,45 +112,32 @@
                         @endif
                     </div>
                 </div>
-
+                
+                @if($teacher->differentiation_on == 1)    
                 <div class="form-group{{ $errors->has('differentiation_group') ? ' invalid' : '' }}">
                     <label for="differentiation_id" class="col-10 col-form-label">Differenzierung von Lernniveaus</label>
                     <label for="differentiation_id" class="col-10 col-form-label mt-0 pt-0">
                         <small class="text-muted">Wenn die Aufgabe nur von bestimmten Schülern bearbeitet werden soll, dann wähle hier die Gruppe von Lernniveaus aus, die Du für diese Lerneinheit benutzen möchtest. Ansonsten wähle "Keine Differenzierung".</small>
                     </label>
-                     @if ($blocksWithDifferentiation > 0)
-                        <div class="alert alert-warning" role="alert">
-                            Du kannst die Differenzierung nur ändern, wenn keine der Aufgaben ein bestimmtes Lernniveau ("Differenzierung") enthält. Wähle daher für <a href="/lehrer/lerneinheiten/{{$unit->id}}/aufgaben">alle Aufgaben</a> zunächst das Lernniveau "Alle" aus, wenn Du die Differenzierungsgruppe hier entfernen oder ändern willst.   
-                        </div>  
-                     @endif
                     <div class="col-10">
-                        <select class="form-control" name="differentiation_group" id="differentiation_group"  @if($blocksWithDifferentiation > 0) disabled @endif>
-                            {{-- Wenn die Lerneinheit noch differenzierte Aufgaben einer bestimmten Differenzierungsgruppe enthält 
-                            (gleiche Unit_id und gleiche order), 
-                            dann muss "keine Differenzierung" auswählen zu einem Alert führen, dass eine andere oder keine Differenzierung 
-                            erst dann auswählbar sind, wenn die Differenzierung der Aufgaben auf alle geändert wurde --}}
-                            @if($unit->differentiation_group !== null)
-                                <option>{{$unit->differentiation_group}}</option>
-                            @endif
-                            @if ($blocksWithDifferentiation == 0)
-                                <option value="">Keine Differenzierung</option>
-                                @isset($differentiation_groups)
-                                    @foreach ($differentiation_groups as $differentiation_group)
-                                        <option value="{{$differentiation_group}}">{{$differentiation_group}}</option>
-                                    @endforeach
-                                @endisset
-                            @endif
+                        <select class="form-control" name="differentiation_group" id="differentiation_group">
+                            <option value="">Keine Differenzierung</option>
+                            @isset($differentiation_groups)
+                                @foreach ($differentiation_groups as $differentiation_group)
+                                    <option value="{{$differentiation_group}}">{{$differentiation_group}}</option>
+                                @endforeach
+                            @endisset
                             <option value="Standard">Standard</option>
                             
                         </select>
                     </div>
                 </div>
+                 @endif
 
             </div>
 
-            <div class="card-footer d-flex justify-content-between">
-                <a href="/lehrer/lerneinheiten" class="btn btn-outline-danger">Abbrechen</a>
-                <button type="submit" class="btn btn-primary">Änderungen speichern</button> 
+            <div class="card-footer d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Lerneinheit anlegen</button> 
             </div>
         </div>
     </form>       
@@ -160,7 +147,6 @@
 
 @section('scripts')
 
-<script src="{{asset('js/choose_content.js')}}"></script>
 <script src="{{asset('js/ddd_subject_topic.js')}}"></script>
 
 @endsection

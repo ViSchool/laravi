@@ -192,21 +192,29 @@
                     </label>
                     <div class="col-10">
                         <select class="form-control" id="differentiation_id" name="differentiation_id">
-				            <?php if($block->differentiation_id !== null): ?>
-                                <?php 
+                            <?php if($block->differentiation_id !== null): ?>
+                                 <?php 
                                     $differentiation_id_old = $block->differentiation_id;
                                     $differentiation_old = App\Differentiation::where('id', '=' , $differentiation_id_old)->first();
                                 ?>
-                                <option value="<?php echo e($differentiation_id_old); ?>"><?php echo e($differentiation_old->differentiation_title); ?></option>
+                                <?php if($block->differentiation_id !== 13): ?>
+                                    <option value="<?php echo e($differentiation_id_old); ?>"><?php echo e($differentiation_old->differentiation_title); ?></option>
+                                    <option value="13">Alle</option>
+                                <?php else: ?>
+                                    <option value="<?php echo e($differentiation_id_old); ?>"><?php echo e($differentiation_old->differentiation_title); ?></option>
+                                    <?php $__currentLoopData = $differentiations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $differentiation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($differentiation->id); ?>"><?php echo e($differentiation->differentiation_title); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
 				            <?php endif; ?>
 		                    <?php if(empty($block->differentiation_id)): ?>
-                                <option value=""></option>
-                            <?php endif; ?>
-                            <?php $__currentLoopData = $differentiations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $differentiation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($differentiation->id); ?>"><?php echo e($differentiation->differentiation_title); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <option value="">Bitte wählen</option>
+                                <?php $__currentLoopData = $differentiations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $differentiation): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($differentiation->id); ?>"><?php echo e($differentiation->differentiation_title); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <option value="13">Alle</option>
+                            <?php endif; ?>     
                         </select>
-                            
                         <?php if($errors->has('differentiation_id')): ?>
                             <span class="help-block">
                                 <strong><?php echo e($errors->first('differentiation_id')); ?></strong>

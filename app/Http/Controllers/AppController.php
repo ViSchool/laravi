@@ -24,9 +24,9 @@ class AppController extends Controller
      public function getDynamicTopics($id) 
      {
         $teacher = Auth::user();
-        $publicTopics = Subject::find($id)->topics->where('status_id',1)->pluck("topic_title","id");
+        $publicTopics = Subject::find($id)->topics->where('status_id',1)->sortBy('topic_title')->pluck("topic_title","id");
         if(isset($teacher)) {
-        $privateTopics = Subject::find($id)->topics->where('status_id','>',1)->where('user_id',$teacher->id)->pluck("topic_title","id");
+        $privateTopics = Subject::find($id)->topics->where('status_id','>',1)->where('user_id',$teacher->id)->sortBy('topic_title')->pluck("topic_title","id");
         }
         if(isset($privateTopics)) {
             $topics = $publicTopics->union($privateTopics);

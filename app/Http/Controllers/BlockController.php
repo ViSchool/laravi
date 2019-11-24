@@ -84,6 +84,7 @@ class BlockController extends Controller
 
         //  if block ist created with differentiation, 
         if (isset($request->differentiation_id)) {
+            if ($request->differentiation_id != 13) {
             $block->differentiation_id = $request->differentiation_id;
             $block->order = $unit->blocks->max('order') + 1;
             //get other differentiation_ids from the same group
@@ -99,6 +100,7 @@ class BlockController extends Controller
                 $newblock->push();
                 }
             $block->save();
+            }
         } else {
             $block->differentiation_id = 13;
             $block->order = $unit->blocks->max('order') + 1;
@@ -138,6 +140,7 @@ class BlockController extends Controller
         $unit = $block->unit;
         $contents = Content::where('topic_id', $block->unit->topic_id)->get();
         $tools = Tool::orderBy('tool_title','asc')->get();
+        
         $differentiations = Differentiation::where([
             ['user_id',$teacher->id],
             ['differentiation_group',$block->unit->differentiation_group]
@@ -167,15 +170,42 @@ class BlockController extends Controller
         $block->tips = Purifier::clean($request->tipp);
         $block->content_id = $request->chooseContent;
         $block->time = $request->time;
-        $block->differentiation_id = $request->differentiation_id;
-        if (isset($request->alternative)) {
-            $alternativeBlock = Block::find($request->alternative);
-            $block->order = $alternativeBlock->order;
-            $block->alternative = $request->alternative;
-        } 
-        $block->save();
+        if ($block->differentiation_id !== $request->differentiation_id) {
+            if ($block->differentiation_id == 13) {
+            $block->differentiation_id = $request->differentiation_id;
+            $block->save();
+            //get other differentiation_ids from the same group
+            $currentDifferentiation = Differentiation::find($block->differentiation_id);
+            $otherDifferentiations = Differentiation::where([
+                ['differentiation_group',$currentDifferentiation->differentiation_group],
+                ['id','!=',$currentDifferentiation->id]
+            ])->get();
+            //loop over all of them and make for each differentiation a copy of the first task
+            foreach ($otherDifferentiations as $otherDifferentiation) {
+                $newblock = $block->replicate();
+                $newblock->differentiation_id = $otherDifferentiation->id;
+                $newblock->push();
+                }
+            $block->save();
+            
+            } else {
+            //get other blocks of the same differentiation_group
+            $currentDifferentiation = Differentiation::find($block->differentiation_id);
+            $otherDifferentiations = Differentiation::where([
+                ['differentiation_group',$currentDifferentiation->differentiation_group],
+                ['id','!=',$currentDifferentiation->id]
+            ])->pluck('id');
+            $otherBlocks = Block::where('unit_id',$block->unit_id)->whereIn('differentiation_id',$otherDifferentiations)->get();
+            //loop over all of them and delete the others
+            foreach ($otherBlocks as $otherBlock) {
+                $otherBlock->delete();
+            }
+            $block->differentiation_id = $request->differentiation_id;
+            $block->save();
+            }
+       }    
         
-        return redirect()->route('teacher.units');
+        return redirect()->route('teacher.unit.block',['unit' => $block->unit_id]);
     }
     
     
@@ -222,12 +252,9 @@ class BlockController extends Controller
     public function teacher_destroy($id)
     {
         $block = Block::findOrFail($id);
-        dd($block->title);
-        $alternativeBlocks = Block::where('alternative',$id)->get();
-        foreach($alternativeBlocks as $alternativeBlock) {
-            $alternativeBlock->alternative = NULL;
-            $alternativeBlock->order = $block->unit->blocks->max('order')+1;
-            $alternativeBlock->save();
+        $otherDifferentiationBlocks = Block::where('unit_id',$block->unit_id)->where('order',$block->order)->get();
+        foreach($otherDifferentiationBlocks as $otherDifferentiationBlock) {
+            $otherDifferentiationBlock->delete();
         }
         $block->delete();
         return redirect()->back();

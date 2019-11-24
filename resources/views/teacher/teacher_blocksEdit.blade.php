@@ -194,27 +194,29 @@
                     </label>
                     <div class="col-10">
                         <select class="form-control" id="differentiation_id" name="differentiation_id">
-				            @if($block->differentiation_id !== null)
-                                @php 
+                            @if($block->differentiation_id !== null)
+                                 @php 
                                     $differentiation_id_old = $block->differentiation_id;
                                     $differentiation_old = App\Differentiation::where('id', '=' , $differentiation_id_old)->first();
                                 @endphp
-                                <option value="{{$differentiation_id_old}}">{{$differentiation_old->differentiation_title}}</option>
+                                @if ($block->differentiation_id !== 13)
+                                    <option value="{{$differentiation_id_old}}">{{$differentiation_old->differentiation_title}}</option>
+                                    <option value="13">Alle</option>
+                                @else
+                                    <option value="{{$differentiation_id_old}}">{{$differentiation_old->differentiation_title}}</option>
+                                    @foreach($differentiations as $differentiation)
+                                        <option value="{{$differentiation->id}}">{{$differentiation->differentiation_title}}</option>
+                                    @endforeach
+                                @endif
 				            @endif
 		                    @empty($block->differentiation_id)
-                                <option value=""></option>
-                            @endempty
-                            @foreach($differentiations as $differentiation)
-                                <option value="{{$differentiation->id}}">{{$differentiation->differentiation_title}}</option>
-                            @endforeach
+                                <option value="">Bitte wählen</option>
+                                @foreach($differentiations as $differentiation)
+                                    <option value="{{$differentiation->id}}">{{$differentiation->differentiation_title}}</option>
+                                @endforeach
+                                <option value="13">Alle</option>
+                            @endempty     
                         </select>
-                            {{--@if (strcmp($differentiation_old->differention_group, $block->unit->differentiation_group) !== 0)
-                                <span class="help-block text-danger">
-                                Aktuelle diff_old_group:{{$differentiation_old->differentiation_group}}<br>
-                                $block->unit->differentiation_group ist:{{$block->unit->differentiation_group}} <br>
-                                <strong>Du hast die Gruppe der Lernniveaus geändert. Bitte wähle immer nur Lernniveaus aus einer Gruppe aus.</strong>
-                                </span> 
-                            @endif--}}
                         @if ($errors->has('differentiation_id'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('differentiation_id') }}</strong>

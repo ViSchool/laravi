@@ -56,7 +56,7 @@ Route::get('/lehrer/newContentDelete/{content}','ContentController@destroy');
 Route::get('lehrer/serien','SerieController@index');
 Route::post('lehrer/serien','SerieController@teacher_store');
 
-
+ 
 //Routes for units and blocks, damit Lehrer selbst lerneinheiten und Aufgaben einstellen kann und Statusänderungen dazu
 Route::get('/lehrer/lerneinheiten','TeacherController@units')->name('teacher.units');
 Route::get('/lehrer/lerneinheiten/erstellen','TeacherController@create_unit');

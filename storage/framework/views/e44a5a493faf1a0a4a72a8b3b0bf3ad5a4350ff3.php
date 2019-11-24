@@ -4,7 +4,7 @@
 <?php $__env->startSection('page-header'); ?>
 <section id="page-header">
     <div class="container p-3">
-        <h4>Eine neue Lerneinheit erstellen</h4>
+        <h4>Eine neue lerneinheit erstellen</h4>
     </div>
 </section> 
 <?php $__env->stopSection(); ?>
@@ -84,21 +84,24 @@
                 </div>
                         
                 <div class="form-group<?php echo e($errors->has('topic_id') ? ' invalid' : ''); ?>">
-                    <label for="topic_id" class="col-10 col-form-label">Die Lerneinheit gehört zu folgendem Thema</label>
+                    <label for="topic_id" class="col-10 col-form-label">Die Lerneinheit gehört zu folgendem Thema: </label>
+                    
                     <div class="col-10">
-                        <select class="form-control" id="topic_id" name="topic_id">
+                        <input list="topics" class="form-control" id="topic" name="topic" placeholder="Thema auswählen oder neues eintragen">
+                        
+                        <datalist id="topics">
                             <?php if((old('topic_id')) !== null): ?>
                                 <?php 
                                     $topic_id_old = old('topic_id');
                                     $topic_old = App\Topic::where('id', '=' , $topic_id_old)->first();
                                 ?>
-                                <option value="<?php echo e($topic_id_old); ?>"><?php echo e($topic_old->topic_title); ?></option>
-                            <?php endif; ?>
+                                <option value="<?php echo e($topic_old->topic_title); ?>">                            <?php endif; ?>
                             <?php if(empty(old('topic_id'))): ?>
                                 <option>Zuerst Fach auswählen</option>
                             <?php endif; ?>
-                        </select>
-			            <div class="col-md-2">
+                        </datalist>
+                        
+                        <div class="col-md-2">
 				            <span id="loader" style="visibility: hidden;">
 					            <i class="far fa-spinner fa-spin"></i>
 				            </span>
@@ -145,7 +148,7 @@
 
 <?php $__env->startSection('scripts'); ?>
 
-<script src="<?php echo e(asset('js/ddd_subject_topic.js')); ?>"></script>
+<script src="<?php echo e(asset('js/datalist_subject_topic.js')); ?>"></script>
 
 <?php $__env->stopSection(); ?>
 

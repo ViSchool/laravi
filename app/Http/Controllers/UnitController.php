@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Unit;
 use Illuminate\Http\Request;
 use App\Subject;
+use App\Topic;
 use Auth;
 use Carbon;
 use App\User;
@@ -82,14 +83,28 @@ class UnitController extends Controller
     public function teacher_store(Request $request)
     {
         $this->validate(request(), [
-        'topic_id' => 'required', 
+        'topic' => 'required', 
         'subject_id' => 'required',
         'unit_title'=> 'required|max:255'
         ]);
         
         $unit = new Unit;
         $unit->subject_id = $request->subject_id;
-        $unit->topic_id = $request->topic_id;
+        //check if it is existing topics or new topic
+        //falls Thema schon existiert - ID speichern
+        if(isset($chosenTopic)) {
+            $unit->topic_id = $chosenTopic->id;
+        //falls Thema noch nicht existiert, neues Thema anlegen
+        } else {
+            //save new Topic with subject_id
+            $newTopic = new Topic;
+            $newTopic->topic_title = $request->topic;
+            $newTopic->status_id = 2;
+            $newTopic->user_id = $request->user_id;
+            $newTopic->save();
+            $newTopic->subjects()->sync($request->subject_id, false);
+            $unit->topic_id = $newTopic->id;
+        }
         $unit->unit_title = $request->unit_title;
         $unit->unit_description = $request->unit_description;
         $unit->user_id = $request->user_id;
@@ -143,7 +158,8 @@ class UnitController extends Controller
         $unit = Unit::find($id);
         $subjects = Subject::all();
         $differentiation_groups = $teacher->differentiations->where('differentiation_group','!=','Alle')->pluck('differentiation_group')->unique();
-        return view('teacher.teacher_unitsEdit',compact('subjects','unit','teacher','differentiation_groups'));
+        $blocksWithDifferentiation = $unit->blocks->whereNotIn('differentiation_id', [13, NULL])->count();
+        return view('teacher.teacher_unitsEdit',compact('subjects','unit','teacher','differentiation_groups','blocksWithDifferentiation'));
     }
     /**
      * Update the specified resource in storage.
@@ -168,6 +184,8 @@ class UnitController extends Controller
         $unit->user_id = $request->user_id;
         if (isset($request->differentiation_group)) {
             $unit->differentiation_group = $request->differentiation_group;
+        } else {
+            $unit->differentiation_group = NULL;
         }
         $unit->save();
         

@@ -86,21 +86,24 @@
                 </div>
                         
                 <div class="form-group{{ $errors->has('topic_id') ? ' invalid' : '' }}">
-                    <label for="topic_id" class="col-10 col-form-label">Die Lerneinheit gehört zu folgendem Thema</label>
+                    <label for="topic_id" class="col-10 col-form-label">Die Lerneinheit gehört zu folgendem Thema: </label>
+                    
                     <div class="col-10">
-                        <select class="form-control" id="topic_id" name="topic_id">
+                        <input list="topics" class="form-control" id="topic" name="topic" placeholder="Thema auswählen oder neues eintragen">
+                        
+                        <datalist id="topics">
                             @if((old('topic_id')) !== null)
                                 @php 
                                     $topic_id_old = old('topic_id');
                                     $topic_old = App\Topic::where('id', '=' , $topic_id_old)->first();
                                 @endphp
-                                <option value="{{$topic_id_old}}">{{$topic_old->topic_title}}</option>
-                            @endif
+                                <option value="{{$topic_old->topic_title}}">                            @endif
                             @empty(old('topic_id'))
                                 <option>Zuerst Fach auswählen</option>
                             @endempty
-                        </select>
-			            <div class="col-md-2">
+                        </datalist>
+                        
+                        <div class="col-md-2">
 				            <span id="loader" style="visibility: hidden;">
 					            <i class="far fa-spinner fa-spin"></i>
 				            </span>
@@ -147,6 +150,6 @@
 
 @section('scripts')
 
-<script src="{{asset('js/ddd_subject_topic.js')}}"></script>
+<script src="{{asset('js/datalist_subject_topic.js')}}"></script>
 
 @endsection

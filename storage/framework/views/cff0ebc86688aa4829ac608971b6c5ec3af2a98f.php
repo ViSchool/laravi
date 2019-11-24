@@ -76,10 +76,10 @@
                     </td>
                     <td class="text-center"><?php echo e($block->differentiation->differentiation_title); ?></td>	
                     <td class="text-center"><?php echo e($block->time); ?></td>
-                <td class="text-center"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModal_<?php echo e($block->id); ?>"><i class="far fa-trash-alt"></i></button></td>
+                    <td class="text-center"><button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteModal_<?php echo e($block->id); ?>"><i class="far fa-trash-alt"></i></button></td>
                     
                 </tr>
-            <div class="modal fade" id="deleteModal_<?php echo e($block->id); ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="deleteModal_<?php echo e($block->id); ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <?php echo $__env->make('components.deleteCheck',['typeDelete'=>'block','id'=>$block->id,'title'=>$block->title], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>    
