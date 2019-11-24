@@ -80,7 +80,7 @@
 				
 			<div class="d-flex flex-wrap align-content-center justify-content-center">
 				@foreach ($publicTopics as $topic)
-					@if($topic->content->count()>0)
+					@if($topic->content->where('status_id',1)->count()>0)
 						<div class="card m-4 text-white" style="width:150px" >
 							@if ($topic->updated_at->diffInDays() < 10)
 								<span class="badge-danger notify-badge">Neu</span>
