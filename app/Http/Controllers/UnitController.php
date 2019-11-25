@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Unit;
 use Illuminate\Http\Request;
 use App\Subject;
+use App\Serie;
 use App\Topic;
 use Auth;
 use Carbon;
@@ -197,7 +198,16 @@ class UnitController extends Controller
     {
         $unit = Unit::findOrFail($id);
         $unit->status_id = 3;
-        $unit->save();	
+        $unit->save();
+        //check if serie exists and change it if necessary
+        if(isset($unit->serie_id)) {
+            $serie = Serie::findOrFail($unit->serie_id);
+            if($serie->status_id > 3) {
+            $serie->status_id = 3;
+            };
+            $serie->save();
+
+        }	
        	//return to overview of topics
         return redirect()->route('teacher.units');
     }
@@ -207,9 +217,17 @@ class UnitController extends Controller
     {
         $unit = Unit::findOrFail($id);
         $unit->status_id = 2;
-        $unit->save();	
+        $unit->save();
+        //check if serie exists and change it if necessary
+        if(isset($unit->serie_id)) {
+            $serie = Serie::findOrFail($unit->serie_id);
+            if($serie->status_id > 2) {
+                $serie->status_id = 2;
+            };
+            $serie->save();
        	//return to overview of topics
         return redirect()->route('teacher.units');
+        }
     }
 
     //ViSchool Admin gibt lerneinheit frei
@@ -217,7 +235,15 @@ class UnitController extends Controller
     {
         $unit = Unit::findOrFail($id);
         $unit->status_id = 1;
-        $unit->save();	
+        $unit->save();
+        if(isset($unit->serie_id)) 
+        {
+            $serie = Serie::findOrFail($unit->serie_id);
+            if($serie->status_id > 1) {
+                $serie->status_id = 1;
+            }
+        }
+            $serie->save();	
        	//return to overview of topics
         return redirect()->back();
     }

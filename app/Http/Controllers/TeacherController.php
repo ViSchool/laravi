@@ -111,7 +111,7 @@ class TeacherController extends Controller
         $units = Unit::where('user_id',$teacher->id)->get();
         $series = Serie::where([
             ['user_id', $teacher->id],
-            ['status_id','>',2],
+            ['status_id','>',1],
             ])->get();
         $unitsBySubject = $units->groupBy('subject_id')->all();
         return view ('teacher.teacher_units', compact('teacher','units','series','unitsBySubject','subjects'));

@@ -159,7 +159,7 @@
 				                    <div style="column-count: 3">
 					                    @foreach ($subjects as $subject)	
 						                    <div class="form-check">
-							                    <input type="checkbox" class="form-check-input mt-2" id="{{$subject->id}}" value="{{$subject->id}}" name="subjects[]" required>
+							                    <input type="checkbox" class="form-check-input mt-2" id="{{$subject->id}}" value="{{$subject->id}}" name="subjects[]">
 							                    <label class="font-weight-normal form-check-label ml-4" for="">{{$subject->subject_title}}</label>
                                             </div>
                                             @if ($errors->has('subjects'))

@@ -159,7 +159,7 @@
 				                    <div style="column-count: 3">
 					                    <?php $__currentLoopData = $subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>	
 						                    <div class="form-check">
-							                    <input type="checkbox" class="form-check-input mt-2" id="<?php echo e($subject->id); ?>" value="<?php echo e($subject->id); ?>" name="subjects[]" required>
+							                    <input type="checkbox" class="form-check-input mt-2" id="<?php echo e($subject->id); ?>" value="<?php echo e($subject->id); ?>" name="subjects[]">
 							                    <label class="font-weight-normal form-check-label ml-4" for=""><?php echo e($subject->subject_title); ?></label>
                                             </div>
                                             <?php if($errors->has('subjects')): ?>
