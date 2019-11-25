@@ -19,7 +19,7 @@
 					<td><a href="/backend/teacher/<?php echo e($teacher->id); ?>"><?php echo e($teacher->teacher_name); ?> <?php echo e($teacher->teacher_surname); ?></a></td>	
 					<td><?php echo e($teacher->school); ?></td>
 					<td>
-						<?php if($teacher->hasRole('teacher_premium')): ?>
+						<?php if($teacher->hasRole('Lehrer (premium)')): ?>
 							<i class="fas fa-euro-sign"></i><i class="fas fa-euro-sign"></i> ja
 						<?php else: ?>
 							<i class="fab fa-creative-commons-nc-eu"></i> nein
