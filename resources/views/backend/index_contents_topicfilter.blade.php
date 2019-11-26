@@ -27,6 +27,7 @@
 					<th>Fach</th>
 					<th>Typ</th>
 					<th>Test</th>
+					<th>Status</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -37,6 +38,7 @@
 					<td>{{$content->subject->subject_title}}</td>
 					<td>{{$content->type->content_type}}</td>
 					<td><a href="/backend/questions/{{$content->id}}"><i class="far fa-question-circle"></i></a></td>
+					<td>{{$content->status->status_name}}</td>
 				</tr>
 				@endforeach
 			</tbody>

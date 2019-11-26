@@ -24,6 +24,7 @@
 					<th>Fach</th>
 					<th>Typ</th>
 					<th>Test</th>
+					<th>Status</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -34,6 +35,7 @@
 					<td><?php echo e($content->subject->subject_title); ?></td>
 					<td><?php echo e($content->type->content_type); ?></td>
 					<td><a href="/backend/questions/<?php echo e($content->id); ?>"><i class="far fa-question-circle"></i></a></td>
+					<td><?php echo e($content->status->status_name); ?></td>
 				</tr>
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 			</tbody>

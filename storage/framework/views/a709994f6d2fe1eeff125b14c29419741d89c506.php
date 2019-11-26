@@ -75,6 +75,7 @@
 						<iframe src="https://player.vimeo.com/video/<?php echo e($content->toolspecific_id); ?>?title=0&byline=0&portrait=0" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 					</div>
 				<?php break; ?>
+				
 			<?php endswitch; ?>
 		</div>	
 	</div>

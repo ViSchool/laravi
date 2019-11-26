@@ -84,7 +84,7 @@ class UnitController extends Controller
     public function teacher_store(Request $request)
     {
         $this->validate(request(), [
-        'topic' => 'required', 
+        'topic' => 'required|max:255', 
         'subject_id' => 'required',
         'unit_title'=> 'required|max:255'
         ]);
@@ -92,6 +92,7 @@ class UnitController extends Controller
         $unit = new Unit;
         $unit->subject_id = $request->subject_id;
         //check if it is existing topics or new topic
+        $chosenTopic = Topic::where('topic_title',$request->topic)->first();
         //falls Thema schon existiert - ID speichern
         if(isset($chosenTopic)) {
             $unit->topic_id = $chosenTopic->id;

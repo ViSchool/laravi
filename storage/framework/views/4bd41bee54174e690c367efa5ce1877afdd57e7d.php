@@ -1,15 +1,22 @@
 <?php $__env->startSection('main'); ?>
-     <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3"> 
-          <div><h2>Lerninhalte administrieren
-          <a href="/backend/contents/create"><i class="far fa-plus-square"></i></a></h2></div>
-          
+<main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3"> 
+	<div class="container">
+		<h2>Lerninhalte administrieren</h2>
+		<a class="btn btn-primary"href="/backend/contents">Alle anzeigen</a>
+	</div>
 
-<div class="container">
-	<div class="my-4">
-	<p>Inhalte nach Fächern filtern:</p>
-	<?php $__currentLoopData = $subjects->sortBy('subject_title'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-		<a class="btn btn-info m-1" href="/backend/contents/subjectfilter/<?php echo e($subject->id); ?>"><?php echo e($subject->subject_title); ?></a>
-		<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+	<div class="container">
+		<div class="my-4">
+			<p>Inhalte für das Fach 
+				<a class="btn-sm btn-primary" href="/backend/contents/subjectfilter/<?php echo e($currentSubject->id); ?>"><?php echo e($currentSubject->subject_title); ?>
+
+				</a>
+			</p>	
+		<hr></hr>
+			<p>Andere Themen: </p>
+			<?php $__currentLoopData = $topics; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $topic): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+				<a class="btn btn-info m-1" href="<?php echo e(route('backend.contents.filtertopics',['topic' => $topic->id , 'subject' => $currentSubject->id])); ?>"><?php echo e($topic->topic_title); ?></a>
+			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 		</div>
 		<table class="table">
 			<thead>
@@ -42,4 +49,4 @@
 </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('backend.layout_backend', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views//backend/index_contents.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('backend.layout_backend', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views//backend/index_contents_topicfilter.blade.php ENDPATH**/ ?>
