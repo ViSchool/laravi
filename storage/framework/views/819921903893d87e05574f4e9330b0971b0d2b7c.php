@@ -11,7 +11,9 @@
 
 <?php $__env->startSection('content'); ?>
 
-
+<?php if(Session::has('message')): ?>
+   <div class="alert alert-warning"><?php echo e(Session::get('message')); ?></div>
+<?php endif; ?>
 
 <div class="container mt-3">
     <h3>Deine selbst erstellten Themen</h3>
@@ -110,10 +112,16 @@
                 </td>
                 <td><?php echo e($topic->status->status_name); ?></td>
                 <td class="text-center">
-                    <?php if($topic->status_id != 1): ?>
-                        <a href="/lehrer/newTopicDelete/<?php echo e($topic->id); ?>"><i class="fas fa-trash"></i></a>
-                    <?php else: ?>
-                       <small> Thema ist bereits veröffentlicht, Löschen ist nicht mehr möglich </small>
+                    <?php if(count($topic->unit) > 0): ?>
+                        <small class="text-secondary">Zu diesem Thema gibt es noch Lerneinheiten, Du kannst es deshalb nicht löschen. </small>
+                        <?php elseif($topic->status_id != 1): ?>
+                        
+                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteModal_<?php echo e($topic->id); ?>"><i class="far fa-trash-alt"></i></button>
+                            <div class="modal fade" id="deleteModal_<?php echo e($topic->id); ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <?php echo $__env->make('components.deleteCheck',['typeDelete'=>'topic','id'=>$topic->id,'title'=>$topic->topic_title], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                            </div>
+                        <?php else: ?>
+                            <small> Thema ist bereits veröffentlicht, Löschen ist nicht mehr möglich </small>
                     <?php endif; ?>
                 </td>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

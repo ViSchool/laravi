@@ -56,7 +56,10 @@
             <?php break; ?>
 
             <?php case ('topic'): ?>
-               Second case...
+               <form method="POST" action="/lehrer/newTopicDelete/<?php echo e($id); ?>">
+                  <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
+			         <button class="form-control btn btn-info" type="submit"> Thema löschen</button>
+		         </form>
             <?php break; ?>
 
             <?php case ('unit'): ?>

@@ -204,9 +204,14 @@ class TopicController extends Controller
     public function destroy($id)
     {
         $topic = Topic::findOrFail($id);
+        if($topic->unit->count() > 0) {
+            Session::flash('message', "Das Thema konnte nicht gelöscht werden, weil noch Lerneinheiten zu diesem Thema vorhanden sind.");
+            return redirect()->back();
+        } else {
         $topic->subjects()->detach();
         $topic->tags()->detach();
         $topic->delete();
         return redirect()->back();
+        }
     }
 }

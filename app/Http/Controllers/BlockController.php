@@ -106,6 +106,10 @@ class BlockController extends Controller
                 $block->save();
             } 
             
+        } else {
+            $block->differentiation_id = 13;
+            $block->order = $unit->blocks->max('order') + 1;
+            $block->save();
         }
         $block->save();
         

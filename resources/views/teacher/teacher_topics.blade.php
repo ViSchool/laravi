@@ -13,7 +13,9 @@
 
 @section('content')
 
-
+@if (Session::has('message'))
+   <div class="alert alert-warning">{{ Session::get('message') }}</div>
+@endif
 
 <div class="container mt-3">
     <h3>Deine selbst erstellten Themen</h3>
@@ -110,10 +112,16 @@
                 </td>
                 <td>{{$topic->status->status_name}}</td>
                 <td class="text-center">
-                    @if($topic->status_id != 1)
-                        <a href="/lehrer/newTopicDelete/{{$topic->id}}"><i class="fas fa-trash"></i></a>
-                    @else
-                       <small> Thema ist bereits veröffentlicht, Löschen ist nicht mehr möglich </small>
+                    @if (count($topic->unit) > 0)
+                        <small class="text-secondary">Zu diesem Thema gibt es noch Lerneinheiten, Du kannst es deshalb nicht löschen. </small>
+                        @elseif($topic->status_id != 1)
+                        {{-- <a href="/lehrer/newTopicDelete/{{$topic->id}}"><i class="fas fa-trash"></i></a> --}}
+                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteModal_{{$topic->id}}"><i class="far fa-trash-alt"></i></button>
+                            <div class="modal fade" id="deleteModal_{{$topic->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                @include('components.deleteCheck',['typeDelete'=>'topic','id'=>$topic->id,'title'=>$topic->topic_title])
+                            </div>
+                        @else
+                            <small> Thema ist bereits veröffentlicht, Löschen ist nicht mehr möglich </small>
                     @endif
                 </td>
             @endforeach
