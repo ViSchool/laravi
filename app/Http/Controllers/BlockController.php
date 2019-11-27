@@ -105,8 +105,9 @@ class BlockController extends Controller
                 $block->order = $unit->blocks->max('order') + 1;
                 $block->save();
             } 
+            
         }
-        
+        $block->save();
         
         return redirect()->route('teacher.unit.block', ['unit'=> $unit->id]);
     }
