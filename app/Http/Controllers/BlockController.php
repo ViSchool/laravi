@@ -68,7 +68,7 @@ class BlockController extends Controller
         'task' => 'required',
         'time' => 'required'
         ]);
-
+        
         $block = new Block;
         $block->title = $request->block_title;
         $block->task = Purifier::clean($request->task);
@@ -81,9 +81,9 @@ class BlockController extends Controller
         $block->time = $request->time;
         $block->unit_id = $request->unit_id;
         $unit = Unit::find($request->unit_id);
-
         //  if block ist created with differentiation, 
         if (isset($request->differentiation_id)) {
+           
             if ($request->differentiation_id != 13) {
             $block->differentiation_id = $request->differentiation_id;
             $block->order = $unit->blocks->max('order') + 1;
@@ -100,11 +100,11 @@ class BlockController extends Controller
                 $newblock->push();
                 }
             $block->save();
-            }
-        } else {
-            $block->differentiation_id = 13;
-            $block->order = $unit->blocks->max('order') + 1;
-            $block->save();
+            } else {
+                $block->differentiation_id = 13;
+                $block->order = $unit->blocks->max('order') + 1;
+                $block->save();
+            } 
         }
         
         
