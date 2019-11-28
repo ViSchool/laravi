@@ -167,48 +167,56 @@ class BlockController extends Controller
         $this->validate(request(), [
         'block_title' => 'required', 
         'task' => 'required',
-        'differentiation_id'=> 'required',
+        'time' => 'required',
         ]);
+
         $block = Block::findOrFail($id);
         $block->title = $request->block_title;
         $block->task = Purifier::clean($request->task);
         $block->tips = Purifier::clean($request->tipp);
         $block->content_id = $request->chooseContent;
         $block->time = $request->time;
-        if ($block->differentiation_id !== $request->differentiation_id) {
-            if ($block->differentiation_id == 13) {
-            $block->differentiation_id = $request->differentiation_id;
-            $block->save();
-            //get other differentiation_ids from the same group
-            $currentDifferentiation = Differentiation::find($block->differentiation_id);
-            $otherDifferentiations = Differentiation::where([
-                ['differentiation_group',$currentDifferentiation->differentiation_group],
-                ['id','!=',$currentDifferentiation->id]
-            ])->get();
-            //loop over all of them and make for each differentiation a copy of the first task
-            foreach ($otherDifferentiations as $otherDifferentiation) {
-                $newblock = $block->replicate();
-                $newblock->differentiation_id = $otherDifferentiation->id;
-                $newblock->push();
-                }
-            $block->save();
+        if (isset($request->differentiation_id)) {
+            if ($block->differentiation_id !== $request->differentiation_id) {
+                if ($block->differentiation_id == 13) {
+                    $block->differentiation_id = $request->differentiation_id;
+                    $block->save();
+                    //get other differentiation_ids from the same group
+                    $currentDifferentiation = Differentiation::find($block->differentiation_id);
+                    $otherDifferentiations = Differentiation::where([
+                        ['differentiation_group',$currentDifferentiation->differentiation_group],
+                        ['id','!=',$currentDifferentiation->id]
+                    ])->get();
+                    //loop over all of them and make for each differentiation a copy of the first task
+                    foreach ($otherDifferentiations as $otherDifferentiation) {
+                        $newblock = $block->replicate();
+                        $newblock->differentiation_id = $otherDifferentiation->id;
+                        $newblock->push();
+                    }
+                    $block->save();
             
+                } else {
+                    //get other blocks of the same differentiation_group
+                    $currentDifferentiation = Differentiation::find($block->differentiation_id);
+                    $otherDifferentiations = Differentiation::where([
+                        ['differentiation_group',$currentDifferentiation->differentiation_group],
+                        ['id','!=',$currentDifferentiation->id]
+                    ])->pluck('id');
+                    $otherBlocks = Block::where('unit_id',$block->unit_id)->whereIn('differentiation_id',$otherDifferentiations)->get();
+                    //loop over all of them and delete the others
+                    foreach ($otherBlocks as $otherBlock) {
+                        $otherBlock->delete();
+                    }
+                    $block->differentiation_id = $request->differentiation_id;
+                    $block->save();
+                }
             } else {
-            //get other blocks of the same differentiation_group
-            $currentDifferentiation = Differentiation::find($block->differentiation_id);
-            $otherDifferentiations = Differentiation::where([
-                ['differentiation_group',$currentDifferentiation->differentiation_group],
-                ['id','!=',$currentDifferentiation->id]
-            ])->pluck('id');
-            $otherBlocks = Block::where('unit_id',$block->unit_id)->whereIn('differentiation_id',$otherDifferentiations)->get();
-            //loop over all of them and delete the others
-            foreach ($otherBlocks as $otherBlock) {
-                $otherBlock->delete();
-            }
-            $block->differentiation_id = $request->differentiation_id;
+                $block->save();
+            } 
+        } else {
+            $block->differentiation_id = 13;
             $block->save();
-            }
-       }    
+        }        
         
         return redirect()->route('teacher.unit.block',['unit' => $block->unit_id]);
     }
