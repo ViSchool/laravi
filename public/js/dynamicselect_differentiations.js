@@ -2,7 +2,7 @@ $(document).ready(function () {
     var teacherId = {!! json_encode($teacher -> id)!!
 };
 $('select[name="differentiation_group"]').on('change', function () {
-    console.log('etwas hat sich geändert');
+
     var differentiation_group = $(this).val();
     if (differentiation_group) {
         $.ajax({

@@ -2,7 +2,7 @@
 
 @section('stylesheets')
 <script src="/js/showInputs.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
 @endsection
 
 @section('main')
@@ -98,7 +98,7 @@
 				<div class="form-group">
 					<label for="task" class="col-md-6 col-form-label">Tipp (optional):</label>
 					<div class="col-lg-10">
-						<textarea class="form-control mb-3" rows="3" id="tipp" name="tipp" aria-label="tipp" aria-describedby="tipp" autofocus>{{old('tipp')}}</textarea>
+						<textarea class="form-control mb-3 tipp-summernote" rows="3" id="tipp" name="tipp" aria-label="tipp" aria-describedby="tipp" autofocus>{{old('tipp')}}</textarea>
 						@if ($errors->has('tipp'))
 							<span class="help-block">
 								<strong class="text-danger">{{ $errors->first('tipp') }}</strong>
@@ -151,7 +151,7 @@
 @endsection
 
 @section('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
 <script>
 	$(document).ready(function() {
 	$('.task-summernote').summernote({
@@ -162,6 +162,7 @@
 		['para', ['ul', 'ol', 'paragraph']],
 		]
 	});
+	$('.tipp-summernote').summernote();
 	});
 </script>
 

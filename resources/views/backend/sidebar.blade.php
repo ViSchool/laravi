@@ -56,6 +56,9 @@
 		<li class="nav-item">
 			<a class="nav-link" href="/backend/blog"><i class="far fa-edit"></i> Blog</a>
 		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="https://moodle.vischool.net"><i class="fas fa-brain"></i> Moodle</a>
+		</li>
 		
 		<li class="nav-item">
 			 <a class="nav-link" href="{{route('admin.logout')}}"><i class="fas fa-sign-out-alt"></i> Logout</a>

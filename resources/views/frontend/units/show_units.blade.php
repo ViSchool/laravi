@@ -85,7 +85,7 @@
 			@foreach ($blocks as $block)
 			<div class="card my-1" style="border-color:#03c4eb">
 				<!-- CardHeader -->
-				<div class="card-header text-white" role="tab" style="background-image: url('/images/banner.jpg')">
+				<div class="card-header text-white" role="tab" style="background-image: url('/images/tafel_schwarz_banner.jpg')">
 					<div class="row mb-2">
 						@php $ordernumber ++; @endphp
 						<div class="col-8">
@@ -103,7 +103,7 @@
 						</div>
 						<div class="col-2">
 							<div class="d-flex align-items-end flex-row-reverse flex-column">
-								<a class="collapsed" data-toggle="collapse" href="#collapse{{$block->id}}" role="button" aria-expanded="false"aria-controls="collapseTwo" style="color:#ffff00;">
+								<a id="blockCollapse_{{$block->id}}" class="collapsed" data-toggle="collapse" href="#collapse{{$block->id}}" role="button" aria-expanded="false" aria-controls="collapseTwo" style="color:#ffff00;">
 								<i class="fa fa-2x fas fa-plus-circle"></i>
 								</a>
 							</div>
@@ -126,38 +126,40 @@
 									@endif
 
 									@isset ($block->content_id)
-										@php $content = App\Content::findOrFail($block->content_id);@endphp
-										<a href="/content/{{$content->id}}" target="_blank">
-										<div class="card border border-primary w-75">
-											@isset ($content->content_img)
-												<img class="card-img p-2" src="/images/contents/{{$content->content_img}}" alt="Bild:{{$content->content_title}}" style="max-height: 100%; width:auto;">
-												<div class="card-img-overlay d-flex justify-content-center align-items-center">
-													<span class="fa-stack fa-3x card-text">
-														<i class="fas fa-square fa-inverse fa-stack-2x"></i>
-														<i class="far fa-play-circle  fa-stack-1x"></i>
-													</span>
-												</div>
-											@endisset 
-											@empty ($content->content_img) 
-												@switch($content->tool_id)
-													@case(1)
-														<img class="p-4 card-img" src="https://img.youtube.com/vi/{{$content->toolspecific_id}}/mqdefault.jpg">
-														<div class="card-img-overlay d-flex justify-content-center align-items-center">
-															<span class="fa-stack fa-3x card-text">
-																<i class="fas fa-square fa-inverse fa-stack-2x"></i>
-																<i class="far fa-play-circle  fa-stack-1x"></i>
-															</span>
-														</div>
-													@break
-													@case(6)
-														<img class="p-2 card-img" src="/images/topic_back.jpeg">
-														<div class="card-img-overlay d-flex justify-content-center align-items-center">
-															<p class="text-white">{{$content->content_title}}</p>
-															<p>
+										@php 
+											$content = App\Content::findOrFail($block->content_id);
+										@endphp
+										<a onclick="storeBlock({{$block->id}})" href="/content/{{$content->id}}" target="_self">
+											<div class="card border border-primary w-75">
+												@isset ($content->content_img)
+													<img class="card-img p-2" src="/images/contents/{{$content->content_img}}" alt="Bild:{{$content->content_title}}" style="max-height: 100%; width:auto;">
+													<div class="card-img-overlay d-flex justify-content-center align-items-center">
+														<span class="fa-stack fa-3x card-text">
+															<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+															<i class="far fa-play-circle  fa-stack-1x"></i>
+														</span>
+													</div>
+												@endisset 
+												@empty ($content->content_img) 
+													@switch($content->tool_id)
+														@case(1)
+															<img class="p-4 card-img" src="https://img.youtube.com/vi/{{$content->toolspecific_id}}/mqdefault.jpg">
+															<div class="card-img-overlay d-flex justify-content-center align-items-center">
 																<span class="fa-stack fa-3x card-text">
 																	<i class="fas fa-square fa-inverse fa-stack-2x"></i>
 																	<i class="far fa-play-circle  fa-stack-1x"></i>
 																</span>
+															</div>
+														@break
+														@case(6)
+															<img class="p-2 card-img" src="/images/topic_back.jpeg">
+															<div class="card-img-overlay d-flex justify-content-center align-items-center">
+																<p class="text-white">{{$content->content_title}}</p>
+																<p>
+																	<span class="fa-stack fa-3x card-text">
+																		<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+																		<i class="far fa-play-circle  fa-stack-1x"></i>
+																	</span>
 															</p>
 														</div>
 													@break
@@ -223,7 +225,7 @@
 			<!-- LAST BLOCK Review -->
 			<div class="card my-1" style="border-color:#03c4eb">
 				<!-- CardHeader Review Unit -->
-				<div class="card-header text-white" role="tab" style="background-image: url('/images/banner.jpg')">
+				<div class="card-header text-white" role="tab" style="background-image: url('/images/tafel_schwarz_banner.jpg')">
 					<div class="row mb-2">
 						<div class="col-8">
 							<small>Letzte Aufgabe</small>
@@ -370,4 +372,21 @@
 })
 </script>
 
+<script>
+//wenn man den Link von einem Inhalt drückt
+function storeBlock($id) {
+//soll die BlockID in einer Sessionvariable gespeichert werden
+	sessionStorage.setItem('block',$id);
+}
+</script>
+<script>
+$(document).ready(function() {
+	if (sessionStorage.getItem('block') != null) {
+		var id = sessionStorage.getItem('block');
+		var expandedBlock = document.getElementById('collapse' + id);
+		expandedBlock.classList.add("show");
+		sessionStorage.clear();
+	}
+}); 
+</script>
 @endsection

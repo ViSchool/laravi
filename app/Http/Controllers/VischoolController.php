@@ -60,7 +60,7 @@ class VischoolController extends BaseController
 			$privateTopics = [];
 		}
 		$klassenstufeTags = Tag::where('tag_group','Klassenstufe')->get();
-		return view('frontend.subjects.subject_topics', compact('subject', 'publicTopics','privateTopics','klassenstufeTags','topicsCount'));
+		return view('frontend.subjects.subject_topics', compact('subject', 'publicTopics','privateTopics','klassenstufeTags'));
 	} 
 	
 
@@ -138,52 +138,56 @@ class VischoolController extends BaseController
 		if(empty($video)) {
 			$aspect_ratio = "16by9";
 		}
+	} else {
+		$aspect_ratio = [];
 	};
+	
 	//get reviews
 	$reviews = Review::where('content_id',$id)->get();
 	$average_score = $reviews->avg('overall_score');
 	
 	//get random question
-	
+
 	$questions = Question::where('content_id',$id)->get()->isNotEmpty();
 	if($questions == true){
-	$question = Question::where('content_id',$id)->get()->random();
-	$finalResult = 0;
-	$correctAnswers = 0;
-	if (isset($question->answer1)) {
-	$finalResult ++;
-		if($question->solution1 == 1){
-			$correctAnswers++;
+		$question = Question::where('content_id',$id)->get()->random();
+		$finalResult = 0;
+		$correctAnswers = 0;
+		
+		if (isset($question->answer1)) {
+			$finalResult ++;
+			if($question->solution1 == 1){
+				$correctAnswers++;
+			}
 		}
-	}
-	if (isset($question->answer2)) {
-	$finalResult ++;
-		if($question->solution2 == 1){
-			$correctAnswers++;
+		if (isset($question->answer2)) {
+			$finalResult ++;
+			if($question->solution2 == 1){
+				$correctAnswers++;
+			}
 		}
-	}
-	if (isset($question->answer3)) {
-	$finalResult ++;
-		if($question->solution3 == 1){
-			$correctAnswers++;
+		if (isset($question->answer3)) {
+			$finalResult ++;
+			if($question->solution3 == 1){
+				$correctAnswers++;
+			}
 		}
-	}
-	if (isset($question->answer4)) {
-	$finalResult ++;
-		if($question->solution4 == 1){
-			$correctAnswers++;
+		if (isset($question->answer4)) {
+			$finalResult ++;
+			if($question->solution4 == 1){
+				$correctAnswers++;
+			}
 		}
-	}
-	if (isset($question->answer5)) {
-	$finalResult ++;
-		if($question->solution5 == 1){
-			$correctAnswers++;
+		if (isset($question->answer5)) {
+			$finalResult ++;
+			if($question->solution5 == 1){
+				$correctAnswers++;
+			}
 		}
-	}
-	}
-	else {
+	} else {
 		$question = null;
 		$finalResult = null;
+		$correctAnswers = null;
 	}
 
 	$relatedContents = Content::where([

@@ -391,6 +391,10 @@ class ContentController extends Controller
 			case 8: //geogebra
 				$content->type_id = 7;
 				break;
+			case 10: //h5p moodle
+				$content->toolspecific_id = Content::parse_h5p_moodle($request->content_link);
+				$content->type_id = 7;
+				break;
         	}
 		$content->user_id = request('user_id');
 		$content->subject_id = request('subject_id');

@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('stylesheets')
-
+<link rel="stylesheet" href="/css/editor.css">
 @endsection
 
 @section('page-header')
@@ -158,8 +158,8 @@
                     <label for="task" class="col-10 col-form-label mt-0 pt-0">
                         <small class="text-muted"> Hier kannst Du den Schülern noch einen Tipp für Ihre Aufgabe mitgeben.</small>
                     </label>
-                    <div class="col-10">
-                        <textarea id="tipp" class="form-control" name="tipp">{{old('tipp')}}</textarea>
+                    <div class="col-10" >
+                        <textarea id="tipp-editor" rows="3" class="form-control tipp-summernote" name="tipp" >{{old('tipp')}}</textarea>
                         @if ($errors->has('tipp'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('tipp') }}</strong>
@@ -217,8 +217,43 @@
 @endsection
 
 @section('scripts')
+
+<script src="{{asset('js/editor.js')}}"></script>
 <script src="{{asset('js/ddd_subject_topic.js')}}"></script>
 <script src="{{asset('js/unit_choose_existing_content.js')}}"></script>
 <script src="{{asset('js/unit_choose_new_content.js')}}"></script>
 <script src="{{asset('js/unit_delete_chosen_content.js')}}"></script>
+
+<script>
+    $(document).ready(function() {
+        $("#tipp-editor").Editor(
+            {
+                'fonts': false,
+                'styles': false,
+                'l_align': false,
+                'r_align':false,
+                'c_align':false,
+                'justify':false, 
+                'insert-img':false,
+                'insert_table':false,
+                'print':false, 
+                'select_all':false,
+                'indent':false,
+                'outdent':false,
+                'undo':false,
+                'redo':false,
+                'source':false,
+                'font_size':false,
+                'color': false,
+                'block_quote':false,
+                'ol':false,
+                'ul':false,
+                'hr_line':false,
+                'rm_format':false,
+                'togglescreen':false,
+            }
+        );
+    }); 
+</script>
+
 @endsection

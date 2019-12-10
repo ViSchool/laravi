@@ -101,4 +101,18 @@ class Content extends Model
 	preg_match($pattern, $url, $matches);
 	return isset($matches[1]) ? $matches[1] : false;
 	}
+
+	public static function parse_h5p_moodle($url) 
+	{
+	$pattern = '#^(?:https:\/\/)(?:moodle\.vischool.net\/mod\/hvp\/view\.php\?id=|moodle\.vischool.net\/mod\/hvp\/embed\.php\?id=)([\d]+)#';
+	preg_match($pattern, $url, $matches);
+	return isset($matches[1]) ? $matches[1] : false;
+	}
+
+	// public static function parse_kahoot($url) 
+	// {
+	// $pattern = '#^(?:https:\/\/)(?:moodle\.vischool.net\/mod\/hvp\/view\.php\?id=|moodle\.vischool.net\/mod\/hvp\/embed\.php\?id=)([\d]+)#';
+	// preg_match($pattern, $url, $matches);
+	// return isset($matches[1]) ? $matches[1] : false;
+	// }
 }

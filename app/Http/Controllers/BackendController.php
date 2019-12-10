@@ -23,7 +23,8 @@ class BackendController extends Controller
     
     public function index() 
     {
-    	$mistakes = Mistake::admin_mistake();
+		$admin = Auth::guard('admin')->user();
+		$mistakes = Mistake::admin_mistake();
 		$nrSubjects = Subject::all()->count();
     	$nrTopics = Topic::all()->count();
     	$nrContents = Content::all()->count();
