@@ -82,7 +82,7 @@
                                             <a class="dropdown-item" title="Auf meiner privaten Lehrerseite veröffentlichen" href="/lehrer/newUnitPrivate/<?php echo e($unit->id); ?>"><i class="fas fa-user-check"></i> Auf meiner privaten Seite veröffentlichen</a>
                                     <?php endswitch; ?>
 
-                                    <?php if($unit->status_id == 5): ?>
+                                    <?php if($unit->status_id > 2): ?>
                                         <a class="dropdown-item" title="Lerneinheit bearbeiten" href="/lehrer/lerneinheiten/bearbeiten/<?php echo e($unit->id); ?>"><i class="far fa-edit"></i> Lerneinheit bearbeiten</a>
                                     <?php endif; ?>
                                     <button class="disabled dropdown-item" type="button" title="Eine Vorschau der Lerneinheit einblenden" data-toggle="modal" data-target="#previewModal"><i class="fas fa-glasses"></i> Vorschau</button>

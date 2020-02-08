@@ -1,5 +1,5 @@
 <?php $__env->startSection('stylesheets'); ?>
-
+<link rel="stylesheet" href="/css/editor.css">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('page-header'); ?>
@@ -156,8 +156,8 @@
                     <label for="task" class="col-10 col-form-label mt-0 pt-0">
                         <small class="text-muted"> Hier kannst Du den Schülern noch einen Tipp für Ihre Aufgabe mitgeben.</small>
                     </label>
-                    <div class="col-10">
-                        <textarea id="tipp" class="form-control" name="tipp"><?php echo e(old('tipp')); ?></textarea>
+                    <div class="col-10" >
+                        <textarea id="tipp-editor" rows="3" class="form-control tipp-summernote" name="tipp" ><?php echo e(old('tipp')); ?></textarea>
                         <?php if($errors->has('tipp')): ?>
                             <span class="help-block">
                                 <strong><?php echo e($errors->first('tipp')); ?></strong>
@@ -215,10 +215,45 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
+
+<script src="<?php echo e(asset('js/editor.js')); ?>"></script>
 <script src="<?php echo e(asset('js/ddd_subject_topic.js')); ?>"></script>
 <script src="<?php echo e(asset('js/unit_choose_existing_content.js')); ?>"></script>
 <script src="<?php echo e(asset('js/unit_choose_new_content.js')); ?>"></script>
 <script src="<?php echo e(asset('js/unit_delete_chosen_content.js')); ?>"></script>
+
+<script>
+    $(document).ready(function() {
+        $("#tipp-editor").Editor(
+            {
+                'fonts': false,
+                'styles': false,
+                'l_align': false,
+                'r_align':false,
+                'c_align':false,
+                'justify':false, 
+                'insert-img':false,
+                'insert_table':false,
+                'print':false, 
+                'select_all':false,
+                'indent':false,
+                'outdent':false,
+                'undo':false,
+                'redo':false,
+                'source':false,
+                'font_size':false,
+                'color': false,
+                'block_quote':false,
+                'ol':false,
+                'ul':false,
+                'hr_line':false,
+                'rm_format':false,
+                'togglescreen':false,
+            }
+        );
+    }); 
+</script>
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/teacher/teacher_blocksCreate.blade.php ENDPATH**/ ?>

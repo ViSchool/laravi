@@ -20,7 +20,10 @@
             @break 
          
             @case('content')
-               Second case...
+               <form method="POST" action="/backend/contents/{{$id}}">
+                  @csrf @method('DELETE')
+			         <button class=" form-control btn btn-warning" type="submit"> Inhalt löschen</button>
+		         </form>
             @break
 
             @case('differentiation')

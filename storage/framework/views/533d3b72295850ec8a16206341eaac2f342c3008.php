@@ -83,7 +83,7 @@
 			<?php $__currentLoopData = $blocks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $block): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 			<div class="card my-1" style="border-color:#03c4eb">
 				<!-- CardHeader -->
-				<div class="card-header text-white" role="tab" style="background-image: url('/images/banner.jpg')">
+				<div class="card-header text-white" role="tab" style="background-image: url('/images/tafel_schwarz_banner.jpg')">
 					<div class="row mb-2">
 						<?php $ordernumber ++; ?>
 						<div class="col-8">
@@ -101,7 +101,7 @@
 						</div>
 						<div class="col-2">
 							<div class="d-flex align-items-end flex-row-reverse flex-column">
-								<a class="collapsed" data-toggle="collapse" href="#collapse<?php echo e($block->id); ?>" role="button" aria-expanded="false"aria-controls="collapseTwo" style="color:#ffff00;">
+								<a id="blockCollapse_<?php echo e($block->id); ?>" class="collapsed" data-toggle="collapse" href="#collapse<?php echo e($block->id); ?>" role="button" aria-expanded="false" aria-controls="collapseTwo" style="color:#ffff00;">
 								<i class="fa fa-2x fas fa-plus-circle"></i>
 								</a>
 							</div>
@@ -125,38 +125,40 @@
 									<?php endif; ?>
 
 									<?php if(isset($block->content_id)): ?>
-										<?php $content = App\Content::findOrFail($block->content_id);?>
-										<a href="/content/<?php echo e($content->id); ?>" target="_blank">
-										<div class="card border border-primary w-75">
-											<?php if(isset($content->content_img)): ?>
-												<img class="card-img p-2" src="/images/contents/<?php echo e($content->content_img); ?>" alt="Bild:<?php echo e($content->content_title); ?>" style="max-height: 100%; width:auto;">
-												<div class="card-img-overlay d-flex justify-content-center align-items-center">
-													<span class="fa-stack fa-3x card-text">
-														<i class="fas fa-square fa-inverse fa-stack-2x"></i>
-														<i class="far fa-play-circle  fa-stack-1x"></i>
-													</span>
-												</div>
-											<?php endif; ?> 
-											<?php if(empty($content->content_img)): ?> 
-												<?php switch($content->tool_id):
-													case (1): ?>
-														<img class="p-4 card-img" src="https://img.youtube.com/vi/<?php echo e($content->toolspecific_id); ?>/mqdefault.jpg">
-														<div class="card-img-overlay d-flex justify-content-center align-items-center">
-															<span class="fa-stack fa-3x card-text">
-																<i class="fas fa-square fa-inverse fa-stack-2x"></i>
-																<i class="far fa-play-circle  fa-stack-1x"></i>
-															</span>
-														</div>
-													<?php break; ?>
-													<?php case (6): ?>
-														<img class="p-2 card-img" src="/images/topic_back.jpeg">
-														<div class="card-img-overlay d-flex justify-content-center align-items-center">
-															<p class="text-white"><?php echo e($content->content_title); ?></p>
-															<p>
+										<?php 
+											$content = App\Content::findOrFail($block->content_id);
+										?>
+										<a onclick="storeBlock(<?php echo e($block->id); ?>)" href="/content/<?php echo e($content->id); ?>" target="_self">
+											<div class="card border border-primary w-75">
+												<?php if(isset($content->content_img)): ?>
+													<img class="card-img p-2" src="/images/contents/<?php echo e($content->content_img); ?>" alt="Bild:<?php echo e($content->content_title); ?>" style="max-height: 100%; width:auto;">
+													<div class="card-img-overlay d-flex justify-content-center align-items-center">
+														<span class="fa-stack fa-3x card-text">
+															<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+															<i class="far fa-play-circle  fa-stack-1x"></i>
+														</span>
+													</div>
+												<?php endif; ?> 
+												<?php if(empty($content->content_img)): ?> 
+													<?php switch($content->tool_id):
+														case (1): ?>
+															<img class="p-4 card-img" src="https://img.youtube.com/vi/<?php echo e($content->toolspecific_id); ?>/mqdefault.jpg">
+															<div class="card-img-overlay d-flex justify-content-center align-items-center">
 																<span class="fa-stack fa-3x card-text">
 																	<i class="fas fa-square fa-inverse fa-stack-2x"></i>
 																	<i class="far fa-play-circle  fa-stack-1x"></i>
 																</span>
+															</div>
+														<?php break; ?>
+														<?php case (6): ?>
+															<img class="p-2 card-img" src="/images/topic_back.jpeg">
+															<div class="card-img-overlay d-flex justify-content-center align-items-center">
+																<p class="text-white"><?php echo e($content->content_title); ?></p>
+																<p>
+																	<span class="fa-stack fa-3x card-text">
+																		<i class="fas fa-square fa-inverse fa-stack-2x"></i>
+																		<i class="far fa-play-circle  fa-stack-1x"></i>
+																	</span>
 															</p>
 														</div>
 													<?php break; ?>
@@ -222,7 +224,7 @@
 			<!-- LAST BLOCK Review -->
 			<div class="card my-1" style="border-color:#03c4eb">
 				<!-- CardHeader Review Unit -->
-				<div class="card-header text-white" role="tab" style="background-image: url('/images/banner.jpg')">
+				<div class="card-header text-white" role="tab" style="background-image: url('/images/tafel_schwarz_banner.jpg')">
 					<div class="row mb-2">
 						<div class="col-8">
 							<small>Letzte Aufgabe</small>
@@ -369,6 +371,23 @@
 })
 </script>
 
+<script>
+//wenn man den Link von einem Inhalt drückt
+function storeBlock($id) {
+//soll die BlockID in einer Sessionvariable gespeichert werden
+	sessionStorage.setItem('block',$id);
+}
+</script>
+<script>
+$(document).ready(function() {
+	if (sessionStorage.getItem('block') != null) {
+		var id = sessionStorage.getItem('block');
+		var expandedBlock = document.getElementById('collapse' + id);
+		expandedBlock.classList.add("show");
+		sessionStorage.clear();
+	}
+}); 
+</script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('/layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/frontend/units/show_units.blade.php ENDPATH**/ ?>

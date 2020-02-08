@@ -20,7 +20,10 @@
             <?php break; ?> 
          
             <?php case ('content'): ?>
-               Second case...
+               <form method="POST" action="/backend/contents/<?php echo e($id); ?>">
+                  <?php echo csrf_field(); ?> <?php echo method_field('DELETE'); ?>
+			         <button class=" form-control btn btn-warning" type="submit"> Inhalt löschen</button>
+		         </form>
             <?php break; ?>
 
             <?php case ('differentiation'): ?>

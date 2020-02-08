@@ -37,7 +37,7 @@ Einen neuen Inhalt erstellen</button>
 <div class="container my-4">
     <hr> 
     <h3>Diese Inhalte hast Du bereits erstellt:</h3>
-    @foreach ($contentsBySubject as $subject_id => $contents)
+    {{-- @foreach ($contentsBySubject as $subject_id => $contents)
     @php $subject = App\Subject::findOrFail($subject_id);@endphp
         <h3 class="mt-3 text-brand-blue">{{$subject->subject_title}}</h3>
         <div class="row justify-content-start">
@@ -126,7 +126,54 @@ Einen neuen Inhalt erstellen</button>
         </div> 
         <hr>   
     @endforeach  
-	
+     --}}
+     
+    @foreach ($contentsBySubject as $subject_id => $contents)
+    @php $subject = App\Subject::findOrFail($subject_id);@endphp
+        <h3 class="mt-3 text-brand-blue">{{$subject->subject_title}}</h3>
+        <div class="table">
+            <table class="table-responsive-sm table-striped my-5 w-100">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col">Name des Inhalts</th>
+                        <th scope="col">Thema</th>
+                        <th scope="col">Tool/Hoster</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Löschen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($contents as $content)
+                        <tr>
+                            <td><button class="btn btn-link m-0 p-0 text-left" data-toggle="modal" data-target="#editContentModal">{{$content->content_title}}</button></td>
+                            <td><small> {{$content->topic->topic_title}}</small></td>
+                            <td><small> {{$content->tool->tool_title}}</small></td>
+                            <td><small> {{$content->status->status_name}}</small></td>
+                            <td>
+                                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteModal_{{$content->id}}"><i class="far fa-trash-alt"></i></button>
+                                <div class="modal fade" id="deleteModal_{{$content->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    @include('components.deleteCheck',['typeDelete'=>'content','id'=>$content->id,'title'=>$content->content_title])
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            
+                        </tr>
+                        
+                        @component('teacher.teacher_components.editContentModal',['content'=>$content, 'teacher'=>$teacher, 'tools'=>$tools, 'subjects'=>$subjects])   
+                        @endcomponent
+                    @endforeach
+                </tbody>
+            </table>
+
+        </div>
+        
+
+					
+    @endforeach  
+	    
+
+
 </div>
 @endsection
 

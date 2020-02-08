@@ -10,7 +10,7 @@
 					<h1 class="mt-3 text-info">ViSchool für Lehrer</h1>
 					<h3 class="lead text-white">Du willst digitaler unterrichten, hast aber keine Zeit oder Erfahrung? Starte mit fertigen Lerneinheiten oder lass Dich von uns <a href="#coaching">kostenlos</a> zu Deinen eigenen Unterrichtsideen beraten.</h3>
 					<p class="text-center">
-						<a href="/lehrer/register_soon" class="btn btn-primary my-2">Als Lehrer bei ViSchool anmelden</a>
+						<a href="/register" class="btn btn-primary my-2">Als Lehrer bei ViSchool anmelden</a>
 					</p>
 					</div>
 					

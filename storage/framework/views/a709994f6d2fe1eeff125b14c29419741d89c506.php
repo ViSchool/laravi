@@ -76,6 +76,14 @@
 					</div>
 				<?php break; ?>
 				
+				<?php case (10): ?> 
+					<div style="overflow:auto;-webkit-overflow-scrolling:touch">
+						<p><iframe src="https://moodle.vischool.net/mod/hvp/embed.php?id=<?php echo e($content->toolspecific_id); ?>" frameborder="0" allowfullscreen="allowfullscreen" style="width:70% "></iframe><script src="https://moodle.vischool.net/mod/hvp/library/js/h5p-resizer.js" charset="UTF-8"></script></p>
+					</div>
+					<div class="row">
+						<button class="btn btn-primary" onClick="window.print()">Ergebnisse drucken/speichern</button>
+					</div>
+				<?php break; ?>
 			<?php endswitch; ?>
 		</div>	
 	</div>
@@ -86,6 +94,19 @@
 				<button type="button" class="btn-sm btn-info" id="question"> Alles verstanden? Teste Dich selbst!</button>
 			</div>
 		</div>
+	</div>
+	<?php endif; ?>
+	<?php
+		 $previous = URL::previous();
+		 if(strpos($previous, 'lerneinheit')) {
+			 $back = 1;
+		 } else {
+			 $back = 0;
+		 }
+	?>
+	<?php if($back == 1): ?>
+	<div class="d-flex justify-content-center mt-3">
+		<a href="<?php echo e(URL::previous()); ?>" class="btn-sm btn-warning btn-block text-center" id="back"> Zurück zur Lerneinheit</a>
 	</div>
 	<?php endif; ?>
 	<hr>

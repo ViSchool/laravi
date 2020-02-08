@@ -35,98 +35,54 @@ Einen neuen Inhalt erstellen</button>
 <div class="container my-4">
     <hr> 
     <h3>Diese Inhalte hast Du bereits erstellt:</h3>
+    
+     
     <?php $__currentLoopData = $contentsBySubject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject_id => $contents): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
     <?php $subject = App\Subject::findOrFail($subject_id);?>
         <h3 class="mt-3 text-brand-blue"><?php echo e($subject->subject_title); ?></h3>
-        <div class="row justify-content-start">
-            
-            <?php $__currentLoopData = $contents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $content): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div class="col">
-				<div class="card m-3" style="width:200px">
-					<?php if(isset($content->content_img_thumb)): ?>
-						<a href="/content/<?php echo e($content->id); ?>"><img class="card-img-top" src="/images/contents/<?php echo e($content->content_img); ?>" alt="Bild:<?php echo e($content->content_title); ?>"></img></a>
-					<?php endif; ?>
-					<?php if(empty($content->content_img_thumb)): ?> 
-						<?php switch($content->tool_id):
-							case (1): ?>
-								<a href="/content/<?php echo e($content->id); ?>"><img class="card-img-top" src="https://img.youtube.com/vi/<?php echo e($content->toolspecific_id); ?>/mqdefault.jpg"></img></a>
-							<?php break; ?>
-							<?php case (7): ?>
-								<a href="/content/<?php echo e($content->id); ?>"><img class="card-img-top" src="<?php echo e($content->img_thumb_url); ?>"></img></a>
-							<?php break; ?>
-							<?php default: ?>
-								<?php if(isset($content->portal->portal_img)): ?>
-								<a href="/content/<?php echo e($content->id); ?>"><img class="card-img-top" src="/images/portals/<?php echo e($content->portal->portal_img); ?>"></img></a>
-								<?php endif; ?>
-						<?php endswitch; ?>
-					<?php endif; ?>	
-					<div class="card-body">
-						<a href="/content/<?php echo e($content->id); ?>"><h4 class="card-title"><?php echo e($content->content_title); ?></h4></a>
-						<p class="card-text">
-                            <?php 
-                            $reviews = App\Review::where('content_id',$content->id)->get();
-                            $average_score = $reviews->avg('overall_score');
-                            ?>
-                            <!-- Sternchenbewertung auf Inhalte-Card -->
-                            <?php if($average_score > 0): ?>
-                                <?php $rating = $average_score ?>  
-                                <?php $__currentLoopData = range(1,5); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <span class="fa-stack" style="width:1em" data-toggle="tooltip" data-placement="top" title="Durchschnittliche Bewertung">
-                                        <i class="far fa-star fa-stack-1x"></i>
+        <div class="table">
+            <table class="table-responsive-sm table-striped my-5 w-100">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col">Name des Inhalts</th>
+                        <th scope="col">Thema</th>
+                        <th scope="col">Tool/Hoster</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Löschen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $__currentLoopData = $contents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $content): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <tr>
+                            <td><button class="btn btn-link m-0 p-0 text-left" data-toggle="modal" data-target="#editContentModal"><?php echo e($content->content_title); ?></button></td>
+                            <td><small> <?php echo e($content->topic->topic_title); ?></small></td>
+                            <td><small> <?php echo e($content->tool->tool_title); ?></small></td>
+                            <td><small> <?php echo e($content->status->status_name); ?></small></td>
+                            <td>
+                                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteModal_<?php echo e($content->id); ?>"><i class="far fa-trash-alt"></i></button>
+                                <div class="modal fade" id="deleteModal_<?php echo e($content->id); ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <?php echo $__env->make('components.deleteCheck',['typeDelete'=>'content','id'=>$content->id,'title'=>$content->content_title], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            
+                        </tr>
+                        
+                        <?php $__env->startComponent('teacher.teacher_components.editContentModal',['content'=>$content, 'teacher'=>$teacher, 'tools'=>$tools, 'subjects'=>$subjects]); ?>   
+                        <?php echo $__env->renderComponent(); ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </tbody>
+            </table>
 
-                                        <?php if($rating >0): ?>
-                                            <?php if($rating >0.5): ?>
-                                                <i class="fas fa-star fa-stack-1x"></i>
-                                            <?php else: ?>
-                                                <i class="fas fa-star-half fa-stack-1x"></i>
-                                            <?php endif; ?>
-                                        <?php endif; ?>
-                                        <?php $rating--; ?>
-                                    </span>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            <?php endif; ?>
-                        </p>
-                    </div>
-  					
-                    <div class="card-footer d-flex justify-content-between">
-                        <small class="text-muted">
-                            <i class="<?php echo e($content->type->type_icon); ?> "></i>
-                            <?php echo e($content->type->content_type); ?>
+        </div>
+        
 
-                        </small>
-                          
-                    </div>
-                    <div class="card-footer 
-                    <?php if($content->status_id == 5): ?>
-                        bg-warning 
-                    <?php elseif($content->status_id == 4): ?>
-                        bg-info text-white
-                    <?php elseif($content->status_id == 3): ?>
-                        bg-warning 
-                    <?php elseif($content->status_id == 2): ?>
-                        bg-info text-white
-                    <?php elseif($content->status_id == 1): ?>
-                        bg-success text-white
-                    <?php endif; ?>                        
-                    d-flex justify-content-between">
-                        <small>
-                            <i class="<?php echo e($content->status->status_icon); ?>"></i>
-                            <?php echo e($content->status->status_name); ?>
-
-                        </small> 
-                        <?php if($content->status_id == 5): ?>
-                            <a title="Inhalt bestätigen und auf der privaten Seite veröffentlichen" href="/lehrer/newContentPrivate/<?php echo e($content->id); ?>"><i class="fas fa-thumbs-up"></i></a>
-                        <?php elseif($content->status_id == 3): ?>
-                            <small><a title="An ViSchool zur Veröffentlichung schicken" href="/lehrer/newContentViSchool/<?php echo e($content->id); ?>" ><i class="fas fa-upload"></i></a></small>
-                        <?php endif; ?>
-                    </div>	
-                </div>
-            </div>  
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </div> 
-        <hr>   
+					
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
-	
+	    
+
+
 </div>
 <?php $__env->stopSection(); ?>
 

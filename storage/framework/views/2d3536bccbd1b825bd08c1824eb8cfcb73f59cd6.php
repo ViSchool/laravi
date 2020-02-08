@@ -81,5 +81,7 @@
         </div>  
     </div>  
 </section>
+
+<iframe src="https://moodle.vischool.net/mod/hvp/embed.php?id=2" width="930" height="584" frameborder="0" allowfullscreen="allowfullscreen"></iframe><script src="https://moodle.vischool.net/mod/hvp/library/js/h5p-resizer.js" charset="UTF-8"></script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/teacher/faq.blade.php ENDPATH**/ ?>
