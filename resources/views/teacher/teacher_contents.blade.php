@@ -145,7 +145,7 @@ Einen neuen Inhalt erstellen</button>
                 <tbody>
                     @foreach ($contents as $content)
                         <tr>
-                            <td><button class="btn btn-link m-0 p-0 text-left" data-toggle="modal" data-target="#editContentModal">{{$content->content_title}}</button></td>
+                        <td><button class="btn btn-link m-0 p-0 text-left" data-toggle="modal" data-target="#editContentModal_{{$content->id}}">{{$content->content_title}}</button></td>
                             <td><small> {{$content->topic->topic_title}}</small></td>
                             <td><small> {{$content->tool->tool_title}}</small></td>
                             <td><small> {{$content->status->status_name}}</small></td>

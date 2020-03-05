@@ -54,7 +54,7 @@ Einen neuen Inhalt erstellen</button>
                 <tbody>
                     <?php $__currentLoopData = $contents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $content): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td><button class="btn btn-link m-0 p-0 text-left" data-toggle="modal" data-target="#editContentModal"><?php echo e($content->content_title); ?></button></td>
+                        <td><button class="btn btn-link m-0 p-0 text-left" data-toggle="modal" data-target="#editContentModal"><?php echo e($content->content_title); ?></button></td>
                             <td><small> <?php echo e($content->topic->topic_title); ?></small></td>
                             <td><small> <?php echo e($content->tool->tool_title); ?></small></td>
                             <td><small> <?php echo e($content->status->status_name); ?></small></td>
