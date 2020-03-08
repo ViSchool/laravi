@@ -66,7 +66,7 @@
 							<td><small>Lerneinheit</small></td>
 							<td><small>{{$unit->unit_title}}</small></td>
 							<td><small>{{$unit->user->user_name}}</small></td>
-							<td><a class="btn-sm btn-primary" href="backend/units/approve/{{$unit->id}}">Freigeben</a></td>	
+							<td><a class="btn-sm btn-primary" href="/backend/units/approve/{{$unit->id}}">Freigeben</a></td>	
 						</tr>
 					@endforeach
 				@endif

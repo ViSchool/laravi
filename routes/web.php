@@ -302,7 +302,7 @@ Route::get('/backend/units/{unit}', 'UnitBackendController@show')->name('backend
 Route::post('/backend/units', 'UnitBackendController@store')->name('backend.units.store');
 Route::delete('/backend/units/{unit}','UnitBackendController@destroy')->name('backend.units.destroy');
 Route::patch('/backend/units/{unit}','UnitBackendController@update')->name('backend.units.update');
-Route::get('backend/units/approve/{unit}','UnitBackendController@teacherUnitApprove');
+Route::get('/backend/units/approve/{unit}','UnitBackendController@teacherUnitApprove');
 
 /*Routes for block database backend*/
 Route::get('/backend/blocks/{unit}/create1', 'BlockBackendController@create_step1')->name('backend.blocks.create_step1');
