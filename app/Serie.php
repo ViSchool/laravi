@@ -22,6 +22,11 @@ class Serie extends Model
 		return $this->hasMany(Unit::class);
 	}
 	
+	public function user()
+	{
+		return $this->belongsTo('App\User');
+	}
+
 	public static function prettyDate($date) 
 	{
 		return $date->diffForHumans();
