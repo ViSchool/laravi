@@ -82,7 +82,7 @@
 				@else
 					@foreach ($status->series as $serie)
 						<tr>
-							<td><small>Lerneinheit</small></td>
+							<td><small>Serie</small></td>
 							<td><small>{{$serie->serie_title}}</small></td>
 							<td><small>{{$serie->user->user_name}}</small></td>
 							<td><a class="btn-sm btn-primary" href="/backend/series/approve/{{$serie->id}}">Freigeben</a></td>	
