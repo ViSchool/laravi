@@ -423,6 +423,7 @@ public function update_orderdown($id)
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function destroy($id)
     {
         $block = Block::findOrFail($id);

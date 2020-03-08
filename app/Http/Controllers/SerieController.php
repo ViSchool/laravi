@@ -118,6 +118,15 @@ class SerieController extends Controller
 		return redirect()->route('backend.series.index');
     }
 
+    public function teacherSerieApprove($id)
+    {
+        $serie = Serie::findOrFail($id);
+        $serie->status_id = 1;
+        $serie->save();	
+       	//return to overview of topics
+        return redirect()->back();
+    }
+
     /**
      * Remove the specified resource from storage.
      *

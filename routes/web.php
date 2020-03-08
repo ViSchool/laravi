@@ -275,7 +275,7 @@ Route::post('/backend/series', 'SerieController@store');
 Route::get('/backend/series/{serie}', 'SerieController@show');
 Route::delete('/backend/series/{serie}','SerieController@destroy')->name('series.destroy');
 Route::patch('/backend/series/{serie}','SerieController@update')->name('series.update');
-
+Route::get('/backend/series/approve/{serie}','SerieController@teacherSerieApprove');
 
 /*Routes for tools database*/
 Route::get('/backend/tools', 'ToolController@index')->name('backend.tools.index');

@@ -196,6 +196,15 @@ class UnitBackendController extends Controller
         return redirect()->route('backend.units.show',[$unit->id]);
     }
 
+    public function teacherUnitApprove($id)
+    {
+        $unit = Unit::findOrFail($id);
+        $unit->status_id = 1;
+        $unit->save();	
+       	//return to overview of topics
+        return redirect()->back();
+    }
+
     /**
      * Remove the specified resource from storage.
      *
