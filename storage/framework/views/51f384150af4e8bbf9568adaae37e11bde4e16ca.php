@@ -234,7 +234,8 @@
 </div>    
 
 
-<?php echo $__env->make('teacher.teacher_components.newInstantContentModal',['tools'=>$tools,'subject_id'=>$unit->subject->id,'topic_id'=>$unit->topic->id], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+<?php echo $__env->make('teacher.teacher_components.newInstantContentModal',['tools'=>$tools,'subject_id'=>$unit->subject->id,'topic_id'=>$unit->topic->id,'block_id'=>$block->id], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 
 <?php $__env->stopSection(); ?>

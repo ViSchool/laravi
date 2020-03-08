@@ -44,7 +44,7 @@ Route::post('lehrer/themen/bearbeiten/{topic}','TopicController@teacher_update')
 Route::get('lehrer/newTopicPrivate/{topic}','TopicController@teacherTopicPrivate');
 Route::get('lehrer/newTopicViSchool/{topic}','TopicController@teacherTopicViSchool');
 Route::delete('lehrer/newTopicDelete/{topic}','TopicController@destroy');
-
+ 
 //Routen, damit Lehrer selbst Inhalte einstellen kann und Statusänderungen dazu
 Route::get('/lehrer/inhalte','TeacherController@contents')->name('teacher.contents');
 Route::post('/lehrer/inhalte','ContentController@teacher_store');

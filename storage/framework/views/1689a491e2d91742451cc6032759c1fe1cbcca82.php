@@ -15,7 +15,7 @@
                         <input type="hidden" value="<?php echo e($subject_id); ?>" name="subject_id">
                         <input type="hidden" value="<?php echo e($topic_id); ?>" name="topic_id">
                         <input type="hidden" value="instant" name="instant">
-                        
+                        <input type="hidden" value="<?php echo e($block_id); ?>" name="block_id">
 
                         
                         <input type="hidden" 

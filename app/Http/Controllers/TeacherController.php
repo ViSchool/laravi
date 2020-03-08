@@ -161,7 +161,7 @@ class TeacherController extends Controller
         $contents = Content::where('topic_id', $unit->topic_id)->get();
         $tools = Tool::orderBy('tool_title','asc')->get();
         $subjects = Subject::where('unit_id',$unit->id);
-        return view ('teacher.teacher_blocksCreate', compact('teacher','unit','differentiations','contents','blocks','differentiation_groups','tools','subjects'));
+        return view ('teacher.teacher_blocksCreate', compact('teacher','unit','differentiations','contents','blocks','tools','subjects'));
     }
 
  //Lehrerkonten im Backend zeigen   

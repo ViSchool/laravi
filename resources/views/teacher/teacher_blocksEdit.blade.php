@@ -235,8 +235,9 @@
 </form>       
 </div>    
 
+
 {{-- Modal um neuen Inhalt einzustellen --}}
-@include('teacher.teacher_components.newInstantContentModal',['tools'=>$tools,'subject_id'=>$unit->subject->id,'topic_id'=>$unit->topic->id])
+@include('teacher.teacher_components.newInstantContentModal',['tools'=>$tools,'subject_id'=>$unit->subject->id,'topic_id'=>$unit->topic->id,'block_id'=>$block->id])
 
 
 @endsection

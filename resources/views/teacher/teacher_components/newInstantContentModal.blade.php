@@ -15,7 +15,7 @@
                         <input type="hidden" value="{{$subject_id}}" name="subject_id">
                         <input type="hidden" value="{{$topic_id}}" name="topic_id">
                         <input type="hidden" value="instant" name="instant">
-                        
+                        <input type="hidden" value="{{$block_id}}" name="block_id">
 
                         
                         <input type="hidden" 

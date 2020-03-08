@@ -174,7 +174,11 @@ class BlockController extends Controller
         $block->title = $request->block_title;
         $block->task = Purifier::clean($request->task);
         $block->tips = Purifier::clean($request->tipp);
+        if(isset($request->content_id)) {
+            $block->content_id = $request->content_id;
+        } else {
         $block->content_id = $request->chooseContent;
+        };
         $block->time = $request->time;
         if (isset($request->differentiation_id)) {
             if ($block->differentiation_id !== $request->differentiation_id) {
