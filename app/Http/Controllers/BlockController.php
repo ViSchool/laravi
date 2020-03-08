@@ -68,13 +68,14 @@ class BlockController extends Controller
         'task' => 'required',
         'time' => 'required'
         ]);
-        
+         
         $block = new Block;
         $block->title = $request->block_title;
         $block->task = Purifier::clean($request->task);
         $block->tips = Purifier::clean($request->tipp);
         if(isset($request->content_id)) {
             $block->content_id = $request->content_id;
+            $request->session()->flush();
         } else {
         $block->content_id = $request->chooseContent;
         };
@@ -176,6 +177,7 @@ class BlockController extends Controller
         $block->tips = Purifier::clean($request->tipp);
         if(isset($request->content_id)) {
             $block->content_id = $request->content_id;
+            $request->session()->flush();
         } else {
         $block->content_id = $request->chooseContent;
         };
