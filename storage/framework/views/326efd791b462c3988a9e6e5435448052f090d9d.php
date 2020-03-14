@@ -64,7 +64,7 @@
 							<td><small>Lerneinheit</small></td>
 							<td><small><?php echo e($unit->unit_title); ?></small></td>
 							<td><small><?php echo e($unit->user->user_name); ?></small></td>
-							<td><a class="btn-sm btn-primary" href="backend/units/approve/<?php echo e($unit->id); ?>">Freigeben</a></td>	
+							<td><a class="btn-sm btn-primary" href="/backend/units/approve/<?php echo e($unit->id); ?>">Freigeben</a></td>	
 						</tr>
 					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 				<?php endif; ?>
@@ -80,10 +80,10 @@
 				<?php else: ?>
 					<?php $__currentLoopData = $status->series; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $serie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 						<tr>
-							<td><small>Lerneinheit</small></td>
+							<td><small>Serie</small></td>
 							<td><small><?php echo e($serie->serie_title); ?></small></td>
 							<td><small><?php echo e($serie->user->user_name); ?></small></td>
-							<td><a class="btn-sm btn-primary" href="backend/units/approve/<?php echo e($unit->id); ?>">Freigeben</a></td>	
+							<td><a class="btn-sm btn-primary" href="/backend/series/approve/<?php echo e($serie->id); ?>">Freigeben</a></td>	
 						</tr>
 					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 				<?php endif; ?>

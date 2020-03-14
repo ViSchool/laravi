@@ -1,4 +1,4 @@
-<div class="modal fade" id="editContentModal" tabindex="-1" role="dialog" aria-labelledby="newContentModalLabel" aria-hidden="true">
+<div class="modal fade" id="editContentModal_<?php echo e($content->id); ?>" tabindex="-1" role="dialog" aria-labelledby="newContentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form method="POST" action="/lehrer/inhalte/<?php echo e($content->id); ?>" enctype="multipart/form-data">

@@ -39,6 +39,7 @@ class UnitBackendController extends Controller
     {
         $units = Unit::orderBy('created_at', 'desc')->paginate(10);
         $subjects = Subject::orderBy('subject_title','asc')->get();
+        $admin = Auth::guard('admin')->user();
         return view('/backend/index_units', compact('units','subjects','admin'));
     }
     
@@ -47,6 +48,7 @@ class UnitBackendController extends Controller
     	$units = Unit::where('subject_id',$id)->orderBy('unit_title', 'desc')->paginate(10);
         $currentSubject = Subject::find($id);
         $topics = $currentSubject->topics()->orderBy('topic_title','asc')->get();
+        $admin = Auth::guard('admin')->user();
         return view('/backend/index_units_subjectfilter', compact('units','topics','currentSubject','admin'));
     }
 
@@ -56,6 +58,7 @@ class UnitBackendController extends Controller
         $currentTopic = Topic::find($topic);
         $currentSubject = Subject::find($subject);
         $topics = $currentSubject->topics()->orderBy('topic_title','asc')->get();
+        $admin = Auth::guard('admin')->user();
         return  view('/backend/index_units_topicfilter', compact('units','currentTopic','currentSubject','topics','admin'));
     }
 
@@ -70,10 +73,10 @@ class UnitBackendController extends Controller
     	$subjects = Subject::orderBy('subject_title', 'asc')->get();
         $topics = Topic::orderBy('topic_title', 'asc')->get();
         $series = Serie::orderBy('serie_title','asc')->get();
-        $user = Auth::guard('admin')->user();
-        $teacher = User::where('email',$user->email)->first();
+        $admin = Auth::guard('admin')->user();
+        $teacher = User::where('email',$admin->email)->first();
         $differentiation_groups = $teacher->differentiations->where('differentiation_group','!=','Alle')->pluck('differentiation_group')->unique();
-        return view('backend.create_units', compact('subjects','topics','admin','series','user','teacher','differentiation_groups') );
+        return view('backend.create_units', compact('subjects','topics','admin','series','teacher','differentiation_groups') );
 
     }
     /**
@@ -88,14 +91,18 @@ class UnitBackendController extends Controller
         'topic_id' => 'required', 
         'subject_id' => 'required',
         'unit_title'=> 'required|max:255',
-        	'unit_img' => 'image',
+        'unit_img' => 'image',
         ]);
         $unit = new Unit;
         $unit->subject_id = $request->subject_id;
         $unit->topic_id = $request->topic_id;
         $unit->unit_title = $request->unit_title;
         $unit->unit_description = $request->unit_description;
-        $unit->user_id = Auth::guard('admin')->user()->id;
+            //get teacher which has the same email address as the admin
+        $admin = Auth::guard('admin')->user();
+        $teacheruser = User::where('user_name',$admin->email)->first();
+        $unit->user_id = $teacheruser->id;
+
         $unit->serie_id = $request->serie;
         $unit->differentiation_group = $request->differentiation_group;
         	//Save Image
@@ -133,11 +140,11 @@ class UnitBackendController extends Controller
         $currentSubject = $unit->subject;
         $currentSerie = $unit->serie;
         $series = Serie::all();
-        $user = Auth::guard('admin')->user();
-        $teacher = User::where('email',$user->email)->first();
+        $admin = Auth::guard('admin')->user();
+        $teacher = User::where('email',$admin->email)->first();
         $differentiation_groups = $teacher->differentiations->where('differentiation_group','!=','Alle')->pluck('differentiation_group')->unique();
         $statuses = Status::all();
-        return view ('backend.show_units', compact('series','unit','subjects','currentSubject','currentSerie','user','differentiation_groups','statuses'));
+        return view ('backend.show_units', compact('series','unit','subjects','currentSubject','currentSerie','admin','differentiation_groups','statuses'));
     }
 
     /**
@@ -171,7 +178,11 @@ class UnitBackendController extends Controller
         $unit->topic_id = $request->topic_id;
         $unit->unit_title = $request->unit_title;
         $unit->unit_description = $request->unit_description;
-        $unit->user_id = Auth::user()->id;
+        
+        $admin = Auth::guard('admin')->user();
+        $teacheruser = User::where('user_name',$admin->email)->first();
+        $unit->user_id = $teacheruser->id;
+        
         $unit->serie_id = $request->serie;
         $unit->differentiation_group = $request->differentiation_group;
         	//Save Image

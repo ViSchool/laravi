@@ -37,144 +37,69 @@ Einen neuen Inhalt erstellen</button>
 <div class="container my-4">
     <hr> 
     <h3>Diese Inhalte hast Du bereits erstellt:</h3>
-    {{-- @foreach ($contentsBySubject as $subject_id => $contents)
-    @php $subject = App\Subject::findOrFail($subject_id);@endphp
-        <h3 class="mt-3 text-brand-blue">{{$subject->subject_title}}</h3>
-        <div class="row justify-content-start">
-            
-            @foreach ($contents as $content)
-            <div class="col">
-				<div class="card m-3" style="width:200px">
-					@isset ($content->content_img_thumb)
-						<a href="/content/{{$content->id}}"><img class="card-img-top" src="/images/contents/{{$content->content_img}}" alt="Bild:{{$content->content_title}}"></img></a>
-					@endisset
-					@empty ($content->content_img_thumb) 
-						@switch($content->tool_id)
-							@case(1)
-								<a href="/content/{{$content->id}}"><img class="card-img-top" src="https://img.youtube.com/vi/{{$content->toolspecific_id}}/mqdefault.jpg"></img></a>
-							@break
-							@case(7)
-								<a href="/content/{{$content->id}}"><img class="card-img-top" src="{{$content->img_thumb_url}}"></img></a>
-							@break
-							@default
-								@isset ($content->portal->portal_img)
-								<a href="/content/{{$content->id}}"><img class="card-img-top" src="/images/portals/{{$content->portal->portal_img}}"></img></a>
-								@endisset
-						@endswitch
-					@endempty	
-					<div class="card-body">
-						<a href="/content/{{$content->id}}"><h4 class="card-title">{{$content->content_title}}</h4></a>
-						<p class="card-text">
-                            @php 
-                            $reviews = App\Review::where('content_id',$content->id)->get();
-                            $average_score = $reviews->avg('overall_score');
-                            @endphp
-                            <!-- Sternchenbewertung auf Inhalte-Card -->
-                            @if ($average_score > 0)
-                                @php $rating = $average_score @endphp  
-                                @foreach(range(1,5) as $i)
-                                    <span class="fa-stack" style="width:1em" data-toggle="tooltip" data-placement="top" title="Durchschnittliche Bewertung">
-                                        <i class="far fa-star fa-stack-1x"></i>
-
-                                        @if($rating >0)
-                                            @if($rating >0.5)
-                                                <i class="fas fa-star fa-stack-1x"></i>
-                                            @else
-                                                <i class="fas fa-star-half fa-stack-1x"></i>
-                                            @endif
-                                        @endif
-                                        @php $rating--; @endphp
-                                    </span>
-                                @endforeach
-                            @endif
-                        </p>
-                    </div>
-  					
-                    <div class="card-footer d-flex justify-content-between">
-                        <small class="text-muted">
-                            <i class="{{$content->type->type_icon}} "></i>
-                            {{$content->type->content_type}}
-                        </small>
-                          
-                    </div>
-                    <div class="card-footer 
-                    @if ($content->status_id == 5)
-                        bg-warning 
-                    @elseif ($content->status_id == 4)
-                        bg-info text-white
-                    @elseif ($content->status_id == 3)
-                        bg-warning 
-                    @elseif ($content->status_id == 2)
-                        bg-info text-white
-                    @elseif ($content->status_id == 1)
-                        bg-success text-white
-                    @endif                        
-                    d-flex justify-content-between">
-                        <small>
-                            <i class="{{$content->status->status_icon}}"></i>
-                            {{$content->status->status_name}}
-                        </small> 
-                        @if ($content->status_id == 5)
-                            <a title="Inhalt bestätigen und auf der privaten Seite veröffentlichen" href="/lehrer/newContentPrivate/{{$content->id}}"><i class="fas fa-thumbs-up"></i></a>
-                        @elseif ($content->status_id == 3)
-                            <small><a title="An ViSchool zur Veröffentlichung schicken" href="/lehrer/newContentViSchool/{{$content->id}}" ><i class="fas fa-upload"></i></a></small>
-                        @endif
-                    </div>	
-                </div>
-            </div>  
-            @endforeach
-        </div> 
-        <hr>   
-    @endforeach  
-     --}}
      
     @foreach ($contentsBySubject as $subject_id => $contents)
     @php $subject = App\Subject::findOrFail($subject_id);@endphp
         <h3 class="mt-3 text-brand-blue">{{$subject->subject_title}}</h3>
-        <div class="table">
-            <table class="table-responsive-sm table-striped my-5 w-100">
-                <thead class="table-primary">
-                    <tr>
-                        <th scope="col">Name des Inhalts</th>
-                        <th scope="col">Thema</th>
-                        <th scope="col">Tool/Hoster</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Löschen</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($contents as $content)
-                        <tr>
+        <table class="table table-responsive-md table-striped my-5 w-100">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Name des Inhalts</th>
+                    <th scope="col">Thema</th>
+                    <th scope="col">Tool/Hoster</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Aktionen</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($contents as $content)
+                    <tr class="m-0 p-0">
                         <td><button class="btn btn-link m-0 p-0 text-left" data-toggle="modal" data-target="#editContentModal_{{$content->id}}">{{$content->content_title}}</button></td>
-                            <td><small> {{$content->topic->topic_title}}</small></td>
-                            <td><small> {{$content->tool->tool_title}}</small></td>
-                            <td><small> {{$content->status->status_name}}</small></td>
-                            <td>
-                                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#deleteModal_{{$content->id}}"><i class="far fa-trash-alt"></i></button>
-                                <div class="modal fade" id="deleteModal_{{$content->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    @include('components.deleteCheck',['typeDelete'=>'content','id'=>$content->id,'title'=>$content->content_title])
+                        <td><small> {{$content->topic->topic_title}}</small></td>
+                        <td><small> {{$content->tool->tool_title}}</small></td>
+                        <td><small> {{$content->status->status_name}}</small></td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn-sm btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aktion auswählen</button>
+                                <div class="dropdown-menu mb-3" aria-labelledby="dropdownMenuButton" id="content_actions">
+                                    @switch($content->status_id)
+                                        @case(1)
+                                        @break
+                                        @case(2)
+                                        @break
+                                        @case(3)
+                                            <a class="dropdown-item" title="An Vischool zur Veröffentlichung senden" href="/lehrer/newContentViSchool/{{$content->id}}"><i class="fas fa-upload"></i> Veröffentlichung bei ViSchool </a> 
+                                        @break 
+                                        @default
+                                            <a class="dropdown-item" title="Auf meiner privaten Lehrerseite veröffentlichen" href="/lehrer/newContentPrivate/{{$content->id}}"><i class="fas fa-user-check"></i> Auf meiner privaten Seite veröffentlichen</a>
+                                    @endswitch
+                                    
+                                    @if($content->status_id > 2)
+                                        <button class="btn btn-link dropdown-item text-left text-black" data-toggle="modal" data-target="#editContentModal_{{$content->id}}"><i class="far fa-edit"></i> Inhalt bearbeiten</button>
+                                    @endif
+                                    
+                                   
+                                    @if($content->status_id > 2)
+                                        <button type="button" class="btn btn-link dropdown-item" data-toggle="modal" data-target="#deleteModal_{{$content->id}}"><i class="far fa-trash-alt"></i> Inhalt löschen</button>
+                                        
+                                    @endif
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            
-                        </tr>
-                        
-                        @component('teacher.teacher_components.editContentModal',['content'=>$content, 'teacher'=>$teacher, 'tools'=>$tools, 'subjects'=>$subjects])   
-                        @endcomponent
-                    @endforeach
-                </tbody>
-            </table>
-
-        </div>
-        
-
-					
+                            </div>
+                        </td>            
+                    </tr>
+                    <tr>        
+                    </tr>
+                    <div class="modal fade" id="deleteModal_{{$content->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        @include('components.deleteCheck',['typeDelete'=>'content','id'=>$content->id,'title'=>$content->content_title])
+                    </div>
+                    @component('teacher.teacher_components.editContentModal',['content'=>$content, 'teacher'=>$teacher, 'tools'=>$tools, 'subjects'=>$subjects])   
+                    @endcomponent
+                @endforeach
+            </tbody>
+        </table>				
     @endforeach  
-	    
-
-
 </div>
+
 @endsection
 
 @section('scripts')
