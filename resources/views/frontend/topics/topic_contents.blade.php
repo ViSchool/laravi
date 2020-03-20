@@ -142,7 +142,7 @@
 					<div class="col">
 						<div class="card m-3" style="width:200px">
 							@isset ($privateContent->content_img_thumb)
-								<a href="/content/{{$privateContent->id}}"><img class="card-img-top" src="/images/contents/{{$privateContent->content_img}}" alt="Bild:{{$publicContent->content_title}}"></img></a>
+								<a href="/content/{{$privateContent->id}}"><img class="card-img-top" src="/images/contents/{{$privateContent->content_img}}" alt="Bild:{{$privateContent->content_title}}"></img></a>
 							@endisset
 							@empty ($privateContent->content_img_thumb) 
 								@switch($privateContent->tool_id)
