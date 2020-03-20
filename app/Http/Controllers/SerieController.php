@@ -6,6 +6,8 @@ use App\Serie;
 use Illuminate\Http\Request;
 use App\Admin;
 use App\Unit;
+use App\User;
+use App\Status;
 use Auth;
 use Purifier;
 
@@ -29,7 +31,7 @@ class SerieController extends Controller
      */
     public function create()
     {
-        	return view('backend.create_series', compact(''));
+        	return view('backend.create_series');
     }
 
     /**
@@ -45,10 +47,12 @@ class SerieController extends Controller
 		]);
 		$serie = new Serie;
 		$serie->serie_title = $request->serie_title;
-		$currentAdmin = Admin::get_current_admin();
-		$serie->createdByUser = $currentAdmin->id;
-		$serie->serie_description = Purifier::clean($request->serie_desciption);
-		$serie->public = $request->public;
+		//Save User:
+			$admin = Auth::guard('admin')->user();
+        	$teacheruser = User::where('user_name',$admin->email)->first();
+        $serie->user_id = $teacheruser->id;
+        $serie->serie_description = Purifier::clean($request->serie_desciption);
+        $serie->status_id = 5;
 		$serie->save();
 		return redirect()->route('backend.series.index');
     }
@@ -82,7 +86,8 @@ class SerieController extends Controller
     public function show($id)
     {
         $serie = Serie::find($id);
-        return view ('backend.show_series', compact('serie'));
+        $statuses = Status::all();
+        return view ('backend.show_series', compact('serie','statuses'));
     }
 
     /**
@@ -105,16 +110,15 @@ class SerieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        	$this->validate(request(), [
+            
+        $this->validate(request(), [
 		'serie_title' => 'required'
-		]);
+        ]);
 		$serie = Serie::findorFail($id);
 		$serie->serie_title = $request->serie_title;
-		$currentAdmin = Admin::get_current_admin();
-		$serie->updatedByUser = $currentAdmin->id;
-		$serie->serie_description = Purifier::clean($request->serie_description);
-		$serie->public = $request->public;
-		$serie->save();
+        $serie->serie_description = Purifier::clean($request->serie_description);
+        $serie->status_id = $request->status_id;
+        $serie->save();
 		return redirect()->route('backend.series.index');
     }
 
@@ -135,7 +139,7 @@ class SerieController extends Controller
      */
     public function destroy($id)
     {
-        	$serie = Serie::findOrFail($id);
+        $serie = Serie::findOrFail($id);
 		$serie->units()->detach();
 		$serie->tags()->detach();	
 		$serie->delete();

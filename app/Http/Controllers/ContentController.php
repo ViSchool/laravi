@@ -74,7 +74,6 @@ class ContentController extends Controller
         'content_img' => 'image',
         'content_duration' => 'required|Numeric',
         'license' => 'required',
-        
         ]);
         $content =new Content;
         switch ($request->tool_id) {
@@ -101,7 +100,11 @@ class ContentController extends Controller
         $content->type_id = request('type_id');
         $content->content_duration = request('content_duration');
         $content->content_title = request('content_title');
-        
+		  
+			//Save User:
+			$admin = Auth::guard('admin')->user();
+        	$teacheruser = User::where('user_name',$admin->email)->first();
+        	$content->user_id = $teacheruser->id;
         
         //Save Image
 		if ($request->hasFile('content_img')){

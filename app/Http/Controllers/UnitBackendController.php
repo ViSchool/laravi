@@ -179,10 +179,6 @@ class UnitBackendController extends Controller
         $unit->unit_title = $request->unit_title;
         $unit->unit_description = $request->unit_description;
         
-        $admin = Auth::guard('admin')->user();
-        $teacheruser = User::where('user_name',$admin->email)->first();
-        $unit->user_id = $teacheruser->id;
-        
         $unit->serie_id = $request->serie;
         $unit->differentiation_group = $request->differentiation_group;
         	//Save Image
