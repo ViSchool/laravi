@@ -21,6 +21,14 @@ class PortalController extends Controller
         return view ('backend.index_portals',compact ('portals'));
     }
 
+    public function index_frontend()
+    {
+        $portals = Portal::orderBy('portal_title','asc')->get();
+        $subjects = $portals->subjects->get();
+        $types = $portals->types->get();
+        return view ('frontend.portals.portals',compact ('portals','subjects','types'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -74,7 +82,7 @@ class PortalController extends Controller
 		//Save all data from create_topics form
        	$portal->save(); 
        	$portal->subjects()->sync($request->subjects, false);
-       	$portal->types()->sync($request->content_type, false);
+       	$portal->types()->sync($request->content_types, false);
        	
        	
        	//return to overview of topics
@@ -148,7 +156,7 @@ class PortalController extends Controller
 		//Save all data from create_portals form
        	$portal->save(); 
        	$portal->subjects()->sync($request->subjects);
-       	$portal->types()->sync($request->content_type);
+       	$portal->types()->sync($request->content_types);
        	
        	
        	//return to overview of topics
