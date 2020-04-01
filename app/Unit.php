@@ -54,6 +54,11 @@ class Unit extends Model
 		return $this->belongsTo('App\Status');
 	}
 
+	public function featured()
+	{
+		return $this->belongsTo('App\Featured');
+	}
+
 	public static function prettyDate($date) 
 	{
 		return $date->diffForHumans();

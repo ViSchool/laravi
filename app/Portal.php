@@ -22,5 +22,8 @@ class Portal extends Model
 	}
 	
 
-
+	public function subjects_filtered($chosen) 
+	{
+		return $this->belongsToMany('App\Subject')->wherePivotIn('subject_id', $chosen);
+	}
 }

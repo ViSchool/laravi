@@ -14,6 +14,9 @@
 			<a class="nav-link" href="/backend/freigaben">Freigaben <?php if($nrApprovals > 0): ?> <sup class="badge badge-pill badge-danger"><?php echo e($nrApprovals); ?></sup> <?php endif; ?></a>
 		</li>
 		<li class="nav-item">
+			<a class="nav-link" href="/backend/featured">Featured</a>
+		</li>
+		<li class="nav-item">
 			<a class="nav-link" href="/backend/subjects">Fächer</a>
 		</li>
 		<li class="nav-item">

@@ -36,4 +36,9 @@ class Serie extends Model
 	{
 		return $this->belongsTo('App\Status');
 	}
+
+	public function featured()
+	{
+		return $this->belongsTo('App\Featured');
+	}
 }

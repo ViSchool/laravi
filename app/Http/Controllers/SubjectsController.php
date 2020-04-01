@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Subject;
+use App\Unit;
+use App\Serie; 
 use App\Icon;
 
 class SubjectsController extends Controller
@@ -56,7 +58,13 @@ class SubjectsController extends Controller
     {
         $subject = Subject::find($id);
         $icons = Icon::orderBy('icon_title','asc')->get();
-        return view ('backend.show_subjects', compact('subject','icons'));
+        $unitsWithSeries = Unit::where('subject_id',$subject->id)->pluck('serie_id');
+        if (count($unitsWithSeries)>0) {
+        $series = Serie::wherein('id',$unitsWithSeries)->get();
+        } else {
+            $series = 0;
+        };
+        return view ('backend.show_subjects', compact('subject','icons','series'));
     }
 
     /**

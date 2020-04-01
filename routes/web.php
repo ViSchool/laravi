@@ -158,6 +158,8 @@ Route::get('/lerneinheiten/{topic}', 'VischoolController@units_topic');
 Route::get('/lerneinheit/{unit}', 'VischoolController@unit_show');
 Route::get('/lerneinheiten/serie/{serie}', 'VischoolController@units_serie');
 
+Route::get('/portalnavigator', 'PortalController@index_frontend');
+Route::post('/portalnavigator/filter','PortalController@index_frontend_filtered');
 
 /*Routes to Backend*/
 
@@ -251,6 +253,12 @@ Route::get('/backend/tags/{tag}', 'TagController@show');
 Route::post('/backend/tags', 'TagController@store');
 Route::patch('/backend/tags/{tag}', 'TagController@update');
 Route::delete('/backend/tags/{tag}','TagController@destroy')->name('tags.destroy');
+
+/*Routes for features database*/
+Route::get('/backend/featured', 'FeatureController@index');
+Route::post('/backend/featured', 'FeatureController@store');
+Route::post('/backend/featured_off', 'FeatureController@destroy');
+
 
 /*Routes for permissions database*/
 Route::get('/backend/permissions', 'PermissionController@index');

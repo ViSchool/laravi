@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Portal;
 use App\Subject;
+use Purifier;
 use Illuminate\Http\Request;
 use Image;
 use App\Type;
@@ -24,11 +25,46 @@ class PortalController extends Controller
     public function index_frontend()
     {
         $portals = Portal::orderBy('portal_title','asc')->get();
-        $subjects = $portals->subjects->get();
-        $types = $portals->types->get();
+        $subjects = Subject::all();
+        $types = Type::all();
         return view ('frontend.portals.portals',compact ('portals','subjects','types'));
     }
 
+    public function index_frontend_filtered(Request $request)
+    {
+        if($request->has('subjects')) {
+            $subjects = Subject::whereIn('id',$request->subjects)->get();
+            $filter_subjects = 1;
+        } else {
+            $subjects = Subject::all();
+            $filter_subjects = 0;
+            
+        }
+        if($request->has('types')) {
+            $types = Type::whereIn('id',$request->types)->get();
+            $filter_types = 1;
+        } else {
+            $types = Type::all();
+            $filter_types = 0;
+        }
+        $merged_subject = collect();
+        $merged_type = collect();
+        foreach ($subjects as $subject) {
+            $portals_subject = $subject->portals()->get();
+            $merged_subject = $portals_subject->merge($merged_subject);
+        }
+        foreach ($types as $type) {
+            $portals_type = $type->portals()->get();
+            $merged_type = $portals_type->merge($merged_type);
+        }
+        $portals = $merged_type->intersect($merged_subject);
+        
+        return view ('frontend.portals.portals_filtered',compact ('portals','subjects','types','filter_subjects','filter_types'));
+
+        
+    }
+
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -57,7 +93,7 @@ class PortalController extends Controller
         ]);
         $portal =new Portal;
         $portal->portal_title = request('portal_title');
-        $portal->portal_description = request('portal_description');
+        $portal->portal_description = Purifier::clean($request->portal_description);
         $portal->portal_url = request('portal_url');
         $portal->price_model = request('price_model');
         
@@ -131,7 +167,7 @@ class PortalController extends Controller
         ]);
         $portal =Portal::find($id);
         $portal->portal_title = request('portal_title');
-        $portal->portal_description = request('portal_description');
+        $portal->portal_description = Purifier::clean($request->portal_description);
         $portal->portal_url = request('portal_url');
         $portal->price_model = request('price_model');
         

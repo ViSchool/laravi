@@ -17,6 +17,7 @@ use App\question;
 use App\Differentiation;
 use App\Serie;
 use App\Tag;
+use App\Featured;
 use Auth;
 use Jenssegers\Agent\Agent;
 
@@ -36,7 +37,9 @@ class VischoolController extends BaseController
 	$posts = Post::get_five_posts();
 	$agent = new Agent();
 	$browser = $agent->browser();
-	return view('vischool', compact('subjects','posts','browser'));
+	$featuredElements = Featured::all();
+	
+	return view('vischool', compact('subjects','posts','browser','featuredElements'));
 	}
 	
 	public function subjects_index() {
