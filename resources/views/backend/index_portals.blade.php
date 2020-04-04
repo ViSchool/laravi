@@ -5,7 +5,6 @@
           <h1>Lernportale administrieren</h1>
 
 <div class="container">
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 		<table class="table">
 			<thead>
 				<tr>

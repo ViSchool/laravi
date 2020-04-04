@@ -10,11 +10,11 @@
 <div class="container">
 	<div class="row text-center">
 		<div class="col">
-			<img src="/images/about_astrid.jpeg" class="img-fluid img-thumbnail"></img>
+			<img src="/images/about_astrid.jpeg" class="img-fluid img-thumbnail" style="max-height:200px;"></img>
 			<p>Astrid, Lernfreak</p>
 		</div>
 		<div class="col">
-			<img src="/images/about_katharina.jpeg" class="img-fluid img-thumbnail"></img>
+			<img src="/images/about_katharina.jpeg" class="img-fluid img-thumbnail" style="max-height:200px;"></img>
 			<p>Katharina, Macher</p>
 		</div>
 	</div>

@@ -33,7 +33,7 @@
 				<label class="input-group-text" for="price_model">Kosten</label>
 			</div>
 			<select name="price_model" id="price_model" class="form-control custom-select">
-				<option value="{{$portal->pricemodel}}">{{$portal->portal_pricemodel}}</option>
+				<option value="{{$portal->price_model}}">{{$portal->price_model}}</option>
 				<option>kostenlos</option>
 				<option>kostenlos für nicht-kommerzielle Nutzung</option>
 				<option>beschränkte kostenlose Nutzung</option>

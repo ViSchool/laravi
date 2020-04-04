@@ -32,7 +32,7 @@
 				<label class="input-group-text" for="price_model">Kosten</label>
 			</div>
 			<select name="price_model" id="price_model" class="form-control custom-select">
-				<option value="<?php echo e($portal->pricemodel); ?>"><?php echo e($portal->portal_pricemodel); ?></option>
+				<option value="<?php echo e($portal->price_model); ?>"><?php echo e($portal->price_model); ?></option>
 				<option>kostenlos</option>
 				<option>kostenlos für nicht-kommerzielle Nutzung</option>
 				<option>beschränkte kostenlose Nutzung</option>
