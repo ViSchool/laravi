@@ -27,11 +27,12 @@ class PortalController extends Controller
         $portals = Portal::orderBy('portal_title','asc')->get();
         $subjects = Subject::all();
         $types = Type::all();
-        return view ('frontend.portals.portals',compact ('portals','subjects','types'));
+        $prices = $portals->unique('price_model')->pluck('price_model');        return view ('frontend.portals.portals',compact ('portals','subjects','types','prices'));
     }
 
     public function index_frontend_filtered(Request $request)
     {
+        // dd($request);
         if($request->has('subjects')) {
             $subjects = Subject::whereIn('id',$request->subjects)->get();
             $filter_subjects = 1;
@@ -47,8 +48,19 @@ class PortalController extends Controller
             $types = Type::all();
             $filter_types = 0;
         }
+        
+        if($request->has('prices')) {
+            $prices = $request->prices;
+            $filter_prices = 1;
+        } else {
+            $prices = Portal::all()->unique('price_model')->pluck('price_model'); 
+            $filter_prices = 0;
+        }
+
         $merged_subject = collect();
         $merged_type = collect();
+        $merged_price = collect();
+
         foreach ($subjects as $subject) {
             $portals_subject = $subject->portals()->get();
             $merged_subject = $portals_subject->merge($merged_subject);
@@ -57,9 +69,12 @@ class PortalController extends Controller
             $portals_type = $type->portals()->get();
             $merged_type = $portals_type->merge($merged_type);
         }
-        $portals = $merged_type->intersect($merged_subject);
+        $portals_price = Portal::whereIn('price_model',$prices)->get();
+
+        $portals_step01 = $merged_type->intersect($merged_subject);
+        $portals = $portals_step01->intersect($portals_price);
         
-        return view ('frontend.portals.portals_filtered',compact ('portals','subjects','types','filter_subjects','filter_types'));
+        return view ('frontend.portals.portals_filtered',compact ('portals','subjects','types','prices','filter_subjects','filter_types','filter_prices'));
 
         
     }

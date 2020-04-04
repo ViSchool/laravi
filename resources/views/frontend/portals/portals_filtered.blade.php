@@ -19,31 +19,6 @@
 		
 @section ('content')
 <div class="d-flex w-100">
-	{{-- <nav id="filter_sidebar">
-		<ul class="list-unstyled components ">
-         <h4 class="mx-5">Themen filtern</h4> --}}
-			
-			{{-- Filter Fächer --}}
-			{{-- <li>
-				<a href="#klassenstufeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Fächer</a>
-            <ul class="collapse list-unstyled" id="klassenstufeSubmenu">
-					@foreach ($subjects as $subject)
-						<li>
-							<div class="form-check m-0 p-0">
-							<input class="form-check-input" type="checkbox" id="{{$subject->id}}" value="{{$subject->id}}">
-  								<label class="form-check-label font-weight-normal ml-4" for="klassenstufe_{{$subject->id}}">
-								  {{$subject->subject_title}}
-								</label>
-							</div>
-						</li>
-					@endforeach
-            </ul>
-			</li>
-      </ul>
-	</nav> --}}
-
-	
-
 
 	{{-- Hauptteil --}}
 	<div class="portals container my-3">
@@ -99,6 +74,35 @@
 				</form>
 			@endforeach
 		@endif
+		@if ($filter_prices == 1)
+			@foreach ($prices as $price)
+				@php
+					$otherprices = $prices;
+					if (($key = array_search($price, $otherprices)) !== false) {
+    					unset($otherprices[$key]);
+					}
+				@endphp
+				<form action="/portalnavigator/filter" method="post">
+					@csrf
+					@foreach ($otherprices as $otherprice)
+					 	<input type="hidden" name="prices[]" value="{{$otherprice}}">
+					@endforeach
+					@if($filter_types == 1)
+						@foreach ($types as $type)
+					 		<input type="hidden" name="types[]" value="{{$type->id}}">
+						@endforeach
+					@endif
+					@if($filter_subjects == 1)
+						@foreach ($subjects as $subject)
+					 		<input type="hidden" name="subjects[]" value="{{$subject->id}}">
+						@endforeach
+					@endif
+					<button type="submit" class="btn-sm btn-outline-secondary mr-2">
+  						<span aria-hidden="true">&times; {{$price}}</span>
+					</button>
+				</form>
+			@endforeach
+		@endif
 		<a href="/portalnavigator" class="ml-auto btn-sm btn-primary mx-2">Alles zurücksetzen</a>
 	</div>
 			
@@ -112,9 +116,12 @@
 				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
 					@foreach ($portals as $portal)  
 						<div class="col mb-4">
-							<div class="card">
+							<div class="card h-100">
+								<div class="card-header p-0 m-0">
+									<p class=" text-center card-text"><small>{{$portal->price_model}}</small></p>
+								</div>
 								<div class=" d-flex justify-content-center bg-white" style="height:120px">
-									<img src="/images/portals/{{$portal->portal_img}}" class="img-fluid" style="max-height: 100px" alt="...">
+									<img src="/images/portals/{{$portal->portal_img}}" class="img-fluid mt-2" style="max-height: 100px" alt="...">
 								</div>
 								<div class="card-body text-center">
 									<a href="{{$portal->portal_url}}" target="_blank"><h5 class="card-title text-brand-blue">{{$portal->portal_title}}</h5></a>
@@ -129,7 +136,7 @@
 										@foreach ($portal->types as $type)	
 												<span class="badge badge-pill badge-warning"><small>{{$type->content_type}}</small></span>
 												@if (++$i > 2)
-													<button class="btn btn-link" onclick="display_types({{$portal->id}})">...</button>
+													<button class="btn btn-link m-0 p-0 text-warning" onclick="display_types({{$portal->id}})">...</button>
 													@break	 
 												@endif
 										@endforeach
@@ -138,7 +145,7 @@
 										@foreach ($portal->types as $type)	
 												<span class="badge badge-pill badge-warning"><small>{{$type->content_type}}</small></span>
 										@endforeach
-										<button class="btn btn-link m-0" onclick="hide_types({{$portal->id}})"><small>Schließen</small>  </button>
+										<button class="btn btn-link m-0 p-0" onclick="hide_types({{$portal->id}})"><small>Schließen</small>  </button>
 									</div>
 
 									{{-- Display Subjects --}}
@@ -149,7 +156,7 @@
 										@foreach ($portal->subjects as $subject)	
 												<span class="badge badge-pill badge-primary"><small>{{$subject->subject_title}}</small></span>
 												@if (++$i > 2)
-													<button class="btn btn-link" onclick="display_subjects({{$portal->id}})">...</button>
+													<button class="btn btn-link m-0 p-0" onclick="display_subjects({{$portal->id}})">...</button>
 													@break	 
 												@endif
 										@endforeach
@@ -158,7 +165,7 @@
 										@foreach ($portal->subjects as $subject)	
 												<span class="badge badge-pill badge-primary"><small>{{$subject->subject_title}}</small></span>
 										@endforeach
-										<button class="btn btn-link m-0" onclick="hide_subjects({{$portal->id}})"><small>Schließen</small>  </button>
+										<button class="btn btn-link m-0 p-0" onclick="hide_subjects({{$portal->id}})"><small>Schließen</small>  </button>
 									</div>
 
 								</div>
@@ -177,7 +184,7 @@
 @section('scripts')
 
 
-<script>
+{{-- <script>
 	$(document).ready(function () {
 
 		$('#btnSidebarCollapse').on('click', function () {
@@ -187,7 +194,7 @@
 		});
 
 	});	
-</script>
+</script> --}}
 
 <script src="/js/hide_more_on_portals.js">
 

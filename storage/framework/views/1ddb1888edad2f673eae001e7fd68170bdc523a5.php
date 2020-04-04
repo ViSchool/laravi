@@ -13,13 +13,6 @@
 		
 <?php $__env->startSection('content'); ?>
 <div class="d-flex w-100">
-	
-			
-			
-			
-
-	
-
 
 	
 	<div class="portals container my-3">
@@ -30,7 +23,8 @@
 		<div id="filter_buttons" class="mx-3 d-flex justify-content-start"> 
 			<a class="btn btn-secondary  m-2" data-toggle="collapse" href="#filter_subjects" role="button" aria-expanded="false" aria-controls="collapseExample">Fächer</a>	
 			<a class="btn btn-secondary  m-2" data-toggle="collapse" href="#filter_types" role="button" aria-expanded="false" aria-controls="collapseExample">Lerninhalte</a>
-			<button class="ml-auto btn-sm btn-primary m-2" type="submit">Filter anwenden</button>
+			<a class="btn btn-secondary  m-2" data-toggle="collapse" href="#filter_price" role="button" aria-expanded="false" aria-controls="collapseExample">Preismodell</a>
+			<button id="filter_button" class="ml-auto btn-sm btn-primary m-2 d-none" type="submit">Filter anwenden</button>
 		</div>
 		
 		<div class="collapse" id="filter_subjects">
@@ -38,7 +32,7 @@
 				<div class="btn-group-toggle" data-toggle="buttons">
 					<?php $__currentLoopData = $subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>  
 						<label class="btn btn-light m-2">
-							<input value="<?php echo e($subject->id); ?>" name="subjects[]" type="checkbox"> <?php echo e($subject->subject_title); ?>					
+							<input class="filter" value="<?php echo e($subject->id); ?>" name="subjects[]" type="checkbox"> <?php echo e($subject->subject_title); ?>					
 						</label>
 					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 				</div> 
@@ -49,8 +43,19 @@
 				<div class="btn-group-toggle" data-toggle="buttons">
 					<?php $__currentLoopData = $types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>  
 						<label class="btn btn-light m-2">
-							<input value="<?php echo e($type->id); ?>" name="types[]" type="checkbox"> <?php echo e($type->content_type); ?>
+							<input class="filter" value="<?php echo e($type->id); ?>" name="types[]" type="checkbox"> <?php echo e($type->content_type); ?>
 
+						</label>
+					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+				</div> 
+			</div>
+		</div>
+		<div class="collapse" id="filter_price">
+			<div class="card card-body">
+				<div class="btn-group-toggle" data-toggle="buttons">
+					<?php $__currentLoopData = $prices; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $price): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>  
+						<label class="btn btn-light m-2">
+							<input class="filter" value="<?php echo e($price); ?>" name="prices[]" type="checkbox"> <?php echo e($price); ?>					
 						</label>
 					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 				</div> 
@@ -65,9 +70,12 @@
 				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
 					<?php $__currentLoopData = $portals; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $portal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>  
 						<div class="col mb-4">
-							<div class="card">
+							<div class="card h-100">
+								<div class="card-header p-0 m-0">
+									<p class=" text-center card-text"><small><?php echo e($portal->price_model); ?></small></p>
+								</div>
 								<div class=" d-flex justify-content-center bg-white" style="height:120px">
-									<img src="/images/portals/<?php echo e($portal->portal_img); ?>" class="img-fluid" style="max-height: 100px" alt="...">
+									<img src="/images/portals/<?php echo e($portal->portal_img); ?>" class="img-fluid mt-2" style="max-height: 100px" alt="...">
 								</div>
 								<div class="card-body text-center">
 									<a href="<?php echo e($portal->portal_url); ?>" target="_blank"><h5 class="card-title text-brand-blue"><?php echo e($portal->portal_title); ?></h5></a>
@@ -82,7 +90,7 @@
 										<?php $__currentLoopData = $portal->types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>	
 												<span class="badge badge-pill badge-warning"><small><?php echo e($type->content_type); ?></small></span>
 												<?php if(++$i > 2): ?>
-													<button class="btn btn-link" onclick="display_types(<?php echo e($portal->id); ?>)">...</button>
+													<button class="btn btn-link text-warning m-0 p-0" onclick="display_types(<?php echo e($portal->id); ?>)">...</button>
 													<?php break; ?>	 
 												<?php endif; ?>
 										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -91,7 +99,7 @@
 										<?php $__currentLoopData = $portal->types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>	
 												<span class="badge badge-pill badge-warning"><small><?php echo e($type->content_type); ?></small></span>
 										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-										<button class="btn btn-link m-0" onclick="hide_types(<?php echo e($portal->id); ?>)"><small>Schließen</small>  </button>
+										<button class="btn btn-link m-0 p-0" onclick="hide_types(<?php echo e($portal->id); ?>)"><small>Schließen</small>  </button>
 									</div>
 
 									
@@ -102,7 +110,7 @@
 										<?php $__currentLoopData = $portal->subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>	
 												<span class="badge badge-pill badge-primary"><small><?php echo e($subject->subject_title); ?></small></span>
 												<?php if(++$i > 2): ?>
-													<button class="btn btn-link" onclick="display_subjects(<?php echo e($portal->id); ?>)">...</button>
+													<button class="btn btn-link m-0 p-0" onclick="display_subjects(<?php echo e($portal->id); ?>)">...</button>
 													<?php break; ?>	 
 												<?php endif; ?>
 										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -111,7 +119,7 @@
 										<?php $__currentLoopData = $portal->subjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subject): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>	
 												<span class="badge badge-pill badge-primary"><small><?php echo e($subject->subject_title); ?></small></span>
 										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-										<button class="btn btn-link m-0" onclick="hide_subjects(<?php echo e($portal->id); ?>)"><small>Schließen</small>  </button>
+										<button class="btn btn-link m-0 p-0" onclick="hide_subjects(<?php echo e($portal->id); ?>)"><small>Schließen</small>  </button>
 									</div>
 
 								</div>
@@ -130,16 +138,16 @@
 <?php $__env->startSection('scripts'); ?>
 
 
+
+
 <script>
-	$(document).ready(function () {
-
-		$('#btnSidebarCollapse').on('click', function () {
-			$('#filter_sidebar').toggleClass('active');
-			$('#btnFilterIcon').toggleClass('fa-filter');
-			$('#btnFilterIcon').toggleClass('fa-times');
-		});
-
-	});	
+$(document).ready(function () {
+	$('.filter').on('change', function () {
+		if(this.checked) {
+			$('#filter_button').removeClass ('d-none');
+		} 
+	}); 
+});
 </script>
 
 <script src="/js/hide_more_on_portals.js">
