@@ -130,6 +130,7 @@ Route::get('/suche/series/{query}', 'SearchController@searchSeries');
 Route::post('/schueler/login','Auth\StudentLoginController@login')->name('students.login.submit');
 Route::get('/schueler/logout','Auth\StudentLoginController@studentLogout')->name('students.logout');
 
+/* Routes to Frontend */
 
 /* Homepage */
 Route::get('/', 'VischoolController@index')->name('vischool');
@@ -144,7 +145,13 @@ Route::get('/datenschutz', function () {
     return view('legal.datenschutz');
 });
 
-/* Routes to Frontend */
+/* Support */
+Route::get('/support', function () {return view('frontend.support.support');});
+Route::get('/faq', 'FaqController@frontend');
+Route::post('/support', 'InquiryController@store');    
+
+
+
 /*NICHT BENUTZT: Route::get('/subjects', 'VischoolController@subjects_index');*/
 Route::get('/subjects/{id}', 'VischoolController@subject_show')->name('frontend.subject');
 /*NICHT BENUTZT: Route::get('/topics', 'VischoolController@topics_index');*/

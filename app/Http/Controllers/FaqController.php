@@ -19,6 +19,15 @@ class FaqController extends Controller
         return view ('backend.index_faq', compact('faqs'));
     }
 
+    public function frontend()
+    {
+        $faqs = Faq::all();
+        $categories = $faqs->unique('faq_category')->pluck('faq_category')->all();
+        $firstCategory = array_shift($categories);
+        $minFirstCategory = trim(preg_replace('/\s+/', '', $firstCategory));
+        return view ('frontend.support.faq', compact('faqs','categories','firstCategory','minFirstCategory'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

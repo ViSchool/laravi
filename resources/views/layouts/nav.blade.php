@@ -151,6 +151,13 @@
 				<li class="nav-item">
 					<a class="nav-link" href="/portalnavigator">Portalnavigator</a>					
 				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownHilfe" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hilfe</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownHilfe">
+						<a class="dropdown-item" href="/support">Wir helfen Dir</a>
+						<a class="dropdown-item" href="/faq">FAQs</a>
+					</div>	
+				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="/blog">Blog</a>					
 				</li>

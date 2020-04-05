@@ -58,14 +58,6 @@ class TeacherController extends Controller
 	return view ('teacher.teacher_thanks');
     }
 
-    public function faq()
-    {
-        $faqs = Faq::all();
-        $categories = $faqs->unique('faq_category')->pluck('faq_category')->all();
-        $firstCategory = array_shift($categories);
-        $minFirstCategory = trim(preg_replace('/\s+/', '', $firstCategory));
-        return view ('teacher.faq', compact('faqs','categories','firstCategory','minFirstCategory'));
-    }
 
     public function allunits()
     {
@@ -101,7 +93,7 @@ class TeacherController extends Controller
         $teacher = Auth::user();
         $subjects = Subject::all();
         $topics = Topic::where('user_id',$teacher->id)->get();
-        return view ('teacher.teacher_topics', compact('teacher','contents','topics','subjects','currentSubjects'));
+        return view ('teacher.teacher_topics', compact('teacher','topics','subjects'));
     }
 
     public function units() 

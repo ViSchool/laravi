@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Inquiry;
+use Purifier;
+use Mail;
+use App\Mail\SendInquiry;
 use Illuminate\Http\Request;
 
 class InquiryController extends Controller
@@ -35,16 +38,21 @@ class InquiryController extends Controller
      */
     public function store(Request $request)
     {
-        	$this->validate(request(), [
+        $this->validate(request(), [
 		'email' => 'required|email',
         ]);
 		$inquiry = new Inquiry;
 		$inquiry->lehrername = $request->lehrername;
 		$inquiry->fach = $request->fach;
 		$inquiry->thema = $request->thema;
-		$inquiry->email = $request->email;
-		$inquiry->save();
-		return redirect()->route('inquiries.index')->with('message', 'Wir haben Deine Anfrage erhalten und melden uns schnellstmöglich bei Dir!');
+        $inquiry->email = $request->email;
+        $inquiry->message = Purifier::clean($request->message);
+        $inquiry->phone = $request->phone;
+        $inquiry->save();
+        
+        Mail::send(new SendInquiry($inquiry));
+
+		return back()->with('success', 'Wir haben Deine Anfrage erhalten und melden uns schnellstmöglich bei Dir!');
     }
 
     /**

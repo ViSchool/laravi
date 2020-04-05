@@ -10,7 +10,7 @@
 
 @section('content')
 <section id="vischool_faq">    
-    <div class="container-fluid my-4">
+    <div class="container-fluid my-5">
         <div class="row">
             <div class="col-4">
                 <div class="list-group" id="list-tab" role="tablist">
@@ -77,7 +77,10 @@
                 </div>
             </div>
         </div>  
-    </div>  
+    </div>
+    <div class="container">
+        <p>Nicht gefunden was Du suchst? Schreibe uns <a href="/support">hier eine Nachricht</a>  und wir melden uns bei Dir!</p>
+    </div> 
 </section>
 
 @endsection
