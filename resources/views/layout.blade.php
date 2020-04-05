@@ -8,6 +8,12 @@
     <link rel="icon" href="../../../../favicon.ico">
 
     <title>ViSchool</title>
+    
+    {{-- Clicky Analytics --}}
+    <script>var clicky_site_ids = clicky_site_ids || []; clicky_site_ids.push(101245609);</script>
+    <script async src="//static.getclicky.com/js"></script>
+
+
 
     <!-- Bootstrap core CSS -->
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> --}}
