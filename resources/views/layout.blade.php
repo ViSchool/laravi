@@ -9,10 +9,7 @@
 
     <title>ViSchool</title>
     
-    {{-- Clicky Analytics --}}
-    <script>var clicky_site_ids = clicky_site_ids || []; clicky_site_ids.push(101245609);</script>
-    <script async src="//static.getclicky.com/js"></script>
-
+    
 
 
     <!-- Bootstrap core CSS -->
