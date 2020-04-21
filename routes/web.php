@@ -21,6 +21,8 @@ Route::get('chosencontent/get/{id}', 'AppController@getChosenContent'); //Route 
 Route::get('chooseContent/{unit}/{id}', 'AppController@chooseContent'); 
 Route::get('/differentiations/getgroupdiff/{differentiation_group}/{teacherId}', 'AppController@getdifferentiations');
 Route::get('/removeContentfromSession', 'AppController@removeContentfromSession');
+Route::get('units/get/{id}', 'AppController@getDynamicUnits'); //Route zu dynamic units dropdown 
+Route::get('blocks/get/{id}', 'AppController@getDynamicBlocks'); //Route zu dynamic blocks in create_tasks 
 
 /*Route für Mails*/
 Route::get('/mailable', 'AppController@sendBrokenLinks');
@@ -102,10 +104,36 @@ Route::get('/lehrer/klassenaccounts','TeacherController@classes');
 Route::get('/lehrer/schueleraccounts','TeacherController@students')->name('schueleraccounts');
 Route::get('/lehrer/schuelergruppe/schueleraccounts_erstellen/{id}', 'StudentController@store_group')->name('store_studentgroup');
 Route::delete('/lehrer/schuelergruppe/löschen/{id}', 'StudentgroupController@destroy')->name('studentgroup_delete');
+
 //nur zu Testzwecken:
 Route::get('/lehrer/schuelergruppe/pdf/{id}','StudentgroupController@show')->name('show_studentgroup_pdf');
 
-Route::get ('/lehrer/faq', 'TeacherController@faq');
+//Routen für Tasks
+Route::get('/lehrer/auftrag/erstellen','TaskController@create')->name('create_auftrag');
+Route::post('/lehrer/auftrag/erstellen','TaskController@store')->name('store_auftrag');
+Route::get('/lehrer/auftraege/schueler/{student}','TaskController@student_auftraege_index_teacher')->name('student_auftraege_teacher');
+Route::get('/lehrer/auftraege','TaskController@index')->name('auftraege');
+
+
+Route::patch('/schueler/lerneinheit_starten','TaskController@set_status_to_gestartet')->name('taskStatusBearbeitung');
+Route::get('/schueler/auftraege/{student}','TaskController@student_auftraege_index_students')->name('student_auftraege_students')->middleware('auth:student');
+Route::patch('/schueler/auftrag/student_check', 'TaskController@store_student_check')->name('auftrag_schueler_erledigt');
+
+
+
+//Routen für Results
+Route::get('/schueler/auftrag/erledigt/zuruecknehmen/{task}','ResultController@delete_ready')->name('auftrag_erledigt_zurueck');
+Route::post('/schueler/auftrag/erledigt','ResultController@store_ready')->name('auftrag_erledigt');
+Route::post('/schueler/auftrag/nachricht','ResultController@store_message')->name('rueckfrage');
+Route::get('/schueler/auftrag/ergebnis/zuruecknehmen/{task}','ResultController@delete_result')->name('ergebnislink_zurücknehmen');
+Route::post('/schueler/auftrag/ergebnis','ResultController@store_result')->name('ergebnislink');
+Route::get('/schueler/auftraege/viewed/{task}','ResultController@set_results_viewed_by_student')->name('results.viewedByStudent');
+Route::get('/lehrer/auftraege/viewed/{task}','ResultController@set_results_viewed_by_teacher')->name('results.viewedByTeacher');
+Route::post('/lehrer/auftrag/erledigt/danke', 'ResultController@store_feedback')->name('feedback_erledigt');
+Route::post('/lehrer/auftrag/nachricht','ResultController@store_message')->name('rueckfrage_antwort');
+
+
+//Routen allgemein für Lehrer
 Route::get ('/lehrer/verified', 'TeacherController@verified');
 Route::get ('/lehrer/coaching', 'TeacherController@coaching');
 Route::get ('/lehrer/schulcoaching', 'TeacherController@schulcoaching');
@@ -159,7 +187,7 @@ Route::get('/topic/{topic}', 'VischoolController@topic_show')->name('frontend.to
 Route::get('/contents', 'VischoolController@contents_index');
 Route::get('/content/{content}', 'VischoolController@content_show')->name('frontend.contents.show');
 /*NICHT BENUTZT: Route::get('/units', 'VischoolController@units_index')->name('frontend.units.index');*/
-Route::get('/unit', 'VischoolController@unit_show');
+Route::get('/unit/{unit}', 'VischoolController@unit_show')->name('unit.show');
 Route::get('/unit/{unit}/{diff}', 'VischoolController@unit_diff')->name('units.filterdiffs');
 Route::get('/lerneinheiten/{topic}', 'VischoolController@units_topic');
 Route::get('/lerneinheit/{unit}', 'VischoolController@unit_show');

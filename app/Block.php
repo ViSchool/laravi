@@ -20,4 +20,10 @@ class Block extends Model
 	{
 		return $this->belongsTo('App\Content');
 	}
+
+	public function tasks()
+    {
+        return $this->hasMany('App\Task');
+    }
+
 }

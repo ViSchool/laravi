@@ -31,6 +31,12 @@ class StudentController extends Controller
         return view('frontend.students');
     }
 
+    public function tasks_index() 
+    {
+        $student = Auth::guard('student')->user();
+        return view('student.student_tasks', compact('student'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

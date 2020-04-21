@@ -29,6 +29,11 @@ class Unit extends Model
 		return $this->hasMany('App\Block');
 	}
 	
+	public function tasks()
+    {
+        return $this->hasMany('App\Task');
+    }
+
 	public function mistakes()
 	{
 		return $this->hasMany('App\Mistake');

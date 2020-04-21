@@ -42,6 +42,11 @@ class Student extends Authenticatable
 		return $this->belongsTo('App\Studentgroup');
     }
 
+    public function tasks()
+    {
+        return $this->hasMany('App\Task');
+    }
+
     
     public static function get_current_student() {
 		return Auth::guard('student')->user();

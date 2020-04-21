@@ -96,21 +96,19 @@
 						@hasanyrole('Lehrer (free)|Lehrer (premium)|Schüler')
 							<a class="dropdown-item" href="/lehrer/themen">Meine Themen</a>
 							<a class="dropdown-item" href="/lehrer/inhalte">Meine Inhalte</a>
-							<a class="dropdown-item" href="/lehrer/lerneinheiten">Meine Lerneinheiten</a>
+							<a class="dropdown-item" href="/lehrer/lerneinheiten">Meine Lerneinheiten</a>					
 						@else
 							<a class="dropdown-item disabled" href="http://">Meine Themen</a>
 							<a class="dropdown-item disabled" href="http://">Meine Inhalte</a>
 							<a class="dropdown-item disabled" href="http://">Meine Lerneinheiten</a>
 						@endhasanyrole
 						@hasanyrole('Lehrer (free)|Lehrer (premium)')
-							<a class="dropdown-item" href="/lehrer/klassenaccounts">Meine Klassenaccounts</a>
+							<a class="dropdown-item" href="/lehrer/schueleraccounts">Meine Schüler</a>
+							{{-- <a class="dropdown-item" href="/lehrer/auftraege">Meine Aufträge</a> --}}
+
 						@else
-							<a class="dropdown-item disabled" href="">Meine Klassenaccounts</a>
-						@endhasanyrole
-						@hasanyrole('Lehrer (free)|Lehrer (premium)')
-							<a class="dropdown-item" href="/lehrer/schueleraccounts">Meine Schüleraccounts</a>
-						@else
-							<a class="dropdown-item disabled" href="">Meine Schüleraccounts</a>
+							<a class="dropdown-item disabled" href="">Meine Schüler</a>
+							{{-- <a class="dropdown-item disabled" href="">Meine Aufträge</a> --}}
 						@endhasanyrole
 					</div>
 				</li>
@@ -119,14 +117,12 @@
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownStudent" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Schüler</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownStudent">
 						@if (Auth::guard('student')->check())
-							<p class="dropdown-item text-success">Du bist eingeloggt als {{Auth::guard('student')->user()->student_name}} 
+							<p class="dropdown-item text-success">Du bist eingeloggt als: "{{Auth::guard('student')->user()->student_name}}"
 								@if(Auth::guard('student')->user()->class_account == 1) 
-									(Klasse)
-								@else 
-									(Schüler) 
+									(Klassenaccount)
 								@endif
 							</p>
-							<a class="dropdown-item text-info" href="/schueler/logout">Logout</a>	 
+							<a class="btn btn-primary dropdown-item" href="/schueler/logout">Logout</a>
 						@else
 						
 							<!-- Schülerlogin -->

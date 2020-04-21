@@ -97,7 +97,8 @@
                                     $topic_id_old = old('topic_id');
                                     $topic_old = App\Topic::where('id', '=' , $topic_id_old)->first();
                                 @endphp
-                                <option value="{{$topic_old->topic_title}}">                            @endif
+                                <option value="{{$topic_old->topic_title}}">                            
+                            @endif
                             @empty(old('topic_id'))
                                 <option>Zuerst Fach auswählen</option>
                             @endempty

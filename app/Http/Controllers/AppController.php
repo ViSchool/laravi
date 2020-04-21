@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Topic;
+use App\Unit;
 use App\Subject;
 use App\Content;
 use App\Tool;
@@ -76,5 +77,29 @@ class AppController extends Controller
         session()->forget(['content_title','content_id']);
         return back();
     }
-}
 
+    public function getDynamicUnits($id) 
+     {
+        $teacher = Auth::user();
+        $publicUnits = Subject::find($id)->units->where('status_id',1)->sortBy('unit_title')->pluck("unit_title","id");
+        if(isset($teacher)) {
+        $privateUnits = Subject::find($id)->units->where('status_id','>',1)->where('user_id',$teacher->id)->sortBy('unit_title')->pluck("unit_title","id");
+        }
+        if(isset($privateUnits)) {
+            $units = $publicUnits->union($privateUnits);
+        } else {
+            $units = $publicUnits;
+        } 
+        return json_encode($units);
+
+    }
+
+    public function getDynamicBlocks($id) 
+     {
+        $unit = Unit::find($id);
+        $blocks = $unit->blocks->pluck('id','title');
+        return json_encode($blocks);
+
+    }
+
+}
