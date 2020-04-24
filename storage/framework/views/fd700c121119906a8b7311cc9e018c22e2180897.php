@@ -102,11 +102,11 @@
 						<?php endif; ?>
 						<?php if(auth()->check() && auth()->user()->hasAnyRole('Lehrer (free)|Lehrer (premium)')): ?>
 							<a class="dropdown-item" href="/lehrer/schueleraccounts">Meine Schüler</a>
-							<a class="dropdown-item" href="/lehrer/auftraege">Meine Aufträge</a>
+							
 
 						<?php else: ?>
 							<a class="dropdown-item disabled" href="">Meine Schüler</a>
-							<a class="dropdown-item disabled" href="">Meine Aufträge</a>
+							
 						<?php endif; ?>
 					</div>
 				</li>

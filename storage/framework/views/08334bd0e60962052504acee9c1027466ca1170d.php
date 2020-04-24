@@ -231,8 +231,8 @@
                                                       </div>
                                                    <?php endif; ?>
                                                 <?php break; ?>
-                                                <?php default: ?>         
-                                             <?php endswitch; ?> 
+                                                <?php default: ?>
+                                             <?php endswitch; ?>
                                           </div>
                                           
 
@@ -280,36 +280,8 @@
                                     </td>
                                  </tr>
                                  
-
-                                 
-                                 <div class="modal fade" id="resultModal_<?php echo e($task->id); ?>" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                       <div class="modal-content">
-                                          <div class="modal-header">
-                                             <h5 class="modal-title" id="resultModalLabel">Schicke Dein Ergebnis zur Aufgabe "<?php echo e($task->block->title); ?>"</h5>
-                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                             </button>
-                                          </div>
-                                          <form action="/schueler/auftrag/ergebnis" method="post" enctype="multipart/form-data" >
-                                             <?php echo csrf_field(); ?> 
-                                             <div class="modal-body form-group">
-                                                <input type="hidden" name="task_id" value="<?php echo e($task->id); ?>">
-                                                <input type="hidden" name="created_by" id="created_by_<?php echo e($task->id); ?>" value="student">
-                                                <label class="col-form-label" for="result_url">Kopiere den Link zu Deinem Ergebnis hierhin: </label>
-                                                <input class="form-control mb-5" type="url" name="result_url" id="result_url_<?php echo e($task->id); ?>" required placeholder="https://....">
-                                                <textarea class="form-control" name="message" id="message_<?php echo e($task->id); ?>" rows="5" placeholder="Hier kannst Du noch eine zusätzliche Nachricht zu Deinem Ergebnis für  hinterlassen..." ></textarea>
-                                             </div>
-                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                                                <button type="submit" class="btn btn-primary">Nachricht senden</button>
-                                             </div>
-                                          </form>
-                                       </div>
-                                    </div>              
-                                 </div> 
-                                 
-                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                              
+                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                            </tbody>
                         </table>
                      </div>

@@ -253,14 +253,19 @@
                                                       <?php endif; ?>
                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </div>
-                                                   <div class="card-footer">
+                                                <div class="card-footer">
+                                                   <form action="/schueler/auftrag/nachricht" method="post" enctype="multipart/form-data" >
+                                                   <?php echo csrf_field(); ?>
+                                                   <input type="hidden" name="created_by" value="student">
+                                                   <input type="hidden" name="task_id" value="<?php echo e($task->id); ?>">
                                                       <div class="input-group mb-3">
-                                                      <input type="text" class="form-control" placeholder="Schreibe eine Nachricht an <?php echo e($teacher->teacher_name); ?> <?php echo e($teacher->teacher_surname); ?> hier..." aria-label="message_to_teacher" aria-describedby="button-addon2">
+                                                         <input name="message" id="message_in_box<?php echo e($task->id); ?>" type="text" class="form-control" placeholder="Schreibe eine Nachricht an <?php echo e($student->student_name); ?> hier..." aria-label="message_to_student" aria-describedby="button-addon2">
                                                          <div class="input-group-append">
-                                                            <button class="btn btn-link text-warning" type="button" id="button-addon2"><i class="fa-2x fas fa-arrow-circle-up"></i></button>
+                                                            <button class="btn btn-link text-warning" type="submit" id="button_send_message_<?php echo e($task->id); ?>"><i class="fa-2x fas fa-arrow-circle-up"></i></button>
                                                          </div>
                                                       </div>
-                                                   </div>
+                                                ^  </form>
+                                                </div>
                                              </div>
                                           </td>
                                        </tr>
