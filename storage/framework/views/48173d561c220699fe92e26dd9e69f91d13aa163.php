@@ -44,8 +44,8 @@
                                     <?php echo method_field('PATCH'); ?>
                                     <?php echo csrf_field(); ?>
                                     <input type="hidden" name="unit_id" value="<?php echo e($unit->id); ?>">
-                                    <?php $__currentLoopData = $unit->tasks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                       <input type="hidden" name="student_id" value="<?php echo e($task->student_id); ?>">
+                                    <?php $__currentLoopData = $unit->tasks->where('student_id',$student->id); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                       <input type="hidden" name="student_id" value="<?php echo e($student->id); ?>">
                                        <input type="hidden" name="tasks[]" value="<?php echo e($task->id); ?>">
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <button class="btn-sm btn-primary" type="submit" title="Klicke hier um mit der Lerneinheit zu starten">Starten </button>

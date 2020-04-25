@@ -15,6 +15,18 @@
             <p><?php echo \Session::get('success'); ?></p>
     		</div>
 		<?php endif; ?>
+
+		<?php if(auth()->guard('student')->check()): ?>
+			 <?php if($student->has('tasks')->where('unit_id',$unit->id)): ?>
+				<div class="my-3 alert-info d-flex justify-content-between align-items-center">
+				<span class="mx-3">Zu dieser Lerneinheit hast Du Aufträge erhalten: </span>
+				<?php
+        			session()->flash('unit_open',$unit->id);	 
+				?>
+				<a class="btn btn-primary my-3 mx-5" href="/schueler/auftraege/<?php echo e($student->id); ?>"> Zu den Aufträgen </a>
+				</div>
+			 <?php endif; ?>
+		<?php endif; ?>
 		<div id="accordion" role="tablist">
 			<!-- Startblock -->
 			<div class="card">
@@ -38,7 +50,7 @@
 					<?php endif; ?>
 					<div class="row">
 						<div class="col text-right">
-							<p>Für diese Einheit brauchst Du insgesamt: 
+							<p>Für diese Lerneinheit brauchst Du insgesamt: 
 							<?php
 							$uniqueBlocks = $unit->blocks->unique('order');
 							$unit_duration = $uniqueBlocks->sum('time') + 2;

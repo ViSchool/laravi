@@ -17,12 +17,8 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    
-    public function __construct() 
-    {
-    $this->middleware('auth' , ['except'=> ['student_auftraege_index_students','store_student_check','set_status_to_bearbeitung']]);
 
-    }
+
     /**
      * Display a listing of the resource.
      *
@@ -52,19 +48,6 @@ class TaskController extends Controller
         ])->orderBy('done_date')->get();
         $tasksByUnit = $tasks->groupBy('unit_id')->all();
         return view('teacher.teacher_student_tasks', compact('student','tasksByUnit')); 
-    }
-
-    public function student_auftraege_index_students() 
-    {
-        $student = Auth::guard('student')->user();
-        $tasks = Task::where('student_id',$student->id)->get();
-        $tasksByTeacher = $tasks->groupBy([
-            'teacher_id',
-            function ($item) {
-                return $item['unit_id'];
-            },
-        ], $preserveKeys = true);
-        return view('student.student_tasks', compact('student','tasksByTeacher'));
     }
 
     /**
@@ -226,23 +209,7 @@ class TaskController extends Controller
         return redirect()->back()->with('unit_open',$task->unit_id);
 
     }
-
-    public function set_status_to_gestartet(Request $request) 
-    {
-        $this->validate(request(), [
-        'tasks' => 'required',
-        'unit_id' => 'required',
-        'student_id' => 'required'
-        ]);
-        
-
-        foreach($request->tasks as $task_id) {
-            $task = Task::where('id',$task_id)->where('student_id',$request->student_id)->get();
-            $task->taskStatus_id = 3;
-            $task->save();
-        } 
-        return redirect()->route('unit.show', ['unit' => $request->unit_id]);
-    }   
+   
 
     /**
      * Remove the specified resource from storage.

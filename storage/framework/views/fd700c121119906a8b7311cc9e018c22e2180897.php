@@ -25,28 +25,33 @@
 						<i class="far fa-circle fa-stack-2x"></i>
 						<i class="fas fa-user fa-stack-1x"></i>
 					</span>
-					<p><small class="text-secondary">Dein Lehrer Zugang</small></p> 
+					<?php if(auth()->guard('web')->guest()): ?>
+						<?php if(auth()->guard('student')->guest()): ?>
+							<p><small class="text-secondary">Login</small></p>
+						<?php else: ?>
+							<p><small class="text-secondary"><?php echo e(Auth::guard('student')->user()->student_name); ?></small></p>
+						<?php endif; ?>
+					<?php else: ?>
+						<p><small class="text-secondary"><?php echo e(Auth::user()->teacher_name); ?></small></p>
+					<?php endif; ?>
+					
 				</a>
-				<div class="dropdown-menu border-0 shadow mr-2" aria-labelledby="dropdownMenuOffset" style="max-width: 200px;">
-					<?php if(auth()->check() && auth()->user()->hasAnyRole('Lehrer (free)|Lehrer (premium)')): ?>
-						<p><small >Du bist eingeloggt als <?php echo e(Auth::user()->teacher_name); ?> (Lehrer)</small></p>
+				<div class="dropdown-menu dropdown-menu-right border-0 shadow" aria-labelledby="dropdownMenuOffset" style="max-width: 200px;">
+					<?php if(auth()->guard('web')->check()): ?>
 						<a href="/lehrer/logout" class="btn-sm btn-primary text-white ml-1"> <i class="fas fa-sign-out-alt"></i> Logout</a>
 					<?php endif; ?>
-					<?php if(auth()->check() && auth()->user()->hasAnyRole('Schüler')): ?>
-						<p><small>Du bist eingeloggt als <?php echo e(Auth::guard('student')->user()->student_name); ?> 
-								<?php if(Auth::guard('student')->user()->class_account == 1): ?> 
-									(Klasse)
-								<?php else: ?> 
-									(Schüler) 
-								<?php endif; ?>
-							</small></p>
-						<a href="/schueler/logout" class="btn-sm btn-primary text-white ml-1"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+					<?php if(auth()->guard('student')->check()): ?>
+						<a class="dropdown-item pl-2" href="/schueler/auftraege/<?php echo e(Auth::guard('student')->user()->id); ?>" ><small>Aufträge</small> </a>
+						<div class="dropdown-divider"></div>
+						<a href="/schueler/logout" class="btn-sm btn-primary text-center btn-block text-white"> <i class="fas fa-sign-out-alt"></i> Logout</a>
 					<?php endif; ?>
-					<?php if(auth()->guard()->guest()): ?>
+					<?php if(auth()->guard('web')->guest()): ?>
+						<?php if(auth()->guard('student')->guest()): ?>						
 						<p class="ml-4"><small>Du bist nicht eingeloggt.</small></p>
 						<p><a href="/login" class="btn-sm btn-primary text-white ml-4"> <i class="fas fa-sign-in-alt"></i> Lehrer-Login</a></p>
-						
-						<p><a href="/register" class="btn-sm btn-link ml-3">Registrieren</a></p>
+						<p><a href="/schueler/anmelden" class="btn-sm btn-primary text-white ml-4"> <i class="fas fa-sign-in-alt"></i> Schüler-Login</a></p>
+						<p><a href="/register" class="btn-sm btn-link ml-3">Als Lehrer registrieren</a></p>
+						<?php endif; ?>
 					<?php endif; ?>
     			</div>
 			</div>	
@@ -76,22 +81,27 @@
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLehrer" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Lehrer</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownLehrer">
-						<?php if(auth()->guard()->guest()): ?>
-							<a class="btn btn-primary w-100 text-left" href="/login">Anmelden</a>
+						
+						<?php if(auth()->guard('web')->guest()): ?>
+							<?php if(auth()->guard('student')->check()): ?>
+								<a class="btn btn-primary w-100 text-left disabled" href="/login">Anmelden</a>
+							<?php else: ?> 
+								<a class="btn btn-primary w-100 text-left" href="/login">Anmelden</a>
+							<?php endif; ?>
+							
 							<a class="dropdown-item" href="/register">Als Lehrer registrieren</a>
 							<a class="dropdown-item" href="/lehrer">Angebote für Lehrer</a>
 						<?php endif; ?>
-						<?php if(auth()->guard()->check()): ?>
+						<?php if(auth()->guard('web')->check()): ?>
 							<a class="btn btn-primary dropdown-item" href="/lehrer/logout">Logout</a>	
 						<?php endif; ?>
-						<div class="dropdown-divider">
-						</div>
-						<?php if(auth()->check() && auth()->user()->hasAnyRole('Lehrer (free)|Lehrer (premium)')): ?>
+						<div class="dropdown-divider"></div>
+						<?php if(auth()->guard('web')->check()): ?>
 							<a class="dropdown-item" href="/lehrer/lehrerkonto">Mein Lehrerkonto</a>
 						<?php else: ?>
 							<a class="dropdown-item disabled" href="#" tabindex="-1" aria-disabled="true">Mein Lehrerkonto</a>
 						<?php endif; ?>
-						<?php if(auth()->check() && auth()->user()->hasAnyRole('Lehrer (free)|Lehrer (premium)|Schüler')): ?>
+						<?php if(auth()->guard('web')->check()): ?>
 							<a class="dropdown-item" href="/lehrer/themen">Meine Themen</a>
 							<a class="dropdown-item" href="/lehrer/inhalte">Meine Inhalte</a>
 							<a class="dropdown-item" href="/lehrer/lerneinheiten">Meine Lerneinheiten</a>					
@@ -100,10 +110,9 @@
 							<a class="dropdown-item disabled" href="http://">Meine Inhalte</a>
 							<a class="dropdown-item disabled" href="http://">Meine Lerneinheiten</a>
 						<?php endif; ?>
-						<?php if(auth()->check() && auth()->user()->hasAnyRole('Lehrer (free)|Lehrer (premium)')): ?>
+						<?php if(auth()->guard('web')->check()): ?>
 							<a class="dropdown-item" href="/lehrer/schueleraccounts">Meine Schüler</a>
 							
-
 						<?php else: ?>
 							<a class="dropdown-item disabled" href="">Meine Schüler</a>
 							
@@ -114,32 +123,20 @@
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownStudent" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Schüler</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownStudent">
-						<?php if(Auth::guard('student')->check()): ?>
-							<p class="dropdown-item text-success">Du bist eingeloggt als: "<?php echo e(Auth::guard('student')->user()->student_name); ?>"
-								<?php if(Auth::guard('student')->user()->class_account == 1): ?> 
-									(Klassenaccount)
-								<?php endif; ?>
-							</p>
+						<?php if(auth()->guard('student')->guest()): ?>
+							<?php if(auth()->guard('web')->check()): ?>
+								<a class="btn btn-primary w-100 text-left disabled" href="/schueler/anmelden">Anmelden</a>
+							<?php else: ?> 
+								<a class="btn btn-primary w-100 text-left" href="/schueler/anmelden">Anmelden</a>
+								<a class="dropdown-item disabled" href="#" > Dein Aufträge</a>
+							<?php endif; ?>
+						<?php endif; ?>
+						<?php if(auth()->guard('student')->check()): ?>
 							<a class="btn btn-primary dropdown-item" href="/schueler/logout">Logout</a>
-						<?php else: ?>
-						
-							<!-- Schülerlogin -->
-							<?php echo $__env->make('layouts.errors', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>	
-							<form action="/schueler/login" method="post" class="p-4 m-3" style="min-width: 200px;">
-							<?php echo csrf_field(); ?>	
-								<div class="form-group">
-									<label for="student_name">Benutzername</label>
-									<input type="text" class="form-control" id="student_name" name="student_name">
-								</div>
-								<div class="form-group">
-									<label for="password">Passwort</label>
-									<input type="password" name="password" class="form-control" id="password" placeholder="Passwort">
-								</div>
-								<div class="d-flex justify-content-end">
-									<button type="submit" class="btn-sm btn-primary">Einloggen</button>
-								</div>
-							</form>
-						<?php endif; ?>		
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="/schueler/auftraege/<?php echo e(Auth::guard('student')->user()->id); ?>" > Dein Aufträge</a>
+
+						<?php endif; ?>
 					</div>
 				</li>
 				<li class="nav-item">

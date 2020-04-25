@@ -18,6 +18,7 @@ use App\Differentiation;
 use App\Serie;
 use App\Tag;
 use App\Featured;
+use App\Task;
 use Auth;
 use Jenssegers\Agent\Agent;
 
@@ -234,29 +235,39 @@ class VischoolController extends BaseController
 	
 	public function unit_show($id) {
 	$unit = Unit::find($id);
+	if (Auth::guard('student')->check()) {
+		$student = Auth::guard('student')->user();
+	} else {
+	$student=[];
+	}
 	if ($unit->differentiation_group != NULL) {
 		$differentiations = Differentiation::where('differentiation_group',$unit->differentiation_group)->skip(1)->take(10)->get();
 		$startDifferentiation = Differentiation::where('differentiation_group',$unit->differentiation_group)->first();
 		$blocks = Block::where('unit_id',$unit->id)->whereIn('differentiation_id',[$startDifferentiation->id, 13])->orderBy('order')->get();
-		return view('frontend.units.show_units', compact('unit','blocks','differentiations','startDifferentiation'));
+		return view('frontend.units.show_units', compact('unit','blocks','differentiations','startDifferentiation','student'));
 	}
 	else {
 		$blocks = Block::where('unit_id',$unit->id)->orderBy('order')->get();
-		return view('frontend.units.show_units', compact('unit','blocks'));
+		return view('frontend.units.show_units', compact('unit','blocks','student'));
 		}
 	} 
 	
 	public function unit_diff($id,$diff) {
 	$unit = Unit::find($id);
+	if (Auth::guard('student')->check()) {
+		$student = Auth::guard('student')->user();
+	} else {
+	$student=[];
+	}
 	if ($unit->differentiation_group != NULL) {
 		$differentiations = Differentiation::where('differentiation_group',$unit->differentiation_group)->get();
 		$startDifferentiation = Differentiation::find($diff);
 		$blocks = Block::where('unit_id',$unit->id)->whereIn('differentiation_id',[$startDifferentiation->id, 13])->orderBy('order')->get();
-		return view('frontend.units.show_units', compact('unit','blocks','differentiations','startDifferentiation'));
+		return view('frontend.units.show_units', compact('unit','blocks','differentiations','startDifferentiation','student'));
 	}
 	else {
 		$blocks = Block::where('unit_id',$unit->id)->orderBy('order')->get();
-		return view('frontend.units.show_units', compact('unit','blocks'));
+		return view('frontend.units.show_units', compact('unit','blocks','student'));
 		}
 	
 	}

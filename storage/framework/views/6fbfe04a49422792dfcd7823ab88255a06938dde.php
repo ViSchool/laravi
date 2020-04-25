@@ -6,7 +6,7 @@
     <meta name="description" content="ViSchool, digitale Bildung, lernen, zeitgemäße Bildung, digitaler Unterricht, Lerneinheiten, Mathe, Physik, Englisch, Deutsch">
     <meta name="author" content="Katharina Schedel | ViSchool">
     <link rel="icon" href="../../../../favicon.ico">
-
+    <script src="/js/matomo.js"></script>
     <title>ViSchool</title>
     
     
@@ -20,6 +20,7 @@
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/offcanvas.css" rel="stylesheet">
+
     
 <?php echo $__env->yieldContent('stylesheets'); ?>
 

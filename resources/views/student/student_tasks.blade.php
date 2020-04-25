@@ -46,8 +46,8 @@
                                     @method('PATCH')
                                     @csrf
                                     <input type="hidden" name="unit_id" value="{{$unit->id}}">
-                                    @foreach($unit->tasks as $task)
-                                       <input type="hidden" name="student_id" value="{{$task->student_id}}">
+                                    @foreach($unit->tasks->where('student_id',$student->id) as $task)
+                                       <input type="hidden" name="student_id" value="{{$student->id}}">
                                        <input type="hidden" name="tasks[]" value="{{$task->id}}">
                                     @endforeach
                                     <button class="btn-sm btn-primary" type="submit" title="Klicke hier um mit der Lerneinheit zu starten">Starten </button>

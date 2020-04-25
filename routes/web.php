@@ -115,8 +115,9 @@ Route::get('/lehrer/auftraege/schueler/{student}','TaskController@student_auftra
 Route::get('/lehrer/auftraege','TaskController@index')->name('auftraege');
 
 
-Route::patch('/schueler/lerneinheit_starten','TaskController@set_status_to_gestartet')->name('taskStatusBearbeitung');
-Route::get('/schueler/auftraege/{student}','TaskController@student_auftraege_index_students')->name('student_auftraege_students')->middleware('auth:student');
+Route::get('/schueler/anmelden', 'Auth\StudentLoginController@showLoginForm')->name('student.login');
+Route::patch('/schueler/lerneinheit_starten','StudentController@set_status_to_gestartet')->name('taskStatusBearbeitung');
+Route::get('/schueler/auftraege/{student}','StudentController@student_auftraege_index_students')->name('student_auftraege_students');
 Route::patch('/schueler/auftrag/student_check', 'TaskController@store_student_check')->name('auftrag_schueler_erledigt');
 
 

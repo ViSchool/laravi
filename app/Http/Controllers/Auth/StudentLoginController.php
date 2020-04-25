@@ -33,7 +33,7 @@ class StudentLoginController extends Controller
 
 // 		attempt to Log User in 
 		if (Auth::guard('student')->attempt(['student_name' => $request->student_name,'password' =>$request->password])){
-			return redirect()->intended(route('vischool'));
+			return redirect()->intended();
 		}
 // if successful then redirect to where they came from
 		
