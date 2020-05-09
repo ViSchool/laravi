@@ -175,7 +175,7 @@
                                                                     @csrf @method('PATCH')
                                                                     <input type="hidden" name="firstjob_id" value="{{$job->id}}">
                                                                     <input type="hidden" name="studentgroup" value="0">
-                                                                    <button title="Jetzt die Aufträge für  {{$student->student_name}} zuweisen und mit dem Lernen beginnen lassen" class="btn-sm" type="submit"><i class="fas fa-user-check"></i> Auftrag jetzt zuteilen</button>
+                                                                    <button title="Jetzt die Aufträge für  {{$job->student->student_name}} zuweisen und mit dem Lernen beginnen lassen" class="btn-sm" type="submit"><i class="fas fa-user-check"></i> Auftrag jetzt zuteilen</button>
                                                                 </form>
                                                             @else 
                                                                 <small>{{$job->jobStatus->jobStatus_name}}</small>
