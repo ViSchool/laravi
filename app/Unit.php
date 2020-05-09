@@ -32,7 +32,13 @@ class Unit extends Model
 	public function tasks()
     {
         return $this->hasMany('App\Task');
+	 }
+	
+	 public function jobs()
+    {
+        return $this->hasMany('App\Job');
     }
+	
 
 	public function mistakes()
 	{

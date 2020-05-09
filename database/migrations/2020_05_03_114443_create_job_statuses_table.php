@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTaskStatusesTable extends Migration
+class CreateJobStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateTaskStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('taskStatuses', function (Blueprint $table) {
+        Schema::create('job_statuses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('taskStatus_name');
-            $table->string('taskStatus_icon');
-            $table->string('taskStatus_color')->nullable();
+            $table->string('jobStatus_name');
+            $table->longText('jobStatus_description');
+            $table->string('jobStatus_icon');
+            $table->string('jobStatus_color')->nullable();
+            $table->unsignedInteger('jobStatus_progress')->default('10');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateTaskStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('task_statuses');
+        Schema::dropIfExists('job_statuses');
     }
 }

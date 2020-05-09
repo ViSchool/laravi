@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\Job;
 use App\Subject;
 use App\Topic;
 use App\Unit;
@@ -17,8 +18,10 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-
-
+    public function __construct() 
+    {
+        $this->middleware('auth:web');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,15 +29,6 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $teacher = Auth::user();
-        $tasks = Task::where('teacher_id', $teacher->id)->orderBy('studentgroup_id', 'desc')->get();
-        $tasksByStudentgroup = $tasks->groupBy([
-            'studentgroup_id',
-            function ($item) {
-                return $item['unit_id'];
-            },
-        ], $preserveKeys = true);
-        return view('teacher.teacher_tasks', compact('tasksByStudentgroup'));
 
     }
 
@@ -55,23 +49,12 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        $subjects = Subject::all();
-        $topics = Topic::all();
-        $teacher = Auth::user();
-        $students = Student::where('teacher_id',$teacher->id)->get();
-        $studentgroups = Studentgroup::where('teacher_id',$teacher->id)->get();
-        $get_today = getdate();
-        if($get_today['mday'] < 10) {
-            $get_today['mday'] = "0" . $get_today['mday'];
-        }
-        if($get_today['mon'] < 10) {
-            $get_today['mon'] = "0" . $get_today['mon'];
-        }
-        $today = $get_today['mday'] . "." . $get_today['mon'] . "." . $get_today['year'];
+        $job = Job::findOrFail($id);
+        $blocks = $job->unit->blocks;
         $interactions = Interaction::all();
-        return view('teacher.teacher_tasksCreate', compact('topics','subjects','students','studentgroups','today','interactions'));
+        return view('teacher.teacher_tasksCreate', compact('job','blocks','interactions'));
     }
 
     /**
@@ -81,86 +64,58 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
-        if(isset($request->interaction_btn)) {
-        return redirect()->back()->with('unit', $request->unit_id);
-        }
-        
+    {
         $this->validate(request(), [
-        'unit_id' => 'required', 
-        'student_id' => 'required',
-        'done_date' => 'required',
         'block_interaction_ids' => 'required',
-        
+        'job_id' => 'required',
+        'assignment' => 'required',
         ]);
-        function save_task_for_blocks ($block_interaction_ids, $block_copies, $studentgroup, $student, $teacher, $done_date, $unit) {
-             foreach ($block_interaction_ids as $block_interaction_id) {
-                $block = explode("|", $block_interaction_id);
-                $task =new Task;
-                $task->block_id = $block[0];
-                $task->unit_id = $unit->id;
-                $task->interaction_id = $block[1];
-                $task->taskStatus_id = 1;
-                $task->student_id = $student;
-                $task->teacher_id = $teacher->id;
-                $task->done_date = $done_date;
-                $task->archived = 0;
-                $task->studentgroup_id = $studentgroup;
-                $task->save();
-                if (isset($block_copies)) {
-                    foreach ($block_copies as $block_copy) {
-                        $blockCopy = explode("|",$block_copy);
-                        if($blockCopy[1] == $block[2]) {
-                            $task =new Task;
-                            $task->block_id = $blockCopy[0];
-                            $task->unit_id = $unit->id;
-                            $task->interaction_id = $block[1];
-                            $task->taskStatus_id = 1;
-                            $task->student_id = $student;
-                            $task->teacher_id = $teacher->id;
-                            $task->done_date = $done_date;
-                            $task->archived = 0;
-                            $task->studentgroup_id = $studentgroup;
-                            $task->save();    
-                        }
-                    }
-                }
-            };
+
+        function save_tasks($job_id, $block_interaction_ids) {
+            foreach ($block_interaction_ids as $block_interaction_id) {
+            $block = explode("|", $block_interaction_id);
+            $task =new Task;
+            $task->block_id = $block[0];
+            $task->job_id = $job_id;
+            $task->interaction_id = $block[1];
+            $task->taskStatus_id = 1;
+            $task->save();
+            }
         };
 
-        $unit = Unit::findorFail($request->unit_id);
-        $teacher = Auth::user();
-        $done_date_de= $request->done_date;
-        $done_date_explode = explode('.',$done_date_de);
-        $done_date = $done_date_explode[2] . "-" . $done_date_explode[1] . "-" .$done_date_explode[0]; 
-        $student_id = $request->student_id;
         $block_interaction_ids = $request->block_interaction_ids;
-        $block_copies = $request->block_interaction_copies;
-        
-
-        if (strpos($request->student_id,'studentgroup') !== false) {
-            $studentgroup_parts = explode("_", $student_id);
-            $studentgroup = Studentgroup::find($studentgroup_parts[0]);
-            $students = $studentgroup->students->all();
-            $single_student = NULL;
-        } else {
-            $student_parts = explode("_",$student_id);
-            $single_student = $student_parts [0];
-            $studentgroup = NULL;
-        }
-
-        if (isset($students)) {
-            foreach ($students as $student) {
-                save_task_for_blocks($block_interaction_ids, $block_copies, $studentgroup->id, $student->id, $teacher, $done_date, $unit);
+        $teacher = Auth::user();
+        $job_one = Job::findOrFail($request->job_id);
+        if($job_one->studentgroup_id != Null) {
+            foreach ($job_one->studentgroup->students as $student) {
+                $job= Job::where('student_id',$student->id)->where('unit_id',$job_one->unit_id)->where('teacher_id',$teacher->id)->first();
+                save_tasks($job->id, $block_interaction_ids);
+                switch ($request->assignment) {
+                    case 'sofort':
+                        $job->jobStatus_id = 3;
+                    break;
+                    case 'spaeter':
+                        $job->jobStatus_id = 2;
+                    break;
+                }
+            $job->save();
             }
         } else {
-            save_task_for_blocks($block_interaction_ids, $block_copies, $studentgroup, $single_student, $teacher, $done_date, $unit);
-
+            save_tasks($job_one->id, $block_interaction_ids);
+            switch ($request->assignment) {
+                case 'sofort':
+                    $job_one->jobStatus_id = 3;
+                break;
+                case 'spaeter':
+                    $job_one->jobStatus_id = 2;
+                break;
+            }
+            $job_one->save();
         }
-        return redirect()->route('auftraege');
 
-     }
+        return redirect('/lehrer/auftraege');
 
+    }
     /**
      * Display the specified resource.
      *
@@ -195,21 +150,7 @@ class TaskController extends Controller
         //
     }
 
-    public function store_student_check (Request $request) 
-    {
-        $this->validate(request(), [
-        'task_id' => 'required', 
-        'result_for_student_check' => 'required',
-        ]);
-
-        $task = Task::find($request->task_id);
-        $task->student_check = $request->result_for_student_check;
-        $task->save();
-
-        return redirect()->back()->with('unit_open',$task->unit_id);
-
-    }
-   
+    
 
     /**
      * Remove the specified resource from storage.

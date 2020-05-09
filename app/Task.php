@@ -45,12 +45,17 @@ class Task extends Model
 
     public function teacher()
     {
-        return $this->hasOneThrough('App\User', 'App\Student');
+        return $this->belongsTo('App\User');
     }
 
     public function studentgroup()
     {
         return $this->belongsTo('App\Studentgroup');
+    }
+
+    public function job()
+    {
+        return $this->belongsTo('App\Job');
     }
 
 }

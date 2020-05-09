@@ -10,20 +10,18 @@
 
 @section ('content')
 <div class="container my-5">
-   @isset($tasksByTeacher)
-      @foreach ($tasksByTeacher as $teacher_id  => $tasksByUnits)
+   @isset($jobsByTeacher)
+      @foreach ($jobsByTeacher as $teacher_id  => $jobs)
          @php
             $teacher = App\User::findOrFail($teacher_id);
          @endphp
          <h3 class="mt-3 text-brand-blue">Aufträge von: {{$teacher->teacher_name}} {{$teacher->teacher_surname}}</h3>                       
-         @foreach ($tasksByUnits as $unit_id => $tasks)
+         @foreach ($jobs as $job)
             @php
-               $unit = App\Unit::find($unit_id);
-               $task_example = $tasks->first();
-               $unit_done_date = $task_example->done_date;
-               $progress = round(count($tasks->where('student_check',1)->all())/count($tasks)*100);
+               $progress = round(count($job->tasks->where('student_check',1))/count($job->tasks)*100);
                $count_news = 0;
-               foreach($unit->tasks as $task) {                     $news = count($task->results->where('result_viewed',NULL)->where('created_by','teacher'));
+               foreach($job->tasks as $task) {
+                  $news = count($task->results->where('result_viewed',NULL)->where('created_by','teacher'));
                   $count_news = $count_news + $news;
                }
             @endphp
@@ -31,45 +29,61 @@
                <div class="card-header">
                   <div class="d-flex flex-row align-items-top my-3">
                      <div class="m-0 p-0 col-5">
-                        <button class="btn btn-link text-left m-0" type="button" data-toggle="collapse" data-target="#collapse_{{$unit->id}}_{{$teacher_id}}" aria-expanded="false" aria-controls="collapse_{{$unit->id}}_{{$teacher_id}}">
-                           {{$unit->unit_title}} <span><i class="fas fa-caret-down"></i></span>
+                        <button class="btn btn-link text-left m-0" type="button" data-toggle="collapse" data-target="#collapse_{{$job->unit->id}}_{{$teacher_id}}" aria-expanded="false" aria-controls="collapse_{{$job->unit->id}}_{{$teacher_id}}">
+                           {{$job->unit->unit_title}} <span><i class="fas fa-caret-down"></i></span>
                         </button>
                      </div>
                      <div class="col-4">
-                        @if ($task_example->taskStatus_id < 3)
+                        @if ($job->jobStatus->id == 3)
                            <form action="/schueler/lerneinheit_starten" method="POST" enctype="multipart/form-data">
                               @method('PATCH')
                               @csrf
-                              <input type="hidden" name="unit_id" value="{{$unit->id}}">
-                              @foreach($unit->tasks->where('student_id',$student->id) as $task)
-                                 <input type="hidden" name="student_id" value="{{$student->id}}">
-                                 <input type="hidden" name="tasks[]" value="{{$task->id}}">
-                              @endforeach
+                              <input type="hidden" name="job_id" value="{{$job->id}}">
                               <div class="d-flex flex-column">
                                  <button class="btn-sm btn-primary" type="submit" title="Klicke hier um mit der Lerneinheit zu starten">Starten </button>
                               </div>
                            </form>
                         @else
-                           @if ($task_example->taskStatus_id > 2)  
-                              <div class="d-flex flex-column">
-                                 <a class="m-1 btn-sm btn-warning text-center" href="/unit/{{$unit->id}}"> Zur Lerneinheit </a>
-                                 <a class="m-1 btn-sm btn-success text-center" href="/unit/{{$unit->id}}"> Abgeben </a>
-                              </div>
+                           @if ($job->jobStatus->id > 3)
+                              @if($job->jobStatus->id < 11)
+                                 <div class="d-flex flex-column">
+                                    <a class="m-1 btn-sm btn-warning text-center" href="/unit/{{$job->unit->id}}"> Zur Lerneinheit </a>
+                                    <form class="m-1" action="/schueler/auftraege/abgeben" method="post">
+                                       @csrf @method('PATCH')
+                                       <input type="hidden" name="student_id" value="{{$student->id}}">
+                                       <input type="hidden" name="job_id" value="{{$job->id}}">
+                                       @if ($progress < 100)
+                                          <button title="Kreuze alle Aufgaben als fertig an, um die Aufgabe abzugeben." class="w-100 btn-sm btn-secondary text-center" disabled type="submit"> Abgeben </button>
+                                       @else
+                                          <button class="w-100 btn-sm btn-success text-center" type="submit"> Abgeben </button>
+                                       @endif
+                                    </form>
+                                 </div>
+                              @else 
+                                 <div class="d-flex flex-column">
+                                    <form class="m-1" action="/schueler/auftraege/zurueckholen" method="post">
+                                       @csrf @method('PATCH')
+                                       <input type="hidden" name="student_id" value="{{$student->id}}">
+                                       <input type="hidden" name="job_id" value="{{$job->id}}">
+                                       <button class="w-100 btn-sm btn-info text-center" type="submit"> Noch mal zurück! </button>
+                                    </form>
+                                 </div>
+                              @endif
                            @endif
                            <div title="Du hast {{$count_news}} neue Nachrichten" class="text-left mt-3" style="min-width: 5rem">
                               @if($count_news > 0)
-                                 <button type="button" data-toggle="collapse" data-target="#collapse_{{$unit->id}}_{{$teacher_id}}" aria-expanded="false" aria-controls="collapse_{{$unit->id}}_{{$teacher_id}}" class="btn btn-primary ml-3" style=""><i class=" far fa-envelope"></i></button>
+                                 <button type="button" data-toggle="collapse" data-target="#collapse_{{$job->unit->id}}_{{$teacher_id}}" aria-expanded="false" aria-controls="collapse_{{$job->unit->id}}_{{$teacher_id}}" class="btn btn-primary ml-3" style=""><i class=" far fa-envelope"></i></button>
                                  <span class="badge news_notify badge-danger" style="position: relative; top:-15px; left:-12px;">{{$count_news}}</span>
                               @endif
                            </div>
-                        @endif 
+                        @endif
                      </div>
                      <div class="col text-center">
                         <small>Fällig</small><br>
-                        <small class="">{{$unit_done_date->diffForHumans()}}</small>
+                        <small class="">{{$job->done_date->diffForHumans()}}</small>
                      </div>
                   </div>
-                  @if ($task_example->taskStatus_id > 2)
+                  @if ($job->jobStatus->id > 3)
                      <div class="row" id="headingTwo">
                         <div class="col">
                            <small>So viel hast Du schon geschafft:</small>
@@ -87,8 +101,8 @@
                   @endif
                </div>
 
-               <div id="collapse_{{$unit->id}}_{{$teacher_id}}" class="collapse 
-                  @if (session('unit_open') == $unit->id) show @endif
+               <div id="collapse_{{$job->unit->id}}_{{$teacher_id}}" class="collapse 
+                  @if (session('unit_open') == $job->unit->id) show @endif
                   " aria-labelledby="headingOne">
 
                   <div class="card-body">
@@ -99,9 +113,9 @@
                               <th class="text-center">Aufgabe fertig?</th>
                            </thead>
                            <tbody>
-                              @foreach ($tasks as $task)
+                              @foreach ($job->tasks as $task)
                                  @php
-                                 $news_task =  count($task->results->where('result_viewed','==',NULL)->where('created_by','teacher')->all());  
+                                 $news_task =  count($task->results->where('result_viewed','==',NULL)->where('created_by','teacher')->all());
                                  @endphp
                                  <tr>
                                     <td class="d-flex flex-row justify-content-start align-items-end">
@@ -112,7 +126,7 @@
                                                 <span class="badge news_notify badge-danger" style="position: relative; top:-18px; left:-12px;">{{$news_task}}</span>
                                              </div>
                                           </a>
-                                       @else 
+                                       @else
                                           <span data-toggle="collapse" data-target="#collapse_task_news_{{$task->id}}" aria-expanded="true" aria-controls="collapse_task_news_{{$task->id}}" title="Nachrichten zu dieser Aufgabe anschauen" class="align-bottom clickable btn btn-link text-left">{{$task->block->title}} <i class="fas fa-caret-down"></i></span> 
                                        @endif
                                     </td>
@@ -227,23 +241,32 @@
                                              @foreach ($task->results->sortBy('created_at') as $result)
                                                 @if($result->created_by == 'teacher')
                                                    @if($result->feedback_message !== 1)
-                                                      <div class="d-flex text-white justify-content-end mr-3">
-                                                         <span><small class="">{{$result->created_at->diffForHumans()}}</small></span>
+                                                      <div class="d-flex flex-column justify-content-start w-75 mb-3 my-1">
+                                                      <div class="d-flex text-white justify-content-between mb-0">
+                                                         <span class="ml-3"><small>{{$job->teacher->teacher_name}} {{$job->teacher->teacher_surname}}</small></span>
+                                                         <span><small class="mr-3">{{$result->created_at->diffForHumans()}}</small></span>
                                                       </div>
-                                                      <div class="d-flex justify-content-start">
-                                                         <div class="otherBubble bg-warning w-75 shadow">
-                                                            <p class="card-text p-2"><small>{{$result->message}}</small></p>
+                                                      <div class="d-flex justify-content-start ">
+                                                         <div class="otherBubble bg-warning shadow mt-0 w-100">
+                                                            <p class="card-text p-1"><small>{{$result->message}}</small></p>
                                                          </div>
-                                                         </div>
+                                                      </div>
+                                                   </div>
                                                    @endif
                                                 @else
                                                    @if ($result->ready_message !== 1)
-                                                      <div class="d-flex text-white justify-content-end mr-3">
-                                                         <span><small class="">{{$result->created_at->diffForHumans()}}</small></span>
-                                                      </div>
-                                                      <div class="d-flex justify-content-end">
-                                                         <div class="ownBubble bg-light w-75 shadow">
-                                                            <p class="card-text p-2"><small>{{$result->message}}</small></p>
+                                                      <div class="row mb-3 my-1">
+                                                         <div class="col-3"></div>
+                                                         <div class="d-flex col-9 p-1 justify-content-end flex-column">
+                                                            <div class="d-flex text-white justify-content-between mb-0">
+                                                               <span class="ml-3"><small>Du</small></span>
+                                                               <span><small class="mr-3">{{$result->created_at->diffForHumans()}}</small></span>
+                                                            </div>
+                                                            <div class="d-flex justify-content-end m-0">
+                                                               <div class="ownBubble bg-light shadow w-100 m-0">
+                                                                  <p class="card-text text-right p-2"><small>{{$result->message}}</small></p>
+                                                               </div>
+                                                            </div>
                                                          </div>
                                                       </div>
                                                    @endif
@@ -257,7 +280,7 @@
                                                 <input type="hidden" name="created_by" value="student">
                                                 <input type="hidden" name="task_id" value="{{$task->id}}">
                                                 <div class="input-group mb-3">
-                                                   <input name="message" id="message_in_box{{$task->id}}" type="text" class="form-control" placeholder="Schreibe eine Nachricht an {{$student->student_name}} hier..." aria-label="message_to_student" aria-describedby="button-addon2">
+                                                   <input name="message" id="message_in_box{{$task->id}}" type="text" class="form-control" placeholder="Schreibe eine Nachricht an {{$teacher->teacher_name}} {{$teacher->teacher_surname}} hier..." aria-label="message_to_student" aria-describedby="button-addon2">
                                                    <div class="input-group-append">
                                                       <button class="btn btn-link text-warning" type="submit" id="button_send_message_{{$task->id}}"><i class="fa-2x fas fa-arrow-circle-up"></i></button>
                                                    </div>

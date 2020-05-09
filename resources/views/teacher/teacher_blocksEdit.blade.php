@@ -67,7 +67,7 @@
                         <small class="text-muted"> Wenn Du der Aufgabe einen digitalen Inhalt hinzufügen willst, such Dir über den Button einen Inhalt aus.</small>
                     </label>
                     <div class="col-10 d-flex justify-content-start align-items-center">
-                        
+
                         {{-- Inhalt einfügen, wenn es ein neuer Inhalt ist --}}
                         @if(Session::has('content_title'))
                             <div class="card bg-secondary mr-3" style="width: 150px;"> 

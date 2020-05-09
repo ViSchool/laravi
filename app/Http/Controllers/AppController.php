@@ -81,15 +81,15 @@ class AppController extends Controller
     public function getDynamicUnits($id) 
      {
         $teacher = Auth::user();
-        $publicUnits = Subject::find($id)->units->where('status_id',1)->sortBy('unit_title')->pluck("unit_title","id");
+        $publicUnits = Unit::where('subject_id',$id)->where('status_id',1)->has('blocks')->pluck("unit_title","id");
         if(isset($teacher)) {
-        $privateUnits = Subject::find($id)->units->where('status_id','>',1)->where('user_id',$teacher->id)->sortBy('unit_title')->pluck("unit_title","id");
+        $privateUnits = Unit::where('subject_id',$id)->where('status_id','>',1)->where('user_id',$teacher->id)->has('blocks')->pluck("unit_title","id");
         }
         if(isset($privateUnits)) {
             $units = $publicUnits->union($privateUnits);
         } else {
             $units = $publicUnits;
-        } 
+        }
         return json_encode($units);
 
     }

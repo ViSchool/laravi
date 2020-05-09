@@ -6,6 +6,7 @@ use App\Student;
 use App\Studentgroup;
 use App\studentName;
 use App\Task;
+use App\Job;
 use Auth;
 use App\User;
 use PDF;
@@ -24,7 +25,7 @@ class StudentController extends Controller
     
     public function __construct() 
     {
-        $this->middleware('auth:student');
+        $this->middleware('auth:student')->only('student_auftraege_index_students');
     }
     
      public function index()
@@ -36,31 +37,11 @@ class StudentController extends Controller
     public function student_auftraege_index_students() 
     {
         $student = Auth::guard('student')->user();
-        $tasks = Task::where('student_id',$student->id)->get();
-        $tasksByTeacher = $tasks->groupBy([
-            'teacher_id',
-            function ($item) {
-                return $item['unit_id'];
-            },
-        ], $preserveKeys = true);
-        return view('student.student_tasks', compact('student','tasksByTeacher'));
+        $jobs = Job::where('student_id',$student->id)->where('jobStatus_id','>',2)->get();
+        $jobsByTeacher = $jobs->groupBy('teacher_id');
+        return view('student.student_jobs', compact('student','jobsByTeacher'));
     }
 
-    public function set_status_to_gestartet(Request $request) 
-    {
-        $this->validate(request(), [
-        'tasks' => 'required',
-        'unit_id' => 'required',
-        'student_id' => 'required'
-        ]);
-        foreach($request->tasks as $task_id) {
-            echo ($task_id);
-            $task = Task::where('id',$task_id)->where('student_id',$request->student_id)->firstOrFail();
-            $task->taskStatus_id = 3;
-            $task->save();
-        } 
-        return redirect()->route('unit.show', ['unit' => $request->unit_id]);
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -195,4 +176,75 @@ class StudentController extends Controller
         $student->delete();
         return redirect()->back();
     }
+
+
+    //TASKS von der Schülerseite 
+    public function store_student_check (Request $request) 
+    {
+        $this->validate(request(), [
+        'task_id' => 'required', 
+        'result_for_student_check' => 'required',
+        ]);
+
+        $task = Task::find($request->task_id);
+        $task->student_check = $request->result_for_student_check;
+        $task->save();
+        Job::progress($task->job);
+
+        return redirect()->back()->with('unit_open',$task->unit_id);
+
+    }
+   
+    public function handin_tasks (Request $request) 
+    {
+        $this->validate(request(), [
+        'job_id' => 'required', 
+        'student_id' => 'required',
+        ]);
+
+        $tasks = Task::where('job_id',$request->job_id)->get();
+        foreach ($tasks as $task) {
+            $task->taskStatus_id = 6;
+            $task->save();
+        }
+        Job::progress($task->job);
+        return redirect()->back()->with('unit_open',$task->unit_id);
+
+    }
+
+    public function setback_tasks (Request $request) 
+    {
+        $this->validate(request(), [
+        'job_id' => 'required',
+        'student_id' => 'required',
+        ]);
+
+        $tasks = Task::where('job_id',$request->job_id)->get();
+        foreach ($tasks as $task) {
+            $task->taskStatus_id = 5;
+            $task->save();
+        }
+        Job::progress($task->job);
+        return redirect()->back()->with('unit_open',$task->unit_id);
+
+    }
+
+    public function set_status_to_gestartet(Request $request) 
+    {
+        $this->validate(request(), [
+        'job_id' => 'required',
+        ]);
+        
+        $job = Job::find($request->job_id);
+        $job->jobStatus_id = 4;
+        $tasks = Task::where('job_id', $job->id)->get();
+        foreach ($tasks as $task) {
+            $task->taskStatus_id = 3;
+            $task->save();
+        }
+        $job->save();
+        return redirect()->route('unit.show', ['unit' => $job->unit_id]);
+    }
+
+
 }

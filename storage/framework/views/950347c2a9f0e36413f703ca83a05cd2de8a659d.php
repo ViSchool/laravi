@@ -90,18 +90,17 @@ Schüleraccount automatisch erstellen</button>
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form method="POST" action="/lehrer/schueleraccount/erstellen" enctype="multipart/form-data">
-                <?php echo csrf_field(); ?> 
-                                
+                    <?php echo csrf_field(); ?>
                     <div class="modal-header">
                         <h5 class="modal-title" id="newStudentModalLabel">Einen neuen Schüleraccount erstellen</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">    
+                    <div class="modal-body">
                         <input type="hidden" value="<?php echo e($teacher->id); ?>" name="user_id">
                         <input type="hidden" value="0" name="class_account">
-                        
+
                         <div class="form-group<?php echo e($errors->has('student_name') ? ' invalid' : ''); ?>">
                             <label for="student_name" class="col-md-4 col-form-label">Benutzername für den Schüleraccount</label>
                              <div class="col-10">
@@ -115,7 +114,7 @@ Schüleraccount automatisch erstellen</button>
                         </div>
 
                         <div class="form-group<?php echo e($errors->has('password') ? ' invalid' : ''); ?>">
-                            <label for="password" class="col-md-4 col-form-label">Passwort für den Klassenaccount</label>
+                            <label for="password" class="col-md-4 col-form-label">Passwort für den Schüleraccount</label>
                              <div class="col-10">
                              <input id="password" type="text" class="form-control" name="password" value="<?php echo e(old('password')); ?>" required>
                                 <?php if($errors->has('password')): ?>

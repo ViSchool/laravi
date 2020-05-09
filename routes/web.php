@@ -95,9 +95,9 @@ Route::get('/lehrer/register_soon','InquiryController@index')->name('inquiries.i
 
 /*Schüler- und Klassenaccounts */
 
-Route::post('lehrer/schueleraccount/erstellen','StudentController@store');
-Route::post('lehrer/klassenaccount/erstellen','StudentController@store_classaccount');
-Route::post('lehrer/schueleraccount_liste/erstellen','StudentgroupController@store');
+Route::post('/lehrer/schueleraccount/erstellen','StudentController@store');
+Route::post('/lehrer/klassenaccount/erstellen','StudentController@store_classaccount');
+Route::post('/lehrer/schueleraccount_liste/erstellen','StudentgroupController@store');
 Route::delete('/lehrer/schueleraccount/loeschen/{id}', 'StudentController@destroy');
 Route::delete('/lehrer/klassenaccount/loeschen/{id}', 'StudentController@destroy');
 Route::get('/lehrer/klassenaccounts','TeacherController@classes');
@@ -108,18 +108,24 @@ Route::delete('/lehrer/schuelergruppe/löschen/{id}', 'StudentgroupController@de
 //nur zu Testzwecken:
 Route::get('/lehrer/schuelergruppe/pdf/{id}','StudentgroupController@show')->name('show_studentgroup_pdf');
 
+//Routen für Jobs
+Route::get('/lehrer/auftrag/erstellen','JobController@create')->name('create_auftrag');
+Route::post('/lehrer/auftrag/erstellen','JobController@store')->name('store_auftrag');
+Route::patch('/lehrer/auftrag/zuteilen','JobController@assign_job')->name('assign_job');
+Route::get('/lehrer/auftraege','JobController@index')->name('auftraege');
+Route::get('/lehrer/auftraege/schueler/{student}','JobController@student_auftraege_index_teacher')->name('student_auftraege_teacher');
+
 //Routen für Tasks
-Route::get('/lehrer/auftrag/erstellen','TaskController@create')->name('create_auftrag');
-Route::post('/lehrer/auftrag/erstellen','TaskController@store')->name('store_auftrag');
-Route::get('/lehrer/auftraege/schueler/{student}','TaskController@student_auftraege_index_teacher')->name('student_auftraege_teacher');
-Route::get('/lehrer/auftraege','TaskController@index')->name('auftraege');
+Route::get('/lehrer/auftrag/aufgaben/erstellen/{job}','TaskController@create')->name('rueckmeldungen_erstellen');
+Route::post('/lehrer/auftrag/aufgaben/erstellen','TaskController@store')->name('rueckmeldungen_speichern');
 
 
 Route::get('/schueler/anmelden', 'Auth\StudentLoginController@showLoginForm')->name('student.login');
 Route::patch('/schueler/lerneinheit_starten','StudentController@set_status_to_gestartet')->name('taskStatusBearbeitung');
-Route::get('/schueler/auftraege/{student}','StudentController@student_auftraege_index_students')->name('student_auftraege_students');
-Route::patch('/schueler/auftrag/student_check', 'TaskController@store_student_check')->name('auftrag_schueler_erledigt');
-
+Route::get('/schueler/auftraege','StudentController@student_auftraege_index_students')->name('student_auftraege_students');
+Route::patch('/schueler/auftrag/student_check', 'StudentController@store_student_check')->name('auftrag_schueler_erledigt');
+Route::patch('/schueler/auftraege/abgeben', 'StudentController@handin_tasks')->name('aufgaben.abgeben');
+Route::patch('/schueler/auftraege/zurueckholen', 'StudentController@setback_tasks')->name('aufgaben.zurueckholen');
 
 
 //Routen für Results

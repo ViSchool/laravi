@@ -4,7 +4,7 @@
 <div class="container d-flex justify-content-center">
     <div class="col-md-10">
         <div class="card mb-3">
-            <div class="card-header bg-white">Login</div>
+            <div class="card-header bg-white">Bitte melde Dich mit Deinem Lehrer-Account an:</div>
             <div class="card-body">
                 <form class="" method="POST" action="{{ route('login') }}">
                 @csrf
@@ -36,7 +36,7 @@
                         <div class="col-md-6">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Eingeloggt bleiben
                                 </label>
                             </div>
                         </div>

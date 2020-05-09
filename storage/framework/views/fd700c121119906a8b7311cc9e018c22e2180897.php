@@ -41,7 +41,7 @@
 						<a href="/lehrer/logout" class="btn-sm btn-primary text-white ml-1"> <i class="fas fa-sign-out-alt"></i> Logout</a>
 					<?php endif; ?>
 					<?php if(auth()->guard('student')->check()): ?>
-						<a class="dropdown-item pl-2" href="/schueler/auftraege/<?php echo e(Auth::guard('student')->user()->id); ?>" ><small>Aufträge</small> </a>
+						<a class="dropdown-item pl-2" href="/schueler/auftraege" ><small>Aufträge</small> </a>
 						<div class="dropdown-divider"></div>
 						<a href="/schueler/logout" class="btn-sm btn-primary text-center btn-block text-white"> <i class="fas fa-sign-out-alt"></i> Logout</a>
 					<?php endif; ?>
@@ -134,7 +134,7 @@
 						<?php if(auth()->guard('student')->check()): ?>
 							<a class="btn btn-primary dropdown-item" href="/schueler/logout">Logout</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="/schueler/auftraege/<?php echo e(Auth::guard('student')->user()->id); ?>" > Dein Aufträge</a>
+							<a class="dropdown-item" href="/schueler/auftraege" > Dein Aufträge</a>
 
 						<?php endif; ?>
 					</div>

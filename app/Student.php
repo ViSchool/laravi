@@ -47,6 +47,11 @@ class Student extends Authenticatable
         return $this->hasMany('App\Task');
     }
 
+    public function jobs()
+    {
+        return $this->hasMany('App\Job');
+    }
+
     
     public static function get_current_student() {
 		return Auth::guard('student')->user();

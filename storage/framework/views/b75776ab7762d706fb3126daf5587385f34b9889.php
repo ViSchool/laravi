@@ -8,20 +8,18 @@
 
 <?php $__env->startSection('content'); ?>
 <div class="container my-5">
-   <?php if(isset($tasksByTeacher)): ?>
-      <?php $__currentLoopData = $tasksByTeacher; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $teacher_id  => $tasksByUnits): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+   <?php if(isset($jobsByTeacher)): ?>
+      <?php $__currentLoopData = $jobsByTeacher; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $teacher_id  => $jobs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
          <?php
             $teacher = App\User::findOrFail($teacher_id);
          ?>
          <h3 class="mt-3 text-brand-blue">Aufträge von: <?php echo e($teacher->teacher_name); ?> <?php echo e($teacher->teacher_surname); ?></h3>                       
-         <?php $__currentLoopData = $tasksByUnits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit_id => $tasks): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+         <?php $__currentLoopData = $jobs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $job): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <?php
-               $unit = App\Unit::find($unit_id);
-               $task_example = $tasks->first();
-               $unit_done_date = $task_example->done_date;
-               $progress = round(count($tasks->where('student_check',1)->all())/count($tasks)*100);
+               $progress = round(count($job->tasks->where('student_check',1))/count($job->tasks)*100);
                $count_news = 0;
-               foreach($unit->tasks as $task) {                     $news = count($task->results->where('result_viewed',NULL)->where('created_by','teacher'));
+               foreach($job->tasks as $task) {
+                  $news = count($task->results->where('result_viewed',NULL)->where('created_by','teacher'));
                   $count_news = $count_news + $news;
                }
             ?>
@@ -29,33 +27,29 @@
                <div class="card-header">
                   <div class="d-flex flex-row align-items-top my-3">
                      <div class="m-0 p-0 col-5">
-                        <button class="btn btn-link text-left m-0" type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($unit->id); ?>_<?php echo e($teacher_id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($unit->id); ?>_<?php echo e($teacher_id); ?>">
-                           <?php echo e($unit->unit_title); ?> <span><i class="fas fa-caret-down"></i></span>
+                        <button class="btn btn-link text-left m-0" type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($job->unit->id); ?>_<?php echo e($teacher_id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($job->unit->id); ?>_<?php echo e($teacher_id); ?>">
+                           <?php echo e($job->unit->unit_title); ?> <span><i class="fas fa-caret-down"></i></span>
                         </button>
                      </div>
                      <div class="col-4">
-                        <?php if($task_example->taskStatus_id < 3): ?>
+                        <?php if($job->jobStatus->id == 3): ?>
                            <form action="/schueler/lerneinheit_starten" method="POST" enctype="multipart/form-data">
                               <?php echo method_field('PATCH'); ?>
                               <?php echo csrf_field(); ?>
-                              <input type="hidden" name="unit_id" value="<?php echo e($unit->id); ?>">
-                              <?php $__currentLoopData = $unit->tasks->where('student_id',$student->id); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                 <input type="hidden" name="student_id" value="<?php echo e($student->id); ?>">
-                                 <input type="hidden" name="tasks[]" value="<?php echo e($task->id); ?>">
-                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                              <input type="hidden" name="job_id" value="<?php echo e($job->id); ?>">
                               <div class="d-flex flex-column">
                                  <button class="btn-sm btn-primary" type="submit" title="Klicke hier um mit der Lerneinheit zu starten">Starten </button>
                               </div>
                            </form>
                         <?php else: ?>
-                           <?php if($task_example->taskStatus_id > 2): ?>
-                              <?php if($task_example->taskStatus_id < 6): ?>
+                           <?php if($job->jobStatus->id > 3): ?>
+                              <?php if($job->jobStatus->id < 11): ?>
                                  <div class="d-flex flex-column">
-                                    <a class="m-1 btn-sm btn-warning text-center" href="/unit/<?php echo e($unit->id); ?>"> Zur Lerneinheit </a>
+                                    <a class="m-1 btn-sm btn-warning text-center" href="/unit/<?php echo e($job->unit->id); ?>"> Zur Lerneinheit </a>
                                     <form class="m-1" action="/schueler/auftraege/abgeben" method="post">
                                        <?php echo csrf_field(); ?> <?php echo method_field('PATCH'); ?>
                                        <input type="hidden" name="student_id" value="<?php echo e($student->id); ?>">
-                                       <input type="hidden" name="unit_id" value="<?php echo e($unit->id); ?>">
+                                       <input type="hidden" name="job_id" value="<?php echo e($job->id); ?>">
                                        <?php if($progress < 100): ?>
                                           <button title="Kreuze alle Aufgaben als fertig an, um die Aufgabe abzugeben." class="w-100 btn-sm btn-secondary text-center" disabled type="submit"> Abgeben </button>
                                        <?php else: ?>
@@ -68,7 +62,7 @@
                                     <form class="m-1" action="/schueler/auftraege/zurueckholen" method="post">
                                        <?php echo csrf_field(); ?> <?php echo method_field('PATCH'); ?>
                                        <input type="hidden" name="student_id" value="<?php echo e($student->id); ?>">
-                                       <input type="hidden" name="unit_id" value="<?php echo e($unit->id); ?>">
+                                       <input type="hidden" name="job_id" value="<?php echo e($job->id); ?>">
                                        <button class="w-100 btn-sm btn-info text-center" type="submit"> Noch mal zurück! </button>
                                     </form>
                                  </div>
@@ -76,7 +70,7 @@
                            <?php endif; ?>
                            <div title="Du hast <?php echo e($count_news); ?> neue Nachrichten" class="text-left mt-3" style="min-width: 5rem">
                               <?php if($count_news > 0): ?>
-                                 <button type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($unit->id); ?>_<?php echo e($teacher_id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($unit->id); ?>_<?php echo e($teacher_id); ?>" class="btn btn-primary ml-3" style=""><i class=" far fa-envelope"></i></button>
+                                 <button type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($job->unit->id); ?>_<?php echo e($teacher_id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($job->unit->id); ?>_<?php echo e($teacher_id); ?>" class="btn btn-primary ml-3" style=""><i class=" far fa-envelope"></i></button>
                                  <span class="badge news_notify badge-danger" style="position: relative; top:-15px; left:-12px;"><?php echo e($count_news); ?></span>
                               <?php endif; ?>
                            </div>
@@ -84,10 +78,10 @@
                      </div>
                      <div class="col text-center">
                         <small>Fällig</small><br>
-                        <small class=""><?php echo e($unit_done_date->diffForHumans()); ?></small>
+                        <small class=""><?php echo e($job->done_date->diffForHumans()); ?></small>
                      </div>
                   </div>
-                  <?php if($task_example->taskStatus_id > 2): ?>
+                  <?php if($job->jobStatus->id > 3): ?>
                      <div class="row" id="headingTwo">
                         <div class="col">
                            <small>So viel hast Du schon geschafft:</small>
@@ -105,8 +99,8 @@
                   <?php endif; ?>
                </div>
 
-               <div id="collapse_<?php echo e($unit->id); ?>_<?php echo e($teacher_id); ?>" class="collapse 
-                  <?php if(session('unit_open') == $unit->id): ?> show <?php endif; ?>
+               <div id="collapse_<?php echo e($job->unit->id); ?>_<?php echo e($teacher_id); ?>" class="collapse 
+                  <?php if(session('unit_open') == $job->unit->id): ?> show <?php endif; ?>
                   " aria-labelledby="headingOne">
 
                   <div class="card-body">
@@ -117,7 +111,7 @@
                               <th class="text-center">Aufgabe fertig?</th>
                            </thead>
                            <tbody>
-                              <?php $__currentLoopData = $tasks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                              <?php $__currentLoopData = $job->tasks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                  <?php
                                  $news_task =  count($task->results->where('result_viewed','==',NULL)->where('created_by','teacher')->all());
                                  ?>
@@ -130,7 +124,7 @@
                                                 <span class="badge news_notify badge-danger" style="position: relative; top:-18px; left:-12px;"><?php echo e($news_task); ?></span>
                                              </div>
                                           </a>
-                                       <?php else: ?> 
+                                       <?php else: ?>
                                           <span data-toggle="collapse" data-target="#collapse_task_news_<?php echo e($task->id); ?>" aria-expanded="true" aria-controls="collapse_task_news_<?php echo e($task->id); ?>" title="Nachrichten zu dieser Aufgabe anschauen" class="align-bottom clickable btn btn-link text-left"><?php echo e($task->block->title); ?> <i class="fas fa-caret-down"></i></span> 
                                        <?php endif; ?>
                                     </td>
@@ -247,7 +241,7 @@
                                                    <?php if($result->feedback_message !== 1): ?>
                                                       <div class="d-flex flex-column justify-content-start w-75 mb-3 my-1">
                                                       <div class="d-flex text-white justify-content-between mb-0">
-                                                         <span class="ml-3"><small><?php echo e($task->teacher->teacher_name); ?> <?php echo e($task->teacher->teacher_surname); ?></small></span>
+                                                         <span class="ml-3"><small><?php echo e($job->teacher->teacher_name); ?> <?php echo e($job->teacher->teacher_surname); ?></small></span>
                                                          <span><small class="mr-3"><?php echo e($result->created_at->diffForHumans()); ?></small></span>
                                                       </div>
                                                       <div class="d-flex justify-content-start ">
@@ -342,4 +336,4 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/student/student_tasks.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/student/student_jobs.blade.php ENDPATH**/ ?>

@@ -3,7 +3,7 @@
     <div class="col-md-10">
         <div class="card mb-3">
             <div class="card-header bg-white">
-                <p>Schüler Login</p> 
+                <p>Schüler-Login</p> 
                 <small>Deine Login-Daten erhälst Du von Deinem Lehrer oder Deiner Lehrerin.</small>
             </div>
             <div class="card-body">

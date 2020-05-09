@@ -11,7 +11,7 @@
 
 <?php $__env->startSection('content'); ?>
 	<div class="container mt-3">
-      <h3>Von Dir zugewiesene Aufträge</h3>
+      <h3>Von Dir erstellte Aufträge</h3>
       <p>"Aufträge" sind öffentliche oder private Lerneinheiten, die Du einzelnen Schülern oder ganzen Klassen zur Erledigung zuweisen kannst. Wenn Du einen Auftrag erstellst, dann bekommt jeder Schüler einen entsprechenden Eintrag auf seiner Auftragsliste und kann Dir danach seine Ergebnisse freigeben.  </p>
       <p>Aufträge, die Du erstellst, können nur die Schüler sehen, denen Du Aufträge erteilt hast. </p>
    </div>
@@ -29,10 +29,10 @@
                 <?php
                     $studentgroup = App\Studentgroup::findOrFail($studentgroup_id);
                 ?>
-                    
-                
+
+
                 <h3 class="mt-3 text-brand-blue">Aufträge an Klasse: "<?php echo e($studentgroup->studentgroup_name); ?>"</h3>           
-                     
+
                 <div class="accordion" id="accordion_<?php echo e($studentgroup->id); ?>">
                     <?php $__currentLoopData = $tasksByUnits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit_id => $tasks): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <?php
@@ -41,7 +41,8 @@
                         <div class="card">
                             <div class="card-header" id="headingOne">
                             <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($unit->id); ?>_<?php echo e($studentgroup->id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($unit->id); ?>_<?php echo e($studentgroup->id); ?>">
-                                    <?php echo e($unit->unit_title); ?>                                        
+                                    <?php echo e($unit->unit_title); ?>
+
                                 </button></h2>
                             </div>
 
@@ -53,19 +54,37 @@
                                                 <th>Schüler</th>
                                                 <th>zu erledigen bis</th>
                                                 <th>Nachrichten</th>
+                                                <th>Stand der Bearbeitung</th>
                                             </thead>
                                             <tbody>
                                                 <?php
                                                     $tasks_unique = $tasks->unique('student_id');
                                                 ?>
                                                 <?php $__currentLoopData = $tasks_unique; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php
+                                                        //Anzahl neuer Nachrichten für diesen Schüler zählen
+                                                        $count_news = 0;
+                                                        $tasks_student = App\Task::where('student_id',$task->student->id)->where('unit_id',$task->unit->id)->get();
+                                                        foreach ($tasks_student as $task_student) {
+                                                            $news = count($task_student->results->where('result_viewed',NULL)->where('created_by','student'));
+                                                            $count_news = $count_news + $news;
+                                                        }
+                                                    ?>
                                                     <tr>
                                                         <td><a href="/lehrer/auftraege/schueler/<?php echo e($task->student->id); ?>"><?php echo e($task->student->student_name); ?></a></td>
-                                                        <td><?php echo e($task->done_date); ?></td>
-                                                        <td>$task->student->results->count()</td>
+                                                        <td><?php echo e($task->done_date->formatLocalized('%d. %B %Y')); ?></td>
+                                                        <?php if($count_news > 0): ?>
+                                                            <?php
+                                                                session()->flash('task_news_open', $task->id);
+                                                                session()->flash('unit_open',$task->unit->id);
+                                                            ?>
+                                                            <td><a href="/lehrer/auftraege/schueler/<?php echo e($task->student->id); ?>"> <small> <?php echo e($count_news); ?> Neue Nachrichten </small></a></td>
+                                                        <?php else: ?>
+                                                            <td><small> <?php echo e($count_news); ?> </small></td>
+                                                        <?php endif; ?>
+                                                        <td></td>
                                                     </tr>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                            
                                             </tbody>
                                         </table>
                                     </div>
@@ -85,7 +104,8 @@
                         <div class="card">
                             <div class="card-header" id="headingOne">
                                 <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($unit->id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($unit->id); ?>">
-                                    <?php echo e($unit->unit_title); ?>                                        
+                                    <?php echo e($unit->unit_title); ?>
+
                                 </button></h2>
                             </div>
 

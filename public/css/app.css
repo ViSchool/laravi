@@ -16878,7 +16878,7 @@ h1, h2 {
 -------------------------------------------------------*/
 .ownBubble {
   min-width: 60px;
-  max-width: 700px;
+  max-width: 100%;
   padding: 14px 18px;
   margin: 6px 8px;
   border-radius: 16px 16px 0 16px;
@@ -16886,7 +16886,7 @@ h1, h2 {
 
 .otherBubble {
   min-width: 60px;
-  max-width: 700px;
+  max-width: 100%;
   padding: 14px 18px;
   margin: 6px 8px;
   background-color: #6C8EA4;

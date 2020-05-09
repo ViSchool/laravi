@@ -2,7 +2,7 @@
 <div class="container d-flex justify-content-center">
     <div class="col-md-10">
         <div class="card mb-3">
-            <div class="card-header bg-white">Login</div>
+            <div class="card-header bg-white">Bitte melde Dich mit Deinem Lehrer-Account an:</div>
             <div class="card-body">
                 <form class="" method="POST" action="<?php echo e(route('login')); ?>">
                 <?php echo csrf_field(); ?>

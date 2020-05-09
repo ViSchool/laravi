@@ -9,70 +9,23 @@
 <?php $__env->startSection('content'); ?>
 <div class="container my-5">
    <h3>Diese Lerneinheiten soll <?php echo e($student->student_name); ?> bearbeiten:</h3>
-   <?php if(isset($tasksByUnit)): ?>
-         <?php $__currentLoopData = $tasksByUnit; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit_id => $tasks): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+   <?php if(isset($jobsByUnit)): ?>
+         <?php $__currentLoopData = $jobsByUnit; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit_id => $jobs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <?php
                $unit = App\Unit::find($unit_id);
-               $task_example = $tasks->first();
-               $unit_done_date = $task_example->done_date;
                $count_news = 0;
-               foreach ($tasks as $task) {
-                  $news = count($task->results->where('result_viewed',NULL)->where('created_by','student'));
-                  $count_news = $count_news + $news;
+               foreach ($jobs as $job) {
+                  //Anzahl neuer Nachrichten für diesen Auftrag zählen
+                  $tasks_student = $job->tasks;
+                  foreach ($tasks_student as $task_student) {
+                     $news = count($task_student->results->where('result_viewed',NULL)->where('created_by','student'));
+                     $count_news = $count_news + $news;
+                  }
                }
-               //Status der Bearbeitung für Progressbar definieren
-               $progress=NULL;
-               $progress_text=NULL;
-               $progresscolor=NULL;
-
-               if (count($tasks) == count($tasks->where('taskStatus_id',2))) {
-                  $progress = 20;
-                  $progress_text = $student->student_name . ' hat die Lerneinheit noch nicht begonnen.';
-                  $progresscolor = 'Crimson';
-               }  elseif (count($tasks) == count($tasks->where('taskStatus_id',3))) {
-                     $progress = 40;
-                     $progress_text = $student->student_name . ' hat mit der Lerneinheit angefangen.';
-                     $progresscolor = 'OrangeRed';
-
-                  }  elseif (count($tasks) == count($tasks->where('taskStatus_id',6))) {
-                        $progress = 80;
-                        $progress_text = $student->student_name . ' ist fertig mit der Lerneinheit.';
-                        $progresscolor = 'GreenYellow';
-
-                     } elseif (count($tasks) == count($tasks->where('taskStatus_id',7))) {
-                           $progress = 100;
-                           $progress_text = 'Die Aufgabe ist erledigt.';
-                           $progresscolor = 'Green';
-               }  else {
-                     if (count($tasks->where('taskStatus_id',4)) > 0) {
-                        $progress = 60;
-                        $progresscolor = 'Gold';
-                        if (count($tasks->where('taskStatus_id', 6)) > 0 && count($tasks->where('taskStatus_id', 6)) < count($tasks)) {
-                           $progress_text = $student->student_name . ' arbeitet an der Lerneinheit. Du musst noch antworten und einzelne Ergebnisse liegen vor.';
-                        }
-                        else {
-                           $progress_text = $student->student_name . ' arbeitet an der Lerneinheit. Du musst noch antworten.';
-                        }
-                     }  elseif (count($tasks->where('taskStatus_id', 6)) > 0 && count($tasks->where('taskStatus_id', 6)) < count($tasks)){
-                           $progress = 60;
-                           $progresscolor = 'Gold';
-                           $progress_text = $student->student_name . ' arbeitet an der Lerneinheit. Einzelne Ergebnisse kannst Du schon korrigieren.';
-
-                        }  elseif (count($tasks->where('taskStatus_id', 7)) > 0 && count($tasks->where('taskStatus_id', 7)) < count($tasks)) {
-                              $progress = 60;
-                              $progress_text = $student->student_name . ' arbeitet an der Lerneinheit.';
-                              $progresscolor = 'Gold';
-
-                           }  elseif (count($tasks->where('taskStatus_id', 5)) > 0) {
-                                 $progress = 60;
-                                 $progress_text = $student->student_name . ' arbeitet an der Lerneinheit.';
-                                 $progresscolor = 'Gold';
-                              }
-                     }
             ?>
 
 
-            <div class="card mb-3">
+            <div id="card_unit<?php echo e($unit->id); ?>" class="card mb-3">
                <div class="card-header">
                   <div class="d-flex flex-row row align-items-center" id="headingOne">
                      <div class="m-0 p-0 col-6">
@@ -90,23 +43,23 @@
                      </div>
                      <div class="col my-3 text-center">
                         <small>Fällig</small><br>
-                        <small class=""><?php echo e($unit_done_date->diffForHumans()); ?></small>
+                        <small class=""><?php echo e($job->done_date->diffForHumans()); ?></small>
                      </div>
                   </div>
                   <div class="row mt-3">
                      <div class="col">
                         <div class="d-flex justify-content-start align-items-baseline">
                            <h5 class="">Bearbeitungsstand: </h5>
-                           <p>  <?php echo e($progress_text); ?></p>
+                           <p> <?php echo e($job->jobStatus->jobStatus_description); ?></p>
                         </div>
-                        <?php if($progress < 5): ?>
+                        <?php if($job->jobStatus->jobStatus_progress < 5): ?>
                            <div class="progress bg-secondary">
-                              <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="<?php echo e($progress); ?>" aria-valuemin="100" aria-valuemax="100" style="width: 100%">
+                              <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="<?php echo e($job->jobStatus->jobStatus_progress); ?>" aria-valuemin="100" aria-valuemax="100" style="width: 100%">
                               </div>
                            </div>
                         <?php else: ?>
                            <div class="progress bg-secondary">
-                              <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo e($progress); ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo e($progress); ?>%; ">
+                              <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo e($job->jobStatus->jobStatus_progress); ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo e($job->jobStatus->jobStatus_progress); ?>%; ">
                               </div>
                            </div>
                         <?php endif; ?>
@@ -128,7 +81,7 @@
                               <th class="text-center">Ergebnis</th>
                            </thead>
                            <tbody>
-                              <?php $__currentLoopData = $tasks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                              <?php $__currentLoopData = $job->tasks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                  <?php
                                     $news_task =  count($task->results->where('result_viewed','==',NULL)->where('created_by','student')->all());  
                                  ?>
@@ -264,7 +217,7 @@
                                                    <?php if($result->ready_message !== 1): ?>
                                                    <div class="d-flex flex-column justify-content-start w-75 mb-3 my-1">
                                                       <div class="d-flex text-white justify-content-between mb-0">
-                                                         <span class="ml-3"><small><?php echo e($task->student->student_name); ?></small></span>
+                                                         <span class="ml-3"><small><?php echo e($job->student->student_name); ?></small></span>
                                                          <span><small class="mr-3"><?php echo e($result->created_at->diffForHumans()); ?></small></span>
                                                       </div>
                                                       <div class="d-flex justify-content-start ">
@@ -328,4 +281,4 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/teacher/teacher_student_tasks.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/katmac/Sites/vischool/laravi/resources/views/teacher/teacher_student_jobs.blade.php ENDPATH**/ ?>

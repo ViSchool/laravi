@@ -6,6 +6,7 @@ use App\Result;
 use Purifier;
 use Carbon;
 use App\Task;
+use App\Job;
 use Illuminate\Http\Request;
 
 class ResultController extends Controller
@@ -58,8 +59,9 @@ class ResultController extends Controller
         $result->save();
         $task->taskStatus_id = 6;
         $task->save();
+        Job::progress($task->job);
         session()->flash('task_news_open', $task->id);
-        session()->flash('unit_open',$task->unit->id);
+        session()->flash('unit_open',$task->unit_id);
         return redirect()->back();
 
     }
@@ -78,10 +80,24 @@ class ResultController extends Controller
         $result->message = Purifier::clean($request->message);
         $result->created_by = $request->created_by;
         $result->save();
-        $task->taskStatus_id = 4;
+        switch ($request->created_by) {
+            case 'student':
+                $task->taskStatus_id = 4;
+            break;
+            case 'teacher':
+                $task->taskStatus_id = 5;
+            break;
+
+            default:
+                # code...
+                break;
+        }
+        
         $task->save();
+        Job::progress($task->job);
+
         session()->flash('task_news_open', $task->id);
-        session()->flash('unit_open',$task->unit->id);
+        session()->flash('unit_open',$task->job->unit->id);
         return redirect()->back();
 
     }
@@ -102,8 +118,9 @@ class ResultController extends Controller
         $result->save();
         $task->taskStatus_id = 6;
         $task->save();
+        Job::progress($task->job);
         session()->flash('task_news_open', $task->id);
-        session()->flash('unit_open',$task->unit->id);
+        session()->flash('unit_open',$task->job->unit->id);
         return redirect()->back();
 
     }
@@ -123,8 +140,9 @@ class ResultController extends Controller
         $result->save();
         $task->taskStatus_id = 7;
         $task->save();
+        Job::progress($task->job);
         session()->flash('task_news_open', $task->id);
-        session()->flash('unit_open',$task->unit->id);
+        session()->flash('unit_open',$task->job->unit->id);
         return redirect()->back();
 
     }
@@ -139,7 +157,7 @@ class ResultController extends Controller
             }
         }
         session()->flash('task_news_open', $task->id);
-        session()->flash('unit_open',$task->unit->id);
+        session()->flash('unit_open',$task->job->unit_id);
         return redirect()->back();
     }
     
@@ -153,7 +171,7 @@ class ResultController extends Controller
             }
         }
         session()->flash('task_news_open', $task->id);
-        session()->flash('unit_open',$task->unit->id);
+        session()->flash('unit_open',$task->job->unit_id);
         return redirect()->back();
     }
     
@@ -213,8 +231,9 @@ class ResultController extends Controller
         $result->delete();
         $task->taskStatus_id = 5;
         $task->save();
+        Job::progress($task->job);
         session()->flash('task_news_open', $task->id);
-        session()->flash('unit_open',$task->unit->id);
+        session()->flash('unit_open',$task->job->unit->id);
         return redirect()->back();
     }
 
@@ -228,8 +247,9 @@ class ResultController extends Controller
         $result->delete();
         $task->taskStatus_id = 5;
         $task->save();
+        Job::progress($task->job);
         session()->flash('task_news_open', $task->id);
-        session()->flash('unit_open',$task->unit->id);
+        session()->flash('unit_open',$task->job->unit->id);
         return redirect()->back();
     }
 }
