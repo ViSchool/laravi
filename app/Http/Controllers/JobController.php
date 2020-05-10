@@ -66,7 +66,7 @@ class JobController extends Controller
         $subjects = Subject::all();
         $topics = Topic::all();
         $teacher = Auth::user();
-        $students = Student::where('teacher_id',$teacher->id)->get();
+        $students = Student::where('teacher_id',$teacher->id)->where('studentgroup_id',NULL)->get();
         $studentgroups = Studentgroup::where('teacher_id',$teacher->id)->get();
         $get_today = getdate();
         if($get_today['mday'] < 10) {
