@@ -11,8 +11,8 @@
 
                 <div class="card-body">
                     <form class="" method="POST" action="/register" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        {{-- @honeypot --}}
+                        @csrf
+                        @honeypot
 
                         <div class="form-row form-group{{ $errors->has('teacher_name') ? ' invalid' : '' }}">
                             <label for="teacher_name" class="col-md-4 col-form-label">Name</label>

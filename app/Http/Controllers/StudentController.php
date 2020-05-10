@@ -14,6 +14,7 @@ use Hash;
 use Illuminate\Http\Request;
 use Role;
 use Redirect;
+use URL;
 
 class StudentController extends Controller
 {
@@ -190,9 +191,7 @@ class StudentController extends Controller
         $task->student_check = $request->result_for_student_check;
         $task->save();
         Job::progress($task->job);
-
-        return redirect()->back()->with('unit_open',$task->unit_id);
-
+        return Redirect::to(URL::previous()."#card_".$task->job->unit_id)->with('unit_open',$task->job->unit_id);
     }
    
     public function handin_tasks (Request $request) 
@@ -208,7 +207,7 @@ class StudentController extends Controller
             $task->save();
         }
         Job::progress($task->job);
-        return redirect()->back()->with('unit_open',$task->unit_id);
+        return Redirect::to(URL::previous()."#card_".$task->job->unit_id)->with('unit_open',$task->job->unit_id);
 
     }
 
@@ -225,7 +224,7 @@ class StudentController extends Controller
             $task->save();
         }
         Job::progress($task->job);
-        return redirect()->back()->with('unit_open',$task->unit_id);
+        return Redirect::to(URL::previous()."#card_".$task->job->unit_id)->with('unit_open',$task->job->unit_id);
 
     }
 

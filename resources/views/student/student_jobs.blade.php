@@ -25,11 +25,11 @@
                   $count_news = $count_news + $news;
                }
             @endphp
-            <div class="card mb-3">
+            <div id="card_{{$job->unit_id}}" class="card mb-3">
                <div class="card-header">
                   <div class="d-flex flex-row align-items-top my-3">
                      <div class="m-0 p-0 col-5">
-                        <button class="btn btn-link text-left m-0" type="button" data-toggle="collapse" data-target="#collapse_{{$job->unit->id}}_{{$teacher_id}}" aria-expanded="false" aria-controls="collapse_{{$job->unit->id}}_{{$teacher_id}}">
+                        <button class="btn btn-link text-left m-0" type="button" data-toggle="collapse" data-target="#collapse_{{$job->unit_id}}_{{$teacher_id}}" aria-expanded="false" aria-controls="collapse_{{$job->unit_id}}_{{$teacher_id}}">
                            {{$job->unit->unit_title}} <span><i class="fas fa-caret-down"></i></span>
                         </button>
                      </div>
@@ -47,7 +47,7 @@
                            @if ($job->jobStatus->id > 3)
                               @if($job->jobStatus->id < 11)
                                  <div class="d-flex flex-column">
-                                    <a class="m-1 btn-sm btn-warning text-center" href="/unit/{{$job->unit->id}}"> Zur Lerneinheit </a>
+                                    <a class="m-1 btn-sm btn-warning text-center" href="/unit/{{$job->unit_id}}"> Zur Lerneinheit </a>
                                     <form class="m-1" action="/schueler/auftraege/abgeben" method="post">
                                        @csrf @method('PATCH')
                                        <input type="hidden" name="student_id" value="{{$student->id}}">
@@ -65,14 +65,14 @@
                                        @csrf @method('PATCH')
                                        <input type="hidden" name="student_id" value="{{$student->id}}">
                                        <input type="hidden" name="job_id" value="{{$job->id}}">
-                                       <button class="w-100 btn-sm btn-info text-center" type="submit"> Noch mal zurück! </button>
+                                       <button class="w-100 btn-sm btn-info text-center" type="submit"> Zu schnell abgegeben, nochmal zurückholen! </button>
                                     </form>
                                  </div>
                               @endif
                            @endif
                            <div title="Du hast {{$count_news}} neue Nachrichten" class="text-left mt-3" style="min-width: 5rem">
                               @if($count_news > 0)
-                                 <button type="button" data-toggle="collapse" data-target="#collapse_{{$job->unit->id}}_{{$teacher_id}}" aria-expanded="false" aria-controls="collapse_{{$job->unit->id}}_{{$teacher_id}}" class="btn btn-primary ml-3" style=""><i class=" far fa-envelope"></i></button>
+                                 <button type="button" data-toggle="collapse" data-target="#collapse_{{$job->unit_id}}_{{$teacher_id}}" aria-expanded="false" aria-controls="collapse_{{$job->unit_id}}_{{$teacher_id}}" class="btn btn-primary ml-3" style=""><i class=" far fa-envelope"></i></button>
                                  <span class="badge news_notify badge-danger" style="position: relative; top:-15px; left:-12px;">{{$count_news}}</span>
                               @endif
                            </div>
@@ -101,8 +101,8 @@
                   @endif
                </div>
 
-               <div id="collapse_{{$job->unit->id}}_{{$teacher_id}}" class="collapse 
-                  @if (session('unit_open') == $job->unit->id) show @endif
+               <div id="collapse_{{$job->unit_id}}_{{$teacher_id}}" class="collapse 
+                  @if (session('unit_open') == $job->unit_id) show @endif
                   " aria-labelledby="headingOne">
 
                   <div class="card-body">

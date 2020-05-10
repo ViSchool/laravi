@@ -97,7 +97,7 @@ class ResultController extends Controller
         Job::progress($task->job);
 
         session()->flash('task_news_open', $task->id);
-        session()->flash('unit_open',$task->job->unit->id);
+        session()->flash('unit_open',$task->job->unit_id);
         return redirect()->back();
 
     }
@@ -120,7 +120,7 @@ class ResultController extends Controller
         $task->save();
         Job::progress($task->job);
         session()->flash('task_news_open', $task->id);
-        session()->flash('unit_open',$task->job->unit->id);
+        session()->flash('unit_open',$task->job->unit_id);
         return redirect()->back();
 
     }
@@ -142,7 +142,7 @@ class ResultController extends Controller
         $task->save();
         Job::progress($task->job);
         session()->flash('task_news_open', $task->id);
-        session()->flash('unit_open',$task->job->unit->id);
+        session()->flash('unit_open',$task->job->unit_id);
         return redirect()->back();
 
     }
@@ -158,7 +158,7 @@ class ResultController extends Controller
         }
         session()->flash('task_news_open', $task->id);
         session()->flash('unit_open',$task->job->unit_id);
-        return redirect()->back();
+        return Redirect::to(URL::previous()."#card_".$task->job->unit_id);
     }
     
     public function set_results_viewed_by_teacher($task_id)
@@ -234,7 +234,7 @@ class ResultController extends Controller
         Job::progress($task->job);
         session()->flash('task_news_open', $task->id);
         session()->flash('unit_open',$task->job->unit->id);
-        return redirect()->back();
+        return Redirect::to(URL::previous()."#card_".$task->job->unit_id);
     }
 
     public function delete_result($task_id)
@@ -250,6 +250,6 @@ class ResultController extends Controller
         Job::progress($task->job);
         session()->flash('task_news_open', $task->id);
         session()->flash('unit_open',$task->job->unit->id);
-        return redirect()->back();
+        return Redirect::to(URL::previous()."#card_".$task->job->unit_id);
     }
 }
