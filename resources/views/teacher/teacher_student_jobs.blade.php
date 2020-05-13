@@ -197,7 +197,7 @@
                                                                   @csrf
                                                                   <input type="hidden" name="task_id" value="{{$task->id}}">
                                                                   <input type="hidden" name="created_by" id="feedback_created_by{{$task->id}}" value="teacher">
-                                                                  <input type="hidden" name="feedback_flag" id="feedback_flag_{{$task->id}}" value="1">
+                                                                  <input type="hidden" name="feedback_message" id="feedback_message_{{$task->id}}" value="1">
                                                                   <label class="text-left mb-0" for="message"><small> Hier kannst Du {{$student->student_name}} eine Nachricht hinterlassen: </small></label>
                                                                   <textarea class="form-control" name="message" id="feedback_message_{{$task->id}}" rows="5" placeholder="Gib Deinem Schüler hier ein Feedback zu seinem Ergebnis..."></textarea>
                                                                   <button type="submit" class=" btn-sm btn-info mt-2">Feedback senden</button>

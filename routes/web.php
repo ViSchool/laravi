@@ -118,14 +118,17 @@ Route::get('/lehrer/auftraege/schueler/{student}','JobController@student_auftrae
 //Routen für Tasks
 Route::get('/lehrer/auftrag/aufgaben/erstellen/{job}','TaskController@create')->name('rueckmeldungen_erstellen');
 Route::post('/lehrer/auftrag/aufgaben/erstellen','TaskController@store')->name('rueckmeldungen_speichern');
-
-
 Route::get('/schueler/anmelden', 'Auth\StudentLoginController@showLoginForm')->name('student.login');
 Route::patch('/schueler/lerneinheit_starten','StudentController@set_status_to_gestartet')->name('taskStatusBearbeitung');
 Route::get('/schueler/auftraege','StudentController@student_auftraege_index_students')->name('student_auftraege_students');
 Route::patch('/schueler/auftrag/student_check', 'StudentController@store_student_check')->name('auftrag_schueler_erledigt');
 Route::patch('/schueler/auftraege/abgeben', 'StudentController@handin_tasks')->name('aufgaben.abgeben');
 Route::patch('/schueler/auftraege/zurueckholen', 'StudentController@setback_tasks')->name('aufgaben.zurueckholen');
+
+//Routen für Schüleraccounts zusammenfassen
+Route::get('/schueler/accounts/uebersicht','ConUserController@index');
+Route::get('/schueler/accounts/zusammenfassen','ConUserController@create');
+Route::post('/schueler/accounts/create_conuser', 'ConUserController@store');
 
 
 //Routen für Results
@@ -138,7 +141,7 @@ Route::get('/schueler/auftraege/viewed/{task}','ResultController@set_results_vie
 Route::get('/lehrer/auftraege/viewed/{task}','ResultController@set_results_viewed_by_teacher')->name('results.viewedByTeacher');
 Route::post('/lehrer/auftrag/erledigt/danke', 'ResultController@store_feedback')->name('feedback_erledigt');
 Route::post('/lehrer/auftrag/nachricht','ResultController@store_message')->name('rueckfrage_antwort');
-
+Route::post('/lehrer/auftrag/ergebnislink/feedback', 'ResultController@store_feedback');
 
 //Routen allgemein für Lehrer
 Route::get ('/lehrer/verified', 'TeacherController@verified');

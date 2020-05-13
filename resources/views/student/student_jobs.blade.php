@@ -213,16 +213,18 @@
                                                          <p class="card-text p-2"><small>Dein Lehrer möchte zu dieser Aufgabe einen Link zu Deiner Lösung von Dir haben:</small></p>
                                                          @if (count($task->results->where('result_url','!==',NULL)) > 0) 
                                                             <div class="d-flex justify-content-between">
-                                                               @if(count($task->results->where('feedback_message',1)) < 1)
+                                                               @if(count($task->results->where('feedback_message',1)) == 0)
                                                                   <a href="/schueler/auftrag/ergebnis/zuruecknehmen/{{$task->id}}"><small> Meldung zurücknehmen </small></a>
                                                                @else
                                                                   @php
-                                                                     $feedback = $task->results->where('feedback_message',1);
+                                                                     $feedback = $task->results->where('feedback_message',1)->first();
                                                                   @endphp
                                                                   <small> Das ist die Korrektur zur Deiner Lösung:  </small>
-                                                                  <small> {{$feedback->message}}  </small>
                                                                @endif
                                                                <span class="text-success"> <i class="fa-2x far fa-check-square"></i></span>
+                                                            </div>
+                                                            <div class="d-flex justify-content-start bg-white rounded">
+                                                               <small class="p-2">{!!$feedback->message!!}}</small>
                                                             </div>
                                                          @else
                                                             <div class="d-flex justify-content-end">

@@ -110,7 +110,7 @@ class JobController extends Controller
         $teacher = Auth::user();
         $done_date_de= $request->done_date;
         $done_date_explode = explode('.',$done_date_de);
-        $done_date = $done_date_explode[2] . "-" . $done_date_explode[1] . "-" .$done_date_explode[0]; 
+        $done_date = $done_date_explode[2] . "-" . $done_date_explode[1] . "-" .$done_date_explode[0] . " 22:00:00"; 
         $student_id = $request->student_id;
 
         if (strpos($request->student_id,'studentgroup') !== false) {

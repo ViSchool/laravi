@@ -41,15 +41,38 @@
                             $unit = App\Unit::findOrFail($unit_id);
                             $count_started = count($jobs->where('jobStatus_id','>',3));
                             $count_finished = count($jobs->where('jobStatus_id','>',10));
+                            $countNewsPerUnit = 0;
+                            //News für die gesamte Einheit zählen
+                            
+                            foreach ($jobs as $job) {
+                                $news = 0;
+                                $tasks_student = $job->tasks;
+                                foreach ($tasks_student as $task_student) {
+                                    $news = count($task_student->results->where('result_viewed',NULL)->where('created_by','student'));
+                                    $countNewsPerUnit = $countNewsPerUnit + $news;
+                                }
+                            }
                         @endphp
                         <div class="card">
                             <div class="card-header" id="headingOne">
-                                <div class="d-flex justify-content-between px-3">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{$unit->id}}_{{$studentgroup->id}}" aria-expanded="false" aria-controls="collapse_{{$unit->id}}_{{$studentgroup->id}}">
+                                <div class="d-flex flex-row">
+                                    <h2 class="mb-0 col-6">
+                                        <button class="btn btn-link text-left" type="button" data-toggle="collapse" data-target="#collapse_{{$unit->id}}_{{$studentgroup->id}}" aria-expanded="false" aria-controls="collapse_{{$unit->id}}_{{$studentgroup->id}}">
                                             {{$unit->unit_title}}
                                         </button>
                                     </h2>
+                                    <div class="col-2 m-0 p-0">
+                                        @if($countNewsPerUnit > 0)
+                                            @php
+                                                session()->flash('unit_open',$job->unit->id);
+                                            @endphp
+                                            <button class="btn btn-link m-0 p-0" type="button" data-toggle="collapse" data-target="#collapse_{{$unit->id}}_{{$studentgroup->id}}" aria-expanded="false" aria-controls="collapse_{{$unit->id}}_{{$studentgroup->id}}">
+                                                <span class=""><i class="fa-2x far fa-envelope"></i></span>
+                                                <small><span class="badge news_notify badge-danger" style="position: relative; top:-18px; left:-10px;">{{$countNewsPerUnit}}</span></small>
+                                            </button>
+                                        @endif
+                                    </div>
+                                    <div class="col-4">
                                     @if(count($jobs->where('jobStatus_id',2)) > 0)
                                         <form action="/lehrer/auftrag/zuteilen" method="post" enctype="multipart/form-data">
                                             @csrf @method('PATCH')
@@ -59,11 +82,12 @@
                                         </form>
                                     @elseif (count($jobs->where('jobStatus_id', '>',3)) > 0)
                                         @if($count_started > $count_finished)
-                                            <small>{{$count_started}}/{{count($jobs)}} Schülern haben angefangen</small>
+                                            <small class="text-right">{{$count_started}}/{{count($jobs)}} Schülern haben angefangen</small>
                                         @else
-                                            <small>{{$count_finished}}/{{count($jobs)}} Schülern sind fertig</small>
+                                            <small class="text-right">{{$count_finished}}/{{count($jobs)}} Schülern sind fertig</small>
                                         @endif
                                     @endif
+                                    </div>
                                 </div>
                             </div>
 
@@ -118,20 +142,47 @@
                             </div>
                         </div>
                     @endforeach
-                </div>            
+                </div>
             @else {{--wenn keine Klasse festgelegt wurde, nur Einzelschüler--}}
 
-                <h3 class="mt-5 text-brand-blue">Aufträge an einzelne Schüler</h3>           
+                <h3 class="mt-5 text-brand-blue">Aufträge an einzelne Schüler</h3>
                 <div class="accordion" id="accordion_singleStudent">
                     @foreach ($jobsByUnits as $unit_id => $jobs)
                         @php
                             $unit = App\Unit::findOrFail($unit_id);
+                            //News für die gesamte Einheit zählen
+                            $countNewsPerUnit = 0;
+                            foreach ($jobs as $job) {
+                                $news = 0;
+                                $tasks_student = $job->tasks;
+                                foreach ($tasks_student as $task_student) {
+                                    $news = count($task_student->results->where('result_viewed',NULL)->where('created_by','student'));
+                                    $countNewsPerUnit = $countNewsPerUnit + $news;
+                                }
+                            }
                         @endphp
                         <div class="card">
                             <div class="card-header" id="headingOne">
-                                <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{$unit->id}}" aria-expanded="false" aria-controls="collapse_{{$unit->id}}">
-                                    {{$unit->unit_title}}
-                                </button></h2>
+                               <div class="d-flex flex-row">
+                                    <h2 class="mb-0 col-6">
+                                        <button class="btn btn-link text-left" type="button" data-toggle="collapse" data-target="#collapse_{{$unit->id}}_{{$studentgroup->id}}" aria-expanded="false" aria-controls="collapse_{{$unit->id}}_{{$studentgroup->id}}">
+                                            {{$unit->unit_title}}
+                                        </button>
+                                    </h2>
+                                    <div class="col-2 m-0 p-0">
+                                        @if($countNewsPerUnit > 0)
+                                            @php
+                                                session()->flash('unit_open',$job->unit->id);
+                                            @endphp
+                                            <button class="btn btn-link m-0 p-0" type="button" data-toggle="collapse" data-target="#collapse_{{$unit->id}}_{{$studentgroup->id}}" aria-expanded="false" aria-controls="collapse_{{$unit->id}}_{{$studentgroup->id}}">
+                                                <span class=""><i class="fa-2x far fa-envelope"></i></span>
+                                                <small><span class="badge news_notify badge-danger" style="position: relative; top:-18px; left:-10px;">{{$countNewsPerUnit}}</span></small>
+                                            </button>
+                                        @endif
+                                    </div>
+                                    <div class="col-4">
+                                    </div>
+                                </div>
                             </div>
 
                             <div id="collapse_{{$unit->id}}" class="collapse " aria-labelledby="headingOne" data-parent="#accordion_singleStudent">

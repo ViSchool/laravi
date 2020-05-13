@@ -8,6 +8,9 @@ use Carbon;
 use App\Task;
 use App\Job;
 use Illuminate\Http\Request;
+use Redirect;
+use URL;
+
 
 class ResultController extends Controller
 {
@@ -137,6 +140,7 @@ class ResultController extends Controller
         $result->task_id = $request->task_id;
         $result->created_by = "teacher";
         $result->feedback_message=1;
+        $result->message = Purifier::clean($request->message);
         $result->save();
         $task->taskStatus_id = 7;
         $task->save();
