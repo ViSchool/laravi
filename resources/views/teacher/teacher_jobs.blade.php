@@ -33,7 +33,7 @@
                 @endphp
 
 
-                <h3 class="mt-3 text-brand-blue">Aufträge an Klasse: "{{$studentgroup->studentgroup_name}}"</h3>           
+                <h3 class="mt-3 text-brand-blue">Aufträge an Klasse: "{{$studentgroup->studentgroup_name}}"</h3>
 
                 <div class="accordion" id="accordion_{{$studentgroup->id}}">
                     @foreach ($jobsByUnits as $unit_id => $jobs)
@@ -43,7 +43,7 @@
                             $count_finished = count($jobs->where('jobStatus_id','>',10));
                             $countNewsPerUnit = 0;
                             //News für die gesamte Einheit zählen
-                            
+
                             foreach ($jobs as $job) {
                                 $news = 0;
                                 $tasks_student = $job->tasks;
@@ -160,12 +160,17 @@
                                     $countNewsPerUnit = $countNewsPerUnit + $news;
                                 }
                             }
+
+
+
+
+
                         @endphp
                         <div class="card">
                             <div class="card-header" id="headingOne">
                                <div class="d-flex flex-row">
                                     <h2 class="mb-0 col-6">
-                                        <button class="btn btn-link text-left" type="button" data-toggle="collapse" data-target="#collapse_{{$unit->id}}_{{$studentgroup->id}}" aria-expanded="false" aria-controls="collapse_{{$unit->id}}_{{$studentgroup->id}}">
+                                        <button class="btn btn-link text-left" type="button" data-toggle="collapse" data-target="#collapse_{{$unit->id}}" aria-expanded="false" aria-controls="collapse_{{$unit->id}}">
                                             {{$unit->unit_title}}
                                         </button>
                                     </h2>
@@ -174,7 +179,7 @@
                                             @php
                                                 session()->flash('unit_open',$job->unit->id);
                                             @endphp
-                                            <button class="btn btn-link m-0 p-0" type="button" data-toggle="collapse" data-target="#collapse_{{$unit->id}}_{{$studentgroup->id}}" aria-expanded="false" aria-controls="collapse_{{$unit->id}}_{{$studentgroup->id}}">
+                                            <button class="btn btn-link m-0 p-0" type="button" data-toggle="collapse" data-target="#collapse_{{$unit->id}}" aria-expanded="false" aria-controls="collapse_{{$unit->id}}">
                                                 <span class=""><i class="fa-2x far fa-envelope"></i></span>
                                                 <small><span class="badge news_notify badge-danger" style="position: relative; top:-18px; left:-10px;">{{$countNewsPerUnit}}</span></small>
                                             </button>
