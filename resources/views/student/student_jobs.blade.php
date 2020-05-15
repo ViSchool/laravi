@@ -223,9 +223,11 @@
                                                                @endif
                                                                <span class="text-success"> <i class="fa-2x far fa-check-square"></i></span>
                                                             </div>
-                                                            <div class="d-flex justify-content-start bg-white rounded">
-                                                               <small class="p-2">{!!$feedback->message!!}}</small>
-                                                            </div>
+                                                            @isset($feedback)
+                                                               <div class="d-flex justify-content-start bg-white rounded">
+                                                                  <small class="p-2">{!!$feedback->message!!}}</small>
+                                                               </div>
+                                                            @endisset
                                                          @else
                                                             <div class="d-flex justify-content-end">
                                                                <button type="button" class="btn-sm btn-success" data-toggle="modal" data-target="#resultModal_{{$task->id}}">Ergebnis zur Aufgabe senden</button>
