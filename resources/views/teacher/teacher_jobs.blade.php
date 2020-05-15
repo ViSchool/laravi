@@ -64,7 +64,7 @@
                                     <div class="col-2 m-0 p-0">
                                         @if($countNewsPerUnit > 0)
                                             @php
-                                                session()->flash('unit_open',$job->unit->id);
+                                                session()->flash('unit_open',$job->unit_id);
                                             @endphp
                                             <button class="btn btn-link m-0 p-0" type="button" data-toggle="collapse" data-target="#collapse_{{$unit->id}}_{{$studentgroup->id}}" aria-expanded="false" aria-controls="collapse_{{$unit->id}}_{{$studentgroup->id}}">
                                                 <span class=""><i class="fa-2x far fa-envelope"></i></span>
@@ -113,14 +113,14 @@
                                                         }
                                                     @endphp
                                                     <tr>
-                                                        <td><a href="/lehrer/auftraege/schueler/{{$job->student->id}}#card_unit{{$job->unit_id}}">{{$job->student->student_name}}</a></td>
+                                                        <td><a href="/lehrer/auftraege/schueler/{{$job->student_id}}#card_unit{{$job->unit_id}}">{{$job->student->student_name}}</a></td>
                                                         <td class="text-center">{{$job->done_date->formatLocalized('%d. %B %Y')}}</td>
                                                         <td class="text-center">
                                                             @if($count_news > 0)
                                                             @php
-                                                                session()->flash('unit_open',$job->unit->id);
+                                                                session()->flash('unit_open',$job->unit_id);
                                                             @endphp
-                                                                <a href="/lehrer/auftraege/schueler/{{$job->student->id}}#card_unit{{$job->unit_id}}"> 
+                                                                <a href="/lehrer/auftraege/schueler/{{$job->student_id}}#card_unit{{$job->unit_id}}"> 
                                                                     <span class="ml-3"><i class="fa-2x far fa-envelope"></i></span>
                                                                     <small><span class="badge news_notify badge-danger" style="position: relative; top:-20px; left:-12px;">{{$count_news}}</span></small>
                                                                 </a>
@@ -177,7 +177,7 @@
                                     <div class="col-2 m-0 p-0">
                                         @if($countNewsPerUnit > 0)
                                             @php
-                                                session()->flash('unit_open',$job->unit->id);
+                                                session()->flash('unit_open',$job->unit_id);
                                             @endphp
                                             <button class="btn btn-link m-0 p-0" type="button" data-toggle="collapse" data-target="#collapse_{{$unit->id}}" aria-expanded="false" aria-controls="collapse_{{$unit->id}}">
                                                 <span class=""><i class="fa-2x far fa-envelope"></i></span>
@@ -212,14 +212,14 @@
                                                     }
                                                 @endphp
                                                     <tr>
-                                                        <td><a href="/lehrer/auftraege/schueler/{{$job->student->id}}#card_unit{{$job->unit_id}}">{{$job->student->student_name}}</a></td>
+                                                        <td><a href="/lehrer/auftraege/schueler/{{$job->student_id}}#card_unit{{$job->unit_id}}">{{$job->student->student_name}}</a></td>
                                                         <td class="text-center">{{$job->done_date->formatLocalized('%d. %B %Y')}}</td>
                                                         <td class="text-center">
                                                             @if($count_news > 0)
                                                             @php
-                                                                session()->flash('unit_open',$job->unit->id);
+                                                                session()->flash('unit_open',$job->unit_id);
                                                             @endphp
-                                                                <a href="/lehrer/auftraege/schueler/{{$job->student->id}}#card_unit{{$job->unit_id}}"> 
+                                                                <a href="/lehrer/auftraege/schueler/{{$job->student_id}}#card_unit{{$job->unit_id}}"> 
                                                                     <span class="ml-3"><i class="fa-2x far fa-envelope"></i></span>
                                                                     <small><span class="badge news_notify badge-danger" style="position: relative; top:-20px; left:-12px;">{{$count_news}}</span></small>
                                                                 </a>
