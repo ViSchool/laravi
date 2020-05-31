@@ -18,7 +18,11 @@ class StudentLoginController extends Controller
 
 	public function showLoginForm()
     {
-    	return view('auth.student-login');
+		if(!session()->has('url.intended'))
+		{
+        session(['url.intended' => url()->previous()]);
+    	}
+		return view('auth.student-login');
     }
     
     public function login(Request $request)
@@ -33,7 +37,7 @@ class StudentLoginController extends Controller
 
 // 		attempt to Log User in 
 		if (Auth::guard('student')->attempt(['student_name' => $request->student_name,'password' =>$request->password])){
-			return redirect()->intended();
+			return redirect()->intended('');
 		}
 // if successful then redirect to where they came from
 		

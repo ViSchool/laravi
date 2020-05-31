@@ -12,12 +12,9 @@
 		
 <?php $__env->startSection('content'); ?>
 
-<div class="container">
-	<?php echo $breadcrumbs->render(); ?>
 
-</div>
 
-<div id="embedded-content" class="container">	
+<div id="embedded-content" class="container mt-3">	
 	<div class="row">
 		<div class="col">
 			<h3><?php echo e($content->content_title); ?></h3>

@@ -15,8 +15,13 @@ use App\Block;
 use App\Student;
 use App\Studentgroup;
 use App\Serie;
+use App\Admin;
 use Auth;
 use App\Faq;
+use App\Jobs\DeleteTeachersContent;
+use App\Notifications\LehrerGeloescht;
+use Illuminate\Notifications\Notification;
+
 
 class TeacherController extends Controller
 {
@@ -179,6 +184,38 @@ class TeacherController extends Controller
         return view ('backend.show_teacher', compact('teacher','students','classes'));
     }
 
+    public function accountDowngradeKostenlos() {
+        $teacher = Auth::user();
+        $teacher->contract_id = 1;
+        $teacher->save();
+        $teacher->assignRole('Lehrer (free)');
+        return back()->with('successDowngrade','Dein Account wurde auf "Kostenlos" umgestellt.');
+    }
 
+    public function softDeleteTeacher()
+    {
+        $teacher = Auth::user();
+        Auth::logout();
+        $admin= Admin::first();
+        //nach 7 Tagen alle privaten Inhalte/Lerneinheiten und User löschen 
+        //!! Delay fehlt noch !!
+        DeleteTeachersContent::dispatch($teacher)->delay(now()->addDays(7));
+
+        //ViSchool SlackNachricht schicken, dass Benutzer gelöscht wurde (Übergabe des Nutzers und Seite im Admin Bereich mit allen privaten Inhalten/Lerneinheiten)
+        $admin->notify(new LehrerGeloescht($teacher));
+
+        $deleted = $teacher->delete();
+        if ($deleted) {
+            // User was deleted successfully, redirect to login
+            return redirect(url('/'));
+        } else {
+            // User was NOT deleted successfully, so log them back into your application! Could also use: Auth::loginUsingId($user->id);
+            Auth::login($teacher);
+
+            // Redirect them back with some data letting them know it failed (or handle however you need depending on your setup)
+            return back()->with('status', 'Dein Account konnte nicht gelöscht werden.');
+        }
+
+    }
 
 }

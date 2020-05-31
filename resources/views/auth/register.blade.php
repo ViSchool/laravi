@@ -66,7 +66,7 @@
                                 <div class="card mb-3" style="min-width:200px;">
                                     <div class="card-header bg-warning">
                                        <div class="form-check form-check-inline d-flex justify-content-start">
-                                            <input class="form-check-input mr-4" type="radio" name="contract" id="kostenlos_radio" value="free">
+                                            <input class="form-check-input mr-4" type="radio" name="contract" id="kostenlos_radio" value="1">
                                             <label class="form-check-label" for="kostenlos_radio">Kostenlos</label>
                                         </div> 
                                     </div>
@@ -84,7 +84,7 @@
                                 <div class="card mb-3" style="min-width:200px;">
                                     <div class="card-header bg-warning">
                                        <div class="form-check form-check-inline d-flex justify-content-start">
-                                            <input class="form-check-input mr-4" type="radio" name="contract" id="lehrer_radio" value="premium">
+                                            <input class="form-check-input mr-4" type="radio" name="contract" id="lehrer_radio" value="2">
                                             <label class="form-check-label text-black" for="lehrer_radio">Lehrer</label>
                                         </div> 
                                     </div>
@@ -103,7 +103,7 @@
                                 <div class="card mb-3" style="min-width:200px;">
                                     <div class="card-header bg-warning">
                                        <div class="form-check form-check-inline d-flex justify-content-start">
-                                            <input class="form-check-input mr-4" type="radio" name="contract" id="schule_radio" value="premium">
+                                            <input class="form-check-input mr-4" type="radio" name="contract" id="schule_radio" value="3">
                                             <label class="form-check-label" for="schule_radio"> Schulaccount</label>
                                         </div> 
                                     </div>

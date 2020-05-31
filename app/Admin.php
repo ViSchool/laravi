@@ -44,4 +44,9 @@ class Admin extends Authenticatable
     {
         $this->notify(new AdminResetPasswordNotification($token));
     }
+
+    public function routeNotificationForSlack() {
+        return env('SLACK_WEBHOOK_URL');
+    }
+
 }

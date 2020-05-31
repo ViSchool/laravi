@@ -12,7 +12,7 @@ class RegistrationController extends Controller
     {
     	return view ('sessions.create');
     }
-    
+
     public function store() 
     {
     $this->validate(request(), [
@@ -20,18 +20,18 @@ class RegistrationController extends Controller
     	'email' => 'required|email',
     	'password' => 'required|confirmed'	
     ]);
-    
-    
+
+
     // create and save user
 	$user = new User;
     User::create(request(['name','email','password']));
-    //  sign them in   
+    //  sign them in
     auth()->login($user);
-    
+
     return Redirect::intended('/');
-    
+
     }
-    
+
     public function change_password($id, Request $request) 
     {
         $this->validate(request(), [

@@ -36,29 +36,11 @@
       0 => 'BeyondCode\\DumpServer\\DumpServerServiceProvider',
     ),
   ),
-  'creitive/laravel6-breadcrumbs' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Creitive\\Breadcrumbs\\BreadcrumbsServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Breadcrumbs' => 'Creitive\\Breadcrumbs\\Facades\\Breadcrumbs',
-    ),
-  ),
   'fideloper/proxy' => 
   array (
     'providers' => 
     array (
       0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
-    ),
-  ),
-  'hedii/artisan-log-cleaner' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Hedii\\ArtisanLogCleaner\\ArtisanLogCleanerServiceProvider',
     ),
   ),
   'intervention/image' => 
@@ -88,6 +70,13 @@
     'providers' => 
     array (
       0 => 'Laravel\\Scout\\ScoutServiceProvider',
+    ),
+  ),
+  'laravel/slack-notification-channel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Illuminate\\Notifications\\SlackChannelServiceProvider',
     ),
   ),
   'laravel/tinker' => 

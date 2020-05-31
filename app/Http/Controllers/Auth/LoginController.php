@@ -54,6 +54,6 @@ class LoginController extends Controller
     {
         session(['url.intended' => url()->previous()]);
     }
-    return view('auth.login');    
+    return view('auth.login');
     }
 }

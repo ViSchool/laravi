@@ -14,11 +14,11 @@
 		
 @section ('content')
 
-<div class="container">
+{{-- <div class="container">
 	{!!$breadcrumbs->render()!!}
-</div>
+</div> --}}
 
-<div id="embedded-content" class="container">	
+<div id="embedded-content" class="container mt-3">	
 	<div class="row">
 		<div class="col">
 			<h3>{{$content->content_title}}</h3>

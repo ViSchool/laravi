@@ -38,6 +38,8 @@ Route::get('/mailable', 'AppController@sendBrokenLinks');
 Route::patch('/lehrer/{id}/passwortaendern','RegistrationController@change_password')->name('teacher.change_password');
 Route::get('lehrer/logout','Auth\LoginController@userLogout');
 Route::get('lehrer/lehrerkonto','TeacherController@lehrerkonto');
+Route::get('/lehrer/account_löschen','TeacherController@softDeleteTeacher');
+Route::get('/lehrer/account_downgrade_kostenlos','TeacherController@accountDowngradeKostenlos')->name('teacher.downgrade');
 
 //Routen, damit Lehrer selbst Themen einstellen kann und Statusänderungen dazu
 Route::get('lehrer/themen','TeacherController@topics');
@@ -125,10 +127,10 @@ Route::patch('/schueler/auftrag/student_check', 'StudentController@store_student
 Route::patch('/schueler/auftraege/abgeben', 'StudentController@handin_tasks')->name('aufgaben.abgeben');
 Route::patch('/schueler/auftraege/zurueckholen', 'StudentController@setback_tasks')->name('aufgaben.zurueckholen');
 
-//Routen für Schüleraccounts zusammenfassen
-Route::get('/schueler/accounts/uebersicht','ConUserController@index');
-Route::get('/schueler/accounts/zusammenfassen','ConUserController@create');
-Route::post('/schueler/accounts/create_conuser', 'ConUserController@store');
+    //Routen für Schüleraccounts zusammenfassen
+//Route::get('/schueler/accounts/uebersicht','ConUserController@index');
+//Route::get('/schueler/accounts/zusammenfassen','ConUserController@create');
+//Route::post('/schueler/accounts/create_conuser', 'ConUserController@store');
 
 
 //Routen für Results
@@ -221,8 +223,6 @@ Route::get('/freigaben', 'BackendController@approvals')->name('admin.approvals')
 Route::get('/', 'BackendController@index')->name('admin.dashboard');
 
 });
-
-
 
 /*Routes for Blog */
 Route::get('/backend/blog', 'PostController@index')->name('backend.blog.index');
@@ -413,3 +413,9 @@ Route::get('email/verify', 'Auth\VerificationController@show')->name('verificati
 Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify'); 
 Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 Route::get('/home', 'ViSchoolControll@index')->name('home');
+
+//Jobs
+Route::get('/jobtest',function() {
+    App\Jobs\deleteTeachersContent::dispatch();
+    return "deleted";
+});

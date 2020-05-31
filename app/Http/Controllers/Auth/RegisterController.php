@@ -75,8 +75,8 @@ class RegisterController extends Controller
      * @return \App\User
      */
     protected function create($request)
-    {   
-        $role = $request['contract'];
+    {
+    
         $user = User::create([
             'teacher_name' => $request['teacher_name'],
             'teacher_surname' => $request['teacher_surname'],
@@ -85,20 +85,21 @@ class RegisterController extends Controller
             'school_id' => $request['school_id'],
             'teacher_id' => '9999999',
             'user_name' => $request['email'],
-            
+            'contract_id' => $request['contract'],
+
         ]);
-        
+
         $user->teacher_id = $user->id;
         if (isset($request->newsletter)){
             $user->newsletter = $request->newsletter;
         }
         $user->save();
-        if ($role == "premium") {
+        if ($user->contract_id == 2 or 3) {
             $user->assignRole('Lehrer (premium)');
         } else {
             $user->assignRole('Lehrer (free)');
         }
-        
+
         return $user;
     }
 

@@ -23,9 +23,9 @@
 			</div>
 		@endif
 
-		<div class="container-fluid">
+		{{-- <div class="container-fluid">
 			{!!$breadcrumbs->render()!!}
-		</div>
+		</div> --}}
 
 		<section id="privateUnits">
 			<div class="container m-4">

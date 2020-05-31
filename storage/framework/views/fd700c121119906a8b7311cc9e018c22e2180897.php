@@ -128,13 +128,13 @@
 								<a class="btn btn-primary w-100 text-left disabled" href="/schueler/anmelden">Anmelden</a>
 							<?php else: ?> 
 								<a class="btn btn-primary w-100 text-left" href="/schueler/anmelden">Anmelden</a>
-								<a class="dropdown-item disabled" href="#" > Dein Aufträge</a>
+								<a class="dropdown-item disabled" href="#" > Deine Aufträge</a>
 							<?php endif; ?>
 						<?php endif; ?>
 						<?php if(auth()->guard('student')->check()): ?>
 							<a class="btn btn-primary dropdown-item" href="/schueler/logout">Logout</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="/schueler/auftraege" > Dein Aufträge</a>
+							<a class="dropdown-item" href="/schueler/auftraege" > Deine Aufträge</a>
 
 						<?php endif; ?>
 					</div>

@@ -32,10 +32,15 @@ class Student extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function user()
+    public function teacher()
 	{
 		return $this->belongsTo('App\User');
     }
+
+    // public function conUser()
+	// {
+	// 	return $this->belongsTo('App\ConUser','conUser_id','id');
+    // }
     
     public function studentgroup()
 	{

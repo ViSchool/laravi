@@ -23,13 +23,13 @@ use Auth;
 use Jenssegers\Agent\Agent;
 
 
-class VischoolController extends BaseController
+class VischoolController extends Controller
 
  
 
 {
 	public function __construct(){
-		parent::__construct();
+		
 	}
 	
 	public function index() {
@@ -78,9 +78,9 @@ class VischoolController extends BaseController
 		$teacher = Auth::user();
 		$student = Auth::guard('student')->user();
 		$topic = Topic::find($id);
-		$breadcrumbs = Breadcrumbs::addCrumb('Startseite', '/');
-		$breadcrumbs = Breadcrumbs::addCrumb($topic->subjects()->first()->subject_title , '/subjects/'. $topic->subjects()->first()->id);
-		$breadcrumbs = Breadcrumbs::addCrumb($topic->topic_title,'/topic/'. $topic->id);
+		// $breadcrumbs = Breadcrumbs::addCrumb('Startseite', '/');
+		// $breadcrumbs = Breadcrumbs::addCrumb($topic->subjects()->first()->subject_title , '/subjects/'. $topic->subjects()->first()->id);
+		// $breadcrumbs = Breadcrumbs::addCrumb($topic->topic_title,'/topic/'. $topic->id);
 
 		$publicContents = $topic->content->where('status_id',1)->sortByDesc('updated_at');
 		$publicUnits = $topic->unit->where('status_id',1)->where('serie_id',NULL)->sortByDesc('updated_at');
@@ -104,7 +104,7 @@ class VischoolController extends BaseController
 			$privateSeries = [];
 
 		}
-		return view('frontend.topics.topic_contents', compact('breadcrumbs','publicContents','privateContents','topic','publicUnits','privateUnits','privateSeries','publicSeries'));
+		return view('frontend.topics.topic_contents', compact('publicContents','privateContents','topic','publicUnits','privateUnits','privateSeries','publicSeries'));
 	} 
 
 
@@ -124,10 +124,10 @@ class VischoolController extends BaseController
 	} else {
 		$device ="groß";
 	};
-	$breadcrumbs = Breadcrumbs::addCrumb('Startseite', '/');
-	$breadcrumbs = Breadcrumbs::addCrumb($content->subject->subject_title , '/subjects/'. $content->subject->id);
-	$breadcrumbs = Breadcrumbs::addCrumb($content->topic->topic_title,'/topic/'. $content->topic->id);
-	$breadcrumbs = Breadcrumbs::addCrumb($content->content_title,'/content/'. $content->id);
+	// $breadcrumbs = Breadcrumbs::addCrumb('Startseite', '/');
+	// $breadcrumbs = Breadcrumbs::addCrumb($content->subject->subject_title , '/subjects/'. $content->subject->id);
+	// $breadcrumbs = Breadcrumbs::addCrumb($content->topic->topic_title,'/topic/'. $content->topic->id);
+	// $breadcrumbs = Breadcrumbs::addCrumb($content->content_title,'/content/'. $content->id);
 	//calculate aspect ratio for Video
 	if ($content->tool_id == 1) {
 		$video=Video::where('content_id',$content->id)->first();
@@ -199,7 +199,7 @@ class VischoolController extends BaseController
 		['id','!=',$content->id]
 		])->inRandomOrder()->take(3)->get();
 
-	return view('frontend.contents.show_contents', compact('device','breadcrumbs','content','aspect_ratio', 'reviews','average_score','question','finalResult','correctAnswers','relatedContents'));
+	return view('frontend.contents.show_contents', compact('device','content','aspect_ratio', 'reviews','average_score','question','finalResult','correctAnswers','relatedContents'));
 	}
 
 

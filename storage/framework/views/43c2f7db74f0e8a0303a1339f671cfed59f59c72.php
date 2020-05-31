@@ -21,10 +21,7 @@
 			</div>
 		<?php endif; ?>
 
-		<div class="container-fluid">
-			<?php echo $breadcrumbs->render(); ?>
-
-		</div>
+		
 
 		<section id="privateUnits">
 			<div class="container m-4">

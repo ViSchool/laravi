@@ -9,12 +9,14 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\ViSchoolVerifyEmailNotification;
 use App\Notifications\CustomResetPasswordNotification;
 use App\Mail\EmailVerification;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
     use HasRoles;
+    use SoftDeletes;
+
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'teacher_name', 'teacher_surname','user_name','email', 'password','school_id', 'teacher_id','newsletter' ,'data_privacy'
+        'teacher_name', 'teacher_surname','user_name','email', 'password','school_id', 'teacher_id','newsletter' ,'data_privacy','contract_id'
     ];
 
     /**
@@ -89,5 +91,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function jobs()
     {
         return $this->hasMany('App\Job');
+    }
+
+    public function contract()
+    {
+        return $this->belongsTo('App\Contract');
     }
 }

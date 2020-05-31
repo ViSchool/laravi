@@ -23,11 +23,11 @@
                   $count_news = $count_news + $news;
                }
             ?>
-            <div class="card mb-3">
+            <div id="card_<?php echo e($job->unit_id); ?>" class="card mb-3">
                <div class="card-header">
                   <div class="d-flex flex-row align-items-top my-3">
                      <div class="m-0 p-0 col-5">
-                        <button class="btn btn-link text-left m-0" type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($job->unit->id); ?>_<?php echo e($teacher_id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($job->unit->id); ?>_<?php echo e($teacher_id); ?>">
+                        <button class="btn btn-link text-left m-0" type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($job->unit_id); ?>_<?php echo e($teacher_id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($job->unit_id); ?>_<?php echo e($teacher_id); ?>">
                            <?php echo e($job->unit->unit_title); ?> <span><i class="fas fa-caret-down"></i></span>
                         </button>
                      </div>
@@ -45,7 +45,7 @@
                            <?php if($job->jobStatus->id > 3): ?>
                               <?php if($job->jobStatus->id < 11): ?>
                                  <div class="d-flex flex-column">
-                                    <a class="m-1 btn-sm btn-warning text-center" href="/unit/<?php echo e($job->unit->id); ?>"> Zur Lerneinheit </a>
+                                    <a class="m-1 btn-sm btn-warning text-center" href="/unit/<?php echo e($job->unit_id); ?>"> Zur Lerneinheit </a>
                                     <form class="m-1" action="/schueler/auftraege/abgeben" method="post">
                                        <?php echo csrf_field(); ?> <?php echo method_field('PATCH'); ?>
                                        <input type="hidden" name="student_id" value="<?php echo e($student->id); ?>">
@@ -63,14 +63,14 @@
                                        <?php echo csrf_field(); ?> <?php echo method_field('PATCH'); ?>
                                        <input type="hidden" name="student_id" value="<?php echo e($student->id); ?>">
                                        <input type="hidden" name="job_id" value="<?php echo e($job->id); ?>">
-                                       <button class="w-100 btn-sm btn-info text-center" type="submit"> Noch mal zurück! </button>
+                                       <button class="w-100 btn-sm btn-info text-center" type="submit"> Zu schnell abgegeben, nochmal zurückholen! </button>
                                     </form>
                                  </div>
                               <?php endif; ?>
                            <?php endif; ?>
                            <div title="Du hast <?php echo e($count_news); ?> neue Nachrichten" class="text-left mt-3" style="min-width: 5rem">
                               <?php if($count_news > 0): ?>
-                                 <button type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($job->unit->id); ?>_<?php echo e($teacher_id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($job->unit->id); ?>_<?php echo e($teacher_id); ?>" class="btn btn-primary ml-3" style=""><i class=" far fa-envelope"></i></button>
+                                 <button type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($job->unit_id); ?>_<?php echo e($teacher_id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($job->unit_id); ?>_<?php echo e($teacher_id); ?>" class="btn btn-primary ml-3" style=""><i class=" far fa-envelope"></i></button>
                                  <span class="badge news_notify badge-danger" style="position: relative; top:-15px; left:-12px;"><?php echo e($count_news); ?></span>
                               <?php endif; ?>
                            </div>
@@ -99,8 +99,10 @@
                   <?php endif; ?>
                </div>
 
-               <div id="collapse_<?php echo e($job->unit->id); ?>_<?php echo e($teacher_id); ?>" class="collapse 
-                  <?php if(session('unit_open') == $job->unit->id): ?> show <?php endif; ?>
+               <div id="collapse_<?php echo e($job->unit_id); ?>_<?php echo e($teacher_id); ?>" class="collapse 
+                  <?php if(session('unit_open') == $job->unit_id): ?> show
+                  <?php elseif($job->jobStatus_id > 3): ?> show
+                  <?php endif; ?>
                   " aria-labelledby="headingOne">
 
                   <div class="card-body">
@@ -211,17 +213,21 @@
                                                          <p class="card-text p-2"><small>Dein Lehrer möchte zu dieser Aufgabe einen Link zu Deiner Lösung von Dir haben:</small></p>
                                                          <?php if(count($task->results->where('result_url','!==',NULL)) > 0): ?> 
                                                             <div class="d-flex justify-content-between">
-                                                               <?php if(count($task->results->where('feedback_message',1)) < 1): ?>
+                                                               <?php if(count($task->results->where('feedback_message',1)) == 0): ?>
                                                                   <a href="/schueler/auftrag/ergebnis/zuruecknehmen/<?php echo e($task->id); ?>"><small> Meldung zurücknehmen </small></a>
                                                                <?php else: ?>
                                                                   <?php
-                                                                     $feedback = $task->results->where('feedback_message',1);
+                                                                     $feedback = $task->results->where('feedback_message',1)->first();
                                                                   ?>
                                                                   <small> Das ist die Korrektur zur Deiner Lösung:  </small>
-                                                                  <small> <?php echo e($feedback->message); ?>  </small>
                                                                <?php endif; ?>
                                                                <span class="text-success"> <i class="fa-2x far fa-check-square"></i></span>
                                                             </div>
+                                                            <?php if(isset($feedback)): ?>
+                                                               <div class="d-flex justify-content-start bg-white rounded">
+                                                                  <small class="p-2"><?php echo $feedback->message; ?>}</small>
+                                                               </div>
+                                                            <?php endif; ?>
                                                          <?php else: ?>
                                                             <div class="d-flex justify-content-end">
                                                                <button type="button" class="btn-sm btn-success" data-toggle="modal" data-target="#resultModal_<?php echo e($task->id); ?>">Ergebnis zur Aufgabe senden</button>

@@ -164,7 +164,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Creitive\Breadcrumbs\BreadcrumbsServiceProvider::class,
+        //Creitive\Breadcrumbs\BreadcrumbsServiceProvider::class,
         Mews\Purifier\PurifierServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
     
@@ -235,7 +235,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'Breadcrumbs' => Creitive\Breadcrumbs\Facades\Breadcrumbs::class,
+        // 'Breadcrumbs' => Creitive\Breadcrumbs\Facades\Breadcrumbs::class,
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
         'Carbon' => Carbon\Carbon::class,
         'Youtube' => Alaouy\Youtube\Facades\Youtube::class,

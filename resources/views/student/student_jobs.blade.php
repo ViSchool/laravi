@@ -102,7 +102,9 @@
                </div>
 
                <div id="collapse_{{$job->unit_id}}_{{$teacher_id}}" class="collapse 
-                  @if (session('unit_open') == $job->unit_id) show @endif
+                  @if (session('unit_open') == $job->unit_id) show
+                  @elseif ($job->jobStatus_id > 3) show
+                  @endif
                   " aria-labelledby="headingOne">
 
                   <div class="card-body">

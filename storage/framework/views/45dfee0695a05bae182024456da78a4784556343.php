@@ -31,7 +31,7 @@
                 ?>
 
 
-                <h3 class="mt-3 text-brand-blue">Aufträge an Klasse: "<?php echo e($studentgroup->studentgroup_name); ?>"</h3>           
+                <h3 class="mt-3 text-brand-blue">Aufträge an Klasse: "<?php echo e($studentgroup->studentgroup_name); ?>"</h3>
 
                 <div class="accordion" id="accordion_<?php echo e($studentgroup->id); ?>">
                     <?php $__currentLoopData = $jobsByUnits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit_id => $jobs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -39,16 +39,39 @@
                             $unit = App\Unit::findOrFail($unit_id);
                             $count_started = count($jobs->where('jobStatus_id','>',3));
                             $count_finished = count($jobs->where('jobStatus_id','>',10));
+                            $countNewsPerUnit = 0;
+                            //News für die gesamte Einheit zählen
+
+                            foreach ($jobs as $job) {
+                                $news = 0;
+                                $tasks_student = $job->tasks;
+                                foreach ($tasks_student as $task_student) {
+                                    $news = count($task_student->results->where('result_viewed',NULL)->where('created_by','student'));
+                                    $countNewsPerUnit = $countNewsPerUnit + $news;
+                                }
+                            }
                         ?>
                         <div class="card">
                             <div class="card-header" id="headingOne">
-                                <div class="d-flex justify-content-between px-3">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($unit->id); ?>_<?php echo e($studentgroup->id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($unit->id); ?>_<?php echo e($studentgroup->id); ?>">
+                                <div class="d-flex flex-row">
+                                    <h2 class="mb-0 col-6">
+                                        <button class="btn btn-link text-left" type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($unit->id); ?>_<?php echo e($studentgroup->id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($unit->id); ?>_<?php echo e($studentgroup->id); ?>">
                                             <?php echo e($unit->unit_title); ?>
 
                                         </button>
                                     </h2>
+                                    <div class="col-2 m-0 p-0">
+                                        <?php if($countNewsPerUnit > 0): ?>
+                                            <?php
+                                                session()->flash('unit_open',$job->unit_id);
+                                            ?>
+                                            <button class="btn btn-link m-0 p-0" type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($unit->id); ?>_<?php echo e($studentgroup->id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($unit->id); ?>_<?php echo e($studentgroup->id); ?>">
+                                                <span class=""><i class="fa-2x far fa-envelope"></i></span>
+                                                <small><span class="badge news_notify badge-danger" style="position: relative; top:-18px; left:-10px;"><?php echo e($countNewsPerUnit); ?></span></small>
+                                            </button>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="col-4">
                                     <?php if(count($jobs->where('jobStatus_id',2)) > 0): ?>
                                         <form action="/lehrer/auftrag/zuteilen" method="post" enctype="multipart/form-data">
                                             <?php echo csrf_field(); ?> <?php echo method_field('PATCH'); ?>
@@ -58,11 +81,12 @@
                                         </form>
                                     <?php elseif(count($jobs->where('jobStatus_id', '>',3)) > 0): ?>
                                         <?php if($count_started > $count_finished): ?>
-                                            <small><?php echo e($count_started); ?>/<?php echo e(count($jobs)); ?> Schülern haben angefangen</small>
+                                            <small class="text-right"><?php echo e($count_started); ?>/<?php echo e(count($jobs)); ?> Schülern haben angefangen</small>
                                         <?php else: ?>
-                                            <small><?php echo e($count_finished); ?>/<?php echo e(count($jobs)); ?> Schülern sind fertig</small>
+                                            <small class="text-right"><?php echo e($count_finished); ?>/<?php echo e(count($jobs)); ?> Schülern sind fertig</small>
                                         <?php endif; ?>
                                     <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
 
@@ -88,14 +112,14 @@
                                                         }
                                                     ?>
                                                     <tr>
-                                                        <td><a href="/lehrer/auftraege/schueler/<?php echo e($job->student->id); ?>#card_unit<?php echo e($job->unit_id); ?>"><?php echo e($job->student->student_name); ?></a></td>
+                                                        <td><a href="/lehrer/auftraege/schueler/<?php echo e($job->student_id); ?>#card_unit<?php echo e($job->unit_id); ?>"><?php echo e($job->student->student_name); ?></a></td>
                                                         <td class="text-center"><?php echo e($job->done_date->formatLocalized('%d. %B %Y')); ?></td>
                                                         <td class="text-center">
                                                             <?php if($count_news > 0): ?>
                                                             <?php
-                                                                session()->flash('unit_open',$job->unit->id);
+                                                                session()->flash('unit_open',$job->unit_id);
                                                             ?>
-                                                                <a href="/lehrer/auftraege/schueler/<?php echo e($job->student->id); ?>#card_unit<?php echo e($job->unit_id); ?>"> 
+                                                                <a href="/lehrer/auftraege/schueler/<?php echo e($job->student_id); ?>#card_unit<?php echo e($job->unit_id); ?>"> 
                                                                     <span class="ml-3"><i class="fa-2x far fa-envelope"></i></span>
                                                                     <small><span class="badge news_notify badge-danger" style="position: relative; top:-20px; left:-12px;"><?php echo e($count_news); ?></span></small>
                                                                 </a>
@@ -117,21 +141,53 @@
                             </div>
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </div>            
+                </div>
             <?php else: ?> 
 
-                <h3 class="mt-5 text-brand-blue">Aufträge an einzelne Schüler</h3>           
+                <h3 class="mt-5 text-brand-blue">Aufträge an einzelne Schüler</h3>
                 <div class="accordion" id="accordion_singleStudent">
                     <?php $__currentLoopData = $jobsByUnits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $unit_id => $jobs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <?php
                             $unit = App\Unit::findOrFail($unit_id);
+                            //News für die gesamte Einheit zählen
+                            $countNewsPerUnit = 0;
+                            foreach ($jobs as $job) {
+                                $news = 0;
+                                $tasks_student = $job->tasks;
+                                foreach ($tasks_student as $task_student) {
+                                    $news = count($task_student->results->where('result_viewed',NULL)->where('created_by','student'));
+                                    $countNewsPerUnit = $countNewsPerUnit + $news;
+                                }
+                            }
+
+
+
+
+
                         ?>
                         <div class="card">
                             <div class="card-header" id="headingOne">
-                                <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($unit->id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($unit->id); ?>">
-                                    <?php echo e($unit->unit_title); ?>
+                               <div class="d-flex flex-row">
+                                    <h2 class="mb-0 col-6">
+                                        <button class="btn btn-link text-left" type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($unit->id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($unit->id); ?>">
+                                            <?php echo e($unit->unit_title); ?>
 
-                                </button></h2>
+                                        </button>
+                                    </h2>
+                                    <div class="col-2 m-0 p-0">
+                                        <?php if($countNewsPerUnit > 0): ?>
+                                            <?php
+                                                session()->flash('unit_open',$job->unit_id);
+                                            ?>
+                                            <button class="btn btn-link m-0 p-0" type="button" data-toggle="collapse" data-target="#collapse_<?php echo e($unit->id); ?>" aria-expanded="false" aria-controls="collapse_<?php echo e($unit->id); ?>">
+                                                <span class=""><i class="fa-2x far fa-envelope"></i></span>
+                                                <small><span class="badge news_notify badge-danger" style="position: relative; top:-18px; left:-10px;"><?php echo e($countNewsPerUnit); ?></span></small>
+                                            </button>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="col-4">
+                                    </div>
+                                </div>
                             </div>
 
                             <div id="collapse_<?php echo e($unit->id); ?>" class="collapse " aria-labelledby="headingOne" data-parent="#accordion_singleStudent">
@@ -156,14 +212,14 @@
                                                     }
                                                 ?>
                                                     <tr>
-                                                        <td><a href="/lehrer/auftraege/schueler/<?php echo e($job->student->id); ?>#card_unit<?php echo e($job->unit_id); ?>"><?php echo e($job->student->student_name); ?></a></td>
+                                                        <td><a href="/lehrer/auftraege/schueler/<?php echo e($job->student_id); ?>#card_unit<?php echo e($job->unit_id); ?>"><?php echo e($job->student->student_name); ?></a></td>
                                                         <td class="text-center"><?php echo e($job->done_date->formatLocalized('%d. %B %Y')); ?></td>
                                                         <td class="text-center">
                                                             <?php if($count_news > 0): ?>
                                                             <?php
-                                                                session()->flash('unit_open',$job->unit->id);
+                                                                session()->flash('unit_open',$job->unit_id);
                                                             ?>
-                                                                <a href="/lehrer/auftraege/schueler/<?php echo e($job->student->id); ?>#card_unit<?php echo e($job->unit_id); ?>"> 
+                                                                <a href="/lehrer/auftraege/schueler/<?php echo e($job->student_id); ?>#card_unit<?php echo e($job->unit_id); ?>"> 
                                                                     <span class="ml-3"><i class="fa-2x far fa-envelope"></i></span>
                                                                     <small><span class="badge news_notify badge-danger" style="position: relative; top:-20px; left:-12px;"><?php echo e($count_news); ?></span></small>
                                                                 </a>
@@ -175,7 +231,7 @@
                                                                     <?php echo csrf_field(); ?> <?php echo method_field('PATCH'); ?>
                                                                     <input type="hidden" name="firstjob_id" value="<?php echo e($job->id); ?>">
                                                                     <input type="hidden" name="studentgroup" value="0">
-                                                                    <button title="Jetzt die Aufträge für die Klasse <?php echo e($studentgroup->studentgroup_name); ?> zuweisen und mit dem Lernen beginnen lassen" class="btn-sm" type="submit"><i class="fas fa-user-check"></i> Auftrag jetzt zuteilen</button>
+                                                                    <button title="Jetzt die Aufträge für  <?php echo e($job->student->student_name); ?> zuweisen und mit dem Lernen beginnen lassen" class="btn-sm" type="submit"><i class="fas fa-user-check"></i> Auftrag jetzt zuteilen</button>
                                                                 </form>
                                                             <?php else: ?> 
                                                                 <small><?php echo e($job->jobStatus->jobStatus_name); ?></small>
